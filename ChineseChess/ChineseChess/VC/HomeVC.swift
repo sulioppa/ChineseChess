@@ -19,7 +19,10 @@ class HomeVC: UIViewController {
 		view.backgroundColor = UIColor.yellow
 		self.view.addSubview(view)
 		view.snp.makeConstraints {
-			$0.edges.equalTo(UIEdgeInsetsMake(10, 10, 10, 10))
+			$0.top.equalTo(self.snp.top)
+			$0.left.equalTo(self.snp.left)
+			$0.bottom.equalTo(self.snp.bottom)
+			$0.right.equalTo(self.snp.right)
 		}
     }
 

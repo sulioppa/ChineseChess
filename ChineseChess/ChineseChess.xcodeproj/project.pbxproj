@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		423381D80836935A6E9A0D8D /* Pods_ChineseChess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */; };
+		A72EF6D81F8F982B004A453D /* UIViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */; };
 		A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */; };
+		A78CC1BC1F8F783100563789 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */; };
 		A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CE55F81F8DC28600641454 /* AppDelegate.swift */; };
 		A7CE56001F8DC28600641454 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7CE55FF1F8DC28600641454 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -17,7 +19,9 @@
 		0960C69523E81DB1C0565640 /* Pods-ChineseChess.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChineseChess.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChineseChess/Pods-ChineseChess.release.xcconfig"; sourceTree = "<group>"; };
 		2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChineseChess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A72062111F8DE85300FA764E /* ChineseChess-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChineseChess-Bridging-Header.h"; sourceTree = "<group>"; };
+		A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Layout.swift"; sourceTree = "<group>"; };
 		A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A7CE55F51F8DC28600641454 /* ChineseChess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChineseChess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7CE55F81F8DC28600641454 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7CE55FF1F8DC28600641454 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -54,11 +58,65 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A7075C081F8F8FD800652D0A /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		A7075C091F8F8FE600652D0A /* UI+Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "UI+Extension";
+			sourceTree = "<group>";
+		};
+		A7075C0A1F8F900900652D0A /* NS+Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */,
+			);
+			path = "NS+Extension";
+			sourceTree = "<group>";
+		};
+		A7075C0B1F8F901100652D0A /* AI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AI;
+			sourceTree = "<group>";
+		};
+		A7075C0C1F8F901600652D0A /* UIData */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UIData;
+			sourceTree = "<group>";
+		};
+		A7075C0D1F8F908100652D0A /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				A72EF6D21F8F921D004A453D /* UI+Custom */,
+				A7075C0A1F8F900900652D0A /* NS+Extension */,
+				A7075C091F8F8FE600652D0A /* UI+Extension */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		A72EF6D21F8F921D004A453D /* UI+Custom */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "UI+Custom";
+			sourceTree = "<group>";
+		};
 		A77E18771F8DE532003A2EC5 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				A7CE56041F8DC28600641454 /* Info.plist */,
 				A72062111F8DE85300FA764E /* ChineseChess-Bridging-Header.h */,
+				A7CE56041F8DC28600641454 /* Info.plist */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -84,8 +142,12 @@
 		A7CE55F71F8DC28600641454 /* ChineseChess */ = {
 			isa = PBXGroup;
 			children = (
-				A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */,
+				A7075C0C1F8F901600652D0A /* UIData */,
+				A7075C0B1F8F901100652D0A /* AI */,
+				A7075C0D1F8F908100652D0A /* Libraries */,
+				A7075C081F8F8FD800652D0A /* VC */,
 				A7CE55F81F8DC28600641454 /* AppDelegate.swift */,
+				A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */,
 				A7CE55FF1F8DC28600641454 /* Assets.xcassets */,
 				A77E18771F8DE532003A2EC5 /* Settings */,
 			);
@@ -154,6 +216,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A78CC1BC1F8F783100563789 /* Launch Screen.storyboard in Resources */,
 				A7CE56001F8DC28600641454 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */,
+				A72EF6D81F8F982B004A453D /* UIViewController+Layout.swift in Sources */,
 				A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,13 +403,12 @@
 			baseConfigurationReference = BBACABA43398033918CA7F83 /* Pods-ChineseChess.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N8DRL785HM;
+				DEVELOPMENT_TEAM = 355A2TSX74;
 				INFOPLIST_FILE = "$(SRCROOT)/ChineseChess/Settings/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = StarLab.ChineseChess;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jd.sulioppa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ChineseChess/Settings/ChineseChess-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
@@ -358,13 +421,12 @@
 			baseConfigurationReference = 0960C69523E81DB1C0565640 /* Pods-ChineseChess.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N8DRL785HM;
+				DEVELOPMENT_TEAM = 355A2TSX74;
 				INFOPLIST_FILE = "$(SRCROOT)/ChineseChess/Settings/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = StarLab.ChineseChess;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jd.sulioppa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ChineseChess/Settings/ChineseChess-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;

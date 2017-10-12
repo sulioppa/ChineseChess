@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	lazy var window: UIWindow? = {
 		let window = UIWindow(frame: UIScreen.main.bounds)
-		window.backgroundColor = UIColor.white
+		window.backgroundColor = UIColor.black
 		window.rootViewController = HomeVC()
 		return window
 	}()
