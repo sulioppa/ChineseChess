@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="Lauch" translatesAutoresizingMaskIntoConstraints="NO" id="KMJ-AC-HTl">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="Launch" translatesAutoresizingMaskIntoConstraints="NO" id="KMJ-AC-HTl">
                                 <rect key="frame" x="0.0" y="20" width="414" height="716"/>
                             </imageView>
                         </subviews>
@@ -37,6 +37,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Lauch" width="414" height="736"/>
+        <image name="Launch" width="414" height="736"/>
     </resources>
 </document>

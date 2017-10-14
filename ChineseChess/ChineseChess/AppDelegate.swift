@@ -18,14 +18,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return window
 	}()
 
+	// MARK: - App Entrance
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+		// BGM - 沧海龙吟
+		BGMManager.invoke(isLaunch: true)
+		
 		self.window?.makeKeyAndVisible()
-		Thread.sleep(forTimeInterval: 1.625)
+		Thread.sleep(forTimeInterval: Macro.Time.launchLastTime)
 		return true
 	}
 
+	// MARK: - SaveData
 	func applicationWillTerminate(_ application: UIApplication) {
-		
+		UserPreference.shared.savePreference()
 	}
 
 }

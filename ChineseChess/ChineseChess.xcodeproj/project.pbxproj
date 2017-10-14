@@ -8,24 +8,50 @@
 
 /* Begin PBXBuildFile section */
 		423381D80836935A6E9A0D8D /* Pods_ChineseChess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */; };
+		A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36351F90ECFA00D9BB62 /* UserPreference.swift */; };
+		A71E36381F90EEC900D9BB62 /* ResourcesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36371F90EEC900D9BB62 /* ResourcesManager.swift */; };
+		A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */; };
+		A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */; };
+		A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D681F90A6E000CBDAD9 /* Macro.swift */; };
 		A72EF6D81F8F982B004A453D /* UIViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */; };
 		A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */; };
 		A78CC1BC1F8F783100563789 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */; };
+		A79128671F911F17002CC4E5 /* BGMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79128661F911F17002CC4E5 /* BGMManager.swift */; };
+		A79128681F9124E2002CC4E5 /* 沧海龙吟.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D161F905DBD0054DF93 /* 沧海龙吟.mp3 */; };
+		A79128691F9124E2002CC4E5 /* check.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D171F905DBD0054DF93 /* check.wav */; };
+		A791286A1F9124E2002CC4E5 /* eat.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D181F905DBD0054DF93 /* eat.wav */; };
+		A791286B1F9124E2002CC4E5 /* run.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D191F905DBD0054DF93 /* run.wav */; };
+		A791286C1F9124E2002CC4E5 /* select.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D1A1F905DBD0054DF93 /* select.wav */; };
+		A791286D1F9124E2002CC4E5 /* KaiTi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D141F9058BF0054DF93 /* KaiTi.ttf */; };
 		A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CE55F81F8DC28600641454 /* AppDelegate.swift */; };
 		A7CE56001F8DC28600641454 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7CE55FF1F8DC28600641454 /* Assets.xcassets */; };
+		A7DFAD7C1F910D7D00FEB8AC /* Value+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0960C69523E81DB1C0565640 /* Pods-ChineseChess.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChineseChess.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChineseChess/Pods-ChineseChess.release.xcconfig"; sourceTree = "<group>"; };
 		2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChineseChess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A71E36351F90ECFA00D9BB62 /* UserPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreference.swift; sourceTree = "<group>"; };
+		A71E36371F90EEC900D9BB62 /* ResourcesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesManager.swift; sourceTree = "<group>"; };
+		A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		A72062111F8DE85300FA764E /* ChineseChess-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChineseChess-Bridging-Header.h"; sourceTree = "<group>"; };
+		A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PresentVC.swift"; sourceTree = "<group>"; };
+		A72A4D681F90A6E000CBDAD9 /* Macro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macro.swift; sourceTree = "<group>"; };
 		A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Layout.swift"; sourceTree = "<group>"; };
 		A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		A79128661F911F17002CC4E5 /* BGMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMManager.swift; sourceTree = "<group>"; };
 		A7CE55F51F8DC28600641454 /* ChineseChess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChineseChess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7CE55F81F8DC28600641454 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7CE55FF1F8DC28600641454 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7CE56041F8DC28600641454 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Map.swift"; sourceTree = "<group>"; };
+		A7E51D141F9058BF0054DF93 /* KaiTi.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = KaiTi.ttf; sourceTree = "<group>"; };
+		A7E51D161F905DBD0054DF93 /* 沧海龙吟.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "沧海龙吟.mp3"; sourceTree = "<group>"; };
+		A7E51D171F905DBD0054DF93 /* check.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = check.wav; sourceTree = "<group>"; };
+		A7E51D181F905DBD0054DF93 /* eat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = eat.wav; sourceTree = "<group>"; };
+		A7E51D191F905DBD0054DF93 /* run.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = run.wav; sourceTree = "<group>"; };
+		A7E51D1A1F905DBD0054DF93 /* select.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = select.wav; sourceTree = "<group>"; };
 		BBACABA43398033918CA7F83 /* Pods-ChineseChess.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChineseChess.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChineseChess/Pods-ChineseChess.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -58,17 +84,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A7075C081F8F8FD800652D0A /* VC */ = {
+		A7075C081F8F8FD800652D0A /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */,
 			);
-			path = VC;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		A7075C091F8F8FE600652D0A /* UI+Extension */ = {
 			isa = PBXGroup;
 			children = (
+				A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */,
+				A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */,
+				A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */,
 			);
 			path = "UI+Extension";
 			sourceTree = "<group>";
@@ -76,7 +105,7 @@
 		A7075C0A1F8F900900652D0A /* NS+Extension */ = {
 			isa = PBXGroup;
 			children = (
-				A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */,
+				A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */,
 			);
 			path = "NS+Extension";
 			sourceTree = "<group>";
@@ -88,37 +117,56 @@
 			path = AI;
 			sourceTree = "<group>";
 		};
-		A7075C0C1F8F901600652D0A /* UIData */ = {
+		A7075C0C1F8F901600652D0A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A7E51D151F905DBD0054DF93 /* Wavs */,
+				A7E51D141F9058BF0054DF93 /* KaiTi.ttf */,
 			);
-			path = UIData;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		A7075C0D1F8F908100652D0A /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				A72EF6D21F8F921D004A453D /* UI+Custom */,
 				A7075C0A1F8F900900652D0A /* NS+Extension */,
 				A7075C091F8F8FE600652D0A /* UI+Extension */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
 		};
-		A72EF6D21F8F921D004A453D /* UI+Custom */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "UI+Custom";
-			sourceTree = "<group>";
-		};
-		A77E18771F8DE532003A2EC5 /* Settings */ = {
+		A77E18771F8DE532003A2EC5 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
 				A72062111F8DE85300FA764E /* ChineseChess-Bridging-Header.h */,
 				A7CE56041F8DC28600641454 /* Info.plist */,
 			);
-			path = Settings;
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		A789FD1C1F90EC5600CFC461 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A789FD1D1F90EC9B00CFC461 /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				A71E36351F90ECFA00D9BB62 /* UserPreference.swift */,
+				A71E36371F90EEC900D9BB62 /* ResourcesManager.swift */,
+				A79128661F911F17002CC4E5 /* BGMManager.swift */,
+			);
+			path = DataManager;
+			sourceTree = "<group>";
+		};
+		A795CDEF1F90DBED0079546A /* Macro */ = {
+			isa = PBXGroup;
+			children = (
+				A72A4D681F90A6E000CBDAD9 /* Macro.swift */,
+			);
+			path = Macro;
 			sourceTree = "<group>";
 		};
 		A7CE55EC1F8DC28600641454 = {
@@ -142,16 +190,31 @@
 		A7CE55F71F8DC28600641454 /* ChineseChess */ = {
 			isa = PBXGroup;
 			children = (
-				A7075C0C1F8F901600652D0A /* UIData */,
 				A7075C0B1F8F901100652D0A /* AI */,
 				A7075C0D1F8F908100652D0A /* Libraries */,
-				A7075C081F8F8FD800652D0A /* VC */,
+				A795CDEF1F90DBED0079546A /* Macro */,
+				A789FD1D1F90EC9B00CFC461 /* DataManager */,
+				A789FD1C1F90EC5600CFC461 /* View */,
+				A7075C081F8F8FD800652D0A /* ViewController */,
 				A7CE55F81F8DC28600641454 /* AppDelegate.swift */,
 				A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */,
 				A7CE55FF1F8DC28600641454 /* Assets.xcassets */,
-				A77E18771F8DE532003A2EC5 /* Settings */,
+				A7075C0C1F8F901600652D0A /* Resources */,
+				A77E18771F8DE532003A2EC5 /* SupportFiles */,
 			);
 			path = ChineseChess;
+			sourceTree = "<group>";
+		};
+		A7E51D151F905DBD0054DF93 /* Wavs */ = {
+			isa = PBXGroup;
+			children = (
+				A7E51D161F905DBD0054DF93 /* 沧海龙吟.mp3 */,
+				A7E51D171F905DBD0054DF93 /* check.wav */,
+				A7E51D181F905DBD0054DF93 /* eat.wav */,
+				A7E51D191F905DBD0054DF93 /* run.wav */,
+				A7E51D1A1F905DBD0054DF93 /* select.wav */,
+			);
+			path = Wavs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,6 +279,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A79128681F9124E2002CC4E5 /* 沧海龙吟.mp3 in Resources */,
+				A79128691F9124E2002CC4E5 /* check.wav in Resources */,
+				A791286A1F9124E2002CC4E5 /* eat.wav in Resources */,
+				A791286B1F9124E2002CC4E5 /* run.wav in Resources */,
+				A791286C1F9124E2002CC4E5 /* select.wav in Resources */,
+				A791286D1F9124E2002CC4E5 /* KaiTi.ttf in Resources */,
 				A78CC1BC1F8F783100563789 /* Launch Screen.storyboard in Resources */,
 				A7CE56001F8DC28600641454 /* Assets.xcassets in Resources */,
 			);
@@ -283,8 +352,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */,
+				A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */,
+				A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */,
 				A72EF6D81F8F982B004A453D /* UIViewController+Layout.swift in Sources */,
+				A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */,
+				A71E36381F90EEC900D9BB62 /* ResourcesManager.swift in Sources */,
+				A79128671F911F17002CC4E5 /* BGMManager.swift in Sources */,
 				A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */,
+				A7DFAD7C1F910D7D00FEB8AC /* Value+Map.swift in Sources */,
+				A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,12 +481,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 355A2TSX74;
-				INFOPLIST_FILE = "$(SRCROOT)/ChineseChess/Settings/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ChineseChess/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jd.sulioppa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ChineseChess/Settings/ChineseChess-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ChineseChess/SupportFiles/ChineseChess-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -423,12 +499,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 355A2TSX74;
-				INFOPLIST_FILE = "$(SRCROOT)/ChineseChess/Settings/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/ChineseChess/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jd.sulioppa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ChineseChess/Settings/ChineseChess-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ChineseChess/SupportFiles/ChineseChess-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
