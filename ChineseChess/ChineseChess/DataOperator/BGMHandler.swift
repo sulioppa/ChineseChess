@@ -1,5 +1,5 @@
 //
-//  BGMManager.swift
+//  BGMHandler.swift
 //  ChineseChess
 //
 //  Created by 李夙璃 on 2017/10/14.
@@ -9,9 +9,9 @@
 import UIKit
 import AVFoundation
 
-class BGMManager: NSObject {
+class BGMHandler: NSObject {
 	
-	private static let bgm = ResourcesManager.shared.wav(named: "BGM")
+	private static let bgm = ResourcesProvider.shared.wav(named: "BGM")
 	
 	public class func invoke(isLaunch: Bool = false) {
 		if UserPreference.shared.playBGM {

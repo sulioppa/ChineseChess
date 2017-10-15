@@ -1,5 +1,5 @@
 //
-//  ResourcesManager.swift
+//  ResourcesProvider.swift
 //  ChineseChess
 //
 //  Created by 李夙璃 on 2017/10/13.
@@ -9,9 +9,9 @@
 import UIKit
 import AVFoundation
 
-class ResourcesManager: NSObject {
+class ResourcesProvider: NSObject {
 
-	public static let shared: ResourcesManager = ResourcesManager()
+	public static let shared: ResourcesProvider = ResourcesProvider()
 	
 	public func image(named: String) -> UIImage? {
 		guard let named = self.images[named] else { return nil }
@@ -24,7 +24,7 @@ class ResourcesManager: NSObject {
 	}
 	
 	// MARK: - Private
-	private let images: [String: String] = ["home": "icon_home"]
+	private let images: [String: String] = ["home": "icon_home", "title": "icon_title", "button": "icon_button"]
 	private let wavs: [String: (name: String, type: String)] = ["BGM": ("沧海龙吟", "mp3")]
 	
 	override private init() {

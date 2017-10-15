@@ -28,7 +28,7 @@ class UserPreference: NSObject {
 	override private init() {
 		super.init()
 		guard let preference = UserDefaults.standard.object(forKey: Key.userPreference) as? [String: Any] else { return }
-		self.playBGM <- preference["playBGM"]
+		self.playBGM <- preference[Key.playBGM]
 	}
 	
 	private var dictionary: [String: Any] {

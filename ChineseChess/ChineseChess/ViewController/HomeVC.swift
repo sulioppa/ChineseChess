@@ -44,6 +44,25 @@ class HomeVC: UIViewController {
 	
 }
 
+// MARK: - Action
+extension HomeVC {
+	
+	@objc func presentVC(sender: Any?) {
+		guard let tag = (sender as? UIButton)?.tag else { return }
+		switch tag {
+		case 1:
+			self.present("GameVC")
+		case 2:
+			self.present("HistoryVC")
+		case 3:
+			self.present("MultiPeerVC")
+		default:
+			fatalError("Unknown sender trigger this function: \(#function), check the button's tag")
+		}
+	}
+	
+}
+
 // MARK: - ScrollView Scroll Control
 extension HomeVC {
 	
@@ -103,7 +122,7 @@ extension HomeVC {
 			scrollView.isScrollEnabled = false
 			scrollView.isUserInteractionEnabled = false
 			
-			if let image = ResourcesManager.shared.image(named: "home") {
+			if let image = ResourcesProvider.shared.image(named: "home") {
 				let contentSize = CGSize(width: Macro.UI.height * image.size.width / image.size.height, height: Macro.UI.height)
 				let imageView = UIImageView(image: image)
 				imageView.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)

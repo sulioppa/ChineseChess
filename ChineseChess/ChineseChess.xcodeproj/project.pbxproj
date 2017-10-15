@@ -9,30 +9,34 @@
 /* Begin PBXBuildFile section */
 		423381D80836935A6E9A0D8D /* Pods_ChineseChess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */; };
 		A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36351F90ECFA00D9BB62 /* UserPreference.swift */; };
-		A71E36381F90EEC900D9BB62 /* ResourcesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36371F90EEC900D9BB62 /* ResourcesManager.swift */; };
+		A71E36381F90EEC900D9BB62 /* ResourcesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */; };
 		A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */; };
 		A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */; };
 		A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D681F90A6E000CBDAD9 /* Macro.swift */; };
 		A72EF6D81F8F982B004A453D /* UIViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */; };
 		A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */; };
 		A78CC1BC1F8F783100563789 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */; };
-		A79128671F911F17002CC4E5 /* BGMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79128661F911F17002CC4E5 /* BGMManager.swift */; };
+		A79128671F911F17002CC4E5 /* BGMHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79128661F911F17002CC4E5 /* BGMHandler.swift */; };
 		A79128681F9124E2002CC4E5 /* 沧海龙吟.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D161F905DBD0054DF93 /* 沧海龙吟.mp3 */; };
 		A79128691F9124E2002CC4E5 /* check.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D171F905DBD0054DF93 /* check.wav */; };
 		A791286A1F9124E2002CC4E5 /* eat.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D181F905DBD0054DF93 /* eat.wav */; };
 		A791286B1F9124E2002CC4E5 /* run.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D191F905DBD0054DF93 /* run.wav */; };
 		A791286C1F9124E2002CC4E5 /* select.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D1A1F905DBD0054DF93 /* select.wav */; };
 		A791286D1F9124E2002CC4E5 /* KaiTi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D141F9058BF0054DF93 /* KaiTi.ttf */; };
+		A7CD69F31F91E11700C3202A /* LayoutPartner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD69F21F91E11700C3202A /* LayoutPartner.swift */; };
 		A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CE55F81F8DC28600641454 /* AppDelegate.swift */; };
 		A7CE56001F8DC28600641454 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7CE55FF1F8DC28600641454 /* Assets.xcassets */; };
+		A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DC614C1F92435C009A9205 /* UIFont+KaiTi.swift */; };
+		A7DC614F1F9249B5009A9205 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DC614E1F9249B5009A9205 /* UIColor+Colors.swift */; };
 		A7DFAD7C1F910D7D00FEB8AC /* Value+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */; };
+		A7E7ACFD1F91DE8E00B29C5A /* UIButton+Golden.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E7ACFC1F91DE8E00B29C5A /* UIButton+Golden.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0960C69523E81DB1C0565640 /* Pods-ChineseChess.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChineseChess.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChineseChess/Pods-ChineseChess.release.xcconfig"; sourceTree = "<group>"; };
 		2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChineseChess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A71E36351F90ECFA00D9BB62 /* UserPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreference.swift; sourceTree = "<group>"; };
-		A71E36371F90EEC900D9BB62 /* ResourcesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesManager.swift; sourceTree = "<group>"; };
+		A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesProvider.swift; sourceTree = "<group>"; };
 		A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		A72062111F8DE85300FA764E /* ChineseChess-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChineseChess-Bridging-Header.h"; sourceTree = "<group>"; };
 		A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PresentVC.swift"; sourceTree = "<group>"; };
@@ -40,11 +44,14 @@
 		A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Layout.swift"; sourceTree = "<group>"; };
 		A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		A79128661F911F17002CC4E5 /* BGMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMManager.swift; sourceTree = "<group>"; };
+		A79128661F911F17002CC4E5 /* BGMHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMHandler.swift; sourceTree = "<group>"; };
+		A7CD69F21F91E11700C3202A /* LayoutPartner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutPartner.swift; sourceTree = "<group>"; };
 		A7CE55F51F8DC28600641454 /* ChineseChess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChineseChess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7CE55F81F8DC28600641454 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7CE55FF1F8DC28600641454 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7CE56041F8DC28600641454 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7DC614C1F92435C009A9205 /* UIFont+KaiTi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+KaiTi.swift"; sourceTree = "<group>"; };
+		A7DC614E1F9249B5009A9205 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
 		A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Map.swift"; sourceTree = "<group>"; };
 		A7E51D141F9058BF0054DF93 /* KaiTi.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = KaiTi.ttf; sourceTree = "<group>"; };
 		A7E51D161F905DBD0054DF93 /* 沧海龙吟.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "沧海龙吟.mp3"; sourceTree = "<group>"; };
@@ -52,6 +59,7 @@
 		A7E51D181F905DBD0054DF93 /* eat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = eat.wav; sourceTree = "<group>"; };
 		A7E51D191F905DBD0054DF93 /* run.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = run.wav; sourceTree = "<group>"; };
 		A7E51D1A1F905DBD0054DF93 /* select.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = select.wav; sourceTree = "<group>"; };
+		A7E7ACFC1F91DE8E00B29C5A /* UIButton+Golden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Golden.swift"; sourceTree = "<group>"; };
 		BBACABA43398033918CA7F83 /* Pods-ChineseChess.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChineseChess.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChineseChess/Pods-ChineseChess.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,8 +104,8 @@
 			isa = PBXGroup;
 			children = (
 				A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */,
-				A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */,
 				A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */,
+				A7DC614E1F9249B5009A9205 /* UIColor+Colors.swift */,
 			);
 			path = "UI+Extension";
 			sourceTree = "<group>";
@@ -147,18 +155,20 @@
 		A789FD1C1F90EC5600CFC461 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A7E7ACFB1F91DE5000B29C5A /* UI+Extension */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		A789FD1D1F90EC9B00CFC461 /* DataManager */ = {
+		A789FD1D1F90EC9B00CFC461 /* DataOperator */ = {
 			isa = PBXGroup;
 			children = (
 				A71E36351F90ECFA00D9BB62 /* UserPreference.swift */,
-				A71E36371F90EEC900D9BB62 /* ResourcesManager.swift */,
-				A79128661F911F17002CC4E5 /* BGMManager.swift */,
+				A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */,
+				A79128661F911F17002CC4E5 /* BGMHandler.swift */,
+				A7CD69F21F91E11700C3202A /* LayoutPartner.swift */,
 			);
-			path = DataManager;
+			path = DataOperator;
 			sourceTree = "<group>";
 		};
 		A795CDEF1F90DBED0079546A /* Macro */ = {
@@ -193,7 +203,7 @@
 				A7075C0B1F8F901100652D0A /* AI */,
 				A7075C0D1F8F908100652D0A /* Libraries */,
 				A795CDEF1F90DBED0079546A /* Macro */,
-				A789FD1D1F90EC9B00CFC461 /* DataManager */,
+				A789FD1D1F90EC9B00CFC461 /* DataOperator */,
 				A789FD1C1F90EC5600CFC461 /* View */,
 				A7075C081F8F8FD800652D0A /* ViewController */,
 				A7CE55F81F8DC28600641454 /* AppDelegate.swift */,
@@ -215,6 +225,16 @@
 				A7E51D1A1F905DBD0054DF93 /* select.wav */,
 			);
 			path = Wavs;
+			sourceTree = "<group>";
+		};
+		A7E7ACFB1F91DE5000B29C5A /* UI+Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */,
+				A7E7ACFC1F91DE8E00B29C5A /* UIButton+Golden.swift */,
+				A7DC614C1F92435C009A9205 /* UIFont+KaiTi.swift */,
+			);
+			path = "UI+Extension";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -354,13 +374,17 @@
 				A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */,
 				A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */,
 				A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */,
+				A7DC614F1F9249B5009A9205 /* UIColor+Colors.swift in Sources */,
 				A72EF6D81F8F982B004A453D /* UIViewController+Layout.swift in Sources */,
 				A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */,
-				A71E36381F90EEC900D9BB62 /* ResourcesManager.swift in Sources */,
-				A79128671F911F17002CC4E5 /* BGMManager.swift in Sources */,
+				A71E36381F90EEC900D9BB62 /* ResourcesProvider.swift in Sources */,
+				A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */,
+				A79128671F911F17002CC4E5 /* BGMHandler.swift in Sources */,
 				A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */,
+				A7E7ACFD1F91DE8E00B29C5A /* UIButton+Golden.swift in Sources */,
 				A7DFAD7C1F910D7D00FEB8AC /* Value+Map.swift in Sources */,
 				A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */,
+				A7CD69F31F91E11700C3202A /* LayoutPartner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

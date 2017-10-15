@@ -27,6 +27,10 @@ public struct Macro {
 		public static var width: CGFloat {
 			return UIScreen.main.bounds.size.width
 		}
+	
+		public static let fontName = "STKaiti"
+		
+		public static let beautyScale: CGFloat = 0.618
 	}
 	
 }
