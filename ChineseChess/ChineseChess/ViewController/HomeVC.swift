@@ -35,7 +35,49 @@ class HomeVC: UIViewController {
 	
 	// Entrances
 	private func initEntrances() {
+		let layout = LayoutPartner.Home()
 		
+		func button(_ title: String, _ tag: Int) -> UIButton {
+			let button = UIButton.gold
+			button.layer.cornerRadius = layout.buttonCordins
+			button.titleLabel?.font = UIFont.kaitiFont(ofSize: layout.buttonTitleFontSize)
+			button.addTarget(self, action: #selector(self.presentVC(sender:)), for: .touchUpInside)
+			button.setTitle(title, for: .normal)
+			button.tag = tag
+			return button
+		}
+		
+		let history = button("棋 谱", 2)
+		self.view.addSubview(history)
+		history.snp.makeConstraints {
+			$0.size.equalTo(layout.buttonSize)
+			$0.centerX.equalTo(self.snp.centerX)
+			$0.top.equalTo(self.snp.centerY)
+		}
+		
+		let game = button("对 弈", 1)
+		self.view.addSubview(game)
+		game.snp.makeConstraints {
+			$0.size.equalTo(layout.buttonSize)
+			$0.centerX.equalTo(self.snp.centerX)
+			$0.bottom.equalTo(history.snp.top).offset(-layout.buttonSpace)
+		}
+		
+		let multiPeer = button("联 机", 3)
+		self.view.addSubview(multiPeer)
+		multiPeer.snp.makeConstraints {
+			$0.size.equalTo(layout.buttonSize)
+			$0.centerX.equalTo(self.snp.centerX)
+			$0.top.equalTo(history.snp.bottom).offset(layout.buttonSpace)
+		}
+		
+		let titleView = UIImageView(image: ResourcesProvider.shared.image(named: "title"))
+		self.view.addSubview(titleView)
+		titleView.snp.makeConstraints {
+			$0.size.equalTo(layout.titleViewSize)
+			$0.centerX.equalTo(self.snp.centerX)
+			$0.bottom.equalTo(game.snp.top).offset(-layout.titleViewSpace)
+		}
 	}
 	
 	deinit {
@@ -123,7 +165,7 @@ extension HomeVC {
 			scrollView.isUserInteractionEnabled = false
 			
 			if let image = ResourcesProvider.shared.image(named: "home") {
-				let contentSize = CGSize(width: Macro.UI.height * image.size.width / image.size.height, height: Macro.UI.height)
+				let contentSize = CGSize(width: LayoutPartner.height * image.size.width / image.size.height, height: LayoutPartner.height)
 				let imageView = UIImageView(image: image)
 				imageView.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
 				
@@ -140,7 +182,7 @@ extension HomeVC {
 			guard self.isViewAppear && self.isForeground else { return }
 			
 			let targetOffset = self.currentOffset + self.direction
-			if targetOffset > scrollView.contentSize.width - Macro.UI.width {
+			if targetOffset > scrollView.contentSize.width - LayoutPartner.width {
 				self.direction = -1.0
 			} else if(targetOffset + self.direction < 0.0) {
 				self.direction = 1.0

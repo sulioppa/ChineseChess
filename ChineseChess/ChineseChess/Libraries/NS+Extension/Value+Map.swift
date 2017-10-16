@@ -12,7 +12,7 @@ infix operator <-
 
 extension Bool {
 	
-	public static func <- (_ left: inout Bool, _ right: Any?) {
+	public static func <-(_ left: inout Bool, _ right: Any?) {
 		guard let value = right as? Bool else { return }
 		left = value
 	}
@@ -21,7 +21,7 @@ extension Bool {
 
 extension Int {
 	
-	public static func <- (_ left: inout Int, _ right: Any?) {
+	public static func <-(_ left: inout Int, _ right: Any?) {
 		guard let value = right as? Int else { return }
 		left = value
 	}
@@ -30,7 +30,7 @@ extension Int {
 
 extension String {
 	
-	public static func <- (_ left: inout String, _ right: Any?) {
+	public static func <-(_ left: inout String, _ right: Any?) {
 		guard let value = right as? String else { return }
 		left = value
 	}
@@ -39,7 +39,7 @@ extension String {
 
 extension Dictionary {
 	
-	public static func <- (_ left: inout Dictionary, _ right: Any?) {
+	public static func <-(_ left: inout Dictionary, _ right: Any?) {
 		guard let value = right as? Dictionary else { return }
 		left = value
 	}

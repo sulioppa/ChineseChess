@@ -17,20 +17,8 @@ public struct Macro {
 	}
 	
 	public struct UI {
-		public static var height: CGFloat {
-			if UIScreen.main.bounds.size.height == 812.0 {
-				return 734.0
-			}
-			return UIScreen.main.bounds.size.height
-		}
-		
-		public static var width: CGFloat {
-			return UIScreen.main.bounds.size.width
-		}
-	
+		public static let goldenScale: CGFloat = 0.618
 		public static let fontName = "STKaiti"
-		
-		public static let beautyScale: CGFloat = 0.618
 	}
 	
 }
