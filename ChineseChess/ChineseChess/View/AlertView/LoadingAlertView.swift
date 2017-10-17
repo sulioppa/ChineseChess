@@ -95,7 +95,7 @@ extension LoadingAlertView {
 		}
 	}
 	
-	public func hide(completion: (() -> Void)? = nil, animation: Bool = true) {
+	public func hide(animation: Bool = true, completion: (() -> Void)? = nil) {
 		guard animation else {
 			self.removeFromSuperview()
 			self.loading?.layer.removeAllAnimations()
@@ -122,8 +122,8 @@ extension LoadingAlertView {
 		LoadingAlertView.shared.show(in: superview, message: message, isCloseButtonHidden: isCloseButtonHidden, completion: completion)
 	}
 	
-	public class func hide(completion: (() -> Void)? = nil, animation: Bool = true) {
-		LoadingAlertView.shared.hide(completion: completion, animation: animation)
+	public class func hide(animation: Bool = true, completion: (() -> Void)? = nil) {
+		LoadingAlertView.shared.hide(animation: animation, completion: completion)
 	}
 	
 }

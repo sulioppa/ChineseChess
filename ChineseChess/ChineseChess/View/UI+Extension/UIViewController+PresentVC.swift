@@ -16,7 +16,7 @@ extension UIViewController {
 			LoadingAlertView.show(in: self.view) {
 				if let vc = NSClassFromString("\(Macro.Project.name).\(viewControllerToPresent)")?.alloc() as? UIViewController {
 					self.present(vc, animated: animated) {
-						LoadingAlertView.hide(completion: completion, animation: false)
+						LoadingAlertView.hide(animation: false, completion: completion)
 					}
 				} else {
 					fatalError("not found class named '\(viewControllerToPresent)'")
