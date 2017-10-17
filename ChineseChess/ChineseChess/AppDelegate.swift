@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	// MARK: - App Entrance
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		// BGM - 沧海龙吟
-		BGMHandler.invoke(isLaunch: true)
+		WavHandler.playBGM(isLaunch: true)
 		
 		self.window?.makeKeyAndVisible()
 		Thread.sleep(forTimeInterval: Macro.Time.launchLastTime)

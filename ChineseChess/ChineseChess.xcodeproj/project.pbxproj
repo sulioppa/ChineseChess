@@ -8,15 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		423381D80836935A6E9A0D8D /* Pods_ChineseChess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */; };
+		A70765F21F94E1A200FA6A43 /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70765F11F94E1A200FA6A43 /* GameVC.swift */; };
+		A70765F61F94E1E600FA6A43 /* ChessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70765F51F94E1E600FA6A43 /* ChessVC.swift */; };
 		A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36351F90ECFA00D9BB62 /* UserPreference.swift */; };
 		A71E36381F90EEC900D9BB62 /* ResourcesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */; };
 		A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */; };
 		A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */; };
 		A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D681F90A6E000CBDAD9 /* Macro.swift */; };
 		A72EF6D81F8F982B004A453D /* UIViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */; };
+		A770863D1F94C39100C24D2B /* LoadingAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770863C1F94C39100C24D2B /* LoadingAlertView.swift */; };
+		A778E4801F94E25200D28B25 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E47F1F94E25200D28B25 /* HistoryVC.swift */; };
+		A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E4811F94E26000D28B25 /* MultiPeerVC.swift */; };
 		A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */; };
 		A78CC1BC1F8F783100563789 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */; };
-		A79128671F911F17002CC4E5 /* BGMHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79128661F911F17002CC4E5 /* BGMHandler.swift */; };
+		A79128671F911F17002CC4E5 /* WavHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79128661F911F17002CC4E5 /* WavHandler.swift */; };
 		A79128681F9124E2002CC4E5 /* 沧海龙吟.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D161F905DBD0054DF93 /* 沧海龙吟.mp3 */; };
 		A79128691F9124E2002CC4E5 /* check.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D171F905DBD0054DF93 /* check.wav */; };
 		A791286A1F9124E2002CC4E5 /* eat.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D181F905DBD0054DF93 /* eat.wav */; };
@@ -35,6 +40,8 @@
 /* Begin PBXFileReference section */
 		0960C69523E81DB1C0565640 /* Pods-ChineseChess.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChineseChess.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChineseChess/Pods-ChineseChess.release.xcconfig"; sourceTree = "<group>"; };
 		2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChineseChess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A70765F11F94E1A200FA6A43 /* GameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
+		A70765F51F94E1E600FA6A43 /* ChessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessVC.swift; sourceTree = "<group>"; };
 		A71E36351F90ECFA00D9BB62 /* UserPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreference.swift; sourceTree = "<group>"; };
 		A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesProvider.swift; sourceTree = "<group>"; };
 		A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
@@ -42,9 +49,12 @@
 		A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PresentVC.swift"; sourceTree = "<group>"; };
 		A72A4D681F90A6E000CBDAD9 /* Macro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macro.swift; sourceTree = "<group>"; };
 		A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Layout.swift"; sourceTree = "<group>"; };
+		A770863C1F94C39100C24D2B /* LoadingAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAlertView.swift; sourceTree = "<group>"; };
+		A778E47F1F94E25200D28B25 /* HistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
+		A778E4811F94E26000D28B25 /* MultiPeerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerVC.swift; sourceTree = "<group>"; };
 		A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		A79128661F911F17002CC4E5 /* BGMHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BGMHandler.swift; sourceTree = "<group>"; };
+		A79128661F911F17002CC4E5 /* WavHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavHandler.swift; sourceTree = "<group>"; };
 		A7CD69F21F91E11700C3202A /* LayoutPartner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutPartner.swift; sourceTree = "<group>"; };
 		A7CE55F51F8DC28600641454 /* ChineseChess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChineseChess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7CE55F81F8DC28600641454 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +105,10 @@
 		A7075C081F8F8FD800652D0A /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				A70765F31F94E1A700FA6A43 /* ChessVC */,
+				A70765F41F94E1CC00FA6A43 /* GameVC */,
+				A70765F71F94E1FC00FA6A43 /* HistoryVC */,
+				A70765F81F94E20300FA6A43 /* MultiPeerVC */,
 				A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */,
 			);
 			path = ViewController;
@@ -143,6 +157,78 @@
 			path = Libraries;
 			sourceTree = "<group>";
 		};
+		A70765F31F94E1A700FA6A43 /* ChessVC */ = {
+			isa = PBXGroup;
+			children = (
+				A778E4831F94E26600D28B25 /* View */,
+				A70765F51F94E1E600FA6A43 /* ChessVC.swift */,
+			);
+			path = ChessVC;
+			sourceTree = "<group>";
+		};
+		A70765F41F94E1CC00FA6A43 /* GameVC */ = {
+			isa = PBXGroup;
+			children = (
+				A778E4841F94E26B00D28B25 /* View */,
+				A70765F11F94E1A200FA6A43 /* GameVC.swift */,
+			);
+			path = GameVC;
+			sourceTree = "<group>";
+		};
+		A70765F71F94E1FC00FA6A43 /* HistoryVC */ = {
+			isa = PBXGroup;
+			children = (
+				A778E4851F94E27100D28B25 /* View */,
+				A778E47F1F94E25200D28B25 /* HistoryVC.swift */,
+			);
+			path = HistoryVC;
+			sourceTree = "<group>";
+		};
+		A70765F81F94E20300FA6A43 /* MultiPeerVC */ = {
+			isa = PBXGroup;
+			children = (
+				A778E4861F94E27600D28B25 /* View */,
+				A778E4811F94E26000D28B25 /* MultiPeerVC.swift */,
+			);
+			path = MultiPeerVC;
+			sourceTree = "<group>";
+		};
+		A770863B1F94C35E00C24D2B /* AlertView */ = {
+			isa = PBXGroup;
+			children = (
+				A770863C1F94C39100C24D2B /* LoadingAlertView.swift */,
+			);
+			path = AlertView;
+			sourceTree = "<group>";
+		};
+		A778E4831F94E26600D28B25 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A778E4841F94E26B00D28B25 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A778E4851F94E27100D28B25 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A778E4861F94E27600D28B25 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		A77E18771F8DE532003A2EC5 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +241,7 @@
 		A789FD1C1F90EC5600CFC461 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A770863B1F94C35E00C24D2B /* AlertView */,
 				A7E7ACFB1F91DE5000B29C5A /* UI+Extension */,
 			);
 			path = View;
@@ -165,7 +252,7 @@
 			children = (
 				A71E36351F90ECFA00D9BB62 /* UserPreference.swift */,
 				A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */,
-				A79128661F911F17002CC4E5 /* BGMHandler.swift */,
+				A79128661F911F17002CC4E5 /* WavHandler.swift */,
 				A7CD69F21F91E11700C3202A /* LayoutPartner.swift */,
 			);
 			path = DataOperator;
@@ -374,17 +461,22 @@
 				A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */,
 				A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */,
 				A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */,
+				A70765F61F94E1E600FA6A43 /* ChessVC.swift in Sources */,
 				A7DC614F1F9249B5009A9205 /* UIColor+Colors.swift in Sources */,
 				A72EF6D81F8F982B004A453D /* UIViewController+Layout.swift in Sources */,
 				A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */,
+				A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */,
+				A778E4801F94E25200D28B25 /* HistoryVC.swift in Sources */,
 				A71E36381F90EEC900D9BB62 /* ResourcesProvider.swift in Sources */,
 				A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */,
-				A79128671F911F17002CC4E5 /* BGMHandler.swift in Sources */,
+				A79128671F911F17002CC4E5 /* WavHandler.swift in Sources */,
 				A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */,
+				A70765F21F94E1A200FA6A43 /* GameVC.swift in Sources */,
 				A7E7ACFD1F91DE8E00B29C5A /* UIButton+Golden.swift in Sources */,
 				A7DFAD7C1F910D7D00FEB8AC /* Value+Map.swift in Sources */,
 				A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */,
 				A7CD69F31F91E11700C3202A /* LayoutPartner.swift in Sources */,
+				A770863D1F94C39100C24D2B /* LoadingAlertView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

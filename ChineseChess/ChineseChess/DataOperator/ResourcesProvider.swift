@@ -24,8 +24,8 @@ class ResourcesProvider: NSObject {
 	}
 	
 	// MARK: - Private
-	private let images: [String: String] = ["home": "icon_home", "title": "icon_title", "button": "icon_button"]
-	private let wavs: [String: (name: String, type: String)] = ["BGM": ("沧海龙吟", "mp3")]
+	private let images: [String: String] = ["home": "icon_home", "title": "icon_title", "button": "icon_button", "close": "icon_close", "loading": "icon_loading"]
+	private let wavs: [String: (name: String, type: String)] = ["BGM": ("沧海龙吟", "mp3"), "check": ("check", "wav"), "eat": ("eat", "wav"), "run": ("run", "wav"), "select": ("select", "wav")]
 	
 	override private init() {
 		super.init()
