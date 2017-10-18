@@ -8,13 +8,19 @@
 
 import UIKit
 
+protocol LoadingAlertViewDelegate {
+	func loadingAlertViewDidDisappear(view: LoadingAlertView)
+}
+
 class LoadingAlertView: UIView {
 
-	private static let shared: LoadingAlertView = LoadingAlertView(frame: CGRect(x: 0, y: 0, width: LayoutPartner.width, height: LayoutPartner.height))
+	private static let shared: LoadingAlertView = LoadingAlertView(frame: CGRect.zero)
 	
 	private weak var loading: UIImageView? = nil
 	private weak var titleLabel: UILabel? = nil
 	private weak var closeView: UIView? = nil
+	
+	private var delegate: LoadingAlertViewDelegate? = nil
 	
 	// Layout
 	override init(frame: CGRect) {
@@ -24,6 +30,7 @@ class LoadingAlertView: UIView {
 		if let close = ResourcesProvider.shared.image(named: "close") {
 			let imageView = UIImageView(image: close)
 			imageView.contentMode = .scaleAspectFit
+			imageView.addTapTarget(self, action: #selector(self.closeAlertView))
 			imageView.frame = CGRect(x: 15, y: 15, width: close.size.width, height: close.size.height)
 			
 			self.closeView = imageView
@@ -40,7 +47,8 @@ class LoadingAlertView: UIView {
 		imageView.snp.makeConstraints {
 			$0.centerX.equalTo(self)
 			$0.centerY.equalTo(self.snp.centerY).offset(-layout.buttonSpace)
-			$0.size.equalTo(CGSize(width: self.bounds.size.width * (1 - Macro.UI.goldenScale), height: self.bounds.size.width * (1 - Macro.UI.goldenScale)))
+			$0.width.equalTo(self.snp.width).multipliedBy(1 - Macro.UI.goldenScale)
+			$0.height.equalTo(self.snp.width).multipliedBy(1 - Macro.UI.goldenScale)
 		}
 	
 		let label = UILabel()
@@ -69,24 +77,37 @@ class LoadingAlertView: UIView {
 		return rotate
 	}
 	
+	@objc private func closeAlertView() {
+		self.hide() {
+			self.delegate?.loadingAlertViewDidDisappear(view: self)
+		}
+	}
+	
 }
 
 // MARK: - Function
 extension LoadingAlertView {
 	
-	public func show(in superview: UIView? = UIApplication.shared.windows.first, message: String? = nil, isCloseButtonHidden: Bool = true, completion: (() -> Void)? = nil) {
+	public func show(in superview: UIView? = UIApplication.shared.windows.first, message: String? = nil, isCloseButtonHidden: Bool = true, delegate: LoadingAlertViewDelegate? = nil, completion: (() -> Void)? = nil) {
 		guard let superview = superview else { return }
 		
 		self.removeFromSuperview()
 		
 		self.closeView?.isHidden = isCloseButtonHidden
-		
-		self.titleLabel?.text = message
+		self.delegate = delegate
 		self.loading?.layer.removeAllAnimations()
 		self.loading?.layer.add(self.animation, forKey: "rotate")
+		self.titleLabel?.text = message
+		
 		self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.0)
 		
 		superview.addSubview(self)
+		self.snp.makeConstraints {
+			$0.top.equalTo(superview.layout.top)
+			$0.left.equalTo(superview.layout.left)
+			$0.bottom.equalTo(superview.layout.bottom)
+			$0.right.equalTo(superview.layout.right)
+		}
 		
 		UIView.animate(withDuration: Macro.Time.transitionLastTime, animations: {
 			self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.5)

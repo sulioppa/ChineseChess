@@ -13,7 +13,7 @@ class ChessVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		self.modalTransitionStyle = .crossDissolve
-		self.view.backgroundColor = UIColor.white
+		self.view.backgroundColor = UIColor.black
     }
 
 }

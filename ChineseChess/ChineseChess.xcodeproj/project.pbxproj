@@ -15,7 +15,8 @@
 		A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */; };
 		A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */; };
 		A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D681F90A6E000CBDAD9 /* Macro.swift */; };
-		A72EF6D81F8F982B004A453D /* UIViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */; };
+		A72F94191F974E73001FACC3 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72F94181F974E73001FACC3 /* UIView+Layout.swift */; };
+		A72F941B1F9753EE001FACC3 /* UIView+Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72F941A1F9753EE001FACC3 /* UIView+Tap.swift */; };
 		A770863D1F94C39100C24D2B /* LoadingAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770863C1F94C39100C24D2B /* LoadingAlertView.swift */; };
 		A778E4801F94E25200D28B25 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E47F1F94E25200D28B25 /* HistoryVC.swift */; };
 		A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E4811F94E26000D28B25 /* MultiPeerVC.swift */; };
@@ -48,7 +49,8 @@
 		A72062111F8DE85300FA764E /* ChineseChess-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChineseChess-Bridging-Header.h"; sourceTree = "<group>"; };
 		A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PresentVC.swift"; sourceTree = "<group>"; };
 		A72A4D681F90A6E000CBDAD9 /* Macro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macro.swift; sourceTree = "<group>"; };
-		A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Layout.swift"; sourceTree = "<group>"; };
+		A72F94181F974E73001FACC3 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
+		A72F941A1F9753EE001FACC3 /* UIView+Tap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Tap.swift"; sourceTree = "<group>"; };
 		A770863C1F94C39100C24D2B /* LoadingAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAlertView.swift; sourceTree = "<group>"; };
 		A778E47F1F94E25200D28B25 /* HistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
 		A778E4811F94E26000D28B25 /* MultiPeerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerVC.swift; sourceTree = "<group>"; };
@@ -117,9 +119,10 @@
 		A7075C091F8F8FE600652D0A /* UI+Extension */ = {
 			isa = PBXGroup;
 			children = (
-				A72EF6D71F8F982B004A453D /* UIViewController+Layout.swift */,
 				A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */,
 				A7DC614E1F9249B5009A9205 /* UIColor+Colors.swift */,
+				A72F94181F974E73001FACC3 /* UIView+Layout.swift */,
+				A72F941A1F9753EE001FACC3 /* UIView+Tap.swift */,
 			);
 			path = "UI+Extension";
 			sourceTree = "<group>";
@@ -462,10 +465,11 @@
 				A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */,
 				A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */,
 				A70765F61F94E1E600FA6A43 /* ChessVC.swift in Sources */,
+				A72F94191F974E73001FACC3 /* UIView+Layout.swift in Sources */,
 				A7DC614F1F9249B5009A9205 /* UIColor+Colors.swift in Sources */,
-				A72EF6D81F8F982B004A453D /* UIViewController+Layout.swift in Sources */,
 				A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */,
 				A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */,
+				A72F941B1F9753EE001FACC3 /* UIView+Tap.swift in Sources */,
 				A778E4801F94E25200D28B25 /* HistoryVC.swift in Sources */,
 				A71E36381F90EEC900D9BB62 /* ResourcesProvider.swift in Sources */,
 				A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */,

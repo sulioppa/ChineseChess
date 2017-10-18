@@ -24,10 +24,10 @@ class HomeVC: UIViewController {
 	private func initScrollView() {
 		self.view.addSubview(self.scrollVC.scrollView)
 		self.scrollVC.scrollView.snp.makeConstraints {
-			$0.top.equalTo(self.snp.top)
-			$0.left.equalTo(self.snp.left)
-			$0.bottom.equalTo(self.snp.bottom)
-			$0.right.equalTo(self.snp.right)
+			$0.top.equalTo(self.view.layout.top)
+			$0.left.equalTo(self.view.layout.left)
+			$0.bottom.equalTo(self.view.layout.bottom)
+			$0.right.equalTo(self.view.layout.right)
 		}
 		NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
@@ -51,15 +51,15 @@ class HomeVC: UIViewController {
 		self.view.addSubview(history)
 		history.snp.makeConstraints {
 			$0.size.equalTo(layout.buttonSize)
-			$0.centerX.equalTo(self.snp.centerX)
-			$0.top.equalTo(self.snp.centerY)
+			$0.centerX.equalTo(self.view.layout.centerX)
+			$0.top.equalTo(self.view.layout.centerY)
 		}
 		
 		let game = button("对 弈", 1)
 		self.view.addSubview(game)
 		game.snp.makeConstraints {
 			$0.size.equalTo(layout.buttonSize)
-			$0.centerX.equalTo(self.snp.centerX)
+			$0.centerX.equalTo(self.view.layout.centerX)
 			$0.bottom.equalTo(history.snp.top).offset(-layout.buttonSpace)
 		}
 		
@@ -67,7 +67,7 @@ class HomeVC: UIViewController {
 		self.view.addSubview(multiPeer)
 		multiPeer.snp.makeConstraints {
 			$0.size.equalTo(layout.buttonSize)
-			$0.centerX.equalTo(self.snp.centerX)
+			$0.centerX.equalTo(self.view.layout.centerX)
 			$0.top.equalTo(history.snp.bottom).offset(layout.buttonSpace)
 		}
 		
@@ -75,7 +75,7 @@ class HomeVC: UIViewController {
 		self.view.addSubview(titleView)
 		titleView.snp.makeConstraints {
 			$0.size.equalTo(layout.titleViewSize)
-			$0.centerX.equalTo(self.snp.centerX)
+			$0.centerX.equalTo(self.view.layout.centerX)
 			$0.bottom.equalTo(game.snp.top).offset(-layout.titleViewSpace)
 		}
 	}
@@ -158,7 +158,7 @@ extension HomeVC {
 		// Private vars
 		private lazy var view: UIScrollView = {
 			let scrollView = UIScrollView()
-			scrollView.backgroundColor = UIColor.white
+			scrollView.backgroundColor = UIColor.carbon
 			scrollView.showsVerticalScrollIndicator = false
 			scrollView.showsHorizontalScrollIndicator = false
 			scrollView.bounces = false
