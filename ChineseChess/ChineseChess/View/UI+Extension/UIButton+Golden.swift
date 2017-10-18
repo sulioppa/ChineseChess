@@ -14,6 +14,7 @@ extension UIButton {
 		let button = UIButton(type: .custom)
 		button.setBackgroundImage(ResourcesProvider.shared.image(named: "button"), for: .normal)
 		button.layer.masksToBounds = true
+		button.isExclusiveTouch = true
 		button.setTitleColor(UIColor.china, for: .normal)
 		button.setTitleColor(UIColor.red, for: .highlighted)
 		button.setTitleColor(UIColor.lightGray, for: .disabled)

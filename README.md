@@ -1,5 +1,5 @@
 # ChineseChess（中国象棋）
-*Chinese Chess - An Free iOS App（C & OC & Swift）*
+*Chinese Chess - A Free iOS App（C & OC & Swift）*
 ## Versions Tracks （版本记录）
 * 2017.10.11, right start the project. （2017年10月11日，正式启动工程。）
 
