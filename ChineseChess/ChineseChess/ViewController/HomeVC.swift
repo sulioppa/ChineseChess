@@ -35,7 +35,7 @@ class HomeVC: UIViewController {
 	
 	// Entrances
 	private func initEntrances() {
-		let layout = LayoutPartner.Home()
+		let layout = LayoutPartner.HomeVC()
 		
 		func button(_ title: String, _ tag: Int) -> UIButton {
 			let button = UIButton.gold

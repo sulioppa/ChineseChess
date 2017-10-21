@@ -31,7 +31,10 @@ class ResourcesProvider: NSObject {
 		"close": "icon_close",
 		"loading": "icon_loading",
 		"board": "board_chess",
-		"wood": "board_wood"
+		"wood": "board_wood",
+		"AI": "icon_thinking",
+		"帥": "chess_0",
+		"將": "chess_7"
 	]
 	
 	private let wavs: [String: (name: String, type: String)] = [

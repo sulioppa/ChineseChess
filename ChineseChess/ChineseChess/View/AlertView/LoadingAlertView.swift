@@ -39,7 +39,7 @@ class LoadingAlertView: UIView {
 		
 		guard let loading = ResourcesProvider.shared.image(named: "loading") else { return }
 		
-		let layout = LayoutPartner.Home()
+		let layout = LayoutPartner.HomeVC()
 		
 		let imageView = UIImageView(image: loading)
 		self.loading = imageView

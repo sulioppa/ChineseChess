@@ -71,10 +71,66 @@ class ChessVC: UIViewController {
 			$0.right.equalTo(self.contentView)
 		}
 	}
-
+	
+	// MARK: - Side、Nickname、Buttons
+	private lazy var topSide: UIImageView = UIImageView()
+	private lazy var topNickname: UILabel = UILabel()
+	private lazy var bottomSide: UIImageView = UIImageView()
+	private lazy var bottomNickname: UILabel = UILabel()
+	
+	public final func layoutTopAndBottom(target: Any, attributes: [(title: String, action: Selector)]) {
+		func layoutSubviews(toItem: UIView, side: UIImageView, nickname: UILabel, target: Any, attributes: [(title: String, action: Selector)]?) {
+			guard let attributes = attributes else { return }
+			
+			let layout = LayoutPartner.ChessVC()
+			let boardmargin = LayoutPartner.ChessBoard().boardmargin
+			
+			self.contentView.addSubview(side)
+			side.snp.makeConstraints {
+				$0.centerY.equalTo(toItem.snp.centerY)
+				$0.left.equalTo(self.contentView.snp.left).offset(boardmargin)
+				$0.size.equalTo(layout.sideSize)
+			}
+			
+			nickname.textColor = UIColor.yellow
+			nickname.font = UIFont.kaitiFont(ofSize: layout.nicknameFontSize)
+			self.contentView.addSubview(nickname)
+			nickname.snp.makeConstraints {
+				$0.top.equalTo(side.snp.bottom)
+				$0.centerX.equalTo(side.snp.centerX)
+			}
+			
+			var frontView: UIView = side
+			for attribute in attributes {
+				let button = UIButton.gold
+				button.titleLabel?.font = UIFont.kaitiFont(ofSize: layout.buttonTitleFontSize)
+				button.layer.cornerRadius = layout.buttonCordins
+				button.addTarget(target, action: attribute.action, for: .touchUpInside)
+				button.setTitle(attribute.title, for: .normal)
+				
+				self.contentView.addSubview(button)
+				button.snp.makeConstraints({
+					$0.centerY.equalTo(toItem.snp.centerY)
+					$0.left.equalTo(frontView.snp.right).offset(boardmargin)
+					$0.size.equalTo(layout.buttonSize)
+				})
+				
+				frontView = button
+			}
+			
+		}
+		
+		layoutSubviews(toItem: self.topWood, side: self.topSide, nickname: self.topNickname, target: target, attributes: attributes[0...2])
+		layoutSubviews(toItem: self.bottomWood, side: self.bottomSide, nickname: self.bottomNickname, target: target, attributes: attributes[3...5])
+		
+		self.setSideState(top: .black, bottom: .red)
+		self.setNickname(top: "棋手", bottom: "棋手")
+		self.setCurrentSide(side: .none)
+	}
+	
 }
 
-// MARK: - attributes are visible to child class
+// MARK: - UI attributes visible to child class.
 extension ChessVC {
 	
 	// subviews should add to this 'contentView'
@@ -82,6 +138,58 @@ extension ChessVC {
 		return self.safeArea
 	}
 	
+}
+
+// MARK: - top and bottom Side Operation.
+extension ChessVC {
+	
+	public enum SideState: Int {
+		case AI = -1
+		case red
+		case black
+		
+		var image: UIImage? {
+			switch self {
+			case .AI:
+				return ResourcesProvider.shared.image(named: "AI")
+			case .red:
+				return ResourcesProvider.shared.image(named: "帥")
+			case .black:
+				return ResourcesProvider.shared.image(named: "將")
+			}
+		}
+	}
+	
+	public enum CurrentSide: Int {
+		case none = -1
+		case top
+		case bottom
+	}
+	
+	public final func setSideState(top: SideState, bottom: SideState) {
+		self.topSide.image = top.image
+		self.bottomSide.image = bottom.image
+	}
+	
+	public final func setNickname(top: String, bottom: String) {
+		self.topNickname.text = top
+		self.bottomNickname.text = bottom
+	}
+	
+	public final func setCurrentSide(side: CurrentSide) {
+		switch side {
+		case .none:
+			self.topSide.layer.borderColor = UIColor.clear.cgColor
+			self.bottomSide.layer.borderColor = UIColor.clear.cgColor
+		case .top:
+			self.topSide.layer.borderColor = UIColor.yellow.cgColor
+			self.bottomSide.layer.borderColor = UIColor.clear.cgColor
+		case .bottom:
+			self.topSide.layer.borderColor = UIColor.clear.cgColor
+			self.bottomSide.layer.borderColor = UIColor.yellow.cgColor
+		}
+	}
+
 }
 
 // MARK: - Chess Operation

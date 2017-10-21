@@ -12,6 +12,44 @@ class GameVC: ChessVC {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		self.layoutTopAndBottom(target: self, attributes: [
+			("新 局", #selector(newGame)),
+			("设 置", #selector(settings)),
+			("返 回", #selector(back)),
+			("悔 棋", #selector(regretOneStep)),
+			("提 示", #selector(teachMe)),
+			("菜 单", #selector(showMenu)),
+			])
+	}
+	
+}
+
+// MARK: - Action.
+extension GameVC {
+	
+	@objc func newGame() {
+		
+	}
+	
+	@objc func settings() {
+		
+	}
+	
+	@objc func back() {
+		WavHandler.playWav()
+		self.dismiss()
+	}
+	
+	@objc func regretOneStep() {
+		
+	}
+	
+	@objc func teachMe() {
+		
+	}
+	
+	@objc func showMenu() {
+		
 	}
 	
 }

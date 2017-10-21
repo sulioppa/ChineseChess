@@ -14,4 +14,6 @@ extension UIColor {
 	
 	public static let carbon = UIColor(hexColor: 0x333333)
 	
+	public static let darkYellow = UIColor(hexColor: 0xff721f)
+	
 }

@@ -31,5 +31,13 @@ extension UIViewController {
 		}
 	}
 	
+	public func dismiss(completion: (() -> Void)? = nil) {
+		LoadingAlertView.show(in: self.view) {
+			self.dismiss(animated: true) {
+				LoadingAlertView.hide(animation: false, completion: completion)
+			}
+		}
+	}
+	
 }
 
