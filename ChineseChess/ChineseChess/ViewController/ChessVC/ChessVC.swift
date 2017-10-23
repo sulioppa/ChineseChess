@@ -17,6 +17,7 @@ class ChessVC: UIViewController {
 		
 		self.layoutContentView()
 		self.layoutChessBoard()
+		self.layoutFlashLayer()
     }
 	
 	// MARK: - SafaArea
@@ -69,6 +70,24 @@ class ChessVC: UIViewController {
 			$0.left.equalTo(self.contentView)
 			$0.bottom.equalTo(self.contentView)
 			$0.right.equalTo(self.contentView)
+		}
+	}
+	
+	// MARK: - progressLayer
+	private var progressLayer: CAShapeLayer?
+	
+	private func layoutFlashLayer() {
+		let layers = FlashLayerController.layer
+		self.progressLayer = layers.progressLayer
+		
+		let container = UIView()
+		container.backgroundColor = UIColor.clear
+		container.layer.addSublayer(layers.backgroundLayer)
+		
+		self.chessBoard.addSubview(container)
+		container.snp.makeConstraints {
+			$0.center.equalTo(self.chessBoard.snp.center)
+			$0.size.equalTo(layers.backgroundLayer.bounds.size)
 		}
 	}
 	
@@ -190,6 +209,16 @@ extension ChessVC {
 		}
 	}
 
+}
+
+// MAKR: - Think Animation
+extension ChessVC {
+	
+	public func setFlashProgress(progress: Float) {
+		guard progress >= 0.0 && progress <= 1.0 else { return }
+		self.progressLayer?.path = FlashLayerController.rect(progress: progress)
+	}
+	
 }
 
 // MARK: - Chess Operation

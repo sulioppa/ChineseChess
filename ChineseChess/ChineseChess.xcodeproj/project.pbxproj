@@ -17,6 +17,7 @@
 		A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D681F90A6E000CBDAD9 /* Macro.swift */; };
 		A72F94191F974E73001FACC3 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72F94181F974E73001FACC3 /* UIView+Layout.swift */; };
 		A72F941B1F9753EE001FACC3 /* UIView+Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72F941A1F9753EE001FACC3 /* UIView+Tap.swift */; };
+		A7592D7F1F9DFB0C00E7EA0F /* Value+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7592D7E1F9DFB0C00E7EA0F /* Value+Random.swift */; };
 		A770863D1F94C39100C24D2B /* LoadingAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770863C1F94C39100C24D2B /* LoadingAlertView.swift */; };
 		A778E4801F94E25200D28B25 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E47F1F94E25200D28B25 /* HistoryVC.swift */; };
 		A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E4811F94E26000D28B25 /* MultiPeerVC.swift */; };
@@ -30,12 +31,14 @@
 		A791286C1F9124E2002CC4E5 /* select.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D1A1F905DBD0054DF93 /* select.wav */; };
 		A791286D1F9124E2002CC4E5 /* KaiTi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D141F9058BF0054DF93 /* KaiTi.ttf */; };
 		A7B3FD7F1F9A03A900B379AD /* Array+Split.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B3FD7E1F9A03A900B379AD /* Array+Split.swift */; };
+		A7C4E5401F9DC20E0018595A /* FlashLayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C4E53F1F9DC20E0018595A /* FlashLayerController.swift */; };
 		A7CD69F31F91E11700C3202A /* LayoutPartner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD69F21F91E11700C3202A /* LayoutPartner.swift */; };
 		A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CE55F81F8DC28600641454 /* AppDelegate.swift */; };
 		A7CE56001F8DC28600641454 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7CE55FF1F8DC28600641454 /* Assets.xcassets */; };
 		A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DC614C1F92435C009A9205 /* UIFont+KaiTi.swift */; };
 		A7DC614F1F9249B5009A9205 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DC614E1F9249B5009A9205 /* UIColor+Colors.swift */; };
 		A7DFAD7C1F910D7D00FEB8AC /* Value+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */; };
+		A7E308BC1F9CE0DA00B0805B /* Luna.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E308BB1F9CE0DA00B0805B /* Luna.m */; };
 		A7E7ACFD1F91DE8E00B29C5A /* UIButton+Golden.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E7ACFC1F91DE8E00B29C5A /* UIButton+Golden.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +55,7 @@
 		A72A4D681F90A6E000CBDAD9 /* Macro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macro.swift; sourceTree = "<group>"; };
 		A72F94181F974E73001FACC3 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		A72F941A1F9753EE001FACC3 /* UIView+Tap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Tap.swift"; sourceTree = "<group>"; };
+		A7592D7E1F9DFB0C00E7EA0F /* Value+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Random.swift"; sourceTree = "<group>"; };
 		A770863C1F94C39100C24D2B /* LoadingAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAlertView.swift; sourceTree = "<group>"; };
 		A778E47F1F94E25200D28B25 /* HistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
 		A778E4811F94E26000D28B25 /* MultiPeerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerVC.swift; sourceTree = "<group>"; };
@@ -59,6 +63,7 @@
 		A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A79128661F911F17002CC4E5 /* WavHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavHandler.swift; sourceTree = "<group>"; };
 		A7B3FD7E1F9A03A900B379AD /* Array+Split.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Split.swift"; sourceTree = "<group>"; };
+		A7C4E53F1F9DC20E0018595A /* FlashLayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashLayerController.swift; sourceTree = "<group>"; };
 		A7CD69F21F91E11700C3202A /* LayoutPartner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutPartner.swift; sourceTree = "<group>"; };
 		A7CE55F51F8DC28600641454 /* ChineseChess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChineseChess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7CE55F81F8DC28600641454 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,6 +72,8 @@
 		A7DC614C1F92435C009A9205 /* UIFont+KaiTi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+KaiTi.swift"; sourceTree = "<group>"; };
 		A7DC614E1F9249B5009A9205 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
 		A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Map.swift"; sourceTree = "<group>"; };
+		A7E308BA1F9CE0DA00B0805B /* Luna.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Luna.h; sourceTree = "<group>"; };
+		A7E308BB1F9CE0DA00B0805B /* Luna.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Luna.m; sourceTree = "<group>"; };
 		A7E51D141F9058BF0054DF93 /* KaiTi.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = KaiTi.ttf; sourceTree = "<group>"; };
 		A7E51D161F905DBD0054DF93 /* 沧海龙吟.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "沧海龙吟.mp3"; sourceTree = "<group>"; };
 		A7E51D171F905DBD0054DF93 /* check.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = check.wav; sourceTree = "<group>"; };
@@ -134,6 +141,7 @@
 			children = (
 				A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */,
 				A7B3FD7E1F9A03A900B379AD /* Array+Split.swift */,
+				A7592D7E1F9DFB0C00E7EA0F /* Value+Random.swift */,
 			);
 			path = "NS+Extension";
 			sourceTree = "<group>";
@@ -141,6 +149,9 @@
 		A7075C0B1F8F901100652D0A /* AI */ = {
 			isa = PBXGroup;
 			children = (
+				A7E308BD1F9CE18900B0805B /* Luna */,
+				A7E308BA1F9CE0DA00B0805B /* Luna.h */,
+				A7E308BB1F9CE0DA00B0805B /* Luna.m */,
 			);
 			path = AI;
 			sourceTree = "<group>";
@@ -210,6 +221,7 @@
 		A778E4831F94E26600D28B25 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A7C4E53F1F9DC20E0018595A /* FlashLayerController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -306,6 +318,13 @@
 				A77E18771F8DE532003A2EC5 /* SupportFiles */,
 			);
 			path = ChineseChess;
+			sourceTree = "<group>";
+		};
+		A7E308BD1F9CE18900B0805B /* Luna */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Luna;
 			sourceTree = "<group>";
 		};
 		A7E51D151F905DBD0054DF93 /* Wavs */ = {
@@ -470,6 +489,7 @@
 				A70765F61F94E1E600FA6A43 /* ChessVC.swift in Sources */,
 				A72F94191F974E73001FACC3 /* UIView+Layout.swift in Sources */,
 				A7DC614F1F9249B5009A9205 /* UIColor+Colors.swift in Sources */,
+				A7592D7F1F9DFB0C00E7EA0F /* Value+Random.swift in Sources */,
 				A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */,
 				A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */,
 				A72F941B1F9753EE001FACC3 /* UIView+Tap.swift in Sources */,
@@ -477,6 +497,7 @@
 				A71E36381F90EEC900D9BB62 /* ResourcesProvider.swift in Sources */,
 				A7B3FD7F1F9A03A900B379AD /* Array+Split.swift in Sources */,
 				A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */,
+				A7E308BC1F9CE0DA00B0805B /* Luna.m in Sources */,
 				A79128671F911F17002CC4E5 /* WavHandler.swift in Sources */,
 				A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */,
 				A70765F21F94E1A200FA6A43 /* GameVC.swift in Sources */,
@@ -485,6 +506,7 @@
 				A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */,
 				A7CD69F31F91E11700C3202A /* LayoutPartner.swift in Sources */,
 				A770863D1F94C39100C24D2B /* LoadingAlertView.swift in Sources */,
+				A7C4E5401F9DC20E0018595A /* FlashLayerController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

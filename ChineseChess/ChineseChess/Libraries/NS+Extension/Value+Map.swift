@@ -8,6 +8,7 @@
 
 import UIKit
 
+// MARK: - Map. target <- Option(value)
 infix operator <-
 
 extension Bool {

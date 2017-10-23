@@ -45,7 +45,7 @@ extension GameVC {
 	}
 	
 	@objc func teachMe() {
-		
+		self.setFlashProgress(progress: Float.random())
 	}
 	
 	@objc func showMenu() {
