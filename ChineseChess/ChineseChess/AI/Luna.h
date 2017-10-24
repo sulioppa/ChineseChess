@@ -10,4 +10,6 @@
 
 @interface Luna : NSObject
 
+- (NSArray<NSNumber *> *)chess;
+
 @end

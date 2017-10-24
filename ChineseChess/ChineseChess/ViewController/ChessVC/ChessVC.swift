@@ -19,6 +19,7 @@ class ChessVC: UIViewController {
 		self.layoutContentView()
 		self.layoutChessBoard()
 		self.layoutFlashLayer()
+		self.chessBoardController.refreshBoard()
     }
 	
 	// MARK: - SafaArea
@@ -28,29 +29,29 @@ class ChessVC: UIViewController {
 		return view
 	}()
 
+	// subviews should add to this 'contentView'
+	public final var contentView: UIView {
+		return self.safeArea
+	}
+	
 	// MARK: - topWood、ChessBoard、bottomWood
 	fileprivate lazy var topWood: UIImageView = UIImageView(image: ResourcesProvider.shared.image(named: "wood"))
 	fileprivate lazy var chessBoard: UIImageView = UIImageView()
 	fileprivate lazy var bottomWood: UIImageView = UIImageView(image: ResourcesProvider.shared.image(named: "wood"))
 	
 	// MARK: - progressLayer
-	fileprivate var progressLayer: CAShapeLayer?
+	internal var progressLayer: CAShapeLayer?
 	
 	// MARK: - Side、Nickname、Buttons
-	fileprivate lazy var topSide: UIImageView = UIImageView()
-	fileprivate lazy var topNickname: UILabel = UILabel()
-	fileprivate lazy var bottomSide: UIImageView = UIImageView()
-	fileprivate lazy var bottomNickname: UILabel = UILabel()
-}
-
-// MARK: - UI attributes visible to child class.
-extension ChessVC {
+	internal lazy var topSide: UIImageView = UIImageView()
+	internal lazy var topNickname: UILabel = UILabel()
+	internal lazy var bottomSide: UIImageView = UIImageView()
+	internal lazy var bottomNickname: UILabel = UILabel()
 	
-	// subviews should add to this 'contentView'
-	public final var contentView: UIView {
-		return self.safeArea
-	}
+	// MARK: - ChessBoard & AI
+	public lazy var AI: Luna = Luna()
 	
+	public lazy var chessBoardController: ChessBoardController = ChessBoardController(board: self.chessBoard.layer, AI: self.AI)
 }
 
 // MARK: - UI Layout
@@ -156,52 +157,5 @@ extension ChessVC {
 		layoutSubviews(toItem: self.topWood, side: self.topSide, nickname: self.topNickname, target: target, attributes: attributes[0...2])
 		layoutSubviews(toItem: self.bottomWood, side: self.bottomSide, nickname: self.bottomNickname, target: target, attributes: attributes[3...5])
 	}
-	
-}
-
-// MARK: - top and bottom Side Operation.
-extension ChessVC {
-	
-	public enum SideState: Int {
-		case AI = -1
-		case red
-		case black
-		
-		var image: UIImage? {
-			switch self {
-			case .AI:
-				return ResourcesProvider.shared.image(named: "AI")
-			case .red:
-				return ResourcesProvider.shared.image(named: "帥")
-			case .black:
-				return ResourcesProvider.shared.image(named: "將")
-			}
-		}
-	}
-	
-	public final func setSideState(top: SideState, bottom: SideState) {
-		self.topSide.image = top.image
-		self.bottomSide.image = bottom.image
-	}
-	
-	public final func setNickname(top: String, bottom: String) {
-		self.topNickname.text = top
-		self.bottomNickname.text = bottom
-	}
-	
-}
-
-// MAKR: - Think Animation
-extension ChessVC {
-	
-	public final func setFlashProgress(progress: Float) {
-		guard progress >= 0.0 && progress <= 1.0 else { return }
-		self.progressLayer?.path = FlashLayerController.rect(progress: progress)
-	}
-	
-}
-
-// MARK: - Chess Operation
-extension ChessVC {
 	
 }

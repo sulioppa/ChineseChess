@@ -29,28 +29,28 @@ class GameVC: ChessVC {
 // MARK: - Action.
 extension GameVC {
 	
-	@objc func newGame() {
-
+	@objc private func newGame() {
+		
 	}
 	
-	@objc func settings() {
+	@objc private func settings() {
 	
 	}
 	
-	@objc func back() {
+	@objc private func back() {
 		WavHandler.playWav()
 		self.dismiss()
 	}
 	
-	@objc func regretOneStep() {
+	@objc private func regretOneStep() {
 		
 	}
 	
-	@objc func teachMe() {
+	@objc private func teachMe() {
 		self.setFlashProgress(progress: Float.random)
 	}
 	
-	@objc func showMenu() {
+	@objc private func showMenu() {
 		
 	}
 	

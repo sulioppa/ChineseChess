@@ -18,6 +18,10 @@ class ResourcesProvider: NSObject {
 		return UIImage(named: named)
 	}
 	
+	public func chess(index: Int) -> UIImage? {
+		return UIImage(named: self.chess[index])
+	}
+	
 	public func wav(named: String) -> AVAudioPlayer? {
 		guard let wav = self.wavs[named], let url = Bundle.main.url(forResource: wav.name, withExtension: wav.type) else { return nil }
 		return try? AVAudioPlayer(contentsOf: url)
@@ -35,6 +39,24 @@ class ResourcesProvider: NSObject {
 		"AI": "icon_thinking",
 		"帥": "chess_0",
 		"將": "chess_7"
+	]
+	
+	private let chess: [String] = [
+		"", "chess_15", "chess14", "chess16", "", "", "", "", "", "", "", "", "", "", "", "",
+		"chess_0",
+		"chess_1", "chess_1",
+		"chess_2", "chess_2",
+		"chess_3", "chess_3",
+		"chess_4", "chess_4",
+		"chess_5", "chess_5",
+		"chess_6", "chess_6", "chess_6", "chess_6", "chess_6",
+		"chess_7",
+		"chess_8", "chess_8",
+		"chess_9", "chess_9",
+		"chess_10", "chess_10",
+		"chess_11", "chess_11",
+		"chess_12", "chess_12",
+		"chess_13", "chess_13", "chess_13", "chess_13", "chess_13"
 	]
 	
 	private let wavs: [String: (name: String, type: String)] = [

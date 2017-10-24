@@ -10,6 +10,9 @@
 		423381D80836935A6E9A0D8D /* Pods_ChineseChess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */; };
 		A70765F21F94E1A200FA6A43 /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70765F11F94E1A200FA6A43 /* GameVC.swift */; };
 		A70765F61F94E1E600FA6A43 /* ChessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70765F51F94E1E600FA6A43 /* ChessVC.swift */; };
+		A71D3D751F9F2CA900823384 /* ChessVC+Side.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D3D741F9F2CA900823384 /* ChessVC+Side.swift */; };
+		A71D3D771F9F2CFD00823384 /* ChessVC+FlashProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D3D761F9F2CFD00823384 /* ChessVC+FlashProgress.swift */; };
+		A71D3D7B1F9F30D500823384 /* ChessBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D3D7A1F9F30D500823384 /* ChessBoardController.swift */; };
 		A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36351F90ECFA00D9BB62 /* UserPreference.swift */; };
 		A71E36381F90EEC900D9BB62 /* ResourcesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */; };
 		A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */; };
@@ -47,6 +50,11 @@
 		2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChineseChess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A70765F11F94E1A200FA6A43 /* GameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
 		A70765F51F94E1E600FA6A43 /* ChessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessVC.swift; sourceTree = "<group>"; };
+		A71D3D741F9F2CA900823384 /* ChessVC+Side.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChessVC+Side.swift"; sourceTree = "<group>"; };
+		A71D3D761F9F2CFD00823384 /* ChessVC+FlashProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChessVC+FlashProgress.swift"; sourceTree = "<group>"; };
+		A71D3D7A1F9F30D500823384 /* ChessBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessBoardController.swift; sourceTree = "<group>"; };
+		A71D3D7D1F9F3AC500823384 /* Luna+Const.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Const.h"; sourceTree = "<group>"; };
+		A71D3D801F9F3C0700823384 /* Luna+C.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+C.h"; sourceTree = "<group>"; };
 		A71E36351F90ECFA00D9BB62 /* UserPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreference.swift; sourceTree = "<group>"; };
 		A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesProvider.swift; sourceTree = "<group>"; };
 		A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
@@ -149,6 +157,7 @@
 		A7075C0B1F8F901100652D0A /* AI */ = {
 			isa = PBXGroup;
 			children = (
+				A71D3D7C1F9F388200823384 /* Vault */,
 				A7E308BD1F9CE18900B0805B /* Luna */,
 				A7E308BA1F9CE0DA00B0805B /* Luna.h */,
 				A7E308BB1F9CE0DA00B0805B /* Luna.m */,
@@ -177,8 +186,10 @@
 		A70765F31F94E1A700FA6A43 /* ChessVC */ = {
 			isa = PBXGroup;
 			children = (
-				A778E4831F94E26600D28B25 /* View */,
+				A778E4831F94E26600D28B25 /* SubViewController */,
 				A70765F51F94E1E600FA6A43 /* ChessVC.swift */,
+				A71D3D741F9F2CA900823384 /* ChessVC+Side.swift */,
+				A71D3D761F9F2CFD00823384 /* ChessVC+FlashProgress.swift */,
 			);
 			path = ChessVC;
 			sourceTree = "<group>";
@@ -210,6 +221,13 @@
 			path = MultiPeerVC;
 			sourceTree = "<group>";
 		};
+		A71D3D7C1F9F388200823384 /* Vault */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Vault;
+			sourceTree = "<group>";
+		};
 		A770863B1F94C35E00C24D2B /* AlertView */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,12 +236,13 @@
 			path = AlertView;
 			sourceTree = "<group>";
 		};
-		A778E4831F94E26600D28B25 /* View */ = {
+		A778E4831F94E26600D28B25 /* SubViewController */ = {
 			isa = PBXGroup;
 			children = (
 				A7C4E53F1F9DC20E0018595A /* FlashLayerController.swift */,
+				A71D3D7A1F9F30D500823384 /* ChessBoardController.swift */,
 			);
-			path = View;
+			path = SubViewController;
 			sourceTree = "<group>";
 		};
 		A778E4841F94E26B00D28B25 /* View */ = {
@@ -323,6 +342,8 @@
 		A7E308BD1F9CE18900B0805B /* Luna */ = {
 			isa = PBXGroup;
 			children = (
+				A71D3D801F9F3C0700823384 /* Luna+C.h */,
+				A71D3D7D1F9F3AC500823384 /* Luna+Const.h */,
 			);
 			path = Luna;
 			sourceTree = "<group>";
@@ -484,11 +505,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */,
+				A71D3D771F9F2CFD00823384 /* ChessVC+FlashProgress.swift in Sources */,
 				A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */,
 				A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */,
 				A70765F61F94E1E600FA6A43 /* ChessVC.swift in Sources */,
 				A72F94191F974E73001FACC3 /* UIView+Layout.swift in Sources */,
 				A7DC614F1F9249B5009A9205 /* UIColor+Colors.swift in Sources */,
+				A71D3D7B1F9F30D500823384 /* ChessBoardController.swift in Sources */,
 				A7592D7F1F9DFB0C00E7EA0F /* Value+Random.swift in Sources */,
 				A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */,
 				A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */,
@@ -501,6 +524,7 @@
 				A79128671F911F17002CC4E5 /* WavHandler.swift in Sources */,
 				A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */,
 				A70765F21F94E1A200FA6A43 /* GameVC.swift in Sources */,
+				A71D3D751F9F2CA900823384 /* ChessVC+Side.swift in Sources */,
 				A7E7ACFD1F91DE8E00B29C5A /* UIButton+Golden.swift in Sources */,
 				A7DFAD7C1F910D7D00FEB8AC /* Value+Map.swift in Sources */,
 				A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */,
