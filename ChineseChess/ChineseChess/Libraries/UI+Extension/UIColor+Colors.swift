@@ -16,6 +16,8 @@ extension UIColor {
 	
 	public static let darkYellow = UIColor(hexColor: 0xff721f)
 	
+	public static let lightYellow = UIColor(hexColor: 0xffff00, alpha: 0.5)
+	
 	public static let gold = UIColor(red: 254.0 / 255.0, green: 254.0 / 255.0, blue: 65.0 / 255.0, alpha: 1.0)
 	
 	public static let separtor = UIColor(hexColor: 0xe6e6e6)

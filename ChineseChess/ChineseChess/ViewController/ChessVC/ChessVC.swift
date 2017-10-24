@@ -8,6 +8,7 @@
 
 import UIKit
 
+// MARK: - Chess View Controller (Super Class)
 class ChessVC: UIViewController {
 	
     override func viewDidLoad() {
@@ -21,11 +22,39 @@ class ChessVC: UIViewController {
     }
 	
 	// MARK: - SafaArea
-	private lazy var safeArea: UIView = {
+	fileprivate lazy var safeArea: UIView = {
 		let view = UIView()
 		view.backgroundColor = UIColor.carbon
 		return view
 	}()
+
+	// MARK: - topWood、ChessBoard、bottomWood
+	fileprivate lazy var topWood: UIImageView = UIImageView(image: ResourcesProvider.shared.image(named: "wood"))
+	fileprivate lazy var chessBoard: UIImageView = UIImageView()
+	fileprivate lazy var bottomWood: UIImageView = UIImageView(image: ResourcesProvider.shared.image(named: "wood"))
+	
+	// MARK: - progressLayer
+	fileprivate var progressLayer: CAShapeLayer?
+	
+	// MARK: - Side、Nickname、Buttons
+	fileprivate lazy var topSide: UIImageView = UIImageView()
+	fileprivate lazy var topNickname: UILabel = UILabel()
+	fileprivate lazy var bottomSide: UIImageView = UIImageView()
+	fileprivate lazy var bottomNickname: UILabel = UILabel()
+}
+
+// MARK: - UI attributes visible to child class.
+extension ChessVC {
+	
+	// subviews should add to this 'contentView'
+	public final var contentView: UIView {
+		return self.safeArea
+	}
+	
+}
+
+// MARK: - UI Layout
+extension ChessVC {
 	
 	private func layoutContentView() {
 		self.view.addSubview(self.safeArea)
@@ -36,11 +65,6 @@ class ChessVC: UIViewController {
 			$0.right.equalTo(self.view.layout.right)
 		}
 	}
-	
-	// MARK: - topWood、ChessBoard、bottomWood
-	private lazy var topWood: UIImageView = UIImageView(image: ResourcesProvider.shared.image(named: "wood"))
-	private lazy var chessBoard: UIImageView = UIImageView()
-	private lazy var bottomWood: UIImageView = UIImageView(image: ResourcesProvider.shared.image(named: "wood"))
 	
 	private func layoutChessBoard() {
 		guard let image = ResourcesProvider.shared.image(named: "board") else {
@@ -73,9 +97,6 @@ class ChessVC: UIViewController {
 		}
 	}
 	
-	// MARK: - progressLayer
-	private var progressLayer: CAShapeLayer?
-	
 	private func layoutFlashLayer() {
 		let layers = FlashLayerController.layer
 		self.progressLayer = layers.progressLayer
@@ -91,12 +112,6 @@ class ChessVC: UIViewController {
 		}
 	}
 	
-	// MARK: - Side、Nickname、Buttons
-	private lazy var topSide: UIImageView = UIImageView()
-	private lazy var topNickname: UILabel = UILabel()
-	private lazy var bottomSide: UIImageView = UIImageView()
-	private lazy var bottomNickname: UILabel = UILabel()
-	
 	public final func layoutTopAndBottom(target: Any, attributes: [(title: String, action: Selector)]) {
 		func layoutSubviews(toItem: UIView, side: UIImageView, nickname: UILabel, target: Any, attributes: [(title: String, action: Selector)]?) {
 			guard let attributes = attributes else { return }
@@ -111,7 +126,7 @@ class ChessVC: UIViewController {
 				$0.size.equalTo(layout.sideSize)
 			}
 			
-			nickname.textColor = UIColor.yellow
+			nickname.textColor = UIColor.lightYellow
 			nickname.font = UIFont.kaitiFont(ofSize: layout.nicknameFontSize)
 			self.contentView.addSubview(nickname)
 			nickname.snp.makeConstraints {
@@ -136,25 +151,10 @@ class ChessVC: UIViewController {
 				
 				frontView = button
 			}
-			
 		}
 		
 		layoutSubviews(toItem: self.topWood, side: self.topSide, nickname: self.topNickname, target: target, attributes: attributes[0...2])
 		layoutSubviews(toItem: self.bottomWood, side: self.bottomSide, nickname: self.bottomNickname, target: target, attributes: attributes[3...5])
-		
-		self.setSideState(top: .black, bottom: .red)
-		self.setNickname(top: "棋手", bottom: "棋手")
-		self.setCurrentSide(side: .none)
-	}
-	
-}
-
-// MARK: - UI attributes visible to child class.
-extension ChessVC {
-	
-	// subviews should add to this 'contentView'
-	public var contentView: UIView {
-		return self.safeArea
 	}
 	
 }
@@ -179,12 +179,6 @@ extension ChessVC {
 		}
 	}
 	
-	public enum CurrentSide: Int {
-		case none = -1
-		case top
-		case bottom
-	}
-	
 	public final func setSideState(top: SideState, bottom: SideState) {
 		self.topSide.image = top.image
 		self.bottomSide.image = bottom.image
@@ -195,26 +189,12 @@ extension ChessVC {
 		self.bottomNickname.text = bottom
 	}
 	
-	public final func setCurrentSide(side: CurrentSide) {
-		switch side {
-		case .none:
-			self.topSide.layer.borderColor = UIColor.clear.cgColor
-			self.bottomSide.layer.borderColor = UIColor.clear.cgColor
-		case .top:
-			self.topSide.layer.borderColor = UIColor.yellow.cgColor
-			self.bottomSide.layer.borderColor = UIColor.clear.cgColor
-		case .bottom:
-			self.topSide.layer.borderColor = UIColor.clear.cgColor
-			self.bottomSide.layer.borderColor = UIColor.yellow.cgColor
-		}
-	}
-
 }
 
 // MAKR: - Think Animation
 extension ChessVC {
 	
-	public func setFlashProgress(progress: Float) {
+	public final func setFlashProgress(progress: Float) {
 		guard progress >= 0.0 && progress <= 1.0 else { return }
 		self.progressLayer?.path = FlashLayerController.rect(progress: progress)
 	}

@@ -20,7 +20,7 @@ class FlashLayerController: NSObject {
 		let layer = CAShapeLayer()
 		layer.frame = CGRect(x: 0, y: 0, width: width, height: height)
 		layer.fillColor = UIColor.carbon.cgColor
-		layer.shadowOpacity = 1.0
+		layer.shadowOpacity = 0.75
 		layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
 		layer.shadowColor = UIColor.carbon.cgColor
 		

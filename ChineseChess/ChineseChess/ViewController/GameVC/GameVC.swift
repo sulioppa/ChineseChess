@@ -20,6 +20,8 @@ class GameVC: ChessVC {
 			("提 示", #selector(teachMe)),
 			("菜 单", #selector(showMenu)),
 			])
+		self.setSideState(top: .black, bottom: .red)
+		self.setNickname(top: "棋手", bottom: "棋手")
 	}
 	
 }
@@ -28,11 +30,11 @@ class GameVC: ChessVC {
 extension GameVC {
 	
 	@objc func newGame() {
-		
+
 	}
 	
 	@objc func settings() {
-		
+	
 	}
 	
 	@objc func back() {
@@ -45,7 +47,7 @@ extension GameVC {
 	}
 	
 	@objc func teachMe() {
-		self.setFlashProgress(progress: Float.random())
+		self.setFlashProgress(progress: Float.random)
 	}
 	
 	@objc func showMenu() {

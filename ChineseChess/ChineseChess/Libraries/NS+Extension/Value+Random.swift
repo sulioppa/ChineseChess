@@ -10,19 +10,19 @@ import UIKit
 
 // MARK: - Random
 extension Double {
-	public static func random() -> Double {
+	public static var random: Double {
 		return Double(arc4random()) / Double(UInt32.max)
 	}
 }
 
 extension Float {
-	public static func random() -> Float {
-		return Float(Double.random())
+	public static var random: Float {
+		return Float(Double.random)
 	}
 }
 
 extension CGFloat {
-	public static func random() -> CGFloat {
-		return CGFloat(Double.random())
+	public static var random: CGFloat {
+		return CGFloat(Double.random)
 	}
 }
