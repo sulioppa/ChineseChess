@@ -13,18 +13,8 @@ class ResourcesProvider: NSObject {
 
 	public static let shared: ResourcesProvider = ResourcesProvider()
 	
-	public func image(named: String) -> UIImage? {
-		guard let named = self.images[named] else { return nil }
-		return UIImage(named: named)
-	}
-	
-	public func chess(index: Int) -> UIImage? {
-		return UIImage(named: self.chess[index])
-	}
-	
-	public func wav(named: String) -> AVAudioPlayer? {
-		guard let wav = self.wavs[named], let url = Bundle.main.url(forResource: wav.name, withExtension: wav.type) else { return nil }
-		return try? AVAudioPlayer(contentsOf: url)
+	override private init() {
+		super.init()
 	}
 	
 	// MARK: - Private
@@ -41,8 +31,8 @@ class ResourcesProvider: NSObject {
 		"將": "chess_7"
 	]
 	
-	private let chess: [String] = [
-		"", "chess_15", "chess14", "chess16", "", "", "", "", "", "", "", "", "", "", "", "",
+	private let chess: [String?] = [
+		nil, "chess_15", "chess14", "chess16", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
 		"chess_0",
 		"chess_1", "chess_1",
 		"chess_2", "chess_2",
@@ -66,9 +56,24 @@ class ResourcesProvider: NSObject {
 		"run": ("run", "wav"),
 		"select": ("select", "wav")
 	]
+}
+
+// MARK: - Public
+extension ResourcesProvider {
 	
-	override private init() {
-		super.init()
+	public func image(named: String) -> UIImage? {
+		guard let named = self.images[named] else { return nil }
+		return UIImage(named: named)
+	}
+	
+	public func chess(index: Int) -> UIImage? {
+		guard let name = self.chess[index] else { return nil }
+		return UIImage(named: name)
+	}
+	
+	public func wav(named: String) -> AVAudioPlayer? {
+		guard let wav = self.wavs[named], let url = Bundle.main.url(forResource: wav.name, withExtension: wav.type) else { return nil }
+		return try? AVAudioPlayer(contentsOf: url)
 	}
 	
 }

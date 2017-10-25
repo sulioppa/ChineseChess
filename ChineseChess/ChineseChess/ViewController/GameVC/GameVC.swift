@@ -20,8 +20,18 @@ class GameVC: ChessVC {
 			("提 示", #selector(teachMe)),
 			("菜 单", #selector(showMenu)),
 			])
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.refreshUI()
+	}
+	
+	private func refreshUI() {
 		self.setSideState(top: .black, bottom: .red)
 		self.setNickname(top: "棋手", bottom: "棋手")
+		self.chessBoardController.reverse = UserPreference.shared.game.reverse
+		self.chessBoardController.opposite = UserPreference.shared.game.opposite
 	}
 	
 }
@@ -30,11 +40,11 @@ class GameVC: ChessVC {
 extension GameVC {
 	
 	@objc private func newGame() {
-		
+		self.chessBoardController.reverse = UserPreference.shared.game.reverse.reverse()
 	}
 	
 	@objc private func settings() {
-	
+		self.chessBoardController.opposite = UserPreference.shared.game.opposite.reverse()
 	}
 	
 	@objc private func back() {

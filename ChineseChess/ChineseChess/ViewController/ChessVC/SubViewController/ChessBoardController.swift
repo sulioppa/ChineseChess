@@ -49,11 +49,13 @@ extension ChessBoardController {
 	public func refreshBoard() {
 		self.clearBoard()
 		for (var index, location) in self.AI.chess().enumerated() {
-			index += 16
-			if let image = ResourcesProvider.shared.chess(index: index) {
-				let grid = GridPoint(location: location.uint8Value, isRervse: self.reverse)
-				self.chess[grid]?.removeFromSuperlayer()
-				self.chess[grid] = self.drawChess(at: grid, isOppositie: self.isOpposite(chess: index), image: image)
+			if location.uint8Value > 0 {
+				index += 16
+				if let image = ResourcesProvider.shared.chess(index: index) {
+					let grid = GridPoint(location: location.uint8Value, isRervse: self.reverse)
+					self.chess[grid]?.removeFromSuperlayer()
+					self.chess[grid] = self.drawChess(at: grid, isOppositie: self.isOpposite(chess: index), image: image)
+				}
 			}
 		}
 	}
@@ -80,11 +82,7 @@ extension ChessBoardController {
 	
 	private func isOpposite(chess: Int) -> Bool {
 		guard self.opposite else { return false }
-		if self.reverse {
-			return chess < 32
-		} else {
-			return chess > 31
-		}
+		return self.reverse ? chess < 32 : chess > 31
 	}
 	
 }
@@ -92,7 +90,7 @@ extension ChessBoardController {
 // MARK: - Private Internal Class
 extension ChessBoardController {
 	
-	private struct GridPoint: Hashable {
+	public struct GridPoint: Hashable {
 		public var x: Int = 0
 		public var y: Int = 0
 		
@@ -101,11 +99,11 @@ extension ChessBoardController {
 			self.y = Int(location & 0xf) - 3
 			if isRervse {
 				self.x = 9 - self.x
-				self.y = 9 - self.y
+				self.y = 8 - self.y
 			}
 		}
 		
-		var description: String {
+		public var description: String {
 			return "(\(x), \(y))"
 		}
 		
@@ -137,7 +135,7 @@ extension ChessBoardController {
 // MARK: - Chess Draw
 extension ChessBoardController {
 	
-	private func drawChess(at point: GridPoint, isOppositie: Bool, image: UIImage, below sibling: CALayer? = nil) -> CALayer {
+	public func drawChess(at point: GridPoint, isOppositie: Bool, image: UIImage, below sibling: CALayer? = nil) -> CALayer {
 		let layer = CALayer()
 		layer.contents = image.cgImage
 		layer.frame = MetaPoint.metaPoint(point: point)

@@ -19,7 +19,6 @@ class ChessVC: UIViewController {
 		self.layoutContentView()
 		self.layoutChessBoard()
 		self.layoutFlashLayer()
-		self.chessBoardController.refreshBoard()
     }
 	
 	// MARK: - SafaArea

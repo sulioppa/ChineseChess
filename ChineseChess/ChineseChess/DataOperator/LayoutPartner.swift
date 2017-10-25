@@ -20,7 +20,11 @@ class LayoutPartner: NSObject {
 	public static let width: CGFloat = UIScreen.main.bounds.size.width
 	
 	public static let scale: CGFloat = LayoutPartner.width / 320.0
-	
+
+}
+
+// MARK: - HomeVC
+extension LayoutPartner {
 	public struct HomeVC {
 		public var buttonSize: CGSize = CGSize(width: 130.0, height: 40.0)
 		public var buttonCordins: CGFloat = 6.0
@@ -42,7 +46,10 @@ class LayoutPartner: NSObject {
 			self.titleViewSpace *= LayoutPartner.scale
 		}
 	}
-	
+}
+
+// MARK: - ChessBoard
+extension LayoutPartner {
 	public struct ChessBoard {
 		private var basePoint: CGPoint = CGPoint.zero
 		public var gridSize: CGFloat = 0.0
@@ -76,13 +83,16 @@ class LayoutPartner: NSObject {
 				self.gridSize = 45.76
 				self.chessSize = 46
 				self.boardmargin = 16.7
-
+				
 			default:
 				break
 			}
 		}
 	}
-	
+}
+
+// MARK: - ChessVC
+extension LayoutPartner {
 	public struct ChessVC {
 		public var buttonSize: CGSize = CGSize.zero
 		public var buttonTitleFontSize: CGFloat = 19.0
@@ -102,5 +112,4 @@ class LayoutPartner: NSObject {
 			self.nicknameFontSize *= LayoutPartner.scale
 		}
 	}
-	
 }
