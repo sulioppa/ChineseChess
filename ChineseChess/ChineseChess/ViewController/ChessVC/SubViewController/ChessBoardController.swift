@@ -143,7 +143,11 @@ extension ChessBoardController {
 			layer.transform = CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
 		}
 		
-		self.board.insertSublayer(layer, below: sibling)
+		if sibling == nil {
+			self.board.addSublayer(layer)
+		} else {
+			self.board.insertSublayer(layer, below: sibling)
+		}
 		return layer
 	}
 	
