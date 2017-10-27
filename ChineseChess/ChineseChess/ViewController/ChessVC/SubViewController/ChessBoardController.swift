@@ -8,6 +8,7 @@
 
 import UIKit
 
+// MARK: - ChessBoardController
 class ChessBoardController: NSObject {
 	
 	// MARK: - Private Properties
@@ -42,7 +43,7 @@ class ChessBoardController: NSObject {
 	}
 }
 
-// MARK: - Chess Operation
+// MARK: - Public Chess Operation
 extension ChessBoardController {
 
 	public func refreshBoard() {
@@ -85,6 +86,7 @@ extension ChessBoardController {
 	
 	public final func drawChess(chess: Int, location: UInt8, below sibling: CALayer? = nil) {
 		guard location > 0 else { return }
+		assert(15 < chess && chess < 48 , "\(#function) 's chess must be more than 15 and less than 48")
 		guard let image = ResourcesProvider.shared.chess(index: chess) else { return }
 		
 		let grid = GridPoint(location: location, isReverse: self.reverse)
@@ -110,16 +112,86 @@ extension ChessBoardController {
 		return self.drawChess(at: grid, isOppositie: false, image: image)
 	}
 	
+	// support touch
+	public func metaPoint(point: CGPoint) -> GridPoint {
+		return MetaPoint.metaPoint(point: point)
+	}
+	
 }
 
-// MARK: - Internal Struct
+// MARK: - Public Chess move and recover
+extension ChessBoardController {
+	
+	public func moveChess(with preparation: (() -> Void)? = nil, from: GridPoint, to: GridPoint, completion: (() -> Void)? = nil) {
+		guard let aChess = self.chess[from] else { return }
+		
+		preparation?()
+		CATransaction.begin()
+		CATransaction.setAnimationDuration(Macro.Time.chessMoveLastTime)
+		
+		// rise up the chess, make it on the top of its super layer
+		aChess.removeFromSuperlayer()
+		self.board.layer.addSublayer(aChess)
+		
+		// a chess to be ate
+		let ateChess = self.chess[to]
+		
+		// move the chess
+		self.chess.removeValue(forKey: from)
+		self.chess[to] = aChess
+		aChess.position = MetaPoint.metaPosition(point: to)
+		
+		// finally, remove the ate chess
+		CATransaction.setCompletionBlock {
+			ateChess?.removeFromSuperlayer()
+			completion?()
+		}
+		CATransaction.commit()
+	}
+	
+	public func recoverChess(with preparation: (() -> Void)? = nil, from: GridPoint, to: GridPoint, recover: Int, completion: (() -> Void)? = nil) {
+		assert(self.chess[to] == nil, "【Error】：\(#function) 's GridPoint to must have no chess.")
+		guard let aChess = self.chess[from] else { return }
+		
+		preparation?()
+		CATransaction.begin()
+		CATransaction.setAnimationDuration(Macro.Time.chessMoveLastTime)
+		
+		// rise up the chess, make it on the top of its super layer
+		aChess.removeFromSuperlayer()
+		self.board.layer.addSublayer(aChess)
+		
+		// update the chess
+		self.chess.removeValue(forKey: from)
+		self.chess[to] = aChess
+		
+		// recover the ate chess
+		if recover > 0 {
+			if let image = ResourcesProvider.shared.chess(index: recover) {
+				let opposite = self.opposite ? (self.reverse ? recover < 32 : recover > 31) : false
+				self.chess[from] = self.drawChess(at: from, isOppositie: opposite, image: image, below: aChess)
+			}
+		}
+		
+		// move the chess
+		aChess.position = MetaPoint.metaPosition(point: to)
+		
+		CATransaction.setCompletionBlock {
+			completion?()
+		}
+		CATransaction.commit()
+	}
+
+}
+
+// MARK: - Public Struct GridPoint
 extension ChessBoardController {
 	
 	public struct GridPoint: Hashable {
 		public var x: Int = 0
 		public var y: Int = 0
 		
-		init(location: UInt8, isReverse: Bool) {
+		public init(location: UInt8, isReverse: Bool) {
 			self.x = Int(location >> 4) - 3
 			self.y = Int(location & 0xf) - 3
 			if isReverse {
@@ -131,7 +203,7 @@ extension ChessBoardController {
 			return UInt8(((self.x + 3) << 4) + self.y + 3)
 		}
 		
-		init(x: Int, y: Int) {
+		public init(x: Int, y: Int) {
 			self.x = x
 			self.y = y
 		}
@@ -145,16 +217,21 @@ extension ChessBoardController {
 			return "GridPoint: (\(x), \(y))"
 		}
 		
-		// MARK: - Hashable
-		var hashValue: Int {
+		// Conform Hashable
+		public var hashValue: Int {
 			return (x << 4) + y
 		}
 		
-		static func ==(lhs: GridPoint, rhs: GridPoint) -> Bool {
+		public static func ==(lhs: GridPoint, rhs: GridPoint) -> Bool {
 			return lhs.x == rhs.x && lhs.y == rhs.y
 		}
 	}
 	
+}
+
+// MARK: - Private MetaPoint & Draw a chess
+extension ChessBoardController {
+
 	private struct MetaPoint {
 		private static let layout = LayoutPartner.ChessBoard()
 		
@@ -193,11 +270,6 @@ extension ChessBoardController {
 		}
 	}
 	
-}
-
-// MARK: - Private Draw a chess
-extension ChessBoardController {
-
 	private final func drawChess(at point: GridPoint, isOppositie: Bool, image: UIImage, below sibling: CALayer? = nil) -> CALayer {
 		let layer = CALayer()
 		layer.contents = image.cgImage
