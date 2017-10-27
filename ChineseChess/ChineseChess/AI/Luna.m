@@ -21,18 +21,27 @@
 {
 	self = [super init];
 	if (self) {
-		memcpy(_board, LCBoard, 256);
-		memcpy(_chess, LCChess, 48);
+		[self initBoard];
 	}
 	return self;
 }
 
-- (NSArray<NSNumber *> *)chess {
+- (void)initBoard {
+	memcpy(_board, LCBoard, 256);
+	memcpy(_chess, LCChess, 48);
+}
+
+// MARK: - Properties
+- (NSArray<NSNumber *> *)chesses {
 	NSMutableArray<NSNumber *> *array = [NSMutableArray array];
 	for (int i = 16; i < 48; i++) {
 		[array addObject:@(_chess[i])];
 	}
 	return [NSArray arrayWithArray:array];
+}
+
+- (uint16_t)lastMove {
+	return (170 << 8) + 84;
 }
 
 @end

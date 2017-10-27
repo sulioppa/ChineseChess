@@ -10,6 +10,8 @@ import UIKit
 
 class GameVC: ChessVC {
 
+	private lazy var chessBoardController: ChessBoardController = ChessBoardController(board: self.board, AI: self.AI)
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.layoutTopAndBottom(target: self, attributes: [
@@ -53,7 +55,7 @@ extension GameVC {
 	}
 	
 	@objc private func regretOneStep() {
-		
+		self.chessBoardController.clearBoard()
 	}
 	
 	@objc private func teachMe() {

@@ -32,7 +32,7 @@ class ResourcesProvider: NSObject {
 	]
 	
 	private let chess: [String?] = [
-		nil, "chess_15", "chess14", "chess16", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
+		nil, "chess_15", "chess_14", "chess_16", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil,
 		"chess_0",
 		"chess_1", "chess_1",
 		"chess_2", "chess_2",

@@ -51,19 +51,11 @@ extension LayoutPartner {
 // MARK: - ChessBoard
 extension LayoutPartner {
 	public struct ChessBoard {
-		private var basePoint: CGPoint = CGPoint.zero
+		public var basePoint: CGPoint = CGPoint.zero
 		public var gridSize: CGFloat = 0.0
 		public var chessSize: CGFloat = 0.0
 		public var boardmargin: CGFloat = 0.0
-		
-		public var xOffset: CGFloat {
-			return basePoint.x - chessSize / 2.0
-		}
-		
-		public var yOffset: CGFloat {
-			return basePoint.y - chessSize / 2.0
-		}
-		
+				
 		init() {
 			switch LayoutPartner.height {
 			case 568.0:

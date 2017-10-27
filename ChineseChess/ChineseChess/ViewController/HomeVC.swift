@@ -11,7 +11,7 @@ import SnapKit
 
 class HomeVC: UIViewController {
 
-	fileprivate lazy var scrollVC: ScrollVC = ScrollVC()
+	private lazy var scrollVC: ScrollVC = ScrollVC()
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,7 +132,7 @@ extension HomeVC {
 // MARK: - ScrollViewController
 extension HomeVC {
 	
-	fileprivate class ScrollVC: NSObject {
+	private class ScrollVC: NSObject {
 		
 		// Public vars
 		public var isForeground: Bool = true {
