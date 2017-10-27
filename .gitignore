@@ -1,2 +1,12 @@
-.DS_Store
-xcuserdata
+## OSX files
+*.DS_Store
+*.DS_Store?
+
+## Various settings
+*.pbxuser
+xcuserdata/
+
+## Other
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
