@@ -37,6 +37,7 @@
 		A7CD69F31F91E11700C3202A /* LayoutPartner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD69F21F91E11700C3202A /* LayoutPartner.swift */; };
 		A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CE55F81F8DC28600641454 /* AppDelegate.swift */; };
 		A7CE56001F8DC28600641454 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7CE55FF1F8DC28600641454 /* Assets.xcassets */; };
+		A7D146C81FA48A9100A512FF /* GameBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D146C71FA48A9100A512FF /* GameBoardController.swift */; };
 		A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DC614C1F92435C009A9205 /* UIFont+KaiTi.swift */; };
 		A7DC614F1F9249B5009A9205 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DC614E1F9249B5009A9205 /* UIColor+Colors.swift */; };
 		A7DFAD7C1F910D7D00FEB8AC /* Value+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */; };
@@ -75,6 +76,7 @@
 		A7CE55F81F8DC28600641454 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7CE55FF1F8DC28600641454 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7CE56041F8DC28600641454 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7D146C71FA48A9100A512FF /* GameBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardController.swift; sourceTree = "<group>"; };
 		A7DC614C1F92435C009A9205 /* UIFont+KaiTi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+KaiTi.swift"; sourceTree = "<group>"; };
 		A7DC614E1F9249B5009A9205 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
 		A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Map.swift"; sourceTree = "<group>"; };
@@ -194,7 +196,7 @@
 		A70765F41F94E1CC00FA6A43 /* GameVC */ = {
 			isa = PBXGroup;
 			children = (
-				A778E4841F94E26B00D28B25 /* View */,
+				A778E4841F94E26B00D28B25 /* SubViewController */,
 				A70765F11F94E1A200FA6A43 /* GameVC.swift */,
 			);
 			path = GameVC;
@@ -203,7 +205,7 @@
 		A70765F71F94E1FC00FA6A43 /* HistoryVC */ = {
 			isa = PBXGroup;
 			children = (
-				A778E4851F94E27100D28B25 /* View */,
+				A778E4851F94E27100D28B25 /* SubViewController */,
 				A778E47F1F94E25200D28B25 /* HistoryVC.swift */,
 			);
 			path = HistoryVC;
@@ -212,7 +214,7 @@
 		A70765F81F94E20300FA6A43 /* MultiPeerVC */ = {
 			isa = PBXGroup;
 			children = (
-				A778E4861F94E27600D28B25 /* View */,
+				A778E4861F94E27600D28B25 /* SubViewController */,
 				A778E4811F94E26000D28B25 /* MultiPeerVC.swift */,
 			);
 			path = MultiPeerVC;
@@ -242,25 +244,26 @@
 			path = SubViewController;
 			sourceTree = "<group>";
 		};
-		A778E4841F94E26B00D28B25 /* View */ = {
+		A778E4841F94E26B00D28B25 /* SubViewController */ = {
 			isa = PBXGroup;
 			children = (
+				A7D146C71FA48A9100A512FF /* GameBoardController.swift */,
 			);
-			path = View;
+			path = SubViewController;
 			sourceTree = "<group>";
 		};
-		A778E4851F94E27100D28B25 /* View */ = {
+		A778E4851F94E27100D28B25 /* SubViewController */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = View;
+			path = SubViewController;
 			sourceTree = "<group>";
 		};
-		A778E4861F94E27600D28B25 /* View */ = {
+		A778E4861F94E27600D28B25 /* SubViewController */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = View;
+			path = SubViewController;
 			sourceTree = "<group>";
 		};
 		A77E18771F8DE532003A2EC5 /* SupportFiles */ = {
@@ -522,6 +525,7 @@
 				A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */,
 				A70765F21F94E1A200FA6A43 /* GameVC.swift in Sources */,
 				A7E7ACFD1F91DE8E00B29C5A /* UIButton+Golden.swift in Sources */,
+				A7D146C81FA48A9100A512FF /* GameBoardController.swift in Sources */,
 				A7DFAD7C1F910D7D00FEB8AC /* Value+Map.swift in Sources */,
 				A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */,
 				A7CD69F31F91E11700C3202A /* LayoutPartner.swift in Sources */,

@@ -11,9 +11,9 @@ import UIKit
 // MARK: - ChessBoardController
 class ChessBoardController: NSObject {
 	
-	// MARK: - Private Properties
-	private var AI: Luna!
+	public final var AI: Luna!
 	
+	// MARK: - Private Properties
 	private var board: UIView!
 	private var chess: [GridPoint: CALayer] = [:]
 	private var lastMove: (from: CALayer?, to: CALayer?) = (nil, nil)
@@ -23,20 +23,36 @@ class ChessBoardController: NSObject {
 		super.init()
 	}
 	
-	convenience init(board: UIView, AI: Luna) {
-		self.init()
+	public init(board: UIView, AI: Luna, isUserInteractionEnabled: Bool) {
+		super.init()
 		self.board = board
 		self.AI = AI
+		
+		if isUserInteractionEnabled {
+			self.board.addTapTarget(self, action: #selector(didTapInBoard(gesture:)))
+		}
+	}
+	
+	// MARK: - Tap Tap Tap~
+	@objc private func didTapInBoard(gesture: UITapGestureRecognizer) {
+		let point = MetaPoint.metaPoint(point: gesture.location(in: self.board))
+		if point.isLegal {
+			self.didTapInBoard(at: point)
+		}
+	}
+	
+	public func didTapInBoard(at point: GridPoint) {
+		fatalError("【Error】：\(#function) should be override at child class.")
 	}
 	
 	// MARK: - reverse & opposite
-	public var reverse: Bool = false {
+	public final var reverse: Bool = false {
 		didSet {
 			self.refreshBoard()
 		}
 	}
 	
-	public var opposite: Bool = false {
+	public final var opposite: Bool = false {
 		didSet {
 			self.refreshBoard()
 		}
@@ -46,17 +62,17 @@ class ChessBoardController: NSObject {
 // MARK: - Public Chess Operation
 extension ChessBoardController {
 
-	public func refreshBoard() {
+	public final func refreshBoard() {
 		self.clearBoard()
 		// draw chesses
-		for (index, location) in self.AI.chesses().enumerated() {
+		for (index, location) in self.AI.chesses.enumerated() {
 			self.drawChess(chess: index + 16, location: location.uint8Value)
 		}
 		// draw last move
-		self.refreshLastMove(with: self.AI.lastMove())
+		self.refreshLastMove(with: self.AI.lastMove)
 	}
 	
-	public func clearBoard() {
+	public final func clearBoard() {
 		// clear chesses
 		for (_, item) in self.chess.enumerated() {
 			item.value.removeFromSuperlayer()
@@ -112,17 +128,12 @@ extension ChessBoardController {
 		return self.drawChess(at: grid, isOppositie: false, image: image)
 	}
 	
-	// support touch
-	public func metaPoint(point: CGPoint) -> GridPoint {
-		return MetaPoint.metaPoint(point: point)
-	}
-	
 }
 
 // MARK: - Public Chess move and recover
 extension ChessBoardController {
 	
-	public func moveChess(with preparation: (() -> Void)? = nil, from: GridPoint, to: GridPoint, completion: (() -> Void)? = nil) {
+	public final func moveChess(with preparation: (() -> Void)? = nil, from: GridPoint, to: GridPoint, completion: (() -> Void)? = nil) {
 		guard let aChess = self.chess[from] else { return }
 		
 		preparation?()
@@ -149,7 +160,7 @@ extension ChessBoardController {
 		CATransaction.commit()
 	}
 	
-	public func recoverChess(with preparation: (() -> Void)? = nil, from: GridPoint, to: GridPoint, recover: Int, completion: (() -> Void)? = nil) {
+	public final func recoverChess(with preparation: (() -> Void)? = nil, from: GridPoint, to: GridPoint, recover: Int, completion: (() -> Void)? = nil) {
 		assert(self.chess[to] == nil, "【Error】：\(#function) 's GridPoint to must have no chess.")
 		guard let aChess = self.chess[from] else { return }
 		
@@ -199,10 +210,6 @@ extension ChessBoardController {
 			}
 		}
 		
-		public var location: UInt8 {
-			return UInt8(((self.x + 3) << 4) + self.y + 3)
-		}
-		
 		public init(x: Int, y: Int) {
 			self.x = x
 			self.y = y
@@ -213,8 +220,16 @@ extension ChessBoardController {
 			self.y = 8 - self.y
 		}
 		
+		public var location: UInt8 {
+			return UInt8(((self.x + 3) << 4) + self.y + 3)
+		}
+		
+		public var isLegal: Bool {
+			return 0 <= self.x && self.x <= 9 && 0 <= self.y && self.y <= 8
+		}
+		
 		public var description: String {
-			return "GridPoint: (\(x), \(y))"
+			return "GridPoint: (row: \(x), column: \(y))"
 		}
 		
 		// Conform Hashable
@@ -248,8 +263,8 @@ extension ChessBoardController {
 			var column = Int((point.x - layout.basePoint.x) / layout.gridSize)
 			var row = Int((point.y - layout.basePoint.y) / layout.gridSize)
 			
-			let xOffset = point.x - CGFloat(column) * layout.gridSize
-			let yOffset = point.y - CGFloat(row) * layout.gridSize
+			let xOffset = point.x - layout.basePoint.x - CGFloat(column) * layout.gridSize
+			let yOffset = point.y - layout.basePoint.y - CGFloat(row) * layout.gridSize
 			let midOffset = layout.gridSize / 2.0
 			
 			if xOffset > midOffset {
