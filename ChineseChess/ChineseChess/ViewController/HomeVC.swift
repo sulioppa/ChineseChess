@@ -91,7 +91,7 @@ extension HomeVC {
 	
 	@objc func presentVC(sender: Any?) {
 		guard let tag = (sender as? UIButton)?.tag else { return }
-		WavHandler.playWav()
+		WavHandler.playButtonWav()
 		switch tag {
 		case 1:
 			self.present("GameVC")

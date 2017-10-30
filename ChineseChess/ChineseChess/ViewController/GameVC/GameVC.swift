@@ -10,7 +10,7 @@ import UIKit
 
 class GameVC: ChessVC {
 
-	private lazy var chessBoardController: GameBoardController = GameBoardController(board: self.board, AI: self.AI)
+	private lazy var chessBoardController: GameBoardController = GameBoardController(board: self.board, AI: self.AI, isUserInteractionEnabled: true)
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -50,7 +50,7 @@ extension GameVC {
 	}
 	
 	@objc private func back() {
-		WavHandler.playWav()
+		WavHandler.playButtonWav()
 		self.dismiss()
 	}
 	

@@ -16,7 +16,6 @@ class ChessBoardController: NSObject {
 	// MARK: - Private Properties
 	private var board: UIView!
 	private var chess: [GridPoint: CALayer] = [:]
-	private var lastMove: (from: CALayer?, to: CALayer?) = (nil, nil)
 	
 	// MARK: - init
 	private override init() {
@@ -57,42 +56,22 @@ class ChessBoardController: NSObject {
 			self.refreshBoard()
 		}
 	}
-}
 
-// MARK: - Public Chess Operation
-extension ChessBoardController {
-
-	public final func refreshBoard() {
+	// MARK: - Public Board Operation
+	public func refreshBoard() {
 		self.clearBoard()
 		// draw chesses
 		for (index, location) in self.AI.chesses.enumerated() {
 			self.drawChess(chess: index + 16, location: location.uint8Value)
 		}
-		// draw last move
-		self.refreshLastMove(with: self.AI.lastMove)
 	}
 	
-	public final func clearBoard() {
+	public func clearBoard() {
 		// clear chesses
 		for (_, item) in self.chess.enumerated() {
 			item.value.removeFromSuperlayer()
 		}
 		self.chess.removeAll()
-		// clear last move
-		self.clearLastMove()
-	}
-	
-	public final func refreshLastMove(with move: UInt16) {
-		self.clearLastMove()
-		self.lastMove.from = self.drawSquare(isRed: false, location: UInt8(move >> 8))
-		self.lastMove.to = self.drawSquare(isRed: false, location: UInt8(move & 0xff))
-	}
-	
-	public final func clearLastMove() {
-		self.lastMove.from?.removeFromSuperlayer()
-		self.lastMove.to?.removeFromSuperlayer()
-		self.lastMove.from = nil
-		self.lastMove.to = nil
 	}
 	
 }
@@ -100,7 +79,7 @@ extension ChessBoardController {
 // MARK: - Public Draw a chess at grid or location
 extension ChessBoardController {
 	
-	public final func drawChess(chess: Int, location: UInt8, below sibling: CALayer? = nil) {
+	public final func drawChess(chess: Int, location: Luna_Location, below sibling: CALayer? = nil) {
 		guard location > 0 else { return }
 		assert(15 < chess && chess < 48 , "\(#function) 's chess must be more than 15 and less than 48")
 		guard let image = ResourcesProvider.shared.chess(index: chess) else { return }
@@ -111,14 +90,14 @@ extension ChessBoardController {
 		self.chess[grid] = self.drawChess(at: grid, isOppositie: opposite, image: image, below: sibling)
 	}
 	
-	public final func drawRuby(location: UInt8) -> (grid: GridPoint?, ruby: CALayer?) {
-		guard let image = ResourcesProvider.shared.chess(index: 1) else { return (nil, nil) }
+	public final func drawRuby(location: Luna_Location) -> (grid: GridPoint, ruby: CALayer?) {
+		guard let image = ResourcesProvider.shared.chess(index: 1) else { return (GridPoint.none, nil) }
 		
 		let grid = GridPoint(location: location, isReverse: self.reverse)
 		return (grid, self.drawChess(at: grid, isOppositie: false, image: image))
 	}
 	
-	public final func drawSquare(isRed: Bool, location: UInt8) -> CALayer? {
+	public final func drawSquare(isRed: Bool, location: Luna_Location) -> CALayer? {
 		let grid = GridPoint(location: location, isReverse: self.reverse)
 		return self.drawSquare(isRed: isRed, grid: grid)
 	}
@@ -133,7 +112,7 @@ extension ChessBoardController {
 // MARK: - Public Chess move and recover
 extension ChessBoardController {
 	
-	public final func moveChess(with preparation: (() -> Void)? = nil, from: GridPoint, to: GridPoint, completion: (() -> Void)? = nil) {
+	public final func moveChess(with preparation: (() -> Void)? = nil, from: GridPoint, to: GridPoint, completion: @escaping () -> Void) {
 		guard let aChess = self.chess[from] else { return }
 		
 		preparation?()
@@ -147,20 +126,22 @@ extension ChessBoardController {
 		// a chess to be ate
 		let ateChess = self.chess[to]
 		
-		// move the chess
+		// update the chess
 		self.chess.removeValue(forKey: from)
 		self.chess[to] = aChess
-		aChess.position = MetaPoint.metaPosition(point: to)
 		
 		// finally, remove the ate chess
 		CATransaction.setCompletionBlock {
 			ateChess?.removeFromSuperlayer()
-			completion?()
+			completion()
 		}
+		
+		// move the chess
+		aChess.position = MetaPoint.metaPosition(point: to)
 		CATransaction.commit()
 	}
 	
-	public final func recoverChess(with preparation: (() -> Void)? = nil, from: GridPoint, to: GridPoint, recover: Int, completion: (() -> Void)? = nil) {
+	public final func recoverChess(with preparation: (() -> Void)? = nil, from: GridPoint, to: GridPoint, recover: Int, completion: @escaping (() -> Void)) {
 		assert(self.chess[to] == nil, "【Error】：\(#function) 's GridPoint to must have no chess.")
 		guard let aChess = self.chess[from] else { return }
 		
@@ -184,12 +165,12 @@ extension ChessBoardController {
 			}
 		}
 		
+		CATransaction.setCompletionBlock {
+			completion()
+		}
+		
 		// move the chess
 		aChess.position = MetaPoint.metaPosition(point: to)
-		
-		CATransaction.setCompletionBlock {
-			completion?()
-		}
 		CATransaction.commit()
 	}
 
@@ -202,34 +183,53 @@ extension ChessBoardController {
 		public var x: Int = 0
 		public var y: Int = 0
 		
-		public init(location: UInt8, isReverse: Bool) {
-			self.x = Int(location >> 4) - 3
-			self.y = Int(location & 0xf) - 3
-			if isReverse {
-				self.reverse()
-			}
-		}
-		
-		public init(x: Int, y: Int) {
+		fileprivate init(x: Int, y: Int) {
 			self.x = x
 			self.y = y
 		}
 		
-		public mutating func reverse() {
-			self.x = 9 - self.x
-			self.y = 8 - self.y
+		public static var none: GridPoint {
+			return GridPoint(x: -1, y: -1)
 		}
 		
-		public var location: UInt8 {
-			return UInt8(((self.x + 3) << 4) + self.y + 3)
+		public static var zero: GridPoint {
+			return GridPoint(x: 0, y: 0)
+		}
+		
+		// Location
+		public init(location: Luna_Location, isReverse: Bool) {
+			self.reset(location: location, isReverse: isReverse)
+		}
+		
+		public mutating func reset(location: Luna_Location, isReverse: Bool) {
+			self.x = Int(location >> 4) - 3
+			self.y = Int(location & 0xf) - 3
+			if isReverse {
+				self.x = 9 - self.x
+				self.y = 8 - self.y
+			}
+		}
+		
+		public func location(_ isReverse: Bool) -> Luna_Location {
+			if isReverse {
+				return Luna_Location(((12 - self.x) << 4) + 11 - self.y)
+			} else {
+				return Luna_Location(((self.x + 3) << 4) + self.y + 3)
+			}
+		}
+		
+		public static func move(from: GridPoint, to: GridPoint, isReverse: Bool) -> Luna_Move {
+			return Luna_Move((from.location(isReverse) << 8) + to.location(isReverse))
+		}
+		
+		// Legal
+		public mutating func clear() {
+			self.x = -1
+			self.y = -1
 		}
 		
 		public var isLegal: Bool {
 			return 0 <= self.x && self.x <= 9 && 0 <= self.y && self.y <= 8
-		}
-		
-		public var description: String {
-			return "GridPoint: (row: \(x), column: \(y))"
 		}
 		
 		// Conform Hashable
@@ -239,6 +239,11 @@ extension ChessBoardController {
 		
 		public static func ==(lhs: GridPoint, rhs: GridPoint) -> Bool {
 			return lhs.x == rhs.x && lhs.y == rhs.y
+		}
+		
+		// Debug
+		public var description: String {
+			return "GridPoint: (row: \(x), column: \(y))"
 		}
 	}
 	

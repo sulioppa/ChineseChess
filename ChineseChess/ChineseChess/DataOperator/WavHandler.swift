@@ -29,15 +29,36 @@ class WavHandler: NSObject {
 		}
 	}
 	
+	public class func playButtonWav() {
+		AudioServicesPlaySystemSound(1105)
+	}
+	
 	private static var wav: AVAudioPlayer? = nil
 	
-	public class func playWav(named: String = "tock") {
-		if named == "tock" {
-			AudioServicesPlaySystemSound(1105)
-		} else {
-			self.wav = ResourcesProvider.shared.wav(named: named)
-			self.wav?.numberOfLoops = 0
-			self.wav?.play()
+	private class func playWav(named: String) {
+		self.wav = ResourcesProvider.shared.wav(named: named)
+		self.wav?.numberOfLoops = 0
+		self.wav?.play()
+	}
+	
+	public class func playVoice(state: LunaMoveState) {
+		switch state {
+		case .select:
+			self.playWav(named: "select")
+		case .normal:
+			self.playWav(named: "run")
+		case .eat:
+			self.playWav(named: "eat")
+		case .check:
+			self.playWav(named: "check")
+		case .checkMate:
+			self.playWav(named: "mate")
+		case .eatCheck:
+			self.playWav(named: "eat")
+			self.playWav(named: "check")
+		case .eatCheckMate:
+			self.playWav(named: "eat")
+			self.playWav(named: "mate")
 		}
 	}
 	

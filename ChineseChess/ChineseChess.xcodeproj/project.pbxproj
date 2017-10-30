@@ -32,6 +32,7 @@
 		A791286B1F9124E2002CC4E5 /* run.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D191F905DBD0054DF93 /* run.wav */; };
 		A791286C1F9124E2002CC4E5 /* select.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D1A1F905DBD0054DF93 /* select.wav */; };
 		A791286D1F9124E2002CC4E5 /* KaiTi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D141F9058BF0054DF93 /* KaiTi.ttf */; };
+		A79C27F71FA5D5B100FD9A87 /* Luna+Const.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C27F61FA5D5B100FD9A87 /* Luna+Const.m */; };
 		A7B3FD7F1F9A03A900B379AD /* Array+Split.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B3FD7E1F9A03A900B379AD /* Array+Split.swift */; };
 		A7C4E5401F9DC20E0018595A /* FlashLayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C4E53F1F9DC20E0018595A /* FlashLayerController.swift */; };
 		A7CD69F31F91E11700C3202A /* LayoutPartner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD69F21F91E11700C3202A /* LayoutPartner.swift */; };
@@ -69,6 +70,7 @@
 		A782B7FD1FA0339600534DB6 /* Bool+Reverse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Reverse.swift"; sourceTree = "<group>"; };
 		A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A79128661F911F17002CC4E5 /* WavHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavHandler.swift; sourceTree = "<group>"; };
+		A79C27F61FA5D5B100FD9A87 /* Luna+Const.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+Const.m"; sourceTree = "<group>"; };
 		A7B3FD7E1F9A03A900B379AD /* Array+Split.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Split.swift"; sourceTree = "<group>"; };
 		A7C4E53F1F9DC20E0018595A /* FlashLayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashLayerController.swift; sourceTree = "<group>"; };
 		A7CD69F21F91E11700C3202A /* LayoutPartner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutPartner.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 		A7075C0B1F8F901100652D0A /* AI */ = {
 			isa = PBXGroup;
 			children = (
+				A7ACCC691FA58C13000F29EF /* FEN */,
 				A71D3D7C1F9F388200823384 /* Vault */,
 				A7E308BD1F9CE18900B0805B /* Luna */,
 				A7E308BA1F9CE0DA00B0805B /* Luna.h */,
@@ -303,6 +306,13 @@
 			path = Macro;
 			sourceTree = "<group>";
 		};
+		A7ACCC691FA58C13000F29EF /* FEN */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FEN;
+			sourceTree = "<group>";
+		};
 		A7CE55EC1F8DC28600641454 = {
 			isa = PBXGroup;
 			children = (
@@ -344,6 +354,7 @@
 			children = (
 				A71D3D801F9F3C0700823384 /* Luna+C.h */,
 				A71D3D7D1F9F3AC500823384 /* Luna+Const.h */,
+				A79C27F61FA5D5B100FD9A87 /* Luna+Const.m */,
 			);
 			path = Luna;
 			sourceTree = "<group>";
@@ -505,6 +516,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */,
+				A79C27F71FA5D5B100FD9A87 /* Luna+Const.m in Sources */,
 				A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */,
 				A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */,
 				A70765F61F94E1E600FA6A43 /* ChessVC.swift in Sources */,

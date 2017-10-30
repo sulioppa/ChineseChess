@@ -54,7 +54,8 @@ class ResourcesProvider: NSObject {
 		"check": ("check", "wav"),
 		"eat": ("eat", "wav"),
 		"run": ("run", "wav"),
-		"select": ("select", "wav")
+		"select": ("select", "wav"),
+		"mate": ("eat", "wav")
 	]
 }
 
