@@ -8,15 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-// MARK: - This enum reveals the state of game, it can be over or red player's turn or black player's turn.
-typedef NS_ENUM(uint8_t, LunaState) {
-	LunaStateRedPlayer,
-	LunaStateBlackPlayer,
-	LunaStateDraw,
-	LunaStateRedPlayerWin,
-	LunaStateBlackPlayerWin
+// MARK: - LunaBoardState, this enum reveals the state of game, it can be over or red player's turn or black player's turn.
+typedef NS_ENUM(uint8_t, LunaBoardState) {
+	LunaBoardStateRedPlayer,
+	LunaBoardStateBlackPlayer,
+	LunaBoardStateDraw,
+	LunaBoardStateRedPlayerWin,
+	LunaBoardStateBlackPlayerWin
 };
 
+// MARK: - LunaMoveState, this enum reveals the state of a move, it can be check or mate...
 typedef NS_ENUM(uint8_t, LunaMoveState) {
 	LunaMoveStateSelect,
 	LunaMoveStateNormal,
@@ -27,31 +28,44 @@ typedef NS_ENUM(uint8_t, LunaMoveState) {
 	LunaMoveStateEatCheckMate
 };
 
-// MARK: - Typedef
 typedef uint8_t Luna_Location;
+
+typedef uint8_t Luna_Chess;
+
+typedef uint8_t Luna_Side;
+
 typedef uint16_t Luna_Move;
 
+// MARK: - AI Luna.
 @interface Luna : NSObject
 
-// MARK: - Read-Only Properties
-@property (nonnull, nonatomic, readonly) NSArray<NSNumber *> *chesses;
+// chess array
+- (nonnull NSArray<NSNumber *> *)chesses;
 
-// the lastest move
-@property (nonatomic, readonly) Luna_Move lastMove;
+// the lastest move, return the move stack' top.
+- (Luna_Move)lastMove;
 
 // the state reveals the state of game.
-@property (nonatomic, readonly) LunaState state;
+@property (nonatomic, readonly) LunaBoardState state;
+
+// AI Control, the isThinking reveals the AI is thinking or not, you can stop it by setting it 'NO'.
+@property (nonatomic) BOOL isThinking;
+
+@end
+
+// MARK: - AI Luna. (Game)
+@interface Luna (Game)
+
+// reset board with FEN reocrd.
+- (void)initBoardWithFEN:(nullable NSString *)FEN;
 
 // see if user want to choose another chess.
-- (BOOL)isAnotherChoiceWith:(Luna_Location)location;
+- (BOOL)isAnotherChoiceWithLocation:(Luna_Location)location;
 
-// generate legal moves
-- (nonnull NSArray<NSNumber *> *)legalMovesWith:(Luna_Location)location;
+// generate legal moves.
+- (nonnull NSArray<NSNumber *> *)legalMovesWithLocation:(Luna_Location)location;
 
-- (LunaMoveState)moveChessWith:(Luna_Move)move;
-
-/* MARK: - AI
- * the isThinking reveals the AI is thinking or not, you can stop it by setting it 'NO'.*/
-@property (nonatomic) BOOL isThinking;
+// do a chess move, return a state indicates how this move affect the game.
+- (LunaMoveState)moveChessWithMove:(Luna_Move)move;
 
 @end

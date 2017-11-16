@@ -57,6 +57,8 @@ class ResourcesProvider: NSObject {
 		"select": ("select", "wav"),
 		"mate": ("eat", "wav")
 	]
+	
+	private var wavsCache: [String: AVAudioPlayer] = [:]
 }
 
 // MARK: - Public
@@ -74,7 +76,13 @@ extension ResourcesProvider {
 	
 	public func wav(named: String) -> AVAudioPlayer? {
 		guard let wav = self.wavs[named], let url = Bundle.main.url(forResource: wav.name, withExtension: wav.type) else { return nil }
-		return try? AVAudioPlayer(contentsOf: url)
+		
+		if let player = self.wavsCache[named] {
+			return player
+		} else {
+			self.wavsCache[named] = try? AVAudioPlayer(contentsOf: url)
+			return self.wavsCache[named]
+		}
 	}
 	
 }

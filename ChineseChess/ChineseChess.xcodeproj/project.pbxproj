@@ -18,6 +18,7 @@
 		A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D681F90A6E000CBDAD9 /* Macro.swift */; };
 		A72F94191F974E73001FACC3 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72F94181F974E73001FACC3 /* UIView+Layout.swift */; };
 		A72F941B1F9753EE001FACC3 /* UIView+Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72F941A1F9753EE001FACC3 /* UIView+Tap.swift */; };
+		A73069741FB2FBAF00D30876 /* Luna+PreGenerate.m in Sources */ = {isa = PBXBuildFile; fileRef = A73069731FB2FBAF00D30876 /* Luna+PreGenerate.m */; };
 		A7592D7F1F9DFB0C00E7EA0F /* Value+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7592D7E1F9DFB0C00E7EA0F /* Value+Random.swift */; };
 		A770863D1F94C39100C24D2B /* LoadingAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770863C1F94C39100C24D2B /* LoadingAlertView.swift */; };
 		A778E4801F94E25200D28B25 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E47F1F94E25200D28B25 /* HistoryVC.swift */; };
@@ -62,6 +63,8 @@
 		A72A4D681F90A6E000CBDAD9 /* Macro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macro.swift; sourceTree = "<group>"; };
 		A72F94181F974E73001FACC3 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		A72F941A1F9753EE001FACC3 /* UIView+Tap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Tap.swift"; sourceTree = "<group>"; };
+		A73069721FB2FBAF00D30876 /* Luna+PreGenerate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+PreGenerate.h"; sourceTree = "<group>"; };
+		A73069731FB2FBAF00D30876 /* Luna+PreGenerate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+PreGenerate.m"; sourceTree = "<group>"; };
 		A7592D7E1F9DFB0C00E7EA0F /* Value+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Random.swift"; sourceTree = "<group>"; };
 		A770863C1F94C39100C24D2B /* LoadingAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAlertView.swift; sourceTree = "<group>"; };
 		A778E47F1F94E25200D28B25 /* HistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
@@ -355,6 +358,8 @@
 				A71D3D801F9F3C0700823384 /* Luna+C.h */,
 				A71D3D7D1F9F3AC500823384 /* Luna+Const.h */,
 				A79C27F61FA5D5B100FD9A87 /* Luna+Const.m */,
+				A73069721FB2FBAF00D30876 /* Luna+PreGenerate.h */,
+				A73069731FB2FBAF00D30876 /* Luna+PreGenerate.m */,
 			);
 			path = Luna;
 			sourceTree = "<group>";
@@ -543,6 +548,7 @@
 				A7CD69F31F91E11700C3202A /* LayoutPartner.swift in Sources */,
 				A770863D1F94C39100C24D2B /* LoadingAlertView.swift in Sources */,
 				A7C4E5401F9DC20E0018595A /* FlashLayerController.swift in Sources */,
+				A73069741FB2FBAF00D30876 /* Luna+PreGenerate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

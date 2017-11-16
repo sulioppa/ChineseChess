@@ -33,12 +33,10 @@ class WavHandler: NSObject {
 		AudioServicesPlaySystemSound(1105)
 	}
 	
-	private static var wav: AVAudioPlayer? = nil
-	
 	private class func playWav(named: String) {
-		self.wav = ResourcesProvider.shared.wav(named: named)
-		self.wav?.numberOfLoops = 0
-		self.wav?.play()
+		let wav = ResourcesProvider.shared.wav(named: named)
+		wav?.numberOfLoops = 0
+		wav?.play()
 	}
 	
 	public class func playVoice(state: LunaMoveState) {

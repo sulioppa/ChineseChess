@@ -61,7 +61,7 @@ class ChessBoardController: NSObject {
 	public func refreshBoard() {
 		self.clearBoard()
 		// draw chesses
-		for (index, location) in self.AI.chesses.enumerated() {
+		for (index, location) in self.AI.chesses().enumerated() {
 			self.drawChess(chess: index + 16, location: location.uint8Value)
 		}
 	}
@@ -219,7 +219,9 @@ extension ChessBoardController {
 		}
 		
 		public static func move(from: GridPoint, to: GridPoint, isReverse: Bool) -> Luna_Move {
-			return Luna_Move((from.location(isReverse) << 8) + to.location(isReverse))
+			let high = from.location(isReverse)
+			let low = to.location(isReverse)
+			return (UInt16(high) << 8) + UInt16(low)
 		}
 		
 		// Legal

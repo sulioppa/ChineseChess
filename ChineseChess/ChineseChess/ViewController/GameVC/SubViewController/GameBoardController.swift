@@ -55,7 +55,7 @@ class GameBoardController: ChessBoardController {
 	// MARK: - Board Operation
 	public override func refreshBoard() {
 		super.refreshBoard()
-		self.refreshLastMove(with: self.AI.lastMove)
+		self.refreshLastMove(with: self.AI.lastMove())
 	}
 	
 	public override func clearBoard() {
@@ -80,7 +80,7 @@ extension GameBoardController {
 	}
 	
 	private func makeChoice(location: Luna_Location) -> Bool {
-		if self.AI.isAnotherChoice(with: location) {
+		if self.AI.isAnotherChoice(withLocation: location) {
 			WavHandler.playVoice(state: .select)
 			self.refreshChoice(with: location)
 			self.refreshLegalMoves(with: location)
@@ -92,11 +92,11 @@ extension GameBoardController {
 	private func makeMove(to: GridPoint) {
 		self.clearLegalMoves()
 		let move = GridPoint.move(from: self.choice.grid, to: to, isReverse: self.reverse)
-		let state = self.AI.moveChess(with: move)
+		let state = self.AI.moveChess(withMove: move)
 		WavHandler.playVoice(state: state)
-		
-		self.refreshLastMove(with: self.AI.lastMove)
+
 		self.moveChess(from: self.choice.grid, to: to)
+		self.refreshLastMove(with: self.AI.lastMove())
 		self.clearChoice()
 	}
 	
@@ -117,7 +117,7 @@ extension GameBoardController {
 	private func refreshLegalMoves(with choice: Luna_Location) {
 		self.clearLegalMoves()
 		// draw ruby
-		for (_, location) in self.AI.legalMoves(with: choice).enumerated() {
+		for (_, location) in self.AI.legalMoves(withLocation: choice).enumerated() {
 			let result = self.drawRuby(location: location.uint8Value)
 			self.legalMoves[result.grid] = result.ruby
 		}
@@ -133,8 +133,10 @@ extension GameBoardController {
 	// last move
 	private func refreshLastMove(with move: Luna_Move) {
 		self.clearLastMove()
-		self.lastMove.from = self.drawSquare(isRed: false, location: Luna_Location(move >> 8))
-		self.lastMove.to = self.drawSquare(isRed: false, location: Luna_Location(move & 0xff))
+		if move != 0 {
+			self.lastMove.from = self.drawSquare(isRed: false, location: Luna_Location(move >> 8))
+			self.lastMove.to = self.drawSquare(isRed: false, location: Luna_Location(move & 0xff))
+		}
 	}
 	
 	private func clearLastMove() {
