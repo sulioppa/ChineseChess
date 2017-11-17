@@ -29,9 +29,9 @@ class LoadingAlertView: UIView {
 		
 		if let close = ResourcesProvider.shared.image(named: "close") {
 			let imageView = UIImageView(image: close)
-			imageView.contentMode = .scaleAspectFit
+			imageView.contentMode = .topLeft
 			imageView.addTapTarget(self, action: #selector(self.closeAlertView))
-			imageView.frame = CGRect(x: 15, y: 15, width: close.size.width, height: close.size.height)
+			imageView.frame = CGRect(x: 15, y: 15, width: 40, height: 40)
 			
 			self.closeView = imageView
 			self.addSubview(imageView)

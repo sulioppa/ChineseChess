@@ -11,15 +11,15 @@ import UIKit
 class LayoutPartner: NSObject {
 
 	public static let height: CGFloat = {
-		if UIScreen.main.bounds.size.height == 812.0 {
-			return 734.0
+		if #available(iOS 11.0, *) {
+			return UIApplication.shared.windows.first?.safeAreaLayoutGuide.layoutFrame.size.height ?? UIScreen.main.bounds.size.height
 		}
 		return UIScreen.main.bounds.size.height
 	}()
 	
 	public static let width: CGFloat = UIScreen.main.bounds.size.width
 	
-	public static let scale: CGFloat = LayoutPartner.width / 320.0
+	private static let scale: CGFloat = LayoutPartner.width / 320.0
 
 }
 

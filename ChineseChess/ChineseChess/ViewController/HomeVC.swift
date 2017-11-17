@@ -22,13 +22,7 @@ class HomeVC: UIViewController {
 	
 	// Scrollview
 	private func initScrollView() {
-		self.view.addSubview(self.scrollVC.scrollView)
-		self.scrollVC.scrollView.snp.makeConstraints {
-			$0.top.equalTo(self.view.layout.top)
-			$0.left.equalTo(self.view.layout.left)
-			$0.bottom.equalTo(self.view.layout.bottom)
-			$0.right.equalTo(self.view.layout.right)
-		}
+		self.scrollVC.setSuperview(superView: self.view)
 		NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
 	}
@@ -150,13 +144,28 @@ extension HomeVC {
 				}
 			}
 		}
-		
-		public var scrollView: UIScrollView {
-			return self.view
+
+		public func setSuperview(superView: UIView) {
+			superView.addSubview(self.scrollView)
+			self.scrollView.snp.makeConstraints {
+				$0.top.equalTo(superView.layout.top)
+				$0.left.equalTo(superView.layout.left)
+				$0.bottom.equalTo(superView.layout.bottom)
+				$0.right.equalTo(superView.layout.right)
+			}
+			
+			guard let image = ResourcesProvider.shared.image(named: "home") else { return }
+			let imageView = UIImageView(image: image)
+			self.scrollView.addSubview(imageView)
+			imageView.snp.makeConstraints {
+				$0.edges.equalTo(self.scrollView)
+				$0.height.equalTo(superView.layout.height)
+				$0.width.equalTo(superView.layout.height).multipliedBy(image.size.width / image.size.height)
+			}
 		}
 		
 		// Private vars
-		private lazy var view: UIScrollView = {
+		private lazy var scrollView: UIScrollView = {
 			let scrollView = UIScrollView()
 			scrollView.backgroundColor = UIColor.carbon
 			scrollView.showsVerticalScrollIndicator = false
@@ -164,15 +173,6 @@ extension HomeVC {
 			scrollView.bounces = false
 			scrollView.isScrollEnabled = false
 			scrollView.isUserInteractionEnabled = false
-			
-			if let image = ResourcesProvider.shared.image(named: "home") {
-				let contentSize = CGSize(width: LayoutPartner.height * image.size.width / image.size.height, height: LayoutPartner.height)
-				let imageView = UIImageView(image: image)
-				imageView.frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
-				
-				scrollView.contentSize = contentSize
-				scrollView.addSubview(imageView)
-			}
 			return scrollView
 		}()
 		
@@ -183,14 +183,14 @@ extension HomeVC {
 			guard self.isViewAppear && self.isForeground else { return }
 			
 			let targetOffset = self.currentOffset + self.direction
-			if targetOffset > scrollView.contentSize.width - LayoutPartner.width {
+			if targetOffset > self.scrollView.contentSize.width - self.scrollView.bounds.size.width {
 				self.direction = -1.0
 			} else if(targetOffset + self.direction < 0.0) {
 				self.direction = 1.0
 			}
 			
 			self.currentOffset += self.direction
-			scrollView.setContentOffset(CGPoint(x: self.currentOffset, y: 0), animated: true)
+			self.scrollView.setContentOffset(CGPoint(x: self.currentOffset, y: 0), animated: true)
 			self.perform(#selector(scrollViewShouldBeginScroll), with: nil, afterDelay: Macro.Time.homeScrollInterval)
 		}
 		
