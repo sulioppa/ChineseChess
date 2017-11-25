@@ -25,6 +25,7 @@
 		A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E4811F94E26000D28B25 /* MultiPeerVC.swift */; };
 		A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */; };
 		A782B7FE1FA0339600534DB6 /* Bool+Reverse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A782B7FD1FA0339600534DB6 /* Bool+Reverse.swift */; };
+		A7884A021FC9995C00691385 /* mate.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A7884A011FC9995B00691385 /* mate.m4a */; };
 		A78CC1BC1F8F783100563789 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */; };
 		A79128671F911F17002CC4E5 /* WavHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79128661F911F17002CC4E5 /* WavHandler.swift */; };
 		A79128681F9124E2002CC4E5 /* 沧海龙吟.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D161F905DBD0054DF93 /* 沧海龙吟.mp3 */; };
@@ -71,6 +72,7 @@
 		A778E4811F94E26000D28B25 /* MultiPeerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerVC.swift; sourceTree = "<group>"; };
 		A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		A782B7FD1FA0339600534DB6 /* Bool+Reverse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Reverse.swift"; sourceTree = "<group>"; };
+		A7884A011FC9995B00691385 /* mate.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = mate.m4a; sourceTree = "<group>"; };
 		A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A79128661F911F17002CC4E5 /* WavHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavHandler.swift; sourceTree = "<group>"; };
 		A79C27F61FA5D5B100FD9A87 /* Luna+Const.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+Const.m"; sourceTree = "<group>"; };
@@ -368,10 +370,11 @@
 			isa = PBXGroup;
 			children = (
 				A7E51D161F905DBD0054DF93 /* 沧海龙吟.mp3 */,
-				A7E51D171F905DBD0054DF93 /* check.wav */,
-				A7E51D181F905DBD0054DF93 /* eat.wav */,
-				A7E51D191F905DBD0054DF93 /* run.wav */,
 				A7E51D1A1F905DBD0054DF93 /* select.wav */,
+				A7E51D191F905DBD0054DF93 /* run.wav */,
+				A7E51D181F905DBD0054DF93 /* eat.wav */,
+				A7E51D171F905DBD0054DF93 /* check.wav */,
+				A7884A011FC9995B00691385 /* mate.m4a */,
 			);
 			path = Wavs;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A79128681F9124E2002CC4E5 /* 沧海龙吟.mp3 in Resources */,
+				A7884A021FC9995C00691385 /* mate.m4a in Resources */,
 				A79128691F9124E2002CC4E5 /* check.wav in Resources */,
 				A791286A1F9124E2002CC4E5 /* eat.wav in Resources */,
 				A791286B1F9124E2002CC4E5 /* run.wav in Resources */,

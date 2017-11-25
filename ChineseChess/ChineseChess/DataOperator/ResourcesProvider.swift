@@ -55,7 +55,7 @@ class ResourcesProvider: NSObject {
 		"eat": ("eat", "wav"),
 		"run": ("run", "wav"),
 		"select": ("select", "wav"),
-		"mate": ("eat", "wav")
+		"mate": ("mate", "m4a")
 	]
 	
 	private var wavsCache: [String: AVAudioPlayer] = [:]
