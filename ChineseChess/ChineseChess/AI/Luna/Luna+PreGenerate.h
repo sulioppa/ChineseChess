@@ -6,7 +6,10 @@
 //  Copyright © 2017年 StarLab. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+typedef signed char int8_t;
+typedef short int16_t;
 
 /* MARK: - Luna PreGenerate.（走法预生成）
  * side = 0 is red, 1 is black.
@@ -38,7 +41,7 @@ extern uint8_t Luna_MoveMap_P[1 << 17]; // [2][256][256]
  		left non eat, right non eat, left super cannon eat, right super cannon eat }
  */
 extern int8_t Luna_RowBit[1 << 19]; // [2 ^ 12][2 ^ 4][2 ^ 3]
-extern int16_t Luna_ColumnBit[1 << 20]; // [2 ^ 13][2 ^ 4][2 ^ 3]
+extern int8_t Luna_ColumnBit[1 << 20]; // [2 ^ 13][2 ^ 4][2 ^ 3]
 
 /* MARK: - Luna RC Row & Column Flexibility（位行位列 灵活度）
  * the third dimension indicates the flexibility of rook and cannon. { rook flexibility, cannon flexibility } */
@@ -46,18 +49,15 @@ extern uint8_t Luna_RowFlexibility[1 << 17]; // [2 ^ 12][2 ^ 4][2 ^ 1]
 extern uint8_t Luna_ColumnFlexibility[1 << 18]; // [2 ^ 13][2 ^ 4][2 ^ 1]
 
 /* MARK: - Luna RC Row & Column Map State（位行位列 走法状态）
- * this enum reveals the from -> to 's state, it can be eat or no eat or cannot eat. */
-typedef NS_ENUM(uint8_t, LunaRowColumnMapState) {
-	LunaRowColumnMapStateMoveNull = 0,
-	LunaRowColumnMapStateEatNone = 1 << 0,
-	LunaRowColumnMapStateEatR = 1 << 1,
-	LunaRowColumnMapStateEatC = 1 << 2,
-	LunaRowColumnMapStateEatSuperC = 1 << 3,
-};
-
-// this two mask indicates rook or cannon's move, eat or no eat.
-extern const uint8_t LunaRowColumnMapStateMaskR;
-extern const uint8_t LunaRowColumnMapStateMaskC;
+ * this values reveals the from -> to 's state, it can be eat or no eat or cannot move. */
+typedef uint8_t LunaRowColumnMapState;
+extern const LunaRowColumnMapState LunaRowColumnMapStateMoveNull;
+extern const LunaRowColumnMapState LunaRowColumnMapStateEatNone;
+extern const LunaRowColumnMapState LunaRowColumnMapStateEatR;
+extern const LunaRowColumnMapState LunaRowColumnMapStateEatC;
+extern const LunaRowColumnMapState LunaRowColumnMapStateEatSuperC;
+extern const LunaRowColumnMapState LunaRowColumnMapStateMaskR;
+extern const LunaRowColumnMapState LunaRowColumnMapStateMaskC;
 
 /* MARK: - Luna RC Row & Column Map（位行位列 走法状态映射）
  * the third dimension indicates the target index, so the second dimension and third dimension can indicates the state of the index of rook to the target index.

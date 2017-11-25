@@ -6,7 +6,7 @@
 //  Copyright © 2017年 StarLab. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+typedef unsigned char uint8_t;
 
 // MARK: - Luna Init Data.（棋子数组、棋盘数组初始化数据）
 extern const uint8_t Luna_InitChess[48];
