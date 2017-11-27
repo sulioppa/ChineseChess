@@ -183,7 +183,7 @@
 	
 	for (Luna_Location *to = Luna_MoveArray_N + (from << 3), *end = to + 8; to < end; to++) {
 		if (*to) {
-			if ( !_board[Luna_MoveMap_N[(from << 8) + *to]] && [self isLegalStateWithMove:from to:*to]) {
+			if ( !_board[Luna_MoveMap_N[Luna_MoveMake(from, *to)]] && [self isLegalStateWithMove:from to:*to]) {
 				[moves addObject:@(*to)];
 			}
 		} else {
@@ -335,7 +335,7 @@
 
 // MARK: - Attacks Check
 - (BOOL)N_AttackWithLocation:(Luna_Location)location target:(Luna_Location)target {
-	Luna_Location leg = Luna_MoveMap_N[(location << 8) + target];
+	Luna_Location leg = Luna_MoveMap_N[Luna_MoveMake(location, target)];
 	return leg && _board[leg] == 0;
 }
 
@@ -365,7 +365,7 @@
 
 - (BOOL)P_AttackWithLocation:(Luna_Location)location target:(Luna_Location)target {
 	uint8_t isBlack = (_board[location] >> 4) > 1;
-	return Luna_MoveMap_P[(location << 8) + target + (isBlack << 16)];
+	return Luna_MoveMap_P[Luna_MoveMake(location, target) + (isBlack << 16)];
 }
 
 // MARK: - Function
@@ -428,12 +428,12 @@
 		return NO;
 	}
 	
-	Luna_Chess ate = [self makeMoveWithMove:(from << 8) + to];
+	Luna_Chess ate = [self makeMoveWithMove:Luna_MoveMake(from, to)];
 	
 	// face check and other attack check
 	BOOL isIllegal = [self isFaceToFace] || [self isCheckedWithTargetSide:_side];
 	
-	[self undoMoveWithMove:(from << 8) + to ate:ate];
+	[self undoMoveWithMove:Luna_MoveMake(from, to) ate:ate];
 	
 	return !isIllegal;
 }

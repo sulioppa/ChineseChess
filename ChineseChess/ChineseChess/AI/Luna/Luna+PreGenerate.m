@@ -80,7 +80,7 @@ void Luna_Init_PreGenerate(void) {
 				to = from + K_Dir[index];
 				if (Luna_LegalLocation_K[to]) {
 					Luna_MoveArray_K[(from << 2) + count] = to;
-					Luna_MoveMap_K[(from << 8) + to] = 1;
+					Luna_MoveMap_K[Luna_MoveMake(from, to)] = 1;
 					count++;
 				}
 			}
@@ -92,7 +92,7 @@ void Luna_Init_PreGenerate(void) {
 				to = from + A_Dir[index];
 				if (Luna_LegalLocation_A[to]) {
 					Luna_MoveArray_A[(from << 2) + count] = to;
-					Luna_MoveMap_A[(from << 8) + to] = 1;
+					Luna_MoveMap_A[Luna_MoveMake(from, to)] = 1;
 					count++;
 				}
 			}
@@ -104,7 +104,7 @@ void Luna_Init_PreGenerate(void) {
 				to = from + B_Dir[index];
 				if (Luna_LegalLocation_B[to]) {
 					Luna_MoveArray_B[(from << 2) + count] = to;
-					Luna_MoveMap_B[(from << 8) + to] = 1;
+					Luna_MoveMap_B[Luna_MoveMake(from, to)] = 1;
 					count++;
 				}
 			}
@@ -116,7 +116,7 @@ void Luna_Init_PreGenerate(void) {
 				to = from + N_Dir[index];
 				if (Luna_LegalLocation_Board[to]) {
 					Luna_MoveArray_N[(from << 3) + count] = to;
-					Luna_MoveMap_N[(from << 8) + to] = from + N_Leg[index];;
+					Luna_MoveMap_N[Luna_MoveMake(from, to)] = from + N_Leg[index];;
 					count++;
 				}
 			}
@@ -128,7 +128,7 @@ void Luna_Init_PreGenerate(void) {
 				to = from + P_Dir[0][index];
 				if (Luna_LegalLocation_P[to]) {
 					Luna_MoveArray_P[(from << 2) + count] = to;
-					Luna_MoveMap_P[(from << 8) + to] = 1;
+					Luna_MoveMap_P[Luna_MoveMake(from, to)] = 1;
 					count++;
 				}
 			}
@@ -139,7 +139,7 @@ void Luna_Init_PreGenerate(void) {
 				to = from + P_Dir[1][index];
 				if (Luna_LegalLocation_P[to + 256]) {
 					Luna_MoveArray_P[(from << 2) + count + (1 << 10)] = to;
-					Luna_MoveMap_P[(from << 8) + to + (1 << 16)] = 1;
+					Luna_MoveMap_P[Luna_MoveMake(from, to) + (1 << 16)] = 1;
 					count++;
 				}
 			}

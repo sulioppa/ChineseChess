@@ -21,6 +21,7 @@ typedef short int16_t;
 // MARK: - Is Same Row Or Column.（同行 或 同列）
 #define Luna_Row(location) ((location) >> 4)
 #define Luna_Column(location) ((location) & 15)
+#define Luna_MoveMake(from, to) (((from) << 8) + (to))
 
 #define Luna_IsSameRow(location1, location2) ((location1) >> 4) == ((location2) >> 4)
 #define Luna_IsSameColumn(location1, location2) ((location1) & 15) == ((location2) & 15)
