@@ -18,6 +18,13 @@ typedef short int16_t;
  * the 5th or 6th bit indicates red or black. */
 #define Luna_IsNotSameSide(chess, side) (((chess) >> 5) ^ (side))
 
+// MARK: - Is Same Row Or Column.（同行 或 同列）
+#define Luna_Row(location) ((location) >> 4)
+#define Luna_Column(location) ((location) & 15)
+
+#define Luna_IsSameRow(location1, location2) ((location1) >> 4) == ((location2) >> 4)
+#define Luna_IsSameColumn(location1, location2) ((location1) & 15) == ((location2) & 15)
+
 // MARK: - Luna Move Array.（短程子力 走法数组）
 extern uint8_t Luna_MoveArray_K[1 << 10]; // [256][4]
 extern uint8_t Luna_MoveArray_A[1 << 10];
@@ -65,6 +72,15 @@ extern const LunaRowColumnMapState LunaRowColumnMapStateMaskC;
  */
 extern LunaRowColumnMapState Luna_RowMap[1 << 20]; // [2 ^ 12][2 ^ 4][2 ^ 4]
 extern LunaRowColumnMapState Luna_ColumnMap[1 << 21]; // [2 ^ 13][2 ^ 4][2 ^ 4]
+
+// MARK: - Luna RC Rank（位行位列 读取）
+extern const uint8_t Luna_BitOffset_EatR;
+extern const uint8_t Luna_BitOffset_EatC;
+extern const uint8_t Luna_BitOffset_EatNone;
+extern const uint8_t Luna_BitOffset_SuperEatC;
+
+extern const int8_t * Luna_Bit(const _Bool isRow, const uint16_t rank, const uint8_t idx, const uint8_t offset);
+extern LunaRowColumnMapState Luna_Map(const _Bool isRow, const uint16_t rank, const uint8_t from, const uint8_t to);
 
 // MARK: - Init PreGenerate.（走法预生成 计算）
 extern void Luna_Init_PreGenerate(void);

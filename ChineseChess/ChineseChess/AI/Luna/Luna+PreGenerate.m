@@ -41,6 +41,20 @@ const LunaRowColumnMapState LunaRowColumnMapStateMaskC = LunaRowColumnMapStateEa
 LunaRowColumnMapState Luna_RowMap[1 << 20] = { LunaRowColumnMapStateMoveNull }; // [2 ^ 12][2 ^ 4][2 ^ 4]
 LunaRowColumnMapState Luna_ColumnMap[1 << 21] = { LunaRowColumnMapStateMoveNull }; // [2 ^ 13][2 ^ 4][2 ^ 4]
 
+// MARK: - Luna RC Rank
+const uint8_t Luna_BitOffset_EatR = 0;
+const uint8_t Luna_BitOffset_EatC = 2;
+const uint8_t Luna_BitOffset_EatNone = 4;
+const uint8_t Luna_BitOffset_SuperEatC = 6;
+
+const int8_t * Luna_Bit(const _Bool isRow, const uint16_t rank, const uint8_t idx, const uint8_t offset) {
+	return (isRow ? Luna_RowBit : Luna_ColumnBit) + (rank << 7) + (idx << 3) + offset;
+}
+
+LunaRowColumnMapState Luna_Map(const _Bool isRow, const uint16_t rank, const uint8_t from, const uint8_t to) {
+	return *((isRow ? Luna_RowMap : Luna_ColumnMap) + (rank << 8) + (from << 4) + to);
+}
+
 // MARK: - Init PreGenerate
 void Luna_Init_Rank(int8_t *const rankBit, uint8_t *const rankFlex, LunaRowColumnMapState *const rankMap, const uint8_t maxIdx, const uint16_t maxBound);
 

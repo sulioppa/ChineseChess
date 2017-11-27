@@ -16,7 +16,7 @@ class UserPreference: NSObject {
 	
 	public class Game {
 		public var red: Bool = true
-		public var black: Bool = false
+		public var black: Bool = true
 		public var reverse: Bool = false
 		public var opposite: Bool = false
 		
