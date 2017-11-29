@@ -21,7 +21,10 @@ typedef short int16_t;
 // MARK: - Is Same Row Or Column.（同行 或 同列）
 #define Luna_Row(location) ((location) >> 4)
 #define Luna_Column(location) ((location) & 15)
+
 #define Luna_MoveMake(from, to) (((from) << 8) + (to))
+#define Luna_MoveFrom(move) ((move) >> 8)
+#define Luna_MoveTo(move) ((move) & 0xff)
 
 #define Luna_IsSameRow(location1, location2) ((location1) >> 4) == ((location2) >> 4)
 #define Luna_IsSameColumn(location1, location2) ((location1) & 15) == ((location2) & 15)
@@ -51,6 +54,12 @@ extern uint8_t Luna_MoveMap_P[1 << 17]; // [2][256][256]
 extern int8_t Luna_RowBit[1 << 19]; // [2 ^ 12][2 ^ 4][2 ^ 3]
 extern int8_t Luna_ColumnBit[1 << 20]; // [2 ^ 13][2 ^ 4][2 ^ 3]
 
+extern const uint8_t Luna_BitOffset_EatR;
+extern const uint8_t Luna_BitOffset_EatC;
+extern const uint8_t Luna_BitOffset_EatNone;
+extern const uint8_t Luna_BitOffset_SuperEatC;
+extern const int8_t * Luna_Bit(const _Bool isRow, const uint16_t rank, const uint8_t idx, const uint8_t offset);
+
 /* MARK: - Luna RC Row & Column Flexibility（位行位列 灵活度）
  * the third dimension indicates the flexibility of rook and cannon. { rook flexibility, cannon flexibility } */
 extern uint8_t Luna_RowFlexibility[1 << 17]; // [2 ^ 12][2 ^ 4][2 ^ 1]
@@ -64,8 +73,6 @@ extern const LunaRowColumnMapState LunaRowColumnMapStateEatNone;
 extern const LunaRowColumnMapState LunaRowColumnMapStateEatR;
 extern const LunaRowColumnMapState LunaRowColumnMapStateEatC;
 extern const LunaRowColumnMapState LunaRowColumnMapStateEatSuperC;
-extern const LunaRowColumnMapState LunaRowColumnMapStateMaskR;
-extern const LunaRowColumnMapState LunaRowColumnMapStateMaskC;
 
 /* MARK: - Luna RC Row & Column Map（位行位列 走法状态映射）
  * the third dimension indicates the target index, so the second dimension and third dimension can indicates the state of the index of rook to the target index.
@@ -74,14 +81,9 @@ extern const LunaRowColumnMapState LunaRowColumnMapStateMaskC;
 extern LunaRowColumnMapState Luna_RowMap[1 << 20]; // [2 ^ 12][2 ^ 4][2 ^ 4]
 extern LunaRowColumnMapState Luna_ColumnMap[1 << 21]; // [2 ^ 13][2 ^ 4][2 ^ 4]
 
-// MARK: - Luna RC Rank（位行位列 读取）
-extern const uint8_t Luna_BitOffset_EatR;
-extern const uint8_t Luna_BitOffset_EatC;
-extern const uint8_t Luna_BitOffset_EatNone;
-extern const uint8_t Luna_BitOffset_SuperEatC;
-
-extern const int8_t * Luna_Bit(const _Bool isRow, const uint16_t rank, const uint8_t idx, const uint8_t offset);
-extern LunaRowColumnMapState Luna_Map(const _Bool isRow, const uint16_t rank, const uint8_t from, const uint8_t to);
+extern const LunaRowColumnMapState LunaRowColumnMapStateMaskR;
+extern const LunaRowColumnMapState LunaRowColumnMapStateMaskC;
+extern const LunaRowColumnMapState Luna_Map(const _Bool isRow, const uint16_t rank, const uint8_t from, const uint8_t to);
 
 // MARK: - Init PreGenerate.（走法预生成 计算）
 extern void Luna_Init_PreGenerate(void);

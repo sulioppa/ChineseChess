@@ -23,35 +23,35 @@ uint8_t Luna_MoveMap_B[1 << 16] = { 0 };
 uint8_t Luna_MoveMap_N[1 << 16] = { 0 };
 uint8_t Luna_MoveMap_P[1 << 17] = { 0 }; // [2][256][256]
 
-// MARK: - Luna RC Row & Column, Flexibility, Map
+// MARK: - Luna RC Row & Column
 int8_t Luna_RowBit[1 << 19] = { 0 }; // [2 ^ 12][2 ^ 4][2 ^ 3]
 int8_t Luna_ColumnBit[1 << 20] = { 0 }; // [2 ^ 13][2 ^ 4][2 ^ 3]
 
+const uint8_t Luna_BitOffset_EatR = 0;
+const uint8_t Luna_BitOffset_EatC = 2;
+const uint8_t Luna_BitOffset_EatNone = 4;
+const uint8_t Luna_BitOffset_SuperEatC = 6;
+const int8_t * Luna_Bit(const _Bool isRow, const uint16_t rank, const uint8_t idx, const uint8_t offset) {
+	return (isRow ? Luna_RowBit : Luna_ColumnBit) + (rank << 7) + (idx << 3) + offset;
+}
+
+// MARK: - Luna RC Flexibility
 uint8_t Luna_RowFlexibility[1 << 17] = { 0 }; // [2 ^ 12][2 ^ 4][2 ^ 1]
 uint8_t Luna_ColumnFlexibility[1 << 18] = { 0 }; // [2 ^ 13][2 ^ 4][2 ^ 1]
 
+// MARK: - Luna RC Map
 const LunaRowColumnMapState LunaRowColumnMapStateMoveNull = 0;
 const LunaRowColumnMapState LunaRowColumnMapStateEatNone = 1 << 0;
 const LunaRowColumnMapState LunaRowColumnMapStateEatR = 1 << 1;
 const LunaRowColumnMapState LunaRowColumnMapStateEatC = 1 << 2;
 const LunaRowColumnMapState LunaRowColumnMapStateEatSuperC = 1 << 3;
-const LunaRowColumnMapState LunaRowColumnMapStateMaskR = LunaRowColumnMapStateEatNone | LunaRowColumnMapStateEatR;
-const LunaRowColumnMapState LunaRowColumnMapStateMaskC = LunaRowColumnMapStateEatNone | LunaRowColumnMapStateEatC;
 
 LunaRowColumnMapState Luna_RowMap[1 << 20] = { LunaRowColumnMapStateMoveNull }; // [2 ^ 12][2 ^ 4][2 ^ 4]
 LunaRowColumnMapState Luna_ColumnMap[1 << 21] = { LunaRowColumnMapStateMoveNull }; // [2 ^ 13][2 ^ 4][2 ^ 4]
 
-// MARK: - Luna RC Rank
-const uint8_t Luna_BitOffset_EatR = 0;
-const uint8_t Luna_BitOffset_EatC = 2;
-const uint8_t Luna_BitOffset_EatNone = 4;
-const uint8_t Luna_BitOffset_SuperEatC = 6;
-
-const int8_t * Luna_Bit(const _Bool isRow, const uint16_t rank, const uint8_t idx, const uint8_t offset) {
-	return (isRow ? Luna_RowBit : Luna_ColumnBit) + (rank << 7) + (idx << 3) + offset;
-}
-
-LunaRowColumnMapState Luna_Map(const _Bool isRow, const uint16_t rank, const uint8_t from, const uint8_t to) {
+const LunaRowColumnMapState LunaRowColumnMapStateMaskR = LunaRowColumnMapStateEatNone | LunaRowColumnMapStateEatR;
+const LunaRowColumnMapState LunaRowColumnMapStateMaskC = LunaRowColumnMapStateEatNone | LunaRowColumnMapStateEatC;
+const LunaRowColumnMapState Luna_Map(const _Bool isRow, const uint16_t rank, const uint8_t from, const uint8_t to) {
 	return *((isRow ? Luna_RowMap : Luna_ColumnMap) + (rank << 8) + (from << 4) + to);
 }
 

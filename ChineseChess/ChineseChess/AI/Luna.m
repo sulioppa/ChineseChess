@@ -8,13 +8,16 @@
 
 #import "Luna.h"
 #import "Luna+C.h"
+#import "Luna+Objc.h"
 
 // MARK: - Board Operation.
 @interface Luna() {
 	Luna_Location _board[256];
 	Luna_Location _chess[48];
 	Luna_Side _side;
-	Luna_Move _lastMove;
+	
+	id<LunaCoding> _coder;
+	LunaRecordStack *_stack;
 }
 
 - (void)initBoard;
@@ -39,7 +42,7 @@
 }
 
 - (Luna_Move)lastMove {
-	return _lastMove;
+	return _stack.peek.move;
 }
 
 // Board Operation
@@ -61,15 +64,18 @@
 	memcpy(_board, Luna_InitBoard, 256);
 	memcpy(_chess, Luna_InitChess, 48);
 	_side = 0;
-	_lastMove = 0;
 	
-	_state = LunaBoardStateRedPlayer;
+	_coder = [LunaFENCoder new];
+	_stack = [[LunaRecordStack alloc] initWithCoder:_coder];
+	
+	_state = LunaBoardStateTurnRedSide;
+	_characterRecords = [NSMutableArray array];
 	_isThinking = NO;
 }
 
 - (Luna_Chess)makeMoveWithMove:(Luna_Move)move {
-	const Luna_Location from = move >> 8;
-	const Luna_Location to = move & 0xff;
+	const Luna_Location from = Luna_MoveFrom(move);
+	const Luna_Location to = Luna_MoveTo(move);
 	const Luna_Chess ate = _board[to];
 	const Luna_Chess chess = _board[from];
 	
@@ -82,12 +88,12 @@
 
 - (void)oppositeSide {
 	_side = 1 - _side;
-	_state = _side ? LunaBoardStateBlackPlayer : LunaBoardStateRedPlayer;
+	_state =  _side ? LunaBoardStateTurnBlackSide : LunaBoardStateTurnRedSide;
 }
 
 - (void)undoMoveWithMove:(Luna_Move)move ate:(Luna_Chess)ate {
-	const Luna_Location from = move >> 8;
-	const Luna_Location to = move & 0xff;
+	const Luna_Location from = Luna_MoveFrom(move);
+	const Luna_Location to = Luna_MoveTo(move);
 	const Luna_Chess chess = _board[to];
 	
 	_chess[chess] = from;
@@ -108,6 +114,8 @@
 - (BOOL)isCheckedMateWithTargetSide:(BOOL)isRed;
 
 - (BOOL)isCheckedWithTargetSide:(BOOL)isRed;
+
+- (Luna_Chess)catchWithLocation:(Luna_Location)location;
 
 @end
 
@@ -438,6 +446,10 @@
 	return !isIllegal;
 }
 
+- (Luna_Chess)catchWithLocation:(Luna_Location)location {
+	return 0;
+}
+
 - (uint16_t)rankWithLocation:(Luna_Location)location isRow:(BOOL)isRow {
 	uint16_t rank = 0;
 	
@@ -467,8 +479,14 @@
 // MARK: - Game.
 @implementation Luna (Game)
 
-- (void)initBoardWithFEN:(NSString *)FEN {
-	[self initBoard];
+- (void)initBoardWithFile:(NSString *)file {
+	[_characterRecords removeAllObjects];
+	
+	[_stack reloadWith:file];
+}
+
+- (NSString *)historyFile {
+	return [_stack historyFileWithCode:NO];
 }
 
 - (BOOL)isAnotherChoiceWithLocation:(Luna_Location)location {
@@ -483,19 +501,48 @@
 }
 
 - (LunaMoveState)moveChessWithMove:(Luna_Move)move {
-	Luna_Chess ate = [self makeMoveWithMove:move];
-	LunaMoveState state = ate ? LunaMoveStateEat : LunaMoveStateNormal;
+	[_characterRecords addObject:[LunaRuler characterRecordWithMove:move board:_board]];
+	
+	LunaRecord *record = [LunaRecord new];
+	record.code = [_coder encode:_board];
+	record.move = move;
+	record.chess = _board[Luna_MoveFrom(move)];
+	record.eat = [self makeMoveWithMove:move];
+	record.position = [_coder encode:_board];
+	record.catch = [self catchWithLocation:Luna_MoveTo(move)];
+	[_stack push:record];
 	
 	[self oppositeSide];
-	_lastMove = move;
+	
+	LunaMoveState state = record.eat ? LunaMoveStateEat : LunaMoveStateNormal;
 	
 	if ([self isCheckedMateWithTargetSide:_side]) {
-		state =  ate ? LunaMoveStateEatCheckMate : LunaMoveStateCheckMate;
-		_state =  _side ? LunaBoardStateRedPlayerWin : LunaBoardStateBlackPlayerWin;
+		state =  record.eat ? LunaMoveStateEatCheckMate : LunaMoveStateCheckMate;
+		_state =  _side ? LunaBoardStateWinNormalRed : LunaBoardStateWinNormalBlack;
 	} else if ([self isCheckedWithTargetSide:_side]) {
-		state =  ate ? LunaMoveStateEatCheck : LunaMoveStateCheck;
+		state =  record.eat ? LunaMoveStateEatCheck : LunaMoveStateCheck;
+	}
+
+	if ((_state & 0xfe) == 0) {
+		_state = [LunaRuler analyze:_stack.allRecords];
 	}
 	return state;
+}
+
+- (Luna_Chess)regret:(Luna_Move *)move {
+	LunaRecord *record = [_stack pop];
+	
+	if (record) {
+		[_characterRecords removeLastObject];
+		[self undoMoveWithMove:record.move ate:record.eat];
+		[self oppositeSide];
+		
+		*move = record.move;
+		return record.eat;
+	} else {
+		*move = 0;
+		return 0;
+	}
 }
 
 @end

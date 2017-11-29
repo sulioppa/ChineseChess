@@ -10,11 +10,15 @@
 
 // MARK: - LunaBoardState, this enum reveals the state of game, it can be over or red player's turn or black player's turn.
 typedef NS_ENUM(uint8_t, LunaBoardState) {
-	LunaBoardStateRedPlayer,
-	LunaBoardStateBlackPlayer,
-	LunaBoardStateDraw,
-	LunaBoardStateRedPlayerWin,
-	LunaBoardStateBlackPlayerWin
+	LunaBoardStateTurnRedSide = 0,
+	LunaBoardStateTurnBlackSide = 1 << 0,
+	LunaBoardStateDrawSamePositionMultiTimes = 1 << 1,
+	LunaBoardStateDraw50RoundHaveNoneEat = 1 << 2,
+	LunaBoardStateDrawBothSideHaveNoneAttckChess = 1 << 3,
+	LunaBoardStateWinNormalRed = 1 << 4,
+	LunaBoardStateWinNormalBlack = 1 << 5,
+	LunaBoardStateWinLongCatchRed = 1 << 6,
+	LunaBoardStateWinLongCatchBlack = 1 << 7
 };
 
 // MARK: - LunaMoveState, this enum reveals the state of a move, it can be check or mate...
@@ -48,6 +52,8 @@ typedef uint16_t Luna_Move;
 // the state reveals the state of game.
 @property (nonatomic, readonly) LunaBoardState state;
 
+@property (nonnull, nonatomic, readonly) NSMutableArray<NSString *> *characterRecords;
+
 // AI Control, the isThinking reveals the AI is thinking or not, you can stop it by setting it 'NO'.
 @property (nonatomic) BOOL isThinking;
 
@@ -56,8 +62,10 @@ typedef uint16_t Luna_Move;
 // MARK: - AI Luna. (Game)
 @interface Luna (Game)
 
-// reset board with FEN reocrd.
-- (void)initBoardWithFEN:(nullable NSString *)FEN;
+// reset board with File reocrd.
+- (void)initBoardWithFile:(nullable NSString *)file;
+
+- (nonnull NSString *)historyFile;
 
 // see if user want to choose another chess.
 - (BOOL)isAnotherChoiceWithLocation:(Luna_Location)location;
@@ -67,5 +75,8 @@ typedef uint16_t Luna_Move;
 
 // do a chess move, return a state indicates how this move affect the game.
 - (LunaMoveState)moveChessWithMove:(Luna_Move)move;
+
+// undo a chess move from move stack, move = 0 indicates there's no more move in stack.
+- (Luna_Chess)regret:(nonnull Luna_Move *)move;
 
 @end

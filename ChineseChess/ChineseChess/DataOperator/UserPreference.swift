@@ -43,12 +43,14 @@ class UserPreference: NSObject {
 	public class History {
 		public var reverse: Bool = false
 		public var opposite: Bool = false
+        public var histories: [String : String] = [:]
 		
 		public var dictionary: [String: Any] {
 			let key = Key()
 			return [
 				key.reverse: self.reverse,
-				key.opposite: self.opposite
+				key.opposite: self.opposite,
+                key.histories: self.histories
 			]
 		}
 		
@@ -98,6 +100,7 @@ class UserPreference: NSObject {
 		public let red = "red"
 		public let black = "black"
 		public let nickname = "nickname"
+        public let histories = "histories"
 	}
 	
 	override private init() {
