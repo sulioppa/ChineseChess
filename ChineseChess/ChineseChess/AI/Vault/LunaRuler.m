@@ -11,8 +11,12 @@
 
 @implementation LunaRuler
 
-+ (LunaBoardState)analyze:(NSArray<LunaRecord *> *)records {
-	return (records.count & 1) ? LunaBoardStateTurnBlackSide : LunaBoardStateTurnRedSide;
++ (LunaBoardState)analyzeWithRecords:(NSArray<LunaRecord *> *)records currentSide:(const uint8_t)side  {
+    if (records.count == 0) {
+        return side;
+    }
+    
+	return side;
 }
 
 + (NSString *)characterRecordWithMove:(uint16_t)move board:(const uint8_t *const)board {

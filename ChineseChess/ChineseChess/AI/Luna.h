@@ -52,6 +52,7 @@ typedef uint16_t Luna_Move;
 // the state reveals the state of game.
 @property (nonatomic, readonly) LunaBoardState state;
 
+// return the character records. such as "車 9 进 1".
 @property (nonnull, nonatomic, readonly) NSMutableArray<NSString *> *characterRecords;
 
 // AI Control, the isThinking reveals the AI is thinking or not, you can stop it by setting it 'NO'.
@@ -61,11 +62,6 @@ typedef uint16_t Luna_Move;
 
 // MARK: - AI Luna. (Game)
 @interface Luna (Game)
-
-// reset board with File reocrd.
-- (void)initBoardWithFile:(nullable NSString *)file;
-
-- (nonnull NSString *)historyFile;
 
 // see if user want to choose another chess.
 - (BOOL)isAnotherChoiceWithLocation:(Luna_Location)location;
@@ -77,6 +73,17 @@ typedef uint16_t Luna_Move;
 - (LunaMoveState)moveChessWithMove:(Luna_Move)move;
 
 // undo a chess move from move stack, move = 0 indicates there's no more move in stack.
-- (Luna_Chess)regret:(nonnull Luna_Move *)move;
+- (Luna_Chess)regretWithMove:(nonnull Luna_Move *)move;
+
+@end
+
+// MARK: - AI Luna. (History)
+@interface Luna (History)
+
+// reset board with file record.
+- (void)initBoardWithFile:(nullable NSString *)file;
+
+// return the file record of game.
+- (nonnull NSString *)historyFile;
 
 @end

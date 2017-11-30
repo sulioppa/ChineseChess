@@ -16,6 +16,14 @@
 
 @end
 
+@implementation NSString (Empty)
+
+- (BOOL)isEmpty {
+	return self.length == 0;
+}
+
+@end
+
 @implementation NSMutableString (Unichar)
 
 - (void)appendChar:(unichar)c {

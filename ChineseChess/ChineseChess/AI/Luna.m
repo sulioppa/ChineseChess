@@ -70,7 +70,7 @@
 	
 	_state = LunaBoardStateTurnRedSide;
 	_characterRecords = [NSMutableArray array];
-	_isThinking = NO;
+	self.isThinking = NO;
 }
 
 - (Luna_Chess)makeMoveWithMove:(Luna_Move)move {
@@ -88,7 +88,7 @@
 
 - (void)oppositeSide {
 	_side = 1 - _side;
-	_state =  _side ? LunaBoardStateTurnBlackSide : LunaBoardStateTurnRedSide;
+	_state =  _side;
 }
 
 - (void)undoMoveWithMove:(Luna_Move)move ate:(Luna_Chess)ate {
@@ -115,7 +115,7 @@
 
 - (BOOL)isCheckedWithTargetSide:(BOOL)isRed;
 
-- (Luna_Chess)catchWithLocation:(Luna_Location)location;
+- (Luna_Chess)catchWithLocation:(Luna_Location)location hasEat:(BOOL)has;
 
 @end
 
@@ -446,8 +446,12 @@
 	return !isIllegal;
 }
 
-- (Luna_Chess)catchWithLocation:(Luna_Location)location {
-	return 0;
+- (Luna_Chess)catchWithLocation:(Luna_Location)location hasEat:(BOOL)has {
+    if (has) {
+        return 0;
+    }
+    
+    return 0;
 }
 
 - (uint16_t)rankWithLocation:(Luna_Location)location isRow:(BOOL)isRow {
@@ -479,16 +483,6 @@
 // MARK: - Game.
 @implementation Luna (Game)
 
-- (void)initBoardWithFile:(NSString *)file {
-	[_characterRecords removeAllObjects];
-	
-	[_stack reloadWith:file];
-}
-
-- (NSString *)historyFile {
-	return [_stack historyFileWithCode:NO];
-}
-
 - (BOOL)isAnotherChoiceWithLocation:(Luna_Location)location {
 	NSAssert(Luna_LegalLocation_Board[location] == 1, @"%s: location is not legal", __FUNCTION__);
 	
@@ -509,7 +503,7 @@
 	record.chess = _board[Luna_MoveFrom(move)];
 	record.eat = [self makeMoveWithMove:move];
 	record.position = [_coder encode:_board];
-	record.catch = [self catchWithLocation:Luna_MoveTo(move)];
+	record.catch = [self catchWithLocation:Luna_MoveTo(move) hasEat:record.eat];
 	[_stack push:record];
 	
 	[self oppositeSide];
@@ -524,12 +518,12 @@
 	}
 
 	if ((_state & 0xfe) == 0) {
-		_state = [LunaRuler analyze:_stack.allRecords];
+		_state = [LunaRuler analyzeWithRecords:_stack.allRecords currentSide:_side];
 	}
 	return state;
 }
 
-- (Luna_Chess)regret:(Luna_Move *)move {
+- (Luna_Chess)regretWithMove:(Luna_Move *)move {
 	LunaRecord *record = [_stack pop];
 	
 	if (record) {
@@ -543,6 +537,60 @@
 		*move = 0;
 		return 0;
 	}
+}
+
+@end
+
+// MARK: - History
+@implementation Luna (History)
+
+- (void)initBoardWithFile:(NSString *)file {
+    memcpy(_board, Luna_InitBoard, 256);
+    memcpy(_chess, Luna_InitChess, 48);
+    _side = 0;
+    
+    _state = LunaBoardStateTurnRedSide;
+    [_characterRecords removeAllObjects];
+    self.isThinking = NO;
+    
+    if (file == nil) {
+        [_stack clear];
+        return;
+    }
+    
+    _side = _stack.firstSide;
+    _state =  _side;
+    [_coder decode:_stack.firstCode board:_board];
+    
+    memset(_chess, 0, 48);
+    for (int i = 0; i < 256; i++) {
+        if (_board[i]) {
+            _chess[_board[i]] = i;
+        }
+    }
+    
+    for (LunaRecord *record in _stack.allRecords) {
+        [_characterRecords addObject:[LunaRuler characterRecordWithMove:record.move board:_board]];
+        
+        record.chess = _board[Luna_MoveFrom(record.move)];
+        record.eat = [self makeMoveWithMove:record.move];
+        record.position = [_coder encode:_board];
+        record.catch = [self catchWithLocation:Luna_MoveTo(record.move) hasEat:record.eat];
+        
+        _side = 1 - _side;
+    }
+    
+    if ([self isCheckedMateWithTargetSide:_side]) {
+        _state =  _side ? LunaBoardStateWinNormalRed : LunaBoardStateWinNormalBlack;
+    }
+    
+    if ((_state & 0xfe) == 0) {
+        _state = [LunaRuler analyzeWithRecords:_stack.allRecords currentSide:_side];
+    }
+}
+
+- (NSString *)historyFile {
+    return [_stack historyFileWithCode:NO];
 }
 
 @end

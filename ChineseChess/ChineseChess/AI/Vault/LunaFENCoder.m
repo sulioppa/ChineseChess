@@ -103,7 +103,6 @@
 	return @"rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR/";
 }
 
-
 // MARK: - Private
 - (uint8_t)chess:(uint8_t *const)array start:(uint8_t)start {
 	if ((start & 15) == 0) {

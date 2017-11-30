@@ -7,6 +7,7 @@
 //
 
 #import "LunaRecordStack.h"
+#import "NSString+Subscript.h"
 
 @interface LunaRecordStack()
 @property (nonatomic) id<LunaCoding> delegate;
@@ -30,10 +31,30 @@
 	if (file == nil) {
 		return;
 	}
+	
+	NSArray<NSString *> *rows = [file componentsSeparatedByString:@"\n"];
+	
+	if (!rows.firstObject.isEmpty) {
+		self.firstSide = rows.firstObject[0].unsignedShortValue - '0';
+		self.firstCode = [rows.firstObject substringFromIndex:1];
+	}
+	
+	for (int i = 1; i < rows.count; i++) {
+		if (!rows[i].isEmpty) {
+			LunaRecord *record = [LunaRecord recordWithString:rows[i]];
+			[self push:record];
+		}
+	}
 }
 
 - (NSString *)historyFileWithCode:(BOOL)withCode {
-    return @"";
+	NSMutableString *file = [NSMutableString stringWithFormat:@"%d%@", self.firstSide, self.firstCode];
+	
+	for (LunaRecord *record in self.allRecords) {
+		[file appendString:@"\n"];
+		[file appendString: [record textWithCode:withCode]];
+	}
+	return [NSString stringWithString:file];
 }
 
 // MARK: - Stack Operation.

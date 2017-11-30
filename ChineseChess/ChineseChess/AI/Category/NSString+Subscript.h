@@ -14,6 +14,12 @@
 
 @end
 
+@interface NSString (Empty)
+
+- (BOOL)isEmpty;
+
+@end
+
 @interface NSMutableString (Unichar)
 
 - (void)appendChar:(unichar)c;

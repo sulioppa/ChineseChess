@@ -12,7 +12,7 @@
 @class LunaRecord;
 @interface LunaRuler : NSObject
 
-+ (LunaBoardState)analyze:(NSArray<LunaRecord *> *)records;
++ (LunaBoardState)analyzeWithRecords:(NSArray<LunaRecord *> *)records currentSide:(const uint8_t)side;
 
 + (NSString *)characterRecordWithMove:(uint16_t)move board:(const uint8_t *const)board;
 

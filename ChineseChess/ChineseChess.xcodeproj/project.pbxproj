@@ -26,6 +26,7 @@
 		A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */; };
 		A782B7FE1FA0339600534DB6 /* Bool+Reverse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A782B7FD1FA0339600534DB6 /* Bool+Reverse.swift */; };
 		A7884A021FC9995C00691385 /* mate.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A7884A011FC9995B00691385 /* mate.m4a */; };
+		A78AA3171FCFA785004DF6AE /* LunaRecordVault.m in Sources */ = {isa = PBXBuildFile; fileRef = A78AA3161FCFA785004DF6AE /* LunaRecordVault.m */; };
 		A78CC1BC1F8F783100563789 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */; };
 		A79128671F911F17002CC4E5 /* WavHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79128661F911F17002CC4E5 /* WavHandler.swift */; };
 		A79128681F9124E2002CC4E5 /* 沧海龙吟.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D161F905DBD0054DF93 /* 沧海龙吟.mp3 */; };
@@ -79,6 +80,8 @@
 		A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		A782B7FD1FA0339600534DB6 /* Bool+Reverse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Reverse.swift"; sourceTree = "<group>"; };
 		A7884A011FC9995B00691385 /* mate.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = mate.m4a; sourceTree = "<group>"; };
+		A78AA3151FCFA785004DF6AE /* LunaRecordVault.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunaRecordVault.h; sourceTree = "<group>"; };
+		A78AA3161FCFA785004DF6AE /* LunaRecordVault.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunaRecordVault.m; sourceTree = "<group>"; };
 		A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A79128661F911F17002CC4E5 /* WavHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavHandler.swift; sourceTree = "<group>"; };
 		A79C27F61FA5D5B100FD9A87 /* Luna+Const.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+Const.m"; sourceTree = "<group>"; };
@@ -334,6 +337,8 @@
 				A7B7D0DE1FCC3FA60048B304 /* LunaRecordStack.m */,
 				A7BEA8A21FCEBABE00605AAE /* LunaRuler.h */,
 				A7BEA8A31FCEBABE00605AAE /* LunaRuler.m */,
+				A78AA3151FCFA785004DF6AE /* LunaRecordVault.h */,
+				A78AA3161FCFA785004DF6AE /* LunaRecordVault.m */,
 			);
 			path = Vault;
 			sourceTree = "<group>";
@@ -575,6 +580,7 @@
 				A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */,
 				A7E308BC1F9CE0DA00B0805B /* Luna.m in Sources */,
 				A79128671F911F17002CC4E5 /* WavHandler.swift in Sources */,
+				A78AA3171FCFA785004DF6AE /* LunaRecordVault.m in Sources */,
 				A7BEA8A41FCEBABE00605AAE /* LunaRuler.m in Sources */,
 				A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */,
 				A7B7D0E21FCC40B50048B304 /* LunaRecord.m in Sources */,
