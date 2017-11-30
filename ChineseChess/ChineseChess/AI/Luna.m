@@ -50,7 +50,7 @@
 {
 	self = [super init];
 	if (self) {
-		[self initBoard];
+		[self initBoard];		
 	}
 	return self;
 }
@@ -71,6 +71,14 @@
 	_state = LunaBoardStateTurnRedSide;
 	_characterRecords = [NSMutableArray array];
 	self.isThinking = NO;
+}
+
+- (void)appendCharacterRecords:(NSString *)character {
+	if (_characterRecords.count & 1) {
+		[_characterRecords addObject:[NSString stringWithFormat:@"%6c%@", ' ', character]];
+	} else {
+		[_characterRecords addObject:[NSString stringWithFormat:@"%3zd. %@", (_characterRecords.count >> 1) + 1, character]];
+	}
 }
 
 - (Luna_Chess)makeMoveWithMove:(Luna_Move)move {
@@ -111,9 +119,9 @@
 
 - (NSArray<NSNumber *> *)generateMovesWithLocation:(Luna_Location)location;
 
-- (BOOL)isCheckedMateWithTargetSide:(BOOL)isRed;
+- (BOOL)isCheckedMateWithTargetSide:(BOOL)isBlack;
 
-- (BOOL)isCheckedWithTargetSide:(BOOL)isRed;
+- (BOOL)isCheckedWithTargetSide:(BOOL)isBlack;
 
 - (Luna_Chess)catchWithLocation:(Luna_Location)location hasEat:(BOOL)has;
 
@@ -495,7 +503,7 @@
 }
 
 - (LunaMoveState)moveChessWithMove:(Luna_Move)move {
-	[_characterRecords addObject:[LunaRuler characterRecordWithMove:move board:_board]];
+	[self appendCharacterRecords:[LunaRecordCharacter characterRecordWithMove:move board:_board array:_chess]];
 	
 	LunaRecord *record = [LunaRecord new];
 	record.code = [_coder encode:_board];
@@ -518,7 +526,7 @@
 	}
 
 	if ((_state & 0xfe) == 0) {
-		_state = [LunaRuler analyzeWithRecords:_stack.allRecords currentSide:_side];
+		_state = [LunaRecordRuler analyzeWithRecords:_stack.allRecords currentSide:_side];
 	}
 	return state;
 }
@@ -570,7 +578,7 @@
     }
     
     for (LunaRecord *record in _stack.allRecords) {
-        [_characterRecords addObject:[LunaRuler characterRecordWithMove:record.move board:_board]];
+        [self appendCharacterRecords:[LunaRecordCharacter characterRecordWithMove:record.move board:_board array:_chess]];
         
         record.chess = _board[Luna_MoveFrom(record.move)];
         record.eat = [self makeMoveWithMove:record.move];
@@ -585,7 +593,7 @@
     }
     
     if ((_state & 0xfe) == 0) {
-        _state = [LunaRuler analyzeWithRecords:_stack.allRecords currentSide:_side];
+        _state = [LunaRecordRuler analyzeWithRecords:_stack.allRecords currentSide:_side];
     }
 }
 

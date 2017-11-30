@@ -8,4 +8,6 @@
 
 #import "LunaFENCoder.h"
 #import "LunaRecordStack.h"
-#import "LunaRuler.h"
+#import "LunaRecordRuler.h"
+#import "LunaRecordCharacter.h"
+#import "LunaRecordVault.h"
