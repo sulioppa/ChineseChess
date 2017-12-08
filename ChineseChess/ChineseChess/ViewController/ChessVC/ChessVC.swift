@@ -24,14 +24,12 @@ class ChessVC: UIViewController {
 	// MARK: - SafaArea
 	private lazy var safeArea: UIView = {
 		let view = UIView()
-		view.backgroundColor = UIColor.carbon
+		view.backgroundColor = UIColor.clear
 		return view
 	}()
 	
-	// MARK: - topWood、ChessBoard、bottomWood
-	private lazy var topWood: UIImageView = UIImageView(image: ResourcesProvider.shared.image(named: "wood"))
+	// MARK: - ChessBoard
 	private lazy var chessBoard: UIImageView = UIImageView()
-	private lazy var bottomWood: UIImageView = UIImageView(image: ResourcesProvider.shared.image(named: "wood"))
 	
 	// MARK: - progressLayer
 	private var progressLayer: CAShapeLayer?
@@ -44,6 +42,20 @@ class ChessVC: UIViewController {
 	
 	// MARK: - AI
 	private lazy var luna: Luna = Luna()
+	
+	// MARK: - Status Bar
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
+	}
+	
+	override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+		return .none
+	}
+	
+	override var prefersStatusBarHidden: Bool {
+		return !LayoutPartner.hasSafeArea
+	}
+	
 }
 
 // MARK: - UI Layout
@@ -72,21 +84,23 @@ extension ChessVC {
 			$0.center.equalTo(self.contentView.snp.center)
 		}
 		
-		self.contentView.addSubview(self.topWood)
-		self.topWood.snp.makeConstraints {
-			$0.top.equalTo(self.contentView)
-			$0.left.equalTo(self.contentView)
+		let topWood: UIImageView = UIImageView(image: ResourcesProvider.shared.image(named: "wood"))
+		self.view.insertSubview(topWood, at: 0)
+		topWood.snp.makeConstraints {
+			$0.top.equalTo(self.view)
+			$0.left.equalTo(self.view)
 			$0.bottom.equalTo(self.chessBoard.snp.top)
-			$0.right.equalTo(self.contentView)
+			$0.right.equalTo(self.view)
 		}
 		
-		self.contentView.addSubview(self.bottomWood)
-		self.bottomWood.layer.transform = CATransform3DMakeRotation(CGFloat.pi, 0.0, 0.0, 1.0)
-		self.bottomWood.snp.makeConstraints {
+		let bottomWood: UIImageView = UIImageView(image: ResourcesProvider.shared.image(named: "wood"))
+		self.view.insertSubview(bottomWood, at: 0)
+		bottomWood.layer.transform = CATransform3DMakeRotation(CGFloat.pi, 0.0, 0.0, 1.0)
+		bottomWood.snp.makeConstraints {
 			$0.top.equalTo(self.chessBoard.snp.bottom)
-			$0.left.equalTo(self.contentView)
-			$0.bottom.equalTo(self.contentView)
-			$0.right.equalTo(self.contentView)
+			$0.left.equalTo(self.view)
+			$0.bottom.equalTo(self.view)
+			$0.right.equalTo(self.view)
 		}
 	}
 	
@@ -146,8 +160,28 @@ extension ChessVC {
 			}
 		}
 		
-		layoutSubviews(toItem: self.topWood, side: self.topSide, nickname: self.topNickname, target: target, attributes: attributes[0...2])
-		layoutSubviews(toItem: self.bottomWood, side: self.bottomSide, nickname: self.bottomNickname, target: target, attributes: attributes[3...5])
+		func container(isTop: Bool) -> UIView {
+			let container = UIView()
+			container.backgroundColor = UIColor.clear
+			self.contentView.addSubview(container)
+			
+			container.snp.makeConstraints {
+				if isTop {
+					$0.top.equalTo(self.contentView)
+					$0.bottom.equalTo(self.chessBoard.snp.top)
+				} else {
+					$0.top.equalTo(self.chessBoard.snp.bottom)
+					$0.bottom.equalTo(self.contentView)
+				}
+				$0.left.equalTo(self.contentView)
+				$0.right.equalTo(self.contentView)
+			}
+			
+			return container
+		}
+		
+		layoutSubviews(toItem: container(isTop: true), side: self.topSide, nickname: self.topNickname, target: target, attributes: attributes[0...2])
+		layoutSubviews(toItem: container(isTop: false), side: self.bottomSide, nickname: self.bottomNickname, target: target, attributes: attributes[3...5])
 	}
 	
 }

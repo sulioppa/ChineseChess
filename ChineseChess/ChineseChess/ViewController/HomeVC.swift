@@ -78,6 +78,19 @@ class HomeVC: UIViewController {
 		NotificationCenter.default.removeObserver(self)
 	}
 	
+	// MARK: - Status Bar	
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
+	}
+	
+	override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+		return .none
+	}
+	
+	override var prefersStatusBarHidden: Bool {
+		return true
+	}
+	
 }
 
 // MARK: - Action
@@ -148,10 +161,7 @@ extension HomeVC {
 		public func setSuperview(superView: UIView) {
 			superView.addSubview(self.scrollView)
 			self.scrollView.snp.makeConstraints {
-				$0.top.equalTo(superView.layout.top)
-				$0.left.equalTo(superView.layout.left)
-				$0.bottom.equalTo(superView.layout.bottom)
-				$0.right.equalTo(superView.layout.right)
+				$0.edges.equalTo(superView)
 			}
 			
 			guard let image = ResourcesProvider.shared.image(named: "home") else { return }
@@ -159,7 +169,7 @@ extension HomeVC {
 			self.scrollView.addSubview(imageView)
 			imageView.snp.makeConstraints {
 				$0.edges.equalTo(self.scrollView)
-				$0.height.equalTo(superView.layout.height)
+				$0.height.equalTo(superView.snp.height)
 				$0.width.equalTo(superView.layout.height).multipliedBy(image.size.width / image.size.height)
 			}
 		}

@@ -31,7 +31,7 @@ class LoadingAlertView: UIView {
 			let imageView = UIImageView(image: close)
 			imageView.contentMode = .topLeft
 			imageView.addTapTarget(self, action: #selector(self.closeAlertView))
-			imageView.frame = CGRect(x: 15, y: 15, width: 40, height: 40)
+			imageView.frame = CGRect(x: 15, y: 15 + LayoutPartner.topToSafeArea, width: 40, height: 40)
 			
 			self.closeView = imageView
 			self.addSubview(imageView)
@@ -103,10 +103,7 @@ extension LoadingAlertView {
 		
 		superview.addSubview(self)
 		self.snp.makeConstraints {
-			$0.top.equalTo(superview.layout.top)
-			$0.left.equalTo(superview.layout.left)
-			$0.bottom.equalTo(superview.layout.bottom)
-			$0.right.equalTo(superview.layout.right)
+			$0.edges.equalTo(superview)
 		}
 		
 		UIView.animate(withDuration: Macro.Time.transitionLastTime, animations: {
