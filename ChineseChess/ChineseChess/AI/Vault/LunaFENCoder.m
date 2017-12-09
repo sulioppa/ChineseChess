@@ -34,7 +34,7 @@
 	uint8_t chess[48] = { 0 };
 	
 	for (int i = 0, index = (3 << 4) + 3; i < code.length; i++) {
-		if (map[code[i]]) {
+		if (map[code[i]] != nil ) {
 			board[index] = [self chess:chess start:map[code[i]].unsignedCharValue];
 			index++;
 		} else {

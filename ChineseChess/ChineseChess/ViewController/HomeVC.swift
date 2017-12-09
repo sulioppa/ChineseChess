@@ -170,14 +170,14 @@ extension HomeVC {
 			imageView.snp.makeConstraints {
 				$0.edges.equalTo(self.scrollView)
 				$0.height.equalTo(superView.snp.height)
-				$0.width.equalTo(superView.layout.height).multipliedBy(image.size.width / image.size.height)
+				$0.width.equalTo(superView.snp.height).multipliedBy(image.size.width / image.size.height)
 			}
 		}
 		
 		// Private vars
 		private lazy var scrollView: UIScrollView = {
 			let scrollView = UIScrollView()
-			scrollView.backgroundColor = UIColor.carbon
+			scrollView.backgroundColor = UIColor.black
 			scrollView.showsVerticalScrollIndicator = false
 			scrollView.showsHorizontalScrollIndicator = false
 			scrollView.bounces = false

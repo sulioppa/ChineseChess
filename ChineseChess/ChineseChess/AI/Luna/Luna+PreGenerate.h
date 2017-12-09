@@ -39,8 +39,8 @@ extern uint8_t Luna_MoveArray_P[1 << 11];  // [2][256][4]
 // MARK: - Luna Move Map.（短程子力 走法映射）
 extern uint8_t Luna_MoveMap_K[1 << 16]; // [256][256]
 extern uint8_t Luna_MoveMap_A[1 << 16];
-extern uint8_t Luna_MoveMap_B[1 << 16];
-extern uint8_t Luna_MoveMap_N[1 << 16]; // whitch can also be leg map.
+extern uint8_t Luna_MoveMap_B[1 << 16]; // whitch can also be B's leg map.
+extern uint8_t Luna_MoveMap_N[1 << 16]; // whitch can also be N's leg map.
 extern uint8_t Luna_MoveMap_P[1 << 17]; // [2][256][256]
 
 /* MARK: - Luna RC Row & Column Bit Position （位行位列 走法偏移）

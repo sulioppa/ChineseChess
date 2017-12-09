@@ -104,7 +104,7 @@ void Luna_Init_PreGenerate(void) {
 				to = from + B_Dir[index];
 				if (Luna_LegalLocation_B[to]) {
 					Luna_MoveArray_B[(from << 2) + count] = to;
-					Luna_MoveMap_B[Luna_MoveMake(from, to)] = 1;
+					Luna_MoveMap_B[Luna_MoveMake(from, to)] = (from + to) >> 1;
 					count++;
 				}
 			}
