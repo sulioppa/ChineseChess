@@ -11,11 +11,76 @@
 
 @implementation LunaRecordRuler
 
-+ (LunaBoardState)analyzeWithRecords:(NSArray<LunaRecord *> *)records currentSide:(const uint8_t)side  {
++ (LunaBoardState)analyzeWithRecords:(NSArray<LunaRecord *> *)records currentSide:(const uint8_t)side chesses:(uint32_t)chesses {
     if (records.count == 0) {
         return side;
     }
-    
+	
+	// 判负，长将、长捉超过5次。
+	if (records.count > 10 && records.lastObject.catch) {
+		NSArray<LunaRecord *> *rounds = [records subarrayWithRange:NSMakeRange(records.count - 11, 11)];
+		BOOL isLongCatch = YES;
+		
+		for (int index = 0; index < 10; index += 2) {
+			LunaRecord *last = rounds.lastObject;
+			LunaRecord *step = rounds[index];
+			
+			if (last.chess == step.chess && last.catch == step.catch) {
+				continue;
+			} else {
+				isLongCatch = NO;
+				break;
+			}
+		}
+		
+		if (isLongCatch) {
+			return side ? LunaBoardStateWinLongCatchRed : LunaBoardStateWinLongCatchBlack;
+		}
+	}
+	
+	// 和棋，双方无进攻棋子。
+	if (!(chesses & 0x07ff07ff)) {
+		return LunaBoardStateDrawBothSideHaveNoneAttckChess;
+	}
+	
+	// 和棋，重复局面出现超过5次。
+	if (records.count > 10) {
+		NSMutableArray<NSString *> *positions = [NSMutableArray arrayWithCapacity:records.count];
+		
+		for (LunaRecord *record in records) {
+			[positions addObject:record.position];
+		}
+		
+		for (int index = (int)(positions.count - 1); index >= 10; index --) {
+			NSInteger count = 0;
+			
+			for (NSString *position in positions) {
+				if ([positions[index] isEqualToString:position]) {
+					count++;
+				}
+			}
+			
+			if (count > 5) {
+				return LunaBoardStateDrawSamePositionMultiTimes;
+			}
+		}
+	}
+	
+	// 和棋，50回合不吃子。
+	if (records.count > 100) {
+		uint8_t count = 0;
+		
+		for (int index = (int)(records.count - 1); index >= 0; index--, count++) {
+			if (records[index].eat) {
+				break;
+			}
+		}
+		
+		if (count > 100) {
+			return LunaBoardStateDraw50RoundHaveNoneEat;
+		}
+	}
+	
 	return side;
 }
 

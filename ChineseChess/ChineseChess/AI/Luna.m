@@ -130,6 +130,8 @@
 
 - (Luna_Chess)catchWithChess:(Luna_Chess)chess targetChess:(Luna_Chess)target hasEat:(BOOL)has;
 
+- (uint32_t)bitChess;
+
 @end
 
 @implementation Luna (AI)
@@ -441,6 +443,23 @@
     return target;
 }
 
+- (uint32_t)bitChess {
+	void (^ setBit)(uint32_t *, uint8_t, BOOL) = ^(uint32_t *bit, uint8_t idx, BOOL isOne) {
+		if (isOne) {
+			*bit |= (1 << idx);
+		} else {
+			*bit &= ~(1 << idx);
+		}
+	};
+	
+	uint32_t bit = 0;
+	for (int index = 16; index < 48; index++) {
+		setBit(&bit, index - 16, _chess[index]);
+	}
+	
+	return bit;
+}
+
 // MARK: - Private
 - (BOOL)isFaceToFace {
 	if (Luna_IsSameColumn(_chess[16], _chess[32])) {
@@ -582,7 +601,7 @@
 	}
 
 	if ((_state & 0xfe) == 0) {
-		_state = [LunaRecordRuler analyzeWithRecords:_stack.allRecords currentSide:_side];
+		_state = [LunaRecordRuler analyzeWithRecords:_stack.allRecords currentSide:_side chesses:self.bitChess];
 	}
 	return state;
 }
@@ -654,7 +673,7 @@
     }
     
     if ((_state & 0xfe) == 0) {
-        _state = [LunaRecordRuler analyzeWithRecords:_stack.allRecords currentSide:_side];
+        _state = [LunaRecordRuler analyzeWithRecords:_stack.allRecords currentSide:_side chesses:self.bitChess];
     }
 }
 
