@@ -32,11 +32,10 @@ typedef NS_ENUM(uint8_t, LunaMoveState) {
 	LunaMoveStateEatCheckMate
 };
 
+// MARK: - Typedef
 typedef uint8_t Luna_Location;
 
 typedef uint8_t Luna_Chess;
-
-typedef uint8_t Luna_Side;
 
 typedef uint16_t Luna_Move;
 
@@ -56,7 +55,7 @@ typedef uint16_t Luna_Move;
 @property (nonnull, nonatomic, readonly) NSMutableArray<NSString *> *characterRecords;
 
 // AI Control, the isThinking reveals the AI is thinking or not, you can stop it by setting it 'NO'.
-@property (nonatomic) BOOL isThinking;
+@property (nonatomic, readwrite) BOOL isThinking;
 
 @end
 

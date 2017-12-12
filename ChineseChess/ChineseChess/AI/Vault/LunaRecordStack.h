@@ -14,7 +14,7 @@
 
 - (instancetype)initWithCoder:(id<LunaCoding>)coder;
 
-@property (nonatomic) uint8_t firstSide;
+@property (nonatomic) BOOL firstSide;
 
 @property (nonatomic) NSString *firstCode;
 

@@ -73,7 +73,7 @@
 }
 
 - (void)clear {
-	_firstSide = 0;
+	_firstSide = NO;
 	_firstCode = [self.delegate initialCode];
 	[_records removeAllObjects];
 }

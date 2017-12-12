@@ -16,18 +16,24 @@ typedef short int16_t;
  * 16 ~ 31 is red. like 01xxxx. from 16 to 31: King(16), Advisor, Advisor, Bishop, Bishop, Knight, Knight, Rook, Rook, Cannon, Cannon, Pawn, Pawn, Pawn, Pawn, Pawn(31).
  * 32 ~ 47 is black. like 10xxxx. from 32 to 47, range also like above.
  * the 5th or 6th bit indicates red or black. */
-#define Luna_IsNotSameSide(chess, side) (((chess) >> 5) ^ (side))
+#define Luna_Side(chess) ((chess) >> 5)
+#define Luna_IsNotSameSide(chess, side) (Luna_Side(chess) ^ (side))
+#define Luna_IsNotSameArmy(chess1, chess2) (Luna_Side(chess1) ^ Luna_Side(chess2))
+
+// MARK: - King
+#define Luna_King(side) (((side) + 1) << 4)
 
 // MARK: - Is Same Row Or Column.（同行 或 同列）
 #define Luna_Row(location) ((location) >> 4)
 #define Luna_Column(location) ((location) & 15)
 
+#define Luna_IsSameRow(location1, location2) ((location1) >> 4) == ((location2) >> 4)
+#define Luna_IsSameColumn(location1, location2) ((location1) & 15) == ((location2) & 15)
+
+// MARK: - Move
 #define Luna_MoveMake(from, to) (((from) << 8) + (to))
 #define Luna_MoveFrom(move) ((move) >> 8)
 #define Luna_MoveTo(move) ((move) & 0xff)
-
-#define Luna_IsSameRow(location1, location2) ((location1) >> 4) == ((location2) >> 4)
-#define Luna_IsSameColumn(location1, location2) ((location1) & 15) == ((location2) & 15)
 
 // MARK: - Luna Move Array.（短程子力 走法数组）
 extern uint8_t Luna_MoveArray_K[1 << 10]; // [256][4]

@@ -10,11 +10,11 @@
 #import "Luna+C.h"
 #import "Luna+Objc.h"
 
-// MARK: - Board Operation.
+// MARK: - AI Luna.
 @interface Luna() {
 	Luna_Location _board[256];
 	Luna_Location _chess[48];
-	Luna_Side _side;
+	BOOL _side;
 	
 	id<LunaCoding> _coder;
 	LunaRecordStack *_stack;
@@ -22,30 +22,18 @@
 
 - (void)initBoard;
 
-- (Luna_Chess)makeMoveWithMove:(Luna_Move)move;
+- (Luna_Chess)doMoveWithMove:(Luna_Move)move;
 
 - (void)oppositeSide;
 
 - (void)undoMoveWithMove:(Luna_Move)move ate:(Luna_Chess)ate;
 
+- (void)appendCharacterRecords:(NSString *)character;
+
 @end
 
 @implementation Luna
 
-// Read only properties
-- (NSArray<NSNumber *> *)chesses {
-	NSMutableArray<NSNumber *> *array = [NSMutableArray array];
-	for (Luna_Chess i = 16; i < 48; i++) {
-		[array addObject:@(_chess[i])];
-	}
-	return [NSArray arrayWithArray:array];
-}
-
-- (Luna_Move)lastMove {
-	return _stack.peek.move;
-}
-
-// Board Operation
 - (instancetype)init
 {
 	self = [super init];
@@ -55,6 +43,22 @@
 	return self;
 }
 
+// Read only properties
+- (NSArray<NSNumber *> *)chesses {
+	NSMutableArray<NSNumber *> *array = [NSMutableArray array];
+	
+	for (Luna_Chess i = 16; i < 48; i++) {
+		[array addObject:@(_chess[i])];
+	}
+	
+	return [NSArray arrayWithArray:array];
+}
+
+- (Luna_Move)lastMove {
+	return _stack.peek.move;
+}
+
+// Board Operation
 - (void)initBoard {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
@@ -63,7 +67,7 @@
 	
 	memcpy(_board, Luna_InitBoard, 256);
 	memcpy(_chess, Luna_InitChess, 48);
-	_side = 0;
+	_side = NO;
 	
 	_coder = [LunaFENCoder new];
 	_stack = [[LunaRecordStack alloc] initWithCoder:_coder];
@@ -73,15 +77,7 @@
 	self.isThinking = NO;
 }
 
-- (void)appendCharacterRecords:(NSString *)character {
-	if (_characterRecords.count & 1) {
-		[_characterRecords addObject:[NSString stringWithFormat:@"%6c%@", ' ', character]];
-	} else {
-		[_characterRecords addObject:[NSString stringWithFormat:@"%3zd. %@", (_characterRecords.count >> 1) + 1, character]];
-	}
-}
-
-- (Luna_Chess)makeMoveWithMove:(Luna_Move)move {
+- (Luna_Chess)doMoveWithMove:(Luna_Move)move {
 	const Luna_Location from = Luna_MoveFrom(move);
 	const Luna_Location to = Luna_MoveTo(move);
 	const Luna_Chess ate = _board[to];
@@ -95,7 +91,7 @@
 }
 
 - (void)oppositeSide {
-	_side = 1 - _side;
+	_side = !_side;
 	_state =  _side;
 }
 
@@ -112,6 +108,15 @@
 	}
 }
 
+// CharacterRecord
+- (void)appendCharacterRecords:(NSString *)character {
+	if (_characterRecords.count & 1) {
+		[_characterRecords addObject:[NSString stringWithFormat:@"%6c%@", ' ', character]];
+	} else {
+		[_characterRecords addObject:[NSString stringWithFormat:@"%3zd. %@", (_characterRecords.count >> 1) + 1, character]];
+	}
+}
+
 @end
 
 // MARK: - AI.
@@ -123,29 +128,11 @@
 
 - (BOOL)isCheckedWithTargetSide:(BOOL)isBlack;
 
-- (Luna_Chess)catchWithLocation:(Luna_Location)location hasEat:(BOOL)has;
+- (Luna_Chess)catchWithChess:(Luna_Chess)chess targetChess:(Luna_Chess)target hasEat:(BOOL)has;
 
 @end
 
 @implementation Luna (AI)
-
-- (NSArray<NSNumber *> *)generateMovesWithLocation:(Luna_Location)location {
-	NSAssert(_board[location] != 0, @"%s: the chess at location is not exist.", __FUNCTION__);
-	
-	const SEL selectors[16] = {
-		@selector(K_GenerateWithParameters:),
-		@selector(A_GenerateWithParameters:), @selector(A_GenerateWithParameters:),
-		@selector(B_GenerateWithParameters:), @selector(B_GenerateWithParameters:),
-		@selector(N_GenerateWithParameters:), @selector(N_GenerateWithParameters:),
-		@selector(R_GenerateWithParameters:), @selector(R_GenerateWithParameters:),
-		@selector(C_GenerateWithParameters:), @selector(C_GenerateWithParameters:),
-		@selector(P_GenerateWithParameters:), @selector(P_GenerateWithParameters:), @selector(P_GenerateWithParameters:), @selector(P_GenerateWithParameters:), @selector(P_GenerateWithParameters:)
-	};
-	
-	NSMutableArray<NSNumber *> *moves = [NSMutableArray array];
-	[self performSelectorOnMainThread:selectors[_board[location] & 15] withObject:@[ @(location), moves ] waitUntilDone:YES];
-	return [NSArray arrayWithArray:moves];
-}
 
 // MARK: - Gernerate Moves
 - (void)K_GenerateWithParameters:(NSArray *)parameters {
@@ -338,7 +325,7 @@
 	const Luna_Location from = [parameters.firstObject unsignedIntValue];
 	const NSMutableArray<NSNumber *> *moves = [parameters lastObject];
 	
-	for (Luna_Location *to = Luna_MoveArray_P + (from << 2) + (_side << 10), *end = to + 3; to < end; to++) {
+	for (Luna_Location *to = Luna_MoveArray_P + (from << 2) + (Luna_Side(_board[from]) << 10), *end = to + 3; to < end; to++) {
 		if (*to) {
 			if ([self isLegalStateWithMove:from to:*to]) {
 				[moves addObject:@(*to)];
@@ -350,6 +337,19 @@
 }
 
 // MARK: - Attacks Check
+- (BOOL)K_AttackWithLocation:(Luna_Location)location target:(Luna_Location)target {
+	return Luna_MoveMap_K[Luna_MoveMake(location, target)];
+}
+
+- (BOOL)A_AttackWithLocation:(Luna_Location)location target:(Luna_Location)target {
+	return Luna_MoveMap_A[Luna_MoveMake(location, target)];
+}
+
+- (BOOL)B_AttackWithLocation:(Luna_Location)location target:(Luna_Location)target {
+	Luna_Location leg = Luna_MoveMap_B[Luna_MoveMake(location, target)];
+	return leg && _board[leg] == 0;
+}
+
 - (BOOL)N_AttackWithLocation:(Luna_Location)location target:(Luna_Location)target {
 	Luna_Location leg = Luna_MoveMap_N[Luna_MoveMake(location, target)];
 	return leg && _board[leg] == 0;
@@ -380,13 +380,30 @@
 }
 
 - (BOOL)P_AttackWithLocation:(Luna_Location)location target:(Luna_Location)target {
-	uint8_t isBlack = (_board[location] >> 4) > 1;
-	return Luna_MoveMap_P[Luna_MoveMake(location, target) + (isBlack << 16)];
+	return Luna_MoveMap_P[Luna_MoveMake(location, target) + (Luna_Side(_board[location]) << 16)];
 }
 
-// MARK: - Function
+// MARK: - Public
+- (NSArray<NSNumber *> *)generateMovesWithLocation:(Luna_Location)location {
+	NSAssert(_board[location] != 0, @"%s: the chess at location is not exist.", __FUNCTION__);
+	
+	const SEL selectors[16] = {
+		@selector(K_GenerateWithParameters:),
+		@selector(A_GenerateWithParameters:), @selector(A_GenerateWithParameters:),
+		@selector(B_GenerateWithParameters:), @selector(B_GenerateWithParameters:),
+		@selector(N_GenerateWithParameters:), @selector(N_GenerateWithParameters:),
+		@selector(R_GenerateWithParameters:), @selector(R_GenerateWithParameters:),
+		@selector(C_GenerateWithParameters:), @selector(C_GenerateWithParameters:),
+		@selector(P_GenerateWithParameters:), @selector(P_GenerateWithParameters:), @selector(P_GenerateWithParameters:), @selector(P_GenerateWithParameters:), @selector(P_GenerateWithParameters:)
+	};
+	
+	NSMutableArray<NSNumber *> *moves = [NSMutableArray array];
+	[self performSelectorOnMainThread:selectors[_board[location] & 15] withObject:@[ @(location), moves ] waitUntilDone:YES];
+	return [NSArray arrayWithArray:moves];
+}
+
 - (BOOL)isCheckedMateWithTargetSide:(BOOL)isBlack {
-	for (uint8_t start = 16 + (isBlack << 4), end = start + 16; start < end; start++) {
+	for (uint8_t start = Luna_King(isBlack), end = start + 16; start < end; start++) {
 		if (_chess[start] && [self generateMovesWithLocation:_chess[start]].count) {
 			return NO;
 		}
@@ -396,40 +413,35 @@
 }
 
 - (BOOL)isCheckedWithTargetSide:(BOOL)isBlack {
-	const Luna_Location kingLocation =  _chess[16 + (isBlack << 4)];
+	const Luna_Location kingLocation =  _chess[Luna_King(isBlack)];
 
 	for (uint8_t start = 21 + ((1- isBlack) << 4), end = start + 11; start < end; start++) {
-		if (_chess[start] == 0) continue;
-		
-		switch (start) {
-			case 21: case 22: case 37: case 38: // N
-				if ([self N_AttackWithLocation:_chess[start] target:kingLocation]) {
-					return YES;
-				}
-				break;
-				
-			case 23: case 24: case 39: case 40: // R
-				if ([self R_AttackWithLocation:_chess[start] target:kingLocation]) {
-					return YES;
-				}
-				break;
-				
-			case 25: case 26: case 41: case 42: // C
-				if ([self C_AttackWithLocation:_chess[start] target:kingLocation]) {
-					return YES;
-				}
-				break;
-				
-			default: // P
-				if ([self P_AttackWithLocation:_chess[start] target:kingLocation]) {
-					return YES;
-				}
+		if ([self isAttackWithFrom:_chess[start] to:kingLocation includeKAB:NO]) {
+			return YES;
 		}
 	}
 	
 	return NO;
 }
 
+- (Luna_Chess)catchWithChess:(Luna_Chess)chess targetChess:(Luna_Chess)target hasEat:(BOOL)has {
+    if (has) {
+        return 0;
+    }
+
+	if ([self isCheckedWithTargetSide:Luna_Side(target)]) {
+		return Luna_King(Luna_Side(target));
+	}
+	
+	// catch the last move's chess (no real protected) ?
+	if (target == 0 || ![self didCatchWithChess:chess target:target]) {
+		return 0;
+	}
+
+    return target;
+}
+
+// MARK: - Private
 - (BOOL)isFaceToFace {
 	if (Luna_IsSameColumn(_chess[16], _chess[32])) {
 		return Luna_Map(false, [self rankWithLocation:_chess[16] isRow:false], Luna_Row(_chess[16]), Luna_Row(_chess[32])) == LunaRowColumnMapStateEatR;
@@ -440,26 +452,70 @@
 
 - (BOOL)isLegalStateWithMove:(Luna_Location)from to:(Luna_Location)to {
 	// eat check.
-	if (_board[to] && !Luna_IsNotSameSide(_board[to], _side)) {
+	if (_board[to] && !Luna_IsNotSameArmy(_board[from], _board[to])) {
 		return NO;
 	}
 	
-	Luna_Chess ate = [self makeMoveWithMove:Luna_MoveMake(from, to)];
+	Luna_Chess ate = [self doMoveWithMove:Luna_MoveMake(from, to)];
 	
 	// face check and other attack check
-	BOOL isIllegal = [self isFaceToFace] || [self isCheckedWithTargetSide:_side];
+	BOOL isIllegal = [self isFaceToFace] || [self isCheckedWithTargetSide:Luna_Side(_board[to])];
 	
 	[self undoMoveWithMove:Luna_MoveMake(from, to) ate:ate];
 	
 	return !isIllegal;
 }
 
-- (Luna_Chess)catchWithLocation:(Luna_Location)location hasEat:(BOOL)has {
-    if (has) {
-        return 0;
-    }
-    
-    return 0;
+- (BOOL)isAttackWithFrom:(Luna_Location)from to:(Luna_Location)to includeKAB:(BOOL)include {
+	switch (_board[from]) {
+		case 16: case 32: // K
+			return include && [self K_AttackWithLocation:from target:to];
+			
+		case 17: case 18: case 33: case 34: // A
+			return include && [self A_AttackWithLocation:from target:to];
+			
+		case 19: case 20: case 35: case 36: // B
+			return include && [self B_AttackWithLocation:from target:to];
+			
+		case 21: case 22: case 37: case 38: // N
+			return [self N_AttackWithLocation:from target:to];
+			
+		case 23: case 24: case 39: case 40: // R
+			return [self R_AttackWithLocation:from target:to];
+			
+		case 25: case 26: case 41: case 42: // C
+			return [self C_AttackWithLocation:from target:to];
+			
+		case 27: case 28: case 29: case 30: case 31: case 43: case 44: case 45: case 46: case 47: // P
+			return [self P_AttackWithLocation:from target:to];
+		
+		default:
+			return NO;
+	}
+}
+
+- (BOOL)didCatchWithChess:(Luna_Chess)chess target:(Luna_Chess)target {
+	if ([self isAttackWithFrom:_chess[chess] to:_chess[target] includeKAB:NO] && [self isLegalStateWithMove:_chess[chess] to:_chess[target]]) {
+		Luna_Move move = Luna_MoveMake(_chess[chess], _chess[target]);
+		Luna_Chess ate = [self doMoveWithMove:move];
+		
+		BOOL hasProtection = [self isUnderAttackWithTarget:chess];
+		
+		[self undoMoveWithMove:move ate:ate];
+		return !hasProtection;
+	}
+	
+	return NO;
+}
+
+- (BOOL)isUnderAttackWithTarget:(Luna_Chess)chess {
+	for (uint8_t start = Luna_King(1 - Luna_Side(chess)), end = start + 16; start < end; start++) {
+		if ([self isAttackWithFrom:_chess[start] to:_chess[chess] includeKAB:YES] && [self isLegalStateWithMove:_chess[start] to:_chess[chess]]) {
+			return YES;
+		}
+	}
+	
+	return NO;
 }
 
 - (uint16_t)rankWithLocation:(Luna_Location)location isRow:(BOOL)isRow {
@@ -478,7 +534,7 @@
 			setRank(&rank, location - min, _board[location]);
 		}
 	} else {
-		for (uint16_t min = location & 15, location = min; location < 255; location += 16) {
+		for (uint16_t min = location & 15, location = min; location < 256; location += 16) {
 			setRank(&rank ,(location - min) >> 4, _board[location]);
 		}
 	}
@@ -509,9 +565,9 @@
 	record.code = [_coder encode:_board];
 	record.move = move;
 	record.chess = _board[Luna_MoveFrom(move)];
-	record.eat = [self makeMoveWithMove:move];
+	record.eat = [self doMoveWithMove:move];
 	record.position = [_coder encode:_board];
-	record.catch = [self catchWithLocation:Luna_MoveTo(move) hasEat:record.eat];
+	record.catch = [self catchWithChess:record.chess targetChess:_stack.peek.chess hasEat:record.eat];
 	[_stack push:record];
 	
 	[self oppositeSide];
@@ -532,6 +588,7 @@
 }
 
 - (Luna_Chess)regretWithMove:(Luna_Move *)move {
+	NSAssert(move != nil, @"%s: move should not be nil", __FUNCTION__);
 	LunaRecord *record = [_stack pop];
 	
 	if (record) {
@@ -555,7 +612,7 @@
 - (void)initBoardWithFile:(NSString *)file {
     memcpy(_board, Luna_InitBoard, 256);
     memcpy(_chess, Luna_InitChess, 48);
-    _side = 0;
+    _side = NO;
     
     _state = LunaBoardStateTurnRedSide;
     [_characterRecords removeAllObjects];
@@ -564,7 +621,9 @@
     if (file == nil) {
         [_stack clear];
         return;
-    }
+	} else {
+		[_stack reloadWith:file];
+	}
     
     _side = _stack.firstSide;
     _state =  _side;
@@ -576,18 +635,20 @@
             _chess[_board[i]] = i;
         }
     }
-    
+	
+	LunaRecord *last;
     for (LunaRecord *record in _stack.allRecords) {
         [self appendCharacterRecords:[LunaRecordCharacter characterRecordWithMove:record.move board:_board array:_chess]];
         
         record.chess = _board[Luna_MoveFrom(record.move)];
-        record.eat = [self makeMoveWithMove:record.move];
+        record.eat = [self doMoveWithMove:record.move];
         record.position = [_coder encode:_board];
-        record.catch = [self catchWithLocation:Luna_MoveTo(record.move) hasEat:record.eat];
+        record.catch = [self catchWithChess:record.chess targetChess:last.chess hasEat:record.eat];
         
-        _side = 1 - _side;
+		[self oppositeSide];
+		last = record;
     }
-    
+	
     if ([self isCheckedMateWithTargetSide:_side]) {
         _state =  _side ? LunaBoardStateWinNormalRed : LunaBoardStateWinNormalBlack;
     }
