@@ -137,7 +137,7 @@ extension LoadingAlertView {
 		}
 		
 		self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.625)
-		UIView.animate(withDuration: Macro.Time.transitionLastTime / 2.0, animations: {
+		UIView.animate(withDuration: Macro.Time.alertViewHideTime, animations: {
 			self.backgroundColor = self.backgroundColor?.withAlphaComponent(0.0)
 		}) { _ in
 			self.removeFromSuperview()

@@ -27,7 +27,6 @@
 		A778E4801F94E25200D28B25 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E47F1F94E25200D28B25 /* HistoryVC.swift */; };
 		A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E4811F94E26000D28B25 /* MultiPeerVC.swift */; };
 		A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */; };
-		A782B7FE1FA0339600534DB6 /* Bool+Reverse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A782B7FD1FA0339600534DB6 /* Bool+Reverse.swift */; };
 		A7884A021FC9995C00691385 /* mate.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A7884A011FC9995B00691385 /* mate.m4a */; };
 		A78AA3171FCFA785004DF6AE /* LunaRecordVault.m in Sources */ = {isa = PBXBuildFile; fileRef = A78AA3161FCFA785004DF6AE /* LunaRecordVault.m */; };
 		A78CC1BC1F8F783100563789 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */; };
@@ -56,6 +55,7 @@
 		A7DFAD7C1F910D7D00FEB8AC /* Value+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */; };
 		A7E308BC1F9CE0DA00B0805B /* Luna.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E308BB1F9CE0DA00B0805B /* Luna.m */; };
 		A7E7ACFD1F91DE8E00B29C5A /* UIButton+Golden.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E7ACFC1F91DE8E00B29C5A /* UIButton+Golden.swift */; };
+		A7EB7BBA1FE419F200AA903A /* Value+Mutating.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EB7BB91FE419F200AA903A /* Value+Mutating.swift */; };
 		A7FDC5101FD0140F008DC815 /* LunaRecordCharacter.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FDC50F1FD0140F008DC815 /* LunaRecordCharacter.m */; };
 /* End PBXBuildFile section */
 
@@ -86,7 +86,6 @@
 		A778E47F1F94E25200D28B25 /* HistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
 		A778E4811F94E26000D28B25 /* MultiPeerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerVC.swift; sourceTree = "<group>"; };
 		A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
-		A782B7FD1FA0339600534DB6 /* Bool+Reverse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Reverse.swift"; sourceTree = "<group>"; };
 		A7884A011FC9995B00691385 /* mate.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = mate.m4a; sourceTree = "<group>"; };
 		A78AA3151FCFA785004DF6AE /* LunaRecordVault.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunaRecordVault.h; sourceTree = "<group>"; };
 		A78AA3161FCFA785004DF6AE /* LunaRecordVault.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunaRecordVault.m; sourceTree = "<group>"; };
@@ -125,6 +124,7 @@
 		A7E51D191F905DBD0054DF93 /* run.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = run.wav; sourceTree = "<group>"; };
 		A7E51D1A1F905DBD0054DF93 /* select.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = select.wav; sourceTree = "<group>"; };
 		A7E7ACFC1F91DE8E00B29C5A /* UIButton+Golden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Golden.swift"; sourceTree = "<group>"; };
+		A7EB7BB91FE419F200AA903A /* Value+Mutating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Mutating.swift"; sourceTree = "<group>"; };
 		A7FDC50E1FD0140F008DC815 /* LunaRecordCharacter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunaRecordCharacter.h; sourceTree = "<group>"; };
 		A7FDC50F1FD0140F008DC815 /* LunaRecordCharacter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunaRecordCharacter.m; sourceTree = "<group>"; };
 		BBACABA43398033918CA7F83 /* Pods-ChineseChess.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChineseChess.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChineseChess/Pods-ChineseChess.debug.xcconfig"; sourceTree = "<group>"; };
@@ -186,9 +186,9 @@
 			isa = PBXGroup;
 			children = (
 				A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */,
-				A7B3FD7E1F9A03A900B379AD /* Array+Split.swift */,
 				A7592D7E1F9DFB0C00E7EA0F /* Value+Random.swift */,
-				A782B7FD1FA0339600534DB6 /* Bool+Reverse.swift */,
+				A7EB7BB91FE419F200AA903A /* Value+Mutating.swift */,
+				A7B3FD7E1F9A03A900B379AD /* Array+Split.swift */,
 				A72534D01FE39EF900C2AFAA /* NSObject+Class.swift */,
 			);
 			path = "NS+Extension";
@@ -587,11 +587,11 @@
 				A72F94191F974E73001FACC3 /* UIView+Layout.swift in Sources */,
 				A7DC614F1F9249B5009A9205 /* UIColor+Colors.swift in Sources */,
 				A71D3D7B1F9F30D500823384 /* ChessBoardController.swift in Sources */,
-				A782B7FE1FA0339600534DB6 /* Bool+Reverse.swift in Sources */,
 				A7592D7F1F9DFB0C00E7EA0F /* Value+Random.swift in Sources */,
 				A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */,
 				A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */,
 				A72F941B1F9753EE001FACC3 /* UIView+Tap.swift in Sources */,
+				A7EB7BBA1FE419F200AA903A /* Value+Mutating.swift in Sources */,
 				A778E4801F94E25200D28B25 /* HistoryVC.swift in Sources */,
 				A71E36381F90EEC900D9BB62 /* ResourcesProvider.swift in Sources */,
 				A7B3FD7F1F9A03A900B379AD /* Array+Split.swift in Sources */,

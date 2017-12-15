@@ -16,6 +16,8 @@ public struct Macro {
 		public static let homeScrollInterval: TimeInterval = 1.0 / 25.0
 		public static let transitionLastTime: TimeInterval = 0.75
 		public static let chessMoveLastTime: TimeInterval = 0.625
+		public static let alertViewShowTime: TimeInterval = 0.375
+		public static let alertViewHideTime: TimeInterval = 0.375
 	}
 	
 	public struct UI {

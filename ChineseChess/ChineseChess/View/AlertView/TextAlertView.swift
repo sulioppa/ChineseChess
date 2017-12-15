@@ -40,25 +40,34 @@ class TextAlertView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	private func show(in view: UIView, text: String) {
+	private func show(in superview: UIView, text: String) {
 		self.isUserInteractionEnabled = false
 		self.textView.text = text
-		
-		let size = self.textView.sizeThatFits(CGSize(width: LayoutPartner.safeArea.size.width - 40.0, height: LayoutPartner.safeArea.size.height - 40.0))
-		self.textView.snp.updateConstraints {
-			$0.size.equalTo(size)
-		}
-		
-		view.addSubview(self)
+
+		superview.addSubview(self)
 		self.snp.makeConstraints {
-			$0.edges.equalTo(view)
+			$0.edges.equalTo(superview)
 		}
 		
-		self.isUserInteractionEnabled = true
+		superview.layoutIfNeeded()
+		var size = LayoutPartner.safeArea.size
+		size = self.textView.sizeThatFits(size.offset(width: -40.0, height: -40.0))
+		
+		UIView.animate(withDuration: Macro.Time.alertViewShowTime, animations: {
+			self.textView.snp.updateConstraints {
+				$0.size.equalTo(size)
+			}
+			superview.layoutIfNeeded()
+		}) { (_) in
+			self.isUserInteractionEnabled = true
+		}
 	}
 	
 	@objc private func hide() {
 		self.removeFromSuperview()
+		self.textView.snp.updateConstraints {
+			$0.size.equalTo(CGSize.zero)
+		}
 	}
 	
 }
