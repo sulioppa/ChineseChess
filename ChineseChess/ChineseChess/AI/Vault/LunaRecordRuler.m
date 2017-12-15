@@ -16,12 +16,13 @@
         return side;
     }
 	
-	// 判负，长将、长捉超过5次。
-	if (records.count > 10 && records.lastObject.catch) {
-		NSArray<LunaRecord *> *rounds = [records subarrayWithRange:NSMakeRange(records.count - 11, 11)];
+	// 判负，长将、长捉超过4次。
+	const uint8_t steps = 9;
+	if (records.lastObject.catch && records.count >= steps) {
+		NSArray<LunaRecord *> *rounds = [records subarrayWithRange:NSMakeRange(records.count - steps, steps)];
 		BOOL isLongCatch = YES;
 		
-		for (int index = 0; index < 10; index += 2) {
+		for (int index = 0, max = steps - 1; index < max; index += 2) {
 			LunaRecord *last = rounds.lastObject;
 			LunaRecord *step = rounds[index];
 			
@@ -34,7 +35,7 @@
 		}
 		
 		if (isLongCatch) {
-			return side ? LunaBoardStateWinLongCatchRed : LunaBoardStateWinLongCatchBlack;
+			return side ? LunaBoardStateWinLongCatchBlack : LunaBoardStateWinLongCatchRed;
 		}
 	}
 	

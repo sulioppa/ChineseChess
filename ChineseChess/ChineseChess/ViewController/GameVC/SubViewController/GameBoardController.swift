@@ -148,7 +148,7 @@ extension GameBoardController {
 	
 }
 
-// MARK: - AsyncTask & Voice
+// MARK: - AsyncTask
 extension GameBoardController {
 	
 	private func asyncTask(task: @escaping (@escaping () -> Void) -> Void) {
