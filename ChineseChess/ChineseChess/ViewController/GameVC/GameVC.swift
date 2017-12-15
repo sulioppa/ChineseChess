@@ -63,7 +63,7 @@ extension GameVC {
 	}
 	
 	@objc private func showMenu() {
-		
+		LoadingAlertView.show(in: self.view, message: "加载中...", isCloseButtonHidden: false)
 	}
 	
 }

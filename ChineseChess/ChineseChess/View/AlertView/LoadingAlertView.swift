@@ -151,7 +151,7 @@ extension LoadingAlertView {
 // MARK: - Static
 extension LoadingAlertView {
 	
-	public class func show(in superview: UIView? = UIApplication.shared.windows.first, message: String? = nil, isCloseButtonHidden: Bool = true, completion: (() -> Void)? = nil) {
+	public class func show(in superview: UIView? = UIApplication.shared.windows.first, message: String? = nil, isCloseButtonHidden: Bool = true, delegate: LoadingAlertViewDelegate? = nil, completion: (() -> Void)? = nil) {
 		LoadingAlertView.shared.show(in: superview, message: message, isCloseButtonHidden: isCloseButtonHidden, completion: completion)
 	}
 	
