@@ -14,7 +14,7 @@ extension UIViewController {
 	public func present(_ viewControllerToPresent: String, animated: Bool = true, completion: (() -> Void)? = nil) {
 		if animated {
 			LoadingAlertView.show(in: self.view) {
-				if let vc = NSClassFromString("\(Macro.Project.name).\(viewControllerToPresent)")?.alloc() as? UIViewController {
+				if let vc = NSObject.instance(from: viewControllerToPresent) as? UIViewController {
 					self.present(vc, animated: animated) {
 						LoadingAlertView.hide(animation: false, completion: completion)
 					}
@@ -23,7 +23,7 @@ extension UIViewController {
 				}
 			}
 		} else {
-			if let vc = NSClassFromString("\(Macro.Project.name).\(viewControllerToPresent)")?.alloc() as? UIViewController {
+			if let vc = NSObject.instance(from: viewControllerToPresent) as? UIViewController {
 				self.present(vc, animated: animated, completion: completion)
 			} else {
 				fatalError("not found class named '\(viewControllerToPresent)'")

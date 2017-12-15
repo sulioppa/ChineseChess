@@ -14,11 +14,13 @@
 		A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36351F90ECFA00D9BB62 /* UserPreference.swift */; };
 		A71E36381F90EEC900D9BB62 /* ResourcesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */; };
 		A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */; };
+		A72534D11FE39EF900C2AFAA /* NSObject+Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72534D01FE39EF900C2AFAA /* NSObject+Class.swift */; };
 		A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */; };
 		A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D681F90A6E000CBDAD9 /* Macro.swift */; };
 		A72F94191F974E73001FACC3 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72F94181F974E73001FACC3 /* UIView+Layout.swift */; };
 		A72F941B1F9753EE001FACC3 /* UIView+Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72F941A1F9753EE001FACC3 /* UIView+Tap.swift */; };
 		A73069741FB2FBAF00D30876 /* Luna+PreGenerate.m in Sources */ = {isa = PBXBuildFile; fileRef = A73069731FB2FBAF00D30876 /* Luna+PreGenerate.m */; };
+		A749D7571FE11BB5005B8520 /* TextAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A749D7561FE11BB5005B8520 /* TextAlertView.swift */; };
 		A7592D7F1F9DFB0C00E7EA0F /* Value+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7592D7E1F9DFB0C00E7EA0F /* Value+Random.swift */; };
 		A770863D1F94C39100C24D2B /* LoadingAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770863C1F94C39100C24D2B /* LoadingAlertView.swift */; };
 		A778E4801F94E25200D28B25 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E47F1F94E25200D28B25 /* HistoryVC.swift */; };
@@ -67,12 +69,14 @@
 		A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesProvider.swift; sourceTree = "<group>"; };
 		A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		A72062111F8DE85300FA764E /* ChineseChess-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChineseChess-Bridging-Header.h"; sourceTree = "<group>"; };
+		A72534D01FE39EF900C2AFAA /* NSObject+Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Class.swift"; sourceTree = "<group>"; };
 		A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PresentVC.swift"; sourceTree = "<group>"; };
 		A72A4D681F90A6E000CBDAD9 /* Macro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macro.swift; sourceTree = "<group>"; };
 		A72F94181F974E73001FACC3 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		A72F941A1F9753EE001FACC3 /* UIView+Tap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Tap.swift"; sourceTree = "<group>"; };
 		A73069721FB2FBAF00D30876 /* Luna+PreGenerate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+PreGenerate.h"; sourceTree = "<group>"; };
 		A73069731FB2FBAF00D30876 /* Luna+PreGenerate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+PreGenerate.m"; sourceTree = "<group>"; };
+		A749D7561FE11BB5005B8520 /* TextAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAlertView.swift; sourceTree = "<group>"; };
 		A74E49A01FCD5606004CA953 /* Luna+Objc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Objc.h"; sourceTree = "<group>"; };
 		A7592D7E1F9DFB0C00E7EA0F /* Value+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Random.swift"; sourceTree = "<group>"; };
 		A770863C1F94C39100C24D2B /* LoadingAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAlertView.swift; sourceTree = "<group>"; };
@@ -181,6 +185,7 @@
 				A7B3FD7E1F9A03A900B379AD /* Array+Split.swift */,
 				A7592D7E1F9DFB0C00E7EA0F /* Value+Random.swift */,
 				A782B7FD1FA0339600534DB6 /* Bool+Reverse.swift */,
+				A72534D01FE39EF900C2AFAA /* NSObject+Class.swift */,
 			);
 			path = "NS+Extension";
 			sourceTree = "<group>";
@@ -255,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				A770863C1F94C39100C24D2B /* LoadingAlertView.swift */,
+				A749D7561FE11BB5005B8520 /* TextAlertView.swift */,
 			);
 			path = AlertView;
 			sourceTree = "<group>";
@@ -569,6 +575,7 @@
 				A7B7D0D31FCC3A280048B304 /* LunaFENCoder.m in Sources */,
 				A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */,
 				A7B7D0DF1FCC3FA60048B304 /* LunaRecordStack.m in Sources */,
+				A749D7571FE11BB5005B8520 /* TextAlertView.swift in Sources */,
 				A70765F61F94E1E600FA6A43 /* ChessVC.swift in Sources */,
 				A72F94191F974E73001FACC3 /* UIView+Layout.swift in Sources */,
 				A7DC614F1F9249B5009A9205 /* UIColor+Colors.swift in Sources */,
@@ -584,6 +591,7 @@
 				A7BEA89F1FCEAE4100605AAE /* NSString+Subscript.m in Sources */,
 				A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */,
 				A7FDC5101FD0140F008DC815 /* LunaRecordCharacter.m in Sources */,
+				A72534D11FE39EF900C2AFAA /* NSObject+Class.swift in Sources */,
 				A7E308BC1F9CE0DA00B0805B /* Luna.m in Sources */,
 				A79128671F911F17002CC4E5 /* WavHandler.swift in Sources */,
 				A78AA3171FCFA785004DF6AE /* LunaRecordVault.m in Sources */,

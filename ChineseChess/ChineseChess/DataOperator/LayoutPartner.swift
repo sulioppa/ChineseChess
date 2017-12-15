@@ -10,33 +10,18 @@ import UIKit
 
 class LayoutPartner: NSObject {
 
-	private static let safeAreaOrigin: CGPoint = {
+	public static let safeArea: CGRect = {
 		if #available(iOS 11.0, *) {
-			return UIApplication.shared.windows.first?.safeAreaLayoutGuide.layoutFrame.origin ?? UIScreen.main.bounds.origin
+			return UIApplication.shared.windows.first?.safeAreaLayoutGuide.layoutFrame ?? UIScreen.main.bounds
 		}
-		return UIScreen.main.bounds.origin
-	}()
-	
-	private static let safeAreaSize: CGSize = {
-		if #available(iOS 11.0, *) {
-			return UIApplication.shared.windows.first?.safeAreaLayoutGuide.layoutFrame.size ?? UIScreen.main.bounds.size
-		}
-		return UIScreen.main.bounds.size
-	}()
-	
-	private static let scale: CGFloat = LayoutPartner.safeAreaSize.width / 320.0
-
-	public static let topToSafeArea: CGFloat = {
-		return LayoutPartner.safeAreaOrigin.y
-	}()
-	
-	public static let bottomToSafeArea: CGFloat = {
-		return UIScreen.main.bounds.size.height - LayoutPartner.safeAreaOrigin.y - LayoutPartner.safeAreaSize.height
+		return UIScreen.main.bounds
 	}()
 	
 	public static let hasSafeArea: Bool = {
-		return LayoutPartner.topToSafeArea != 0.0
+		return LayoutPartner.safeArea.origin.y != 0.0
 	}()
+	
+	private static let scale: CGFloat = LayoutPartner.safeArea.size.width / 320.0
 	
 }
 
@@ -58,7 +43,7 @@ extension LayoutPartner {
 			self.buttonTitleFontSize *= LayoutPartner.scale
 			self.buttonSpace *= LayoutPartner.scale
 			
-			self.titleViewSize.width = LayoutPartner.safeAreaSize.width * Macro.UI.goldenScale
+			self.titleViewSize.width = LayoutPartner.safeArea.size.width * Macro.UI.goldenScale
 			self.titleViewSize.height = self.titleViewSize.width * 0.25
 			self.titleViewSpace *= LayoutPartner.scale
 		}
@@ -74,7 +59,7 @@ extension LayoutPartner {
 		public var boardmargin: CGFloat = 0.0
 				
 		init() {
-			switch LayoutPartner.safeAreaSize.height {
+			switch LayoutPartner.safeArea.size.height {
 			case 568.0:
 				self.basePoint = CGPoint(x: 19.0, y: 34.5)
 				self.gridSize = 35.3
@@ -111,7 +96,7 @@ extension LayoutPartner {
 		public var nicknameFontSize: CGFloat = 12.0
 		
 		init() {
-			self.buttonSize.width = (LayoutPartner.safeAreaSize.width - 5 * ChessBoard().boardmargin) / (3 + Macro.UI.goldenScale)
+			self.buttonSize.width = (LayoutPartner.safeArea.size.width - 5 * ChessBoard().boardmargin) / (3 + Macro.UI.goldenScale)
 			self.buttonSize.height = self.buttonSize.width * Macro.UI.goldenScale
 			self.buttonTitleFontSize *= LayoutPartner.scale
 			self.buttonCordins = self.buttonSize.height * 0.15
