@@ -11,10 +11,11 @@ import UIKit
 // MARK: - ChessBoardController
 class ChessBoardController: NSObject {
 	
-	public final var AI: Luna!
+	public final weak var AI: Luna!
+	public final weak var contentView: UIView!
 	
 	// MARK: - Private Properties
-	private var board: UIView!
+	private weak var board: UIView!
 	private var chess: [GridPoint: CALayer] = [:]
 	
 	// MARK: - init
@@ -22,8 +23,9 @@ class ChessBoardController: NSObject {
 		super.init()
 	}
 	
-	public init(board: UIView, AI: Luna, isUserInteractionEnabled: Bool) {
+	public init(contentView: UIView, board: UIView, AI: Luna, isUserInteractionEnabled: Bool) {
 		super.init()
+		self.contentView = contentView
 		self.board = board
 		self.AI = AI
 		

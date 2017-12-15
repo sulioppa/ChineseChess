@@ -28,7 +28,10 @@ class GameBoardController: ChessBoardController {
 	
 	// MARK: - Handle Tap
 	public override func didTapInBoard(at point: ChessBoardController.GridPoint) {
-		guard self.canRespond else { return }
+		guard self.canRespond else {
+			TextAlertView.show(in: self.contentView, text: self.AI.state.description)
+			return
+		}
 		
 		if self.choice.grid.isLegal {
 			// has chosen one.

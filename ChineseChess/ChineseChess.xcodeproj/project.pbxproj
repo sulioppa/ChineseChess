@@ -22,6 +22,7 @@
 		A73069741FB2FBAF00D30876 /* Luna+PreGenerate.m in Sources */ = {isa = PBXBuildFile; fileRef = A73069731FB2FBAF00D30876 /* Luna+PreGenerate.m */; };
 		A749D7571FE11BB5005B8520 /* TextAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A749D7561FE11BB5005B8520 /* TextAlertView.swift */; };
 		A7592D7F1F9DFB0C00E7EA0F /* Value+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7592D7E1F9DFB0C00E7EA0F /* Value+Random.swift */; };
+		A7607A721FE3DEDC0030039F /* ObjcEnum+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7607A711FE3DEDC0030039F /* ObjcEnum+Extension.swift */; };
 		A770863D1F94C39100C24D2B /* LoadingAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A770863C1F94C39100C24D2B /* LoadingAlertView.swift */; };
 		A778E4801F94E25200D28B25 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E47F1F94E25200D28B25 /* HistoryVC.swift */; };
 		A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E4811F94E26000D28B25 /* MultiPeerVC.swift */; };
@@ -45,6 +46,7 @@
 		A7BEA89F1FCEAE4100605AAE /* NSString+Subscript.m in Sources */ = {isa = PBXBuildFile; fileRef = A7BEA89E1FCEAE4100605AAE /* NSString+Subscript.m */; };
 		A7BEA8A41FCEBABE00605AAE /* LunaRecordRuler.m in Sources */ = {isa = PBXBuildFile; fileRef = A7BEA8A31FCEBABE00605AAE /* LunaRecordRuler.m */; };
 		A7C4E5401F9DC20E0018595A /* FlashLayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C4E53F1F9DC20E0018595A /* FlashLayerController.swift */; };
+		A7C8D4701FE3A4F6006AC172 /* UIView+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C8D46F1FE3A4F6006AC172 /* UIView+Border.swift */; };
 		A7CD69F31F91E11700C3202A /* LayoutPartner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD69F21F91E11700C3202A /* LayoutPartner.swift */; };
 		A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CE55F81F8DC28600641454 /* AppDelegate.swift */; };
 		A7CE56001F8DC28600641454 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7CE55FF1F8DC28600641454 /* Assets.xcassets */; };
@@ -79,6 +81,7 @@
 		A749D7561FE11BB5005B8520 /* TextAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAlertView.swift; sourceTree = "<group>"; };
 		A74E49A01FCD5606004CA953 /* Luna+Objc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Objc.h"; sourceTree = "<group>"; };
 		A7592D7E1F9DFB0C00E7EA0F /* Value+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Random.swift"; sourceTree = "<group>"; };
+		A7607A711FE3DEDC0030039F /* ObjcEnum+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObjcEnum+Extension.swift"; sourceTree = "<group>"; };
 		A770863C1F94C39100C24D2B /* LoadingAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAlertView.swift; sourceTree = "<group>"; };
 		A778E47F1F94E25200D28B25 /* HistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
 		A778E4811F94E26000D28B25 /* MultiPeerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerVC.swift; sourceTree = "<group>"; };
@@ -103,6 +106,7 @@
 		A7BEA8A21FCEBABE00605AAE /* LunaRecordRuler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunaRecordRuler.h; sourceTree = "<group>"; };
 		A7BEA8A31FCEBABE00605AAE /* LunaRecordRuler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunaRecordRuler.m; sourceTree = "<group>"; };
 		A7C4E53F1F9DC20E0018595A /* FlashLayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashLayerController.swift; sourceTree = "<group>"; };
+		A7C8D46F1FE3A4F6006AC172 /* UIView+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Border.swift"; sourceTree = "<group>"; };
 		A7CD69F21F91E11700C3202A /* LayoutPartner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutPartner.swift; sourceTree = "<group>"; };
 		A7CE55F51F8DC28600641454 /* ChineseChess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChineseChess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7CE55F81F8DC28600641454 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -321,6 +325,7 @@
 				A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */,
 				A79128661F911F17002CC4E5 /* WavHandler.swift */,
 				A7CD69F21F91E11700C3202A /* LayoutPartner.swift */,
+				A7607A711FE3DEDC0030039F /* ObjcEnum+Extension.swift */,
 			);
 			path = DataOperator;
 			sourceTree = "<group>";
@@ -430,6 +435,7 @@
 				A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */,
 				A7E7ACFC1F91DE8E00B29C5A /* UIButton+Golden.swift */,
 				A7DC614C1F92435C009A9205 /* UIFont+KaiTi.swift */,
+				A7C8D46F1FE3A4F6006AC172 /* UIView+Border.swift */,
 			);
 			path = "UI+Extension";
 			sourceTree = "<group>";
@@ -571,6 +577,7 @@
 			files = (
 				A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */,
 				A79C27F71FA5D5B100FD9A87 /* Luna+Const.m in Sources */,
+				A7C8D4701FE3A4F6006AC172 /* UIView+Border.swift in Sources */,
 				A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */,
 				A7B7D0D31FCC3A280048B304 /* LunaFENCoder.m in Sources */,
 				A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */,
@@ -606,6 +613,7 @@
 				A7CD69F31F91E11700C3202A /* LayoutPartner.swift in Sources */,
 				A770863D1F94C39100C24D2B /* LoadingAlertView.swift in Sources */,
 				A7C4E5401F9DC20E0018595A /* FlashLayerController.swift in Sources */,
+				A7607A721FE3DEDC0030039F /* ObjcEnum+Extension.swift in Sources */,
 				A73069741FB2FBAF00D30876 /* Luna+PreGenerate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

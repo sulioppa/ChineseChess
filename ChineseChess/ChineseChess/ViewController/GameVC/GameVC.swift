@@ -10,7 +10,7 @@ import UIKit
 
 class GameVC: ChessVC {
 
-	private lazy var chessBoardController: GameBoardController = GameBoardController(board: self.board, AI: self.AI, isUserInteractionEnabled: true)
+	private lazy var chessBoardController: GameBoardController = GameBoardController(contentView: self.contentView, board: self.board, AI: self.AI, isUserInteractionEnabled: true)
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
