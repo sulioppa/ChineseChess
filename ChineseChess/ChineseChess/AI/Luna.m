@@ -606,6 +606,10 @@
 	return state;
 }
 
+- (NSUInteger)regretSteps {
+	return _stack.count;
+}
+
 - (Luna_Chess)regretWithMove:(Luna_Move *)move {
 	NSAssert(move != nil, @"%s: move should not be nil", __FUNCTION__);
 	LunaRecord *record = [_stack pop];

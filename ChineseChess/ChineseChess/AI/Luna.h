@@ -71,6 +71,9 @@ typedef uint16_t Luna_Move;
 // do a chess move, return a state indicates how this move affect the game.
 - (LunaMoveState)moveChessWithMove:(Luna_Move)move;
 
+// the number of steps
+- (NSUInteger)regretSteps;
+
 // undo a chess move from move stack, move = 0 indicates there's no more move in stack.
 - (Luna_Chess)regretWithMove:(nonnull Luna_Move *)move;
 

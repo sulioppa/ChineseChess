@@ -114,7 +114,7 @@ extension ChessBoardController {
 // MARK: - Public Chess move and recover
 extension ChessBoardController {
 	
-	public final func moveChess(with preparation: (() -> Void)? = nil, from: GridPoint, to: GridPoint, completion: @escaping () -> Void) {
+	public final func moveChess(with preparation: (() -> Void)?, from: GridPoint, to: GridPoint, completion: @escaping () -> Void) {
 		guard let aChess = self.chess[from] else { return }
 		
 		preparation?()
@@ -143,7 +143,7 @@ extension ChessBoardController {
 		CATransaction.commit()
 	}
 	
-	public final func recoverChess(with preparation: (() -> Void)? = nil, from: GridPoint, to: GridPoint, recover: Int, completion: @escaping (() -> Void)) {
+	public final func recoverChess(with preparation: (() -> Void)?, from: GridPoint, to: GridPoint, recover: Int, completion: @escaping (() -> Void)) {
 		assert(self.chess[to] == nil, "【Error】：\(#function) 's GridPoint to must have no chess.")
 		guard let aChess = self.chess[from] else { return }
 		

@@ -22,6 +22,9 @@ class GameBoardController: ChessBoardController {
 	// isMoving reveals the chess is moving or not.
 	private var isMoving: Bool = false
 	
+	// isRegreting reveals the game is in progress of regreting.
+	private var isRegreting: Bool = false
+	
 	// taskQueue, to avoid data mess. Reverse, opposite and chess move should be serially executed.
 	private let taskQueue: DispatchQueue = DispatchQueue(label: "com.sulioppa.game.taskQueue")
 	private let taskSignal: DispatchSemaphore = DispatchSemaphore(value: 1)
@@ -70,7 +73,23 @@ class GameBoardController: ChessBoardController {
 	
 }
 
-// MARK: - Support Handling Tap
+// MARK: - Public
+extension GameBoardController {
+	
+	public final func complexRegret() {
+		if self.isRegreting || self.isMoving || self.AI.regretSteps() == 0 {
+			WavHandler.playButtonWav()
+			return
+		}
+		
+		self.isRegreting = true
+		self.AI.isThinking = false
+		self.regretOneStep(release: true)
+	}
+	
+}
+
+// MARK: - Private - Support Handling Tap
 extension GameBoardController {
 	
 	private var canRespond: Bool {
@@ -141,8 +160,8 @@ extension GameBoardController {
 	private func refreshLastMove(with move: Luna_Move) {
 		self.clearLastMove()
 		if move != 0 {
-			self.lastMove.from = self.drawSquare(isRed: false, location: Luna_Location(move >> 8))
-			self.lastMove.to = self.drawSquare(isRed: false, location: Luna_Location(move & 0xff))
+			self.lastMove.from = self.drawSquare(isRed: false, location: move.from)
+			self.lastMove.to = self.drawSquare(isRed: false, location: move.to)
 		}
 	}
 	
@@ -151,22 +170,6 @@ extension GameBoardController {
 		self.lastMove.to?.removeFromSuperlayer()
 		self.lastMove.from = nil
 		self.lastMove.to = nil
-	}
-	
-}
-
-// MARK: - AsyncTask
-extension GameBoardController {
-	
-	private func asyncTask(task: @escaping (@escaping () -> Void) -> Void) {
-		self.taskQueue.async { [weak self] in
-			self?.taskSignal.wait()
-			DispatchQueue.main.async {
-				task() {
-					self?.taskSignal.signal()
-				}
-			}
-		}
 	}
 	
 }
@@ -185,14 +188,49 @@ extension GameBoardController {
 		}
 	}
 	
-	private func recoverChess(from: GridPoint, to: GridPoint, recover: Int) {
+	private func recoverChess(from: GridPoint, to: GridPoint, recover: Int, completion: (() -> Void)?) {
 		self.asyncTask { [weak self] (release) in
 			self?.recoverChess(with: {
 				self?.isMoving = true
 			}, from: from, to: to, recover: recover, completion: {
 				self?.isMoving = false
+				completion?()
 				release()
 			})
+		}
+	}
+	
+	private func asyncTask(task: @escaping (@escaping () -> Void) -> Void) {
+		self.taskQueue.async { [weak self] in
+			self?.taskSignal.wait()
+			DispatchQueue.main.async {
+				task() {
+					self?.taskSignal.signal()
+				}
+			}
+		}
+	}
+	
+}
+
+// MARK: - Complex Regret
+extension GameBoardController {
+	
+	private func regretOneStep(release: Bool) {
+		var move: Luna_Move = 0
+		let ate = Int(self.AI.regret(withMove: &move))
+		
+		if move > 0 {
+			self.recoverChess(from: GridPoint(location: move.to, isReverse: self.reverse), to: GridPoint(location: move.from, isReverse: self.reverse), recover: ate) {
+				if release {
+					self.isRegreting = false
+				}
+			}
+			
+			self.clearChoice()
+			self.clearLegalMoves()
+			self.refreshLastMove(with: self.AI.lastMove())
+			WavHandler.playVoice(state: .normal)
 		}
 	}
 	

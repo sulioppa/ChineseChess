@@ -55,7 +55,7 @@ extension GameVC {
 	}
 	
 	@objc private func regretOneStep() {
-		self.chessBoardController.clearBoard()
+		self.chessBoardController.complexRegret()
 	}
 	
 	@objc private func teachMe() {

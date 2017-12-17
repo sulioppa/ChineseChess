@@ -1,5 +1,5 @@
 //
-//  ObjcEnum+Extension.swift
+//  Objc+Extension.swift
 //  ChineseChess
 //
 //  Created by 李夙璃 on 2017/12/15.
@@ -36,6 +36,19 @@ extension LunaBoardState {
 	
 	public var isNormalState: Bool {
 		return self.rawValue <= LunaBoardState.turnBlackSide.rawValue
+	}
+	
+}
+
+// MARK: - Luna_Move
+extension Luna_Move {
+	
+	public var from: Luna_Location {
+		return Luna_Location(self >> 8)
+	}
+	
+	public var to: Luna_Location {
+		return Luna_Location(self & 0xff)
 	}
 	
 }
