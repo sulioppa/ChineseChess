@@ -57,7 +57,7 @@ class TextAlertView: UIView {
 			self.textView.snp.updateConstraints {
 				$0.size.equalTo(size)
 			}
-			superview.layoutIfNeeded()
+			self.layoutIfNeeded()
 		}) { (_) in
 			self.isUserInteractionEnabled = true
 		}

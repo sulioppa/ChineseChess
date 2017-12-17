@@ -101,6 +101,10 @@ extension GameBoardController {
 		self.moveChess(from: self.choice.grid, to: to)
 		self.refreshLastMove(with: self.AI.lastMove())
 		self.clearChoice()
+		
+		if !self.AI.state.isNormalState {
+			BladeAlertView.show(in: self.contentView, text: self.AI.state.description)
+		}
 	}
 	
 	// choice

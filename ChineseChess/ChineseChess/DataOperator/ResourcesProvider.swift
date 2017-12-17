@@ -28,7 +28,8 @@ class ResourcesProvider: NSObject {
 		"wood": "board_wood",
 		"AI": "icon_thinking",
 		"帥": "chess_0",
-		"將": "chess_7"
+		"將": "chess_7",
+		"prompt": "icon_prompt"
 	]
 	
 	private let chess: [String?] = [

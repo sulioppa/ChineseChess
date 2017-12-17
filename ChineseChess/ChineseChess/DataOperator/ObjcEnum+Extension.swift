@@ -34,4 +34,8 @@ extension LunaBoardState {
 		}
 	}
 	
+	public var isNormalState: Bool {
+		return self.rawValue <= LunaBoardState.turnBlackSide.rawValue
+	}
+	
 }
