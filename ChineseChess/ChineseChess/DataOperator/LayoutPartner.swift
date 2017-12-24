@@ -12,13 +12,21 @@ class LayoutPartner: NSObject {
 
 	public static let safeArea: CGRect = {
 		if #available(iOS 11.0, *) {
-			return UIApplication.shared.windows.first?.safeAreaLayoutGuide.layoutFrame ?? UIScreen.main.bounds
+			return UIView.window()?.safeAreaLayoutGuide.layoutFrame ?? UIScreen.main.bounds
 		}
 		return UIScreen.main.bounds
 	}()
 	
 	public static let hasSafeArea: Bool = {
 		return LayoutPartner.safeArea.origin.y != 0.0
+	}()
+	
+	public static let safeAreaCenterYOffset: CGFloat = {
+		if LayoutPartner.hasSafeArea {
+			return (LayoutPartner.safeArea.origin.y - (UIScreen.main.bounds.maxY - LayoutPartner.safeArea.maxY)) / 2.0
+		}
+		
+		return 0.0
 	}()
 	
 	private static let scale: CGFloat = LayoutPartner.safeArea.size.width / 320.0
@@ -105,5 +113,13 @@ extension LayoutPartner {
 			self.sideSize.height = self.buttonSize.height
 			self.nicknameFontSize *= LayoutPartner.scale
 		}
+	}
+}
+
+// MARK: - NavigationView
+extension LayoutPartner {
+	public struct NavigationView {
+		public let titleFontSize: CGFloat = 22.0
+		public let backgroundColorAlpha: CGFloat = 0.9375
 	}
 }
