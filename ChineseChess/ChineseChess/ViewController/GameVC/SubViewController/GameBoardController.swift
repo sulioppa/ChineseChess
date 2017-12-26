@@ -96,8 +96,8 @@ extension GameBoardController {
 		if self.isMoving || self.AI.isThinking {
 			return false
 		} else {
-			return (UserPreference.shared.game.red && self.AI.state == .turnRedSide)
-				|| (UserPreference.shared.game.black && self.AI.state == .turnBlackSide)
+			return (UserPreference.shared.game.red.isPlayer && self.AI.state == .turnRedSide)
+				|| (UserPreference.shared.game.black.isPlayer && self.AI.state == .turnBlackSide)
 		}
 	}
 	

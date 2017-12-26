@@ -24,6 +24,7 @@ public class NavigationView: UIView {
 		super.init(frame: frame)
 		self.separtedBorder()
 		self.backgroundColor = UIColor(white: 1.0, alpha: LayoutPartner.NavigationView().backgroundColorAlpha)
+		self.isUserInteractionEnabled = true
 		
 		self.bar.leftBarButtonItem?.addTapTarget(self, action: #selector(self.dismiss))
 		
@@ -160,6 +161,7 @@ public final class NavigationBar: UIView {
 	
 	public init(superview: UIView) {
 		super.init(frame: CGRect.zero)
+		self.separtedBorder()
 		self.backgroundColor = UIColor.china
 		
 		superview.addSubview(self)

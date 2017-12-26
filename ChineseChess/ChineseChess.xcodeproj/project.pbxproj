@@ -10,6 +10,7 @@
 		423381D80836935A6E9A0D8D /* Pods_ChineseChess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */; };
 		A70765F21F94E1A200FA6A43 /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70765F11F94E1A200FA6A43 /* GameVC.swift */; };
 		A70765F61F94E1E600FA6A43 /* ChessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70765F51F94E1E600FA6A43 /* ChessVC.swift */; };
+		A71C6A5A1FF0E68100D9F0F6 /* AppInformation.txt in Resources */ = {isa = PBXBuildFile; fileRef = A71C6A591FF0E68100D9F0F6 /* AppInformation.txt */; };
 		A71D3D7B1F9F30D500823384 /* ChessBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71D3D7A1F9F30D500823384 /* ChessBoardController.swift */; };
 		A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36351F90ECFA00D9BB62 /* UserPreference.swift */; };
 		A71E36381F90EEC900D9BB62 /* ResourcesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */; };
@@ -17,6 +18,7 @@
 		A72534D11FE39EF900C2AFAA /* NSObject+Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72534D01FE39EF900C2AFAA /* NSObject+Class.swift */; };
 		A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */; };
 		A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D681F90A6E000CBDAD9 /* Macro.swift */; };
+		A72D652E1FF13B8700E44E60 /* GameSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72D652D1FF13B8700E44E60 /* GameSettingsView.swift */; };
 		A72F94191F974E73001FACC3 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72F94181F974E73001FACC3 /* UIView+Layout.swift */; };
 		A72F941B1F9753EE001FACC3 /* UIView+Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72F941A1F9753EE001FACC3 /* UIView+Tap.swift */; };
 		A73069741FB2FBAF00D30876 /* Luna+PreGenerate.m in Sources */ = {isa = PBXBuildFile; fileRef = A73069731FB2FBAF00D30876 /* Luna+PreGenerate.m */; };
@@ -68,6 +70,7 @@
 		2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChineseChess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A70765F11F94E1A200FA6A43 /* GameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
 		A70765F51F94E1E600FA6A43 /* ChessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessVC.swift; sourceTree = "<group>"; };
+		A71C6A591FF0E68100D9F0F6 /* AppInformation.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AppInformation.txt; sourceTree = "<group>"; };
 		A71D3D7A1F9F30D500823384 /* ChessBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessBoardController.swift; sourceTree = "<group>"; };
 		A71D3D7D1F9F3AC500823384 /* Luna+Const.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Const.h"; sourceTree = "<group>"; };
 		A71D3D801F9F3C0700823384 /* Luna+C.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+C.h"; sourceTree = "<group>"; };
@@ -78,6 +81,7 @@
 		A72534D01FE39EF900C2AFAA /* NSObject+Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Class.swift"; sourceTree = "<group>"; };
 		A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PresentVC.swift"; sourceTree = "<group>"; };
 		A72A4D681F90A6E000CBDAD9 /* Macro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macro.swift; sourceTree = "<group>"; };
+		A72D652D1FF13B8700E44E60 /* GameSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsView.swift; sourceTree = "<group>"; };
 		A72F94181F974E73001FACC3 /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		A72F941A1F9753EE001FACC3 /* UIView+Tap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Tap.swift"; sourceTree = "<group>"; };
 		A73069721FB2FBAF00D30876 /* Luna+PreGenerate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+PreGenerate.h"; sourceTree = "<group>"; };
@@ -220,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				A7E51D151F905DBD0054DF93 /* Wavs */,
+				A71C6A591FF0E68100D9F0F6 /* AppInformation.txt */,
 				A7E51D141F9058BF0054DF93 /* KaiTi.ttf */,
 			);
 			path = Resources;
@@ -246,6 +251,7 @@
 		A70765F41F94E1CC00FA6A43 /* GameVC */ = {
 			isa = PBXGroup;
 			children = (
+				A72D652C1FF13B6400E44E60 /* View */,
 				A778E4841F94E26B00D28B25 /* SubViewController */,
 				A70765F11F94E1A200FA6A43 /* GameVC.swift */,
 			);
@@ -268,6 +274,14 @@
 				A778E4811F94E26000D28B25 /* MultiPeerVC.swift */,
 			);
 			path = MultiPeerVC;
+			sourceTree = "<group>";
+		};
+		A72D652C1FF13B6400E44E60 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A72D652D1FF13B8700E44E60 /* GameSettingsView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		A74F8AD71FEE36E500782288 /* NavigationView */ = {
@@ -531,6 +545,7 @@
 				A791286D1F9124E2002CC4E5 /* KaiTi.ttf in Resources */,
 				A78CC1BC1F8F783100563789 /* Launch Screen.storyboard in Resources */,
 				A7CE56001F8DC28600641454 /* Assets.xcassets in Resources */,
+				A71C6A5A1FF0E68100D9F0F6 /* AppInformation.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,6 +618,7 @@
 				A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */,
 				A7854A1E1FEF5BA100C977B7 /* UIView+Window.swift in Sources */,
 				A7B7D0DF1FCC3FA60048B304 /* LunaRecordStack.m in Sources */,
+				A72D652E1FF13B8700E44E60 /* GameSettingsView.swift in Sources */,
 				A749D7571FE11BB5005B8520 /* TextAlertView.swift in Sources */,
 				A70765F61F94E1E600FA6A43 /* ChessVC.swift in Sources */,
 				A72F94191F974E73001FACC3 /* UIView+Layout.swift in Sources */,

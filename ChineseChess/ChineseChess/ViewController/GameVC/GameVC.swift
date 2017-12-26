@@ -39,14 +39,18 @@ class GameVC: ChessVC {
 }
 
 // MARK: - Action.
-extension GameVC {
+extension GameVC: GameSettingsViewDelegate {
 	
 	@objc private func newGame() {
-		self.chessBoardController.reverse = UserPreference.shared.game.reverse.reverse()
+		GameSettingsView().show(isNew: true, delegate: self)
 	}
 	
 	@objc private func settings() {
-		self.chessBoardController.opposite = UserPreference.shared.game.opposite.reverse()
+		GameSettingsView().show(isNew: false, delegate: self)
+	}
+	
+	func gameSettingsViewDidClickOk(isNew: Bool, levels: [UserPreference.Level]) {
+		
 	}
 	
 	@objc private func back() {

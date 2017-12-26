@@ -119,7 +119,11 @@ extension LayoutPartner {
 // MARK: - NavigationView
 extension LayoutPartner {
 	public struct NavigationView {
-		public let titleFontSize: CGFloat = 22.0
+		public var titleFontSize: CGFloat = 19.0
 		public let backgroundColorAlpha: CGFloat = 0.9375
+		
+		init() {
+			self.titleFontSize *= LayoutPartner.scale
+		}
 	}
 }
