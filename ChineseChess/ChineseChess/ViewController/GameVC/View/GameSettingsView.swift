@@ -138,6 +138,7 @@ extension GameSettingsView: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.allowsSelection = false
 		tableView.deselectRow(at: indexPath, animated: true)
 		
 		if indexPath.section > 0 {
@@ -344,6 +345,7 @@ extension GameSettingsView: LevelSelectViewDelegate {
 	func levelSelectView(level didSelectLevel: UserPreference.Level, indexPath: IndexPath) {
 		self.dataSource[indexPath.row].level = didSelectLevel
 		self.tableview.reloadRows(at: [indexPath], with: .automatic)
+		self.tableview.allowsSelection = true
 	}
 	
 }
