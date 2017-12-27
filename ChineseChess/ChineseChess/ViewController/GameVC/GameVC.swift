@@ -74,7 +74,7 @@ extension GameVC: GameSettingsViewDelegate {
 extension GameVC {
 	
 	@objc private func showMenu() {
-		LoadingAlertView.show(in: self.view, message: "加载中...", isCloseButtonHidden: false)
+		self.reverse()
 	}
 	
 	@objc private func reverse() {
@@ -101,7 +101,7 @@ extension GameVC {
 	}
 	
 	@objc private func teachMe() {
-		self.setFlashProgress(progress: Float.random)
+		self.opposite()
 	}
 	
 }
