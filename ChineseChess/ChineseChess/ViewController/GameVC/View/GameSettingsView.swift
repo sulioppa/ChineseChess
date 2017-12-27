@@ -316,7 +316,7 @@ extension GameSettingsView: LevelSelectViewDelegate {
 			tableView.allowsSelection = false
 			WavHandler.playButtonWav()
 			
-			UIView.animate(withDuration: Macro.Time.alertViewHideTime, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .allowUserInteraction, animations: {
+			UIView.animate(withDuration: Macro.Time.alertViewShowTime, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .allowUserInteraction, animations: {
 				tableView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
 			}, completion: { (_) in
 				tableView.removeFromSuperview()
