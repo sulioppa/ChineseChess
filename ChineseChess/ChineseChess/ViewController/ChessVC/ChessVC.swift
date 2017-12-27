@@ -19,7 +19,24 @@ class ChessVC: UIViewController {
 		self.layoutContentView()
 		self.layoutChessBoard()
 		self.layoutFlashLayer()
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(updateUserPreference), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
     }
+	
+	// MARK: - Update UserPreference
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		self.updateUserPreference()
+	}
+	
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+		self.updateUserPreference()
+	}
+	
+	@objc public func updateUserPreference() {
+		fatalError("\(#function) should be override by subclass")
+	}
 	
 	// MARK: - SafaArea
 	private lazy var safeArea: UIView = {
@@ -222,6 +239,15 @@ extension ChessVC {
 				return ResourcesProvider.shared.image(named: "將")
 			}
 		}
+		
+		public static func side(level: UserPreference.Level, isRed: Bool) -> SideState {
+			if level.isPlayer {
+				return isRed ? .red : .black
+			} else {
+				return .AI
+			}
+		}
+		
 	}
 	
 	public final func setSideState(top: SideState, bottom: SideState) {

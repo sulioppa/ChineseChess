@@ -75,7 +75,7 @@ class GameBoardController: ChessBoardController {
 }
 
 // MARK: - Public
-extension GameBoardController: GameSettingsViewDelegate {
+extension GameBoardController {
 	
 	func gameSettingsViewDidClickOk(isNew: Bool, levels: [UserPreference.Level]) {
 		UserPreference.shared.game.red = levels[0]

@@ -28,7 +28,7 @@
 - (void)reloadWith:(NSString *)file {
     [self clear];
 	
-	if (file == nil) {
+	if (file == nil || file.isEmpty) {
 		return;
 	}
 	

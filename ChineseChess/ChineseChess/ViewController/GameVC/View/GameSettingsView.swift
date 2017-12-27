@@ -128,6 +128,7 @@ extension GameSettingsView: UITableViewDelegate, UITableViewDataSource {
 		if indexPath.section > 0 {
 			let cell = tableView.dequeueReusableCell(withIdentifier: OkCell.identifier, for: indexPath) as! OkCell
 			cell.okLabel.text = "确  定"
+			cell.selectionStyle = .none
 			return cell
 		}
 		

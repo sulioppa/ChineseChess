@@ -51,6 +51,7 @@ extension UserPreference {
 		public var red: Level = .player
 		public var black: Level = .player
 		public var prompt: Level = .supermaster
+		public var record: String = ""
 		public var reverse: Bool = false
 		public var opposite: Bool = false
 		
@@ -60,6 +61,7 @@ extension UserPreference {
 				key.red: self.red.rawValue,
 				key.black: self.black.rawValue,
 				key.prompt: self.prompt.rawValue,
+				key.record: self.record,
 				key.reverse: self.reverse,
 				key.opposite: self.opposite
 			]
@@ -71,6 +73,7 @@ extension UserPreference {
 			left.red <- dictionary[key.red]
 			left.black <- dictionary[key.black]
 			left.prompt <- dictionary[key.prompt]
+			left.record <- dictionary[key.record]
 			left.reverse <- dictionary[key.reverse]
 			left.opposite <- dictionary[key.opposite]
 		}
@@ -188,5 +191,6 @@ extension UserPreference {
 		public let prompt = "prompt"
 		public let nickname = "nickname"
 		public let histories = "histories"
+		public let record = "record"
 	}
 }

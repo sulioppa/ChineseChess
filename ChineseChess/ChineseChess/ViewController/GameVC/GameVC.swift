@@ -30,24 +30,66 @@ class GameVC: ChessVC {
 	}
 	
 	private func refreshUI() {
-		self.setSideState(top: .AI, bottom: .red)
-		self.setNickname(top: "棋手", bottom: "棋手")
+		self.AI.initBoard(withFile: UserPreference.shared.game.record)
 		self.chessBoardController.reverse = UserPreference.shared.game.reverse
 		self.chessBoardController.opposite = UserPreference.shared.game.opposite
+		self.refreshTopBottom()
+	}
+	
+	public override func updateUserPreference() {
+		UserPreference.shared.game.record = self.AI.historyFile()
 	}
 	
 }
 
-// MARK: - Action.
-extension GameVC {
+// MARK: - GameSettings.
+extension GameVC: GameSettingsViewDelegate {
 	
 	@objc private func newGame() {
-		GameSettingsView().show(isNew: true, delegate: self.chessBoardController)
+		GameSettingsView().show(isNew: true, delegate: self)
 	}
 	
 	@objc private func settings() {
-		GameSettingsView().show(isNew: false, delegate: self.chessBoardController)
+		GameSettingsView().show(isNew: false, delegate: self)
 	}
+	
+	func gameSettingsViewDidClickOk(isNew: Bool, levels: [UserPreference.Level]) {
+		self.chessBoardController.gameSettingsViewDidClickOk(isNew: isNew, levels: levels)
+		self.refreshTopBottom()
+	}
+	
+	private func refreshTopBottom() {
+		if UserPreference.shared.game.reverse {
+			self.setSideState(top: ChessVC.SideState.side(level: UserPreference.shared.game.red, isRed: true), bottom: ChessVC.SideState.side(level: UserPreference.shared.game.black, isRed: false))
+			self.setNickname(top: UserPreference.shared.game.red.description, bottom: UserPreference.shared.game.black.description)
+		} else {
+			self.setSideState(top: ChessVC.SideState.side(level: UserPreference.shared.game.black, isRed: false), bottom: ChessVC.SideState.side(level: UserPreference.shared.game.red, isRed: true))
+			self.setNickname(top: UserPreference.shared.game.black.description, bottom: UserPreference.shared.game.red.description)
+		}
+	}
+	
+}
+
+// MARK: - Menu.
+extension GameVC {
+	
+	@objc private func showMenu() {
+		LoadingAlertView.show(in: self.view, message: "加载中...", isCloseButtonHidden: false)
+	}
+	
+	@objc private func reverse() {
+		self.chessBoardController.reverse = UserPreference.shared.game.reverse.reverse()
+		self.refreshTopBottom()
+	}
+	
+	@objc private func opposite() {
+		self.chessBoardController.opposite = UserPreference.shared.game.opposite.reverse()
+	}
+
+}
+
+// MARK: - Other
+extension GameVC {
 	
 	@objc private func back() {
 		WavHandler.playButtonWav()
@@ -60,10 +102,6 @@ extension GameVC {
 	
 	@objc private func teachMe() {
 		self.setFlashProgress(progress: Float.random)
-	}
-	
-	@objc private func showMenu() {
-		LoadingAlertView.show(in: self.view, message: "加载中...", isCloseButtonHidden: false)
 	}
 	
 }
