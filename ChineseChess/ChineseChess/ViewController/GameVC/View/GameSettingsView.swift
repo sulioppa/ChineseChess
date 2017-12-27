@@ -12,6 +12,10 @@ protocol GameSettingsViewDelegate: NSObjectProtocol {
 	func gameSettingsViewDidClickOk(isNew: Bool, levels: [UserPreference.Level])
 }
 
+private protocol LevelSelectViewDelegate: NSObjectProtocol {
+	func levelSelectView(level didSelectLevel: UserPreference.Level, indexPath: IndexPath)
+}
+
 class GameSettingsView: NavigationView {
 
 	private lazy var tableview: UITableView = { [weak self] in
@@ -139,6 +143,7 @@ extension GameSettingsView: UITableViewDelegate, UITableViewDataSource {
 			self.delegate?.gameSettingsViewDidClickOk(isNew: self.isNew, levels: self.levels)
 			self.dismiss()
 		} else {
+			LevelSelectView.show(in: self, frame: self.bounds, delegate: self, indexPath: indexPath, includePlayer: indexPath.row < 2)
 			WavHandler.playButtonWav()
 		}
 	}
@@ -224,6 +229,7 @@ extension GameSettingsView {
 			self.chess?.image = ResourcesProvider.shared.image(named: item.image)
 			self.title?.text = item.title
 			self.value?.text = item.level.description
+			self.value?.textColor = item.level.isPlayer ? UIColor.carbon : UIColor.china
 		}
 	}
 	
@@ -254,6 +260,89 @@ extension GameSettingsView {
 		required init?(coder aDecoder: NSCoder) {
 			fatalError("init(coder:) has not been implemented")
 		}
+	}
+	
+}
+
+// MARK: - Select Level
+extension GameSettingsView: LevelSelectViewDelegate {
+	
+	private class LevelSelectView: UITableView, UITableViewDelegate, UITableViewDataSource {
+		
+		private var levels: [UserPreference.Level] = []
+		private var selectDelegate: LevelSelectViewDelegate?
+		private var indexPath: IndexPath = IndexPath(row: 0, section: 0)
+		
+		init(frame: CGRect, delegate: LevelSelectViewDelegate, includePlayer: Bool) {
+			super.init(frame: frame, style: .plain)
+			self.separtedBorder()
+			self.backgroundColor = UIColor.white
+			
+			self.selectDelegate = delegate
+			self.levels = UserPreference.Level.levels
+			if !includePlayer {
+				self.levels.removeFirst()
+			}
+			
+			self.delegate = self
+			self.dataSource = self
+			self.allowsMultipleSelection = false
+			self.register(OkCell.self, forCellReuseIdentifier: OkCell.identifier)
+			self.separatorInset = UIEdgeInsets.zero
+			self.separatorStyle = .singleLine
+		}
+		
+		required init?(coder aDecoder: NSCoder) {
+			fatalError("init(coder:) has not been implemented")
+		}
+		
+		func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+			return Cell.height
+		}
+		
+		func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+			return levels.count
+		}
+		
+		func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+			let cell = tableView.dequeueReusableCell(withIdentifier: OkCell.identifier, for: indexPath) as! OkCell
+			cell.okLabel.textColor = self.levels[indexPath.row].isPlayer ? UIColor.carbon : UIColor.china
+			cell.okLabel.text = self.levels[indexPath.row].description
+			return cell
+		}
+		
+		func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+			tableView.allowsSelection = false
+			WavHandler.playButtonWav()
+			
+			UIView.animate(withDuration: Macro.Time.alertViewHideTime, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .allowUserInteraction, animations: {
+				tableView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+			}, completion: { (_) in
+				tableView.removeFromSuperview()
+			})
+			
+			self.selectDelegate?.levelSelectView(level: self.levels[indexPath.row], indexPath: self.indexPath)
+		}
+		
+		public class func show(in superview: UIView, frame: CGRect, delegate: LevelSelectViewDelegate, indexPath: IndexPath, includePlayer: Bool) {
+			let view = LevelSelectView(frame: frame, delegate: delegate, includePlayer: includePlayer)
+			view.indexPath = indexPath
+			view.isUserInteractionEnabled = false
+			view.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+			superview.addSubview(view)
+			
+			UIView.animate(withDuration: Macro.Time.alertViewShowTime, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .allowUserInteraction, animations: {
+				view.transform = .identity
+			}, completion: { (_) in
+				view.isUserInteractionEnabled = true
+			})
+		}
+		
+	}
+	
+	func levelSelectView(level didSelectLevel: UserPreference.Level, indexPath: IndexPath) {
+		self.dataSource[indexPath.row].level = didSelectLevel
+		self.tableview.reloadRows(at: [indexPath], with: .automatic)
 	}
 	
 }

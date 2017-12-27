@@ -31,8 +31,9 @@ class GameBoardController: ChessBoardController {
 	
 	// MARK: - Handle Tap
 	public override func didTapInBoard(at point: ChessBoardController.GridPoint) {
-		guard self.canRespond else {
-			TextAlertView.show(in: self.contentView, text: self.AI.state.description)
+		let canRespond = self.canRespond
+		if !canRespond.can {
+			TextAlertView.show(in: self.contentView, text: canRespond.error)
 			return
 		}
 		
@@ -74,7 +75,18 @@ class GameBoardController: ChessBoardController {
 }
 
 // MARK: - Public
-extension GameBoardController {
+extension GameBoardController: GameSettingsViewDelegate {
+	
+	func gameSettingsViewDidClickOk(isNew: Bool, levels: [UserPreference.Level]) {
+		UserPreference.shared.game.red = levels[0]
+		UserPreference.shared.game.black = levels[1]
+		UserPreference.shared.game.prompt = levels[2]
+		
+		if isNew {
+			self.AI.initBoard(withFile: nil)
+			self.refreshBoard()
+		}
+	}
 	
 	public final func complexRegret() {
 		if self.isRegreting || self.isMoving || self.AI.regretSteps() == 0 {
@@ -92,13 +104,24 @@ extension GameBoardController {
 // MARK: - Private - Support Handling Tap
 extension GameBoardController {
 	
-	private var canRespond: Bool {
-		if self.isMoving || self.AI.isThinking {
-			return false
+	private var canRespond: (can: Bool, error: String?) {
+		if self.isMoving {
+			return (false, nil)
+		} else if self.AI.isThinking {
+			return (false, "AI正在思考...")
 		} else {
-			return (UserPreference.shared.game.red.isPlayer && self.AI.state == .turnRedSide)
-				|| (UserPreference.shared.game.black.isPlayer && self.AI.state == .turnBlackSide)
+			if self.AI.state.isNormalState {
+				if self.AI.state == .turnRedSide && !UserPreference.shared.game.red.isPlayer {
+					return (false, "红方AI走")
+				} else if self.AI.state == .turnBlackSide && !UserPreference.shared.game.black.isPlayer {
+					return (false, "黑方AI走")
+				}
+			} else {
+				return (false, self.AI.state.description)
+			}
 		}
+		
+		return (true, nil)
 	}
 	
 	private func makeChoice(location: Luna_Location) -> Bool {

@@ -75,7 +75,8 @@ class TextAlertView: UIView {
 // MARK: - Public
 extension TextAlertView {
 	
-	public class func show(in view: UIView, text: String) {
+	public class func show(in view: UIView, text: String?) {
+		guard let text = text else { return }
 		TextAlertView.shared.show(in: view, text: text)
 	}
 	

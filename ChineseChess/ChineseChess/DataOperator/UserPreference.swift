@@ -121,6 +121,10 @@ extension UserPreference {
 			guard let rawValue = right as? Int else { return }
 			left = Level(rawValue: rawValue) ?? .player
 		}
+		
+		public static var levels: [Level] {
+			return [ .player, .white, .rookie, .sprog, .accidence, .primary, .intermediate, .senior, .master, .supermaster ]
+		}
 	}
 }
 

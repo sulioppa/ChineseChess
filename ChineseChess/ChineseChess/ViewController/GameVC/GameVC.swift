@@ -39,18 +39,14 @@ class GameVC: ChessVC {
 }
 
 // MARK: - Action.
-extension GameVC: GameSettingsViewDelegate {
+extension GameVC {
 	
 	@objc private func newGame() {
-		GameSettingsView().show(isNew: true, delegate: self)
+		GameSettingsView().show(isNew: true, delegate: self.chessBoardController)
 	}
 	
 	@objc private func settings() {
-		GameSettingsView().show(isNew: false, delegate: self)
-	}
-	
-	func gameSettingsViewDidClickOk(isNew: Bool, levels: [UserPreference.Level]) {
-		
+		GameSettingsView().show(isNew: false, delegate: self.chessBoardController)
 	}
 	
 	@objc private func back() {

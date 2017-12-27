@@ -81,6 +81,7 @@ public class NavigationView: UIView {
 		guard let superview = self.superview, self.isUserInteractionEnabled, self != view else { return }
 		
 		self.isUserInteractionEnabled = false
+		WavHandler.playButtonWav()
 		
 		superview.addSubview(view)
 		view.snp.makeConstraints {
