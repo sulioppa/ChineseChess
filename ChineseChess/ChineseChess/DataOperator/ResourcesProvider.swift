@@ -88,4 +88,10 @@ extension ResourcesProvider {
 		}
 	}
 	
+	public func bundle(named: String, type: String) -> Data? {
+		guard let url = Bundle.main.url(forResource: named, withExtension: type) else { return nil }
+		
+		return try? Data(contentsOf: url)
+	}
+	
 }

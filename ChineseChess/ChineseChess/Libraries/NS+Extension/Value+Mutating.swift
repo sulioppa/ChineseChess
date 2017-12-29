@@ -10,10 +10,19 @@ import UIKit
 
 extension CGSize {
 		
-	public mutating func offset(width: CGFloat, height: CGFloat) -> CGSize {
+	public mutating func offset(width: CGFloat, height: CGFloat) {
 		self.width += width
 		self.height += height
-		return self
+	}
+	
+	public mutating func contained(in size: CGSize) {
+		if self.width > size.width {
+			self.width = size.width
+		}
+		
+		if self.height > size.height {
+			self.height = size.height
+		}
 	}
 	
 }

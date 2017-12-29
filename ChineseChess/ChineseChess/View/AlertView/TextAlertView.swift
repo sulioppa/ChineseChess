@@ -48,14 +48,18 @@ class TextAlertView: UIView {
 		self.snp.makeConstraints {
 			$0.edges.equalTo(superview)
 		}
-		
 		superview.layoutIfNeeded()
-		var size = LayoutPartner.safeArea.size
-		size = self.textView.sizeThatFits(size.offset(width: -40.0, height: -40.0))
+		
+		let margin = LayoutPartner.ChessBoard().boardmargin * 2
+		var fitsize = LayoutPartner.safeArea.size
+		fitsize.offset(width: -margin, height: -margin)
+		
+		var goodsize = self.textView.sizeThatFits(fitsize)
+		goodsize.contained(in: fitsize)
 		
 		UIView.animate(withDuration: Macro.Time.alertViewShowTime, animations: {
 			self.textView.snp.updateConstraints {
-				$0.size.equalTo(size)
+				$0.size.equalTo(goodsize)
 			}
 			self.layoutIfNeeded()
 		}) { (_) in
@@ -75,8 +79,8 @@ class TextAlertView: UIView {
 // MARK: - Public
 extension TextAlertView {
 	
-	public class func show(in view: UIView, text: String?) {
-		guard let text = text else { return }
+	public class func show(in view: UIView? = UIView.window(), text: String?) {
+		guard let text = text, let view = view else { return }
 		TextAlertView.shared.show(in: view, text: text)
 	}
 	

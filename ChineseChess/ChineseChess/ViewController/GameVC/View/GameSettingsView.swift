@@ -56,6 +56,9 @@ class GameSettingsView: NavigationView {
 		super.init(frame: CGRect.zero)
 		self.initDataSource()
 		
+		self.bar.rightBarButtonItem?.image = ResourcesProvider.shared.image(named: "tips")
+		self.bar.addTapTarget(self, action: #selector(self.showTips(sender:)))
+		
 		self.contentView.addSubview(self.tableview)
 		self.tableview.snp.makeConstraints {
 			$0.top.equalTo(self.contentView)
@@ -75,6 +78,18 @@ class GameSettingsView: NavigationView {
 		self.dataSource.append(("帥", "红 方", UserPreference.shared.game.red))
 		self.dataSource.append(("將", "黑 方", UserPreference.shared.game.black))
 		self.dataSource.append(("AI", "提 示 水 平", UserPreference.shared.game.prompt))
+	}
+	
+	 @objc private func showTips(sender: UIGestureRecognizer?) {
+		sender?.isEnabled = false
+		defer {
+			sender?.isEnabled = true
+		}
+		
+		guard let data = ResourcesProvider.shared.bundle(named: "AppInformation", type: "txt") else { return }
+		guard let text = String(data: data, encoding: .utf8) else { return }
+		
+		TextAlertView.show(in: self.superview, text: text)
 	}
 	
 	public func show(isNew: Bool, delegate: GameSettingsViewDelegate?) {

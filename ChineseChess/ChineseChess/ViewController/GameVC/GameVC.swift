@@ -38,6 +38,7 @@ class GameVC: ChessVC {
 	
 	public override func updateUserPreference() {
 		UserPreference.shared.game.record = self.AI.historyFile()
+		UserPreference.shared.savePreference()
 	}
 	
 }
