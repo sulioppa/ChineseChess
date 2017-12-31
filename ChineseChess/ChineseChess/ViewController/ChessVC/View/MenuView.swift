@@ -15,7 +15,7 @@ protocol MenuViewDelegate: NSObjectProtocol {
 class MenuView: NavigationView, UITableViewDelegate, UITableViewDataSource {
 
 	private lazy var tableview: UITableView = { [weak self] in
-		let view = UITableView(frame: CGRect.zero, style: .plain)
+		let view = UITableView(frame: CGRect.zero, style: .grouped)
 		view.backgroundColor = UIColor.clear
 		view.delegate = self
 		view.dataSource = self
@@ -50,12 +50,36 @@ class MenuView: NavigationView, UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	// MARK: - UITableViewDelegate
+	func numberOfSections(in tableView: UITableView) -> Int {
+		return 1
+	}
+	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return self.dataSource.count
 	}
 	
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return Cell.height / 2.0
+	}
+	
+	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		return Cell.height / 2.0
+	}
+	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return Cell.height
+	}
+	
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let view = UIView()
+		view.backgroundColor = UIColor.clear
+		return view
+	}
+	
+	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+		let view = UIView()
+		view.backgroundColor = UIColor.clear
+		return view
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -95,9 +119,9 @@ extension MenuView {
 	private final func layoutTableView() {
 		self.contentView.addSubview(self.tableview)
 		self.tableview.snp.makeConstraints {
-			$0.top.equalTo(self.contentView).offset(Cell.edge)
+			$0.top.equalTo(self.contentView)
 			$0.left.equalTo(self.contentView).offset(Cell.edge)
-			$0.bottom.equalTo(self.contentView).offset(-Cell.edge)
+			$0.bottom.equalTo(self.contentView)
 			$0.right.equalTo(self.contentView).offset(-Cell.edge)
 			$0.width.equalTo(Cell.width)
 			$0.height.equalTo(Cell.estimatedHeight(rows: self.dataSource.count))
@@ -132,7 +156,7 @@ extension MenuView {
 		}
 		
 		public class func estimatedHeight(rows: Int) -> CGFloat {
-			return Cell.height * CGFloat(rows)
+			return Cell.height * CGFloat(rows + 1)
 		}
 		
 		private weak var logo: UIImageView?
