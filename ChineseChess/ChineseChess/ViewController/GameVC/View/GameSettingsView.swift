@@ -89,6 +89,7 @@ class GameSettingsView: NavigationView {
 		guard let data = ResourcesProvider.shared.bundle(named: "AppInformation", type: "txt") else { return }
 		guard let text = String(data: data, encoding: .utf8) else { return }
 		
+		WavHandler.playButtonWav()
 		TextAlertView.show(in: self.superview, text: text)
 	}
 	
@@ -176,7 +177,7 @@ extension GameSettingsView {
 		}
 		
 		public static var edge: CGFloat {
-			return 15.0
+			return LayoutPartner.ChessBoard().boardmargin
 		}
 		
 		public static var height: CGFloat {
@@ -195,7 +196,7 @@ extension GameSettingsView {
 		private weak var title: UILabel?
 		private weak var value: UILabel?
 		
-		public var label: UILabel {
+		private var label: UILabel {
 			let label = UILabel()
 			label.textColor = UIColor.china
 			label.font = UIFont.kaitiFont(ofSize: LayoutPartner.NavigationView().titleFontSize - 2.0)

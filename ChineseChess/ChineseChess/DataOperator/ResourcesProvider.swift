@@ -31,7 +31,13 @@ class ResourcesProvider: NSObject {
 		"將": "chess_7",
 		"prompt": "icon_prompt",
 		"back": "icon_back",
-		"tips": "icon_tips"
+		"in": "icon_in",
+		"tips": "icon_tips",
+		"bgm": "icon_bgm",
+		"reverse": "icon_reverse",
+		"opposite": "icon_opposite",
+		"put": "icon_put",
+		"history": "icon_history"
 	]
 	
 	private let chess: [String?] = [

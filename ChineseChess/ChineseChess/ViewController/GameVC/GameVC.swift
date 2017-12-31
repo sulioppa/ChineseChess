@@ -72,21 +72,28 @@ extension GameVC: GameSettingsViewDelegate {
 }
 
 // MARK: - Menu.
-extension GameVC {
-	
-	@objc private func showMenu() {
-		self.reverse()
-	}
-	
-	@objc private func reverse() {
-		self.chessBoardController.reverse = UserPreference.shared.game.reverse.reverse()
-		self.refreshTopBottom()
-	}
-	
-	@objc private func opposite() {
-		self.chessBoardController.opposite = UserPreference.shared.game.opposite.reverse()
-	}
+extension GameVC: MenuViewDelegate {
 
+	@objc private func showMenu() {
+		GameMenuView().show(delegate: self)
+	}
+	
+	func menuView(didSelectRowAt index: Int) {
+		switch index {
+		case 0:
+			self.chessBoardController.reverse = UserPreference.shared.game.reverse
+			self.refreshTopBottom()
+		case 1:
+			self.chessBoardController.opposite = UserPreference.shared.game.opposite
+		case 2:
+			break;
+		case 3:
+			break;
+		default:
+			break;
+		}
+	}
+	
 }
 
 // MARK: - Other
@@ -102,7 +109,7 @@ extension GameVC {
 	}
 	
 	@objc private func teachMe() {
-		self.opposite()
+		
 	}
 	
 }
