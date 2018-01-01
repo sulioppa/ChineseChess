@@ -178,15 +178,12 @@ extension MenuView {
 			self.backgroundColor = UIColor.clear
 			self.contentView.backgroundColor = UIColor.clear
 			
-			let layout = LayoutPartner.ChessBoard()
-			
 			let logo = UIImageView()
+			logo.contentMode = .center
 			self.contentView.addSubview(logo)
 			logo.snp.makeConstraints {
 				$0.left.equalTo(self.contentView).offset(3.0)
 				$0.centerY.equalTo(self.contentView)
-				$0.width.equalTo(layout.chessSize)
-				$0.height.equalTo(layout.chessSize)
 			}
 			
 			let title = self.label
@@ -218,7 +215,7 @@ extension MenuView {
 		}
 		
 		public func setDataItem(item: DataItem) {
-			self.logo?.image = ResourcesProvider.shared.image(named: item.image)
+			self.logo?.image = ResourcesProvider.shared.image(named: item.image)?.image(blende: UIColor.china)
 			self.title?.text = item.title
 			
 			if let status = item.status {

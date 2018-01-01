@@ -62,9 +62,6 @@ class LoadingAlertView: UIView {
 		imageView = {
 			let imageView = UIImageView(image: close)
 			imageView.contentMode = .center
-			imageView.layer.cornerRadius = 20.0
-			imageView.layer.borderColor = UIColor.white.cgColor
-			imageView.layer.borderWidth = 1.0
 			imageView.addTapTarget(self, action: #selector(self.closeAlertView))
 			return imageView
 		}()

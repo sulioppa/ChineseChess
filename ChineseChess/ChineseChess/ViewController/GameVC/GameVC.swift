@@ -109,7 +109,7 @@ extension GameVC {
 	}
 	
 	@objc private func teachMe() {
-		
+		LoadingAlertView.show(message: "加载中...", isCloseButtonHidden: false, delegate: nil, completion: nil)
 	}
 	
 }
