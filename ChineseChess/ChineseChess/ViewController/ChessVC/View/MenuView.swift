@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MenuViewDelegate: NSObjectProtocol {
-	func menuView(didSelectRowAt index: Int)
+	func menuView(_ menuView: NavigationView, didSelectRowAt index: Int)
 }
 
 class MenuView: NavigationView, UITableViewDelegate, UITableViewDataSource {
@@ -139,21 +139,21 @@ extension MenuView {
 extension MenuView {
 	
 	public class Cell: UITableViewCell {
-		public static var identifier: String {
+		public static let identifier: String = {
 			return "Cell"
-		}
+		}()
 		
-		public static var edge: CGFloat {
+		public static let edge: CGFloat = {
 			return LayoutPartner.ChessBoard().boardmargin
-		}
+		}()
 		
-		public static var height: CGFloat {
+		public static let height: CGFloat = {
 			return LayoutPartner.ChessBoard().chessSize + 4.0
-		}
+		}()
 		
-		public static var width: CGFloat {
+		public static let width: CGFloat = {
 			return LayoutPartner.safeArea.size.width - (LayoutPartner.ChessBoard().boardmargin + Cell.edge) * 2.0
-		}
+		}()
 		
 		public class func estimatedHeight(rows: Int) -> CGFloat {
 			return Cell.height * CGFloat(rows + 1)

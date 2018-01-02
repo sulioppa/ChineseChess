@@ -78,7 +78,7 @@ extension GameVC: MenuViewDelegate {
 		GameMenuView().show(delegate: self)
 	}
 	
-	func menuView(didSelectRowAt index: Int) {
+	func menuView(_ menuView: NavigationView, didSelectRowAt index: Int) {
 		switch index {
 		case 0:
 			self.chessBoardController.reverse = UserPreference.shared.game.reverse

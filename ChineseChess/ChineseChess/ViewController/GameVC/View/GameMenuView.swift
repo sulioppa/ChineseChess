@@ -43,7 +43,7 @@ class GameMenuView: MenuView {
 			WavHandler.playButtonWav()
 		}
 		
-		self.delegate?.menuView(didSelectRowAt: indexPath.row)
+		self.delegate?.menuView(self, didSelectRowAt: indexPath.row)
 	}
 	
 }
