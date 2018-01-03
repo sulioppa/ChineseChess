@@ -116,8 +116,8 @@ extension HomeVC {
 // MARK: - ScrollView Scroll Control
 extension HomeVC {
 	
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
 		self.scrollVC.isViewAppear = true
 	}
 	
@@ -146,6 +146,7 @@ extension HomeVC {
 			didSet {
 				if !oldValue {
 					self.scrollViewShouldBeginScroll()
+					self.imageViewShouldBeginRipple()
 				}
 			}
 		}
@@ -154,6 +155,7 @@ extension HomeVC {
 			didSet {
 				if !oldValue {
 					self.scrollViewShouldBeginScroll()
+					self.imageViewShouldBeginRipple()
 				}
 			}
 		}
@@ -165,7 +167,9 @@ extension HomeVC {
 			}
 			
 			guard let image = ResourcesProvider.shared.image(named: "home") else { return }
+			
 			let imageView = UIImageView(image: image)
+			self.imageView = imageView
 			self.scrollView.addSubview(imageView)
 			imageView.snp.makeConstraints {
 				$0.edges.equalTo(self.scrollView)
@@ -186,6 +190,8 @@ extension HomeVC {
 			return scrollView
 		}()
 		
+		private var imageView: UIImageView?
+		
 		private var direction: CGFloat = 1.0
 		private var currentOffset: CGFloat = 0.0
 		
@@ -204,6 +210,17 @@ extension HomeVC {
 			self.perform(#selector(scrollViewShouldBeginScroll), with: nil, afterDelay: Macro.Time.homeScrollInterval)
 		}
 		
+		private func imageViewShouldBeginRipple() {
+			self.imageView?.layer.removeAllAnimations()
+			
+			let animation = CATransition()
+			animation.duration = Macro.Time.homeRippleInterval
+			animation.type = "rippleEffect"
+			animation.subtype = kCATransitionFade
+			animation.repeatCount = Float.infinity
+			
+			self.imageView?.layer.add(animation, forKey: "animation")
+		}
 	}
 
 }

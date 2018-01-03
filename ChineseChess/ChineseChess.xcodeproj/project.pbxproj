@@ -15,6 +15,7 @@
 		A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36351F90ECFA00D9BB62 /* UserPreference.swift */; };
 		A71E36381F90EEC900D9BB62 /* ResourcesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */; };
 		A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */; };
+		A723A7A41FFB6CEA00F780AF /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A723A7A31FFB6CEA00F780AF /* HistoryView.swift */; };
 		A72534D11FE39EF900C2AFAA /* NSObject+Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72534D01FE39EF900C2AFAA /* NSObject+Class.swift */; };
 		A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */; };
 		A72A4D691F90A6E000CBDAD9 /* Macro.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72A4D681F90A6E000CBDAD9 /* Macro.swift */; };
@@ -48,6 +49,7 @@
 		A7928ADC1FF916F1000DF584 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7928ADB1FF916F1000DF584 /* MenuView.swift */; };
 		A79C27F71FA5D5B100FD9A87 /* Luna+Const.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C27F61FA5D5B100FD9A87 /* Luna+Const.m */; };
 		A7B3FD7F1F9A03A900B379AD /* Array+Split.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B3FD7E1F9A03A900B379AD /* Array+Split.swift */; };
+		A7B604C51FFB977400B8B5D8 /* Value+Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B604C41FFB977400B8B5D8 /* Value+Property.swift */; };
 		A7B7D0D31FCC3A280048B304 /* LunaFENCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = A7B7D0D21FCC3A280048B304 /* LunaFENCoder.m */; };
 		A7B7D0DF1FCC3FA60048B304 /* LunaRecordStack.m in Sources */ = {isa = PBXBuildFile; fileRef = A7B7D0DE1FCC3FA60048B304 /* LunaRecordStack.m */; };
 		A7B7D0E21FCC40B50048B304 /* LunaRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = A7B7D0E11FCC40B50048B304 /* LunaRecord.m */; };
@@ -81,6 +83,7 @@
 		A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesProvider.swift; sourceTree = "<group>"; };
 		A71E36391F90EEE200D9BB62 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		A72062111F8DE85300FA764E /* ChineseChess-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChineseChess-Bridging-Header.h"; sourceTree = "<group>"; };
+		A723A7A31FFB6CEA00F780AF /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		A72534D01FE39EF900C2AFAA /* NSObject+Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Class.swift"; sourceTree = "<group>"; };
 		A72A4D641F90A2A800CBDAD9 /* UIViewController+PresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PresentVC.swift"; sourceTree = "<group>"; };
 		A72A4D681F90A6E000CBDAD9 /* Macro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macro.swift; sourceTree = "<group>"; };
@@ -111,6 +114,7 @@
 		A7928ADB1FF916F1000DF584 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		A79C27F61FA5D5B100FD9A87 /* Luna+Const.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+Const.m"; sourceTree = "<group>"; };
 		A7B3FD7E1F9A03A900B379AD /* Array+Split.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Split.swift"; sourceTree = "<group>"; };
+		A7B604C41FFB977400B8B5D8 /* Value+Property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Property.swift"; sourceTree = "<group>"; };
 		A7B7D0CB1FCC37930048B304 /* LunaCodingProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunaCodingProtocol.h; sourceTree = "<group>"; };
 		A7B7D0D11FCC3A280048B304 /* LunaFENCoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunaFENCoder.h; sourceTree = "<group>"; };
 		A7B7D0D21FCC3A280048B304 /* LunaFENCoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunaFENCoder.m; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 				A7592D7E1F9DFB0C00E7EA0F /* Value+Random.swift */,
 				A7EB7BB91FE419F200AA903A /* Value+Mutating.swift */,
 				A73873D51FE6557300D24753 /* Value+Meta.swift */,
+				A7B604C41FFB977400B8B5D8 /* Value+Property.swift */,
 				A7B3FD7E1F9A03A900B379AD /* Array+Split.swift */,
 				A72534D01FE39EF900C2AFAA /* NSObject+Class.swift */,
 			);
@@ -377,6 +382,7 @@
 			isa = PBXGroup;
 			children = (
 				A7928ADB1FF916F1000DF584 /* MenuView.swift */,
+				A723A7A31FFB6CEA00F780AF /* HistoryView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -633,6 +639,7 @@
 				A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */,
 				A7B7D0D31FCC3A280048B304 /* LunaFENCoder.m in Sources */,
 				A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */,
+				A7B604C51FFB977400B8B5D8 /* Value+Property.swift in Sources */,
 				A7854A1E1FEF5BA100C977B7 /* UIView+Window.swift in Sources */,
 				A7B7D0DF1FCC3FA60048B304 /* LunaRecordStack.m in Sources */,
 				A72D652E1FF13B8700E44E60 /* GameSettingsView.swift in Sources */,
@@ -662,6 +669,7 @@
 				A78AA3171FCFA785004DF6AE /* LunaRecordVault.m in Sources */,
 				A7BEA8A41FCEBABE00605AAE /* LunaRecordRuler.m in Sources */,
 				A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */,
+				A723A7A41FFB6CEA00F780AF /* HistoryView.swift in Sources */,
 				A7B7D0E21FCC40B50048B304 /* LunaRecord.m in Sources */,
 				A70765F21F94E1A200FA6A43 /* GameVC.swift in Sources */,
 				A7E7ACFD1F91DE8E00B29C5A /* UIButton+Golden.swift in Sources */,
