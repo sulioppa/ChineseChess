@@ -58,8 +58,8 @@
 }
 
 // MARK: - Stack Operation.
-- (void)push:(LunaRecord *)history {
-	[_records addObject:history];
+- (void)push:(LunaRecord *)record {
+	[_records addObject:record];
 }
 
 - (LunaRecord *)pop {
@@ -70,6 +70,10 @@
 
 - (LunaRecord *)peek {
     return _records.lastObject;
+}
+
+- (LunaRecord *)objectAtIndexedSubscript:(NSUInteger)idx {
+	return _records[idx];
 }
 
 - (void)clear {
@@ -84,6 +88,15 @@
 
 - (NSUInteger)count {
 	return _records.count;
+}
+
+- (NSString *)characters {
+	NSMutableString *characters = [NSMutableString string];
+	for (LunaRecord *record in _records) {
+		[characters appendFormat:@"\n%@", record.character];
+	}
+	
+	return characters;
 }
 
 @end

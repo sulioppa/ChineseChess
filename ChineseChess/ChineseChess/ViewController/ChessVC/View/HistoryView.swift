@@ -8,36 +8,208 @@
 
 import UIKit
 
+@objc protocol HistoryViewDelegate: NSObjectProtocol {
+	
+	@objc optional func historyView(didSelectAt row: Int)
+	
+	@objc optional func historyView(didClickAt index: Int)
+	
+	@objc optional var detail: String { get }
+	
+}
+
 class HistoryView: NavigationView {
+	
+	private var roundsLabel: UILabel?
+	private var resultLabel: UILabel?
 	
 	private lazy var tableview: UITableView = { [weak self] in
 		let view = UITableView(frame: .zero, style: .grouped)
-		view.backgroundColor = .clear
+		view.backgroundColor = UIColor(white: 1.0, alpha: LayoutPartner.NavigationView().backgroundColorAlpha)
 		view.delegate = self
 		view.dataSource = self
 		view.allowsMultipleSelection = false
 		view.register(Cell.self, forCellReuseIdentifier: Cell.identifier)
-		view.isScrollEnabled = false
+		view.register(HeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderView.identifier)
 		view.separatorInset = .zero
 		view.separatorStyle = .singleLine
 		return view
 		}()
 	
 	public typealias DataItem = (chess: Int, text: String, eat: Int)
-	public var dataSource: [DataItem] = []
 	
-	init() {
+	private var dataSource: [DataItem] = []
+	private var delegate: HistoryViewDelegate? = nil
+	
+	init(delegate: HistoryViewDelegate?, dataSource: [DataItem], result: String) {
 		super.init(frame: .zero)
+		self.delegate = delegate
+		self.bar.title = "棋  谱"
+		self.bar.rightBarButtonItem?.image = ResourcesProvider.shared.image(named: "tips")
+		self.bar.rightBarButtonItem?.addTapTarget(self, action: #selector(self.showDetail(gesture:)))
+		
+		// label
+		let fontSize = LayoutPartner.NavigationView().smallTitleFontSize
+		func createLabel() -> UILabel {
+			let label = UILabel()
+			label.textColor = UIColor.carbon
+			label.font = UIFont.kaitiFont(ofSize: fontSize)
+			label.textAlignment = .center
+			return label
+		}
+		
+		var label = createLabel()
+		self.roundsLabel = label
+		self.contentView.addSubview(label)
+		label.snp.makeConstraints {
+			$0.left.equalTo(self.contentView).offset(Cell.edge)
+			$0.top.equalTo(self.contentView).offset(Cell.edge)
+			$0.height.equalTo(fontSize + 4.0)
+		}
+		
+		label = createLabel()
+		self.resultLabel = label
+		self.contentView.addSubview(label)
+		label.snp.makeConstraints {
+			$0.right.equalTo(self.contentView).offset(-Cell.edge)
+			$0.top.equalTo(self.contentView).offset(Cell.edge)
+			$0.height.equalTo(fontSize + 4.0)
+		}
+		
+		// button
+		func createButton() -> UIButton {
+			let button = UIButton()
+			button.backgroundColor = UIColor.white
+			button.titleLabel?.font = UIFont.kaitiFont(ofSize: LayoutPartner.NavigationView().subTitleFontSize)
+			button.setTitleColor(.china, for: .normal)
+			button.setTitleColor(.red, for: .highlighted)
+			return button
+		}
+		
+		var line = UIView()
+		line.backgroundColor = UIColor.separtor
+		self.contentView.addSubview(line)
+		line.snp.makeConstraints {
+			$0.centerX.equalTo(self.contentView.snp.centerX)
+			$0.bottom.equalTo(self.contentView)
+			$0.height.equalTo(Cell.height)
+			$0.width.equalTo(0.5)
+		}
+		
+		var button = createButton()
+		button.tag = 0
+		button.setTitle("保 存 棋 谱", for: .normal)
+		button.addTarget(self, action: #selector(self.didClickButton(sender:)), for: .touchUpInside)
+		self.contentView.addSubview(button)
+		button.snp.makeConstraints {
+			$0.left.equalTo(self.contentView)
+			$0.bottom.equalTo(self.contentView)
+			$0.right.equalTo(line.snp.left)
+			$0.height.equalTo(Cell.height)
+		}
+		
+		button = createButton()
+		button.tag = 1
+		button.setTitle("复 制 棋 谱", for: .normal)
+		button.addTarget(self, action: #selector(self.didClickButton(sender:)), for: .touchUpInside)
+		self.contentView.addSubview(button)
+		button.snp.makeConstraints {
+			$0.left.equalTo(line.snp.right)
+			$0.bottom.equalTo(self.contentView)
+			$0.right.equalTo(self.contentView)
+			$0.height.equalTo(Cell.height)
+		}
+		
+		line = UIView()
+		line.backgroundColor = UIColor.separtor
+		self.contentView.addSubview(line)
+		line.snp.makeConstraints {
+			$0.left.equalTo(self.contentView)
+			$0.right.equalTo(self.contentView)
+			$0.height.equalTo(0.5)
+			$0.bottom.equalTo(button.snp.top)
+		}
+		
+		// tableview
+		self.contentView.addSubview(self.tableview)
+		self.tableview.snp.makeConstraints {
+			$0.width.equalTo(Cell.width)
+			$0.height.equalTo(Cell.estimatedHeight)
+			$0.left.equalTo(self.contentView).offset(Cell.edge)
+			$0.right.equalTo(self.contentView).offset(-Cell.edge)
+			$0.top.equalTo(label.snp.bottom).offset(3.0)
+			$0.bottom.equalTo(button.snp.top).offset(-Cell.edge)
+		}
+		
+		self.setDataSource(dataSource: dataSource, result: result)
+		
+		NotificationCenter.default.addObserver(forName: Macro.NotificationName.didUpdateOneStep, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
+			if let item = notification.userInfo?["item"] as? DataItem {
+				self?.didInsert(item: item, result: notification.userInfo?["result"] as? String)
+			}
+		}
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
+	
+}
+
+// MARK: - Private
+extension HistoryView {
+	
+	private func didInsert(item: DataItem, result: String?) {
+		self.dataSource.append(item)
+		self.tableview.insert(indexPaths: [IndexPath(row: self.dataSource.count - 1, section: 0)])
+		self.refreshRounds()
+		self.refreshResult(result: result ?? "结果: 未知")
+	}
+	
+	private func setDataSource(dataSource: [DataItem], result: String) {
+		self.dataSource = dataSource
+		self.tableview.reloadData()
+		self.refreshRounds()
+		self.refreshResult(result: result)
+	}
+	
+	private func refreshRounds(index: Int? = nil) {
+		let now: Int = index ?? self.dataSource.count - 1
+		self.roundsLabel?.text = "回合数: \((now + 2) >> 1) / \((self.dataSource.count + 1) >> 1)"
+	}
+	
+	private func refreshResult(result: String) {
+		self.resultLabel?.text = result
+	}
+	
+	@objc private func didClickButton(sender: UIButton) {
+		sender.isEnabled = false
+		defer {
+			sender.isEnabled = true
+		}
+		
+		self.dismiss()
+		self.delegate?.historyView?(didClickAt: sender.tag)
+	}
+	
+	@objc private func showDetail(gesture: UIGestureRecognizer) {
+		gesture.isEnabled = false
+		defer {
+			gesture.isEnabled = true
+		}
+		
+		WavHandler.playButtonWav()
+		TextAlertView.show(in: self.superview, text: self.delegate?.detail)
+	}
+	
 }
 
 // MARK: - UITableViewDelegate
-extension HistoryView: UITableViewDelegate, UITableViewDataSource {
+extension HistoryView: UITableViewDelegate, UITableViewDataSource, HistoryViewDelegate {
 	
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
@@ -51,18 +223,24 @@ extension HistoryView: UITableViewDelegate, UITableViewDataSource {
 		return Cell.height
 	}
 	
-	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-		return Cell.height / 2.0
-	}
-	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return Cell.height
 	}
+
+	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		return 1.0
+	}
 	
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let view = UIView()
-		view.backgroundColor = UIColor.clear
+		let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderView.identifier) as! HeaderView
+		view.delegate = self
 		return view
+	}
+	
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: Cell.identifier, for: indexPath) as! Cell
+		cell.reloadCell(with: self.dataSource[indexPath.row])
+		return cell
 	}
 	
 	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -71,14 +249,16 @@ extension HistoryView: UITableViewDelegate, UITableViewDataSource {
 		return view
 	}
 	
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: Cell.identifier, for: indexPath) as! Cell
-		cell.reloadCell(with: self.dataSource[indexPath.row], isRed: indexPath.row.isEven)
-		return cell
-	}
-	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
+		self.historyView(didSelectAt: indexPath.row)
+	}
+	
+	func historyView(didSelectAt index: Int) {
+		guard self.delegate?.responds(to: #selector(historyView(didSelectAt:))) == true else { return }
+		
+		self.refreshRounds(index: index)
+		self.delegate?.historyView?(didSelectAt: index)
 	}
 	
 }
@@ -139,7 +319,7 @@ extension HistoryView {
 			let step: UILabel = {
 				let label = UILabel()
 				label.textColor = UIColor.china
-				label.font = UIFont.kaitiFont(ofSize: LayoutPartner.NavigationView().titleFontSize - 2.0)
+				label.font = UIFont.kaitiFont(ofSize: LayoutPartner.NavigationView().subTitleFontSize)
 				label.textAlignment = .center
 				return label
 			}()
@@ -160,9 +340,9 @@ extension HistoryView {
 			fatalError("init(coder:) has not been implemented")
 		}
 		
-		public func reloadCell(with item: DataItem, isRed: Bool) {
+		public func reloadCell(with item: DataItem) {
 			self.chess?.image = ResourcesProvider.shared.chess(index: item.chess)
-			self.step?.textColor = isRed ? .china : .carbon
+			self.step?.textColor = item.chess < 32 ? .china : .carbon
 			self.step?.text = item.text
 			self.eat?.image = ResourcesProvider.shared.chess(index: item.eat)
 		}
@@ -170,6 +350,44 @@ extension HistoryView {
 	
 	private class HeaderView: UITableViewHeaderFooterView {
 		
+		public static let identifier: String = "Header"
+		
+		public var delegate: HistoryViewDelegate? = nil
+		
+		private lazy var button: UIButton = {
+			let button = UIButton()
+			button.backgroundColor = UIColor.white
+			button.titleLabel?.font = UIFont.kaitiFont(ofSize: LayoutPartner.NavigationView().subTitleFontSize)
+			button.setTitle("开  局", for: .normal)
+			button.setTitleColor(.china, for: .normal)
+			button.setTitleColor(.red, for: .highlighted)
+			return button
+		}()
+		
+		override init(reuseIdentifier: String?) {
+			super.init(reuseIdentifier: reuseIdentifier)
+			self.backgroundColor = UIColor.clear
+			self.contentView.backgroundColor = UIColor.clear
+			
+			self.button.addTarget(self, action: #selector(self.didSelectHeaderView(sender:)), for: .touchUpInside)
+			self.contentView.addSubview(self.button)
+			self.button.snp.makeConstraints {
+				$0.edges.equalToSuperview()
+			}
+		}
+		
+		required init?(coder aDecoder: NSCoder) {
+			fatalError("init(coder:) has not been implemented")
+		}
+		
+		@objc private func didSelectHeaderView(sender: UIButton) {
+			sender.isEnabled = false
+			defer {
+				sender.isEnabled = true
+			}
+			
+			self.delegate?.historyView?(didSelectAt: -1)
+		}
 	}
 	
 }

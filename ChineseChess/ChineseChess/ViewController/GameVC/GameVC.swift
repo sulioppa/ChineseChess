@@ -72,7 +72,7 @@ extension GameVC: GameSettingsViewDelegate {
 }
 
 // MARK: - Menu.
-extension GameVC: MenuViewDelegate {
+extension GameVC: MenuViewDelegate, HistoryViewDelegate {
 
 	@objc private func showMenu() {
 		GameMenuView().show(delegate: self)
@@ -86,12 +86,30 @@ extension GameVC: MenuViewDelegate {
 		case 1:
 			self.chessBoardController.opposite = UserPreference.shared.game.opposite
 		case 2:
-			break;
+			menuView.push(view: HistoryView(delegate: self, dataSource: self.AI.records.map({ return $0.item }), result: self.AI.state.result))
 		case 3:
-			break;
+			break
 		default:
-			break;
+			break
 		}
+	}
+	
+	func historyView(didClickAt index: Int) {
+		if index == 0 {
+			UserPreference.shared.history.saveHistory(name: self.name, description: self.detail, file: self.AI.historyFile())
+			TextAlertView.show(in: self.contentView, text: "棋谱已保存")
+		} else {
+			UIPasteboard.general.string = "\(self.detail)\n\(self.AI.characters)"
+			TextAlertView.show(in: self.contentView, text: "棋谱已复制到剪贴板")
+		}
+	}
+	
+	var detail: String {
+		return "红方：\(UserPreference.shared.game.red.description)\n黑方：\(UserPreference.shared.game.black.description)\n回合数：\((self.AI.count + 1) >> 1)\n步数：\(self.AI.count)\n\(self.AI.state.result)"
+	}
+	
+	private var name: String {
+		return "\(Date.time) \(UserPreference.shared.game.red.description) \(self.AI.state.vs) \(UserPreference.shared.game.black.description)"
 	}
 	
 }

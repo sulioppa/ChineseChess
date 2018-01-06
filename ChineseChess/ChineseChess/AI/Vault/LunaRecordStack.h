@@ -23,16 +23,20 @@
 - (NSString *)historyFileWithCode:(BOOL)withCode;
 
 // MARK: - Stack Operation.
-- (void)push:(LunaRecord *)history;
+- (void)push:(LunaRecord *)record;
 
 - (LunaRecord *)pop;
 
 - (LunaRecord *)peek;
+
+- (LunaRecord *)objectAtIndexedSubscript:(NSUInteger)idx;
 
 - (void)clear;
 
 - (NSArray<LunaRecord *> *)allRecords;
 
 - (NSUInteger)count;
+
+- (NSString *)characters;
 
 @end

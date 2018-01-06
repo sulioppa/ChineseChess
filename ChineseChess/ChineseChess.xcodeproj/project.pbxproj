@@ -34,7 +34,9 @@
 		A77429CD1FF9361E00B7D480 /* UIImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77429CC1FF9361E00B7D480 /* UIImage+Color.swift */; };
 		A778E4801F94E25200D28B25 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E47F1F94E25200D28B25 /* HistoryVC.swift */; };
 		A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778E4811F94E26000D28B25 /* MultiPeerVC.swift */; };
+		A77D8F172000BDBB000D3588 /* UserFileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77D8F162000BDBB000D3588 /* UserFileHandler.swift */; };
 		A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */; };
+		A78239D51FFE1B3A0078A906 /* UITableView+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78239D41FFE1B3A0078A906 /* UITableView+Update.swift */; };
 		A7854A1E1FEF5BA100C977B7 /* UIView+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7854A1D1FEF5BA100C977B7 /* UIView+Window.swift */; };
 		A7884A021FC9995C00691385 /* mate.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A7884A011FC9995B00691385 /* mate.m4a */; };
 		A78AA3171FCFA785004DF6AE /* LunaRecordVault.m in Sources */ = {isa = PBXBuildFile; fileRef = A78AA3161FCFA785004DF6AE /* LunaRecordVault.m */; };
@@ -104,7 +106,9 @@
 		A77429CC1FF9361E00B7D480 /* UIImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Color.swift"; sourceTree = "<group>"; };
 		A778E47F1F94E25200D28B25 /* HistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
 		A778E4811F94E26000D28B25 /* MultiPeerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerVC.swift; sourceTree = "<group>"; };
+		A77D8F162000BDBB000D3588 /* UserFileHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFileHandler.swift; sourceTree = "<group>"; };
 		A77E187E1F8DE5D0003A2EC5 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		A78239D41FFE1B3A0078A906 /* UITableView+Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Update.swift"; sourceTree = "<group>"; };
 		A7854A1D1FEF5BA100C977B7 /* UIView+Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Window.swift"; sourceTree = "<group>"; };
 		A7884A011FC9995B00691385 /* mate.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = mate.m4a; sourceTree = "<group>"; };
 		A78AA3151FCFA785004DF6AE /* LunaRecordVault.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunaRecordVault.h; sourceTree = "<group>"; };
@@ -202,6 +206,7 @@
 				A72F941A1F9753EE001FACC3 /* UIView+Tap.swift */,
 				A7854A1D1FEF5BA100C977B7 /* UIView+Window.swift */,
 				A77429CC1FF9361E00B7D480 /* UIImage+Color.swift */,
+				A78239D41FFE1B3A0078A906 /* UITableView+Update.swift */,
 			);
 			path = "UI+Extension";
 			sourceTree = "<group>";
@@ -370,6 +375,7 @@
 			isa = PBXGroup;
 			children = (
 				A71E36351F90ECFA00D9BB62 /* UserPreference.swift */,
+				A77D8F162000BDBB000D3588 /* UserFileHandler.swift */,
 				A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */,
 				A79128661F911F17002CC4E5 /* WavHandler.swift */,
 				A7CD69F21F91E11700C3202A /* LayoutPartner.swift */,
@@ -638,6 +644,7 @@
 				A7C8D4701FE3A4F6006AC172 /* UIView+Border.swift in Sources */,
 				A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */,
 				A7B7D0D31FCC3A280048B304 /* LunaFENCoder.m in Sources */,
+				A77D8F172000BDBB000D3588 /* UserFileHandler.swift in Sources */,
 				A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */,
 				A7B604C51FFB977400B8B5D8 /* Value+Property.swift in Sources */,
 				A7854A1E1FEF5BA100C977B7 /* UIView+Window.swift in Sources */,
@@ -659,6 +666,7 @@
 				A74F8AD91FEE370200782288 /* NavigationView.swift in Sources */,
 				A71E36381F90EEC900D9BB62 /* ResourcesProvider.swift in Sources */,
 				A7928ADC1FF916F1000DF584 /* MenuView.swift in Sources */,
+				A78239D51FFE1B3A0078A906 /* UITableView+Update.swift in Sources */,
 				A7B3FD7F1F9A03A900B379AD /* Array+Split.swift in Sources */,
 				A7BEA89F1FCEAE4100605AAE /* NSString+Subscript.m in Sources */,
 				A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */,

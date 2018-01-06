@@ -62,7 +62,7 @@ class GameBoardController: ChessBoardController {
 	// MARK: - Board Operation
 	public override func refreshBoard() {
 		super.refreshBoard()
-		self.refreshLastMove(with: self.AI.lastMove())
+		self.refreshLastMove(with: self.AI.lastMove?.move)
 	}
 	
 	public override func clearBoard() {
@@ -89,7 +89,7 @@ extension GameBoardController {
 	}
 	
 	public final func complexRegret() {
-		if self.isRegreting || self.isMoving || self.AI.regretSteps() == 0 {
+		if self.isRegreting || self.isMoving || self.AI.count == 0 {
 			WavHandler.playButtonWav()
 			return
 		}
@@ -141,12 +141,17 @@ extension GameBoardController {
 		WavHandler.playVoice(state: state)
 
 		self.moveChess(from: self.choice.grid, to: to)
-		self.refreshLastMove(with: self.AI.lastMove())
+		self.refreshLastMove(with: self.AI.lastMove?.move)
 		self.clearChoice()
 		
 		if !self.AI.state.isNormalState {
 			BladeAlertView.show(in: self.contentView, text: self.AI.state.description)
 		}
+		
+		NotificationCenter.default.post(name: Macro.NotificationName.didUpdateOneStep, object: nil, userInfo: [
+			"item": self.AI.lastMove!.item,
+			"result": self.AI.state.result
+			])
 	}
 	
 	// choice
@@ -180,9 +185,9 @@ extension GameBoardController {
 	}
 	
 	// last move
-	private func refreshLastMove(with move: Luna_Move) {
+	private func refreshLastMove(with move: Luna_Move?) {
 		self.clearLastMove()
-		if move != 0 {
+		if let move = move, move != 0 {
 			self.lastMove.from = self.drawSquare(isRed: false, location: move.from)
 			self.lastMove.to = self.drawSquare(isRed: false, location: move.to)
 		}
@@ -252,7 +257,7 @@ extension GameBoardController {
 			
 			self.clearChoice()
 			self.clearLegalMoves()
-			self.refreshLastMove(with: self.AI.lastMove())
+			self.refreshLastMove(with: self.AI.lastMove?.move)
 			WavHandler.playVoice(state: .normal)
 		}
 	}

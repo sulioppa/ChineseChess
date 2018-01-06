@@ -10,8 +10,10 @@
 
 @interface LunaRecord : NSObject
 @property (nonatomic) NSString *code;
-@property (nonatomic) uint16_t move;
+@property (nonatomic) NSString *character;
+
 @property (nonatomic) uint8_t chess;
+@property (nonatomic) uint16_t move;
 @property (nonatomic) uint8_t eat;
 
 // rule
@@ -22,4 +24,7 @@
 + (LunaRecord *)recordWithString:(NSString *)string;
 
 - (NSString *)textWithCode:(BOOL)withCode;
+
+- (void)setCharacter:(NSString *)character count:(NSUInteger)count;
+
 @end

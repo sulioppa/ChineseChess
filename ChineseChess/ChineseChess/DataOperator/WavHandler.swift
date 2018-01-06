@@ -30,7 +30,7 @@ class WavHandler: NSObject {
 	}
 	
 	public class func playButtonWav() {
-		AudioServicesPlaySystemSound(1105)
+		AudioServicesPlaySystemSound(1104)
 	}
 	
 	private class func playWav(named: String) {

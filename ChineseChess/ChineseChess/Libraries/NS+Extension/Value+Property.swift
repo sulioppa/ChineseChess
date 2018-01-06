@@ -15,3 +15,13 @@ extension Int {
 	}
 	
 }
+
+extension Date {
+	
+	public static var time: String {
+		let formatter = DateFormatter()
+		formatter.dateFormat = "yyMMdd HH:mm:ss"
+		return formatter.string(from: Date())
+	}
+	
+}

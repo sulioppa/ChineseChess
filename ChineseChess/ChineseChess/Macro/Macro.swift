@@ -27,6 +27,10 @@ public struct Macro {
 		public static let fontName = "STKaiti"
 	}
 	
+	public struct NotificationName {
+		public static let didUpdateOneStep = Notification.Name("didUpdateOneStep")
+	}
+	
 	public struct Project {
 		public static let name = "ChineseChess"
 	}

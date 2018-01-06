@@ -38,6 +38,36 @@ extension LunaBoardState {
 		return self.rawValue <= LunaBoardState.turnBlackSide.rawValue
 	}
 	
+	public var result: String {
+		switch self {
+		case .turnRedSide, .turnBlackSide:
+			return "结果: 未知"
+			
+		case .draw50RoundHaveNoneEat, .drawSamePositionMultiTimes, .drawBothSideHaveNoneAttckChess:
+			return "结果: 和棋"
+			
+		case .winNormalRed, .winLongCatchRed:
+			return "结果: 红胜 "
+		case .winNormalBlack, .winLongCatchBlack:
+			return "结果: 黑胜 "
+		}
+	}
+	
+	public var vs: String {
+		switch self {
+		case .turnRedSide, .turnBlackSide:
+			return "-"
+			
+		case .draw50RoundHaveNoneEat, .drawSamePositionMultiTimes, .drawBothSideHaveNoneAttckChess:
+			return "先和"
+			
+		case .winNormalRed, .winLongCatchRed:
+			return "先胜"
+		case .winNormalBlack, .winLongCatchBlack:
+			return "先负"
+		}
+	}
+	
 }
 
 // MARK: - Luna_Move
@@ -49,6 +79,15 @@ extension Luna_Move {
 	
 	public var to: Luna_Location {
 		return Luna_Location(self & 0xff)
+	}
+	
+}
+
+// MARK: - LunaRecord
+extension LunaRecord {
+	
+	var item: HistoryView.DataItem {
+		return HistoryView.DataItem(Int(self.chess), self.character, Int(self.eat))
 	}
 	
 }

@@ -47,8 +47,12 @@ uint16_t StringToMove(NSString *string) {
 	return MoveToString(self.move);
 }
 
-- (NSString *)description {
-	return [NSString stringWithFormat:@"code: %@ move: %d chess: %d eat: %d catch: %d", self.code, self.move, self.chess, self.eat, self.catch];
+- (void)setCharacter:(NSString *)character count:(NSUInteger)count {
+	if (count & 1) {
+		_character = [NSString stringWithFormat:@"%4c %@", ' ',character];
+	} else {
+		_character = [NSString stringWithFormat:@"%3zd. %@", (count >> 1) + 1, character];
+	}
 }
 
 @end

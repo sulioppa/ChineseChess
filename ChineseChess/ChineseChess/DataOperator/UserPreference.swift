@@ -153,6 +153,21 @@ extension UserPreference {
 			left.reverse <- dictionary[key.reverse]
 			left.opposite <- dictionary[key.opposite]
 		}
+		
+		public final func readHistory(name: String) -> String {
+			guard let data = UserFileHandler.readFile(name: name) else { return "" }
+			return String(data: data, encoding: .utf8) ?? ""
+		}
+		
+		public final func saveHistory(name: String, description: String, file: String) {
+			self.histories[name] = description
+			UserFileHandler.writeFile(name: name, data: file.data(using: .utf8))
+		}
+		
+		public final func deleteHistroy(name: String) {
+			self.histories.removeValue(forKey: name)
+			UserFileHandler.deleteFile(name: name)
+		}
 	}
 }
 

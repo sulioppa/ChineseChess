@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LunaRecord.h"
 
 // MARK: - LunaBoardState, this enum reveals the state of game, it can be over or red player's turn or black player's turn.
 typedef NS_ENUM(uint8_t, LunaBoardState) {
@@ -43,16 +44,10 @@ typedef uint16_t Luna_Move;
 @interface Luna : NSObject
 
 // chess array
-- (nonnull NSArray<NSNumber *> *)chesses;
-
-// the lastest move, return the move stack' top.
-- (Luna_Move)lastMove;
+@property (nonnull, nonatomic, readonly) NSArray<NSNumber *> *chesses;
 
 // the state reveals the state of game.
 @property (nonatomic, readonly) LunaBoardState state;
-
-// return the character records. such as "車 9 进 1".
-@property (nonnull, nonatomic, readonly) NSMutableArray<NSString *> *characterRecords;
 
 // AI Control, the isThinking reveals the AI is thinking or not, you can stop it by setting it 'NO'.
 @property (nonatomic, readwrite) BOOL isThinking;
@@ -61,6 +56,9 @@ typedef uint16_t Luna_Move;
 
 // MARK: - AI Luna. (Game)
 @interface Luna (Game)
+
+// last reocrd.
+@property (nullable, nonatomic, readonly) LunaRecord *lastMove;
 
 // see if user want to choose another chess.
 - (BOOL)isAnotherChoiceWithLocation:(Luna_Location)location;
@@ -71,9 +69,6 @@ typedef uint16_t Luna_Move;
 // do a chess move, return a state indicates how this move affect the game.
 - (LunaMoveState)moveChessWithMove:(Luna_Move)move;
 
-// the number of steps
-- (NSUInteger)regretSteps;
-
 // undo a chess move from move stack, move = 0 indicates there's no more move in stack.
 - (Luna_Chess)regretWithMove:(nonnull Luna_Move *)move;
 
@@ -81,6 +76,18 @@ typedef uint16_t Luna_Move;
 
 // MARK: - AI Luna. (History)
 @interface Luna (History)
+
+// all records
+@property (nonnull, nonatomic, readonly) NSArray<LunaRecord *> *records;
+
+// count of records
+@property (nonatomic, readonly) NSUInteger count;
+
+// the record at index of records
+- (nonnull LunaRecord *)recordAtIndex:(NSUInteger)idx;
+
+// character history
+@property (nonnull, nonatomic, readonly) NSString *characters;
 
 // reset board with file record.
 - (void)initBoardWithFile:(nullable NSString *)file;

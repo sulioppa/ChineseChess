@@ -63,7 +63,7 @@ class ChessBoardController: NSObject {
 	public func refreshBoard() {
 		self.clearBoard()
 		// draw chesses
-		for (index, location) in self.AI.chesses().enumerated() {
+		for (index, location) in self.AI.chesses.enumerated() {
 			self.drawChess(chess: index + 16, location: location.uint8Value)
 		}
 	}

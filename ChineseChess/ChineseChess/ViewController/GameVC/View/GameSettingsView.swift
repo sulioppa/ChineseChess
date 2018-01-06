@@ -199,7 +199,7 @@ extension GameSettingsView {
 		private var label: UILabel {
 			let label = UILabel()
 			label.textColor = UIColor.china
-			label.font = UIFont.kaitiFont(ofSize: LayoutPartner.NavigationView().titleFontSize - 2.0)
+			label.font = UIFont.kaitiFont(ofSize: LayoutPartner.NavigationView().subTitleFontSize)
 			label.textAlignment = .center
 			return label
 		}
@@ -259,7 +259,7 @@ extension GameSettingsView {
 		public lazy var okLabel: UILabel = {
 			let label = UILabel()
 			label.textColor = UIColor.china
-			label.font = UIFont.kaitiFont(ofSize: LayoutPartner.NavigationView().titleFontSize)
+			label.font = UIFont.kaitiFont(ofSize: LayoutPartner.NavigationView().subTitleFontSize)
 			label.textAlignment = .center
 			return label
 		}()
