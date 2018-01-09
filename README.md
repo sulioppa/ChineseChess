@@ -9,3 +9,5 @@
 
 ### Game Module（对弈模块）
 ![](ReadMeMedia/Game.png)
+
+![](ReadMeMedia/GameSettings&History.png)
