@@ -72,7 +72,7 @@ extension GameVC: GameSettingsViewDelegate {
 }
 
 // MARK: - Menu.
-extension GameVC: MenuViewDelegate, HistoryViewDelegate {
+extension GameVC: MenuViewDelegate, CharacterViewDelegate {
 
 	@objc private func showMenu() {
 		GameMenuView().show(delegate: self)
@@ -86,7 +86,7 @@ extension GameVC: MenuViewDelegate, HistoryViewDelegate {
 		case 1:
 			self.chessBoardController.opposite = UserPreference.shared.game.opposite
 		case 2:
-			menuView.push(view: HistoryView(delegate: self, dataSource: self.AI.records.map({ return $0.item }), result: self.AI.state.result))
+			menuView.push(view: CharacterView(delegate: self, dataSource: self.AI.records.map({ return $0.item }), result: self.AI.state.result))
 		case 3:
 			break
 		default:
@@ -94,7 +94,7 @@ extension GameVC: MenuViewDelegate, HistoryViewDelegate {
 		}
 	}
 	
-	func historyView(didClickAt index: Int) {
+	func characterView(didClickAt index: Int) {
 		if index == 0 {
 			UserPreference.shared.history.saveHistory(name: self.name, description: self.detail, file: self.AI.historyFile())
 			TextAlertView.show(in: self.contentView, text: "棋谱已保存")

@@ -1,5 +1,5 @@
 //
-//  HistoryView.swift
+//  CharacterView.swift
 //  ChineseChess
 //
 //  Created by 李夙璃 on 2018/1/2.
@@ -8,17 +8,17 @@
 
 import UIKit
 
-@objc protocol HistoryViewDelegate: NSObjectProtocol {
+@objc protocol CharacterViewDelegate: NSObjectProtocol {
 	
-	@objc optional func historyView(didSelectAt row: Int)
+	@objc optional func characterView(didSelectAt row: Int)
 	
-	@objc optional func historyView(didClickAt index: Int)
+	@objc optional func characterView(didClickAt index: Int)
 	
 	@objc optional var detail: String { get }
 	
 }
 
-class HistoryView: NavigationView {
+class CharacterView: NavigationView {
 	
 	private var roundsLabel: UILabel?
 	private var resultLabel: UILabel?
@@ -39,9 +39,9 @@ class HistoryView: NavigationView {
 	public typealias DataItem = (chess: Int, text: String, eat: Int)
 	
 	private var dataSource: [DataItem] = []
-	private var delegate: HistoryViewDelegate? = nil
+	private var delegate: CharacterViewDelegate? = nil
 	
-	init(delegate: HistoryViewDelegate?, dataSource: [DataItem], result: String) {
+	init(delegate: CharacterViewDelegate?, dataSource: [DataItem], result: String) {
 		super.init(frame: .zero)
 		self.delegate = delegate
 		self.bar.title = "棋  谱"
@@ -161,7 +161,7 @@ class HistoryView: NavigationView {
 }
 
 // MARK: - Private
-extension HistoryView {
+extension CharacterView {
 	
 	private func didInsert(item: DataItem, result: String?) {
 		self.dataSource.append(item)
@@ -193,7 +193,7 @@ extension HistoryView {
 		}
 		
 		self.dismiss()
-		self.delegate?.historyView?(didClickAt: sender.tag)
+		self.delegate?.characterView?(didClickAt: sender.tag)
 	}
 	
 	@objc private func showDetail(gesture: UIGestureRecognizer) {
@@ -209,7 +209,7 @@ extension HistoryView {
 }
 
 // MARK: - UITableViewDelegate
-extension HistoryView: UITableViewDelegate, UITableViewDataSource, HistoryViewDelegate {
+extension CharacterView: UITableViewDelegate, UITableViewDataSource, CharacterViewDelegate {
 	
 	func numberOfSections(in tableView: UITableView) -> Int {
 		return 1
@@ -251,20 +251,20 @@ extension HistoryView: UITableViewDelegate, UITableViewDataSource, HistoryViewDe
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		self.historyView(didSelectAt: indexPath.row)
+		self.characterView(didSelectAt: indexPath.row)
 	}
 	
-	func historyView(didSelectAt index: Int) {
-		guard self.delegate?.responds(to: #selector(historyView(didSelectAt:))) == true else { return }
+	func characterView(didSelectAt index: Int) {
+		guard self.delegate?.responds(to: #selector(characterView(didSelectAt:))) == true else { return }
 		
 		self.refreshRounds(index: index)
-		self.delegate?.historyView?(didSelectAt: index)
+		self.delegate?.characterView?(didSelectAt: index)
 	}
 	
 }
 
 // MARK: - Cell
-extension HistoryView {
+extension CharacterView {
 	
 	private class Cell: UITableViewCell {
 		public static let identifier: String = {
@@ -352,7 +352,7 @@ extension HistoryView {
 		
 		public static let identifier: String = "Header"
 		
-		public var delegate: HistoryViewDelegate? = nil
+		public var delegate: CharacterViewDelegate? = nil
 		
 		private lazy var button: UIButton = {
 			let button = UIButton()
@@ -386,7 +386,7 @@ extension HistoryView {
 				sender.isEnabled = true
 			}
 			
-			self.delegate?.historyView?(didSelectAt: -1)
+			self.delegate?.characterView?(didSelectAt: -1)
 		}
 	}
 	

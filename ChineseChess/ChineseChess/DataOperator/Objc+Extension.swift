@@ -86,8 +86,8 @@ extension Luna_Move {
 // MARK: - LunaRecord
 extension LunaRecord {
 	
-	var item: HistoryView.DataItem {
-		return HistoryView.DataItem(Int(self.chess), self.character, Int(self.eat))
+	var item: CharacterView.DataItem {
+		return CharacterView.DataItem(Int(self.chess), self.character, Int(self.eat))
 	}
 	
 }
