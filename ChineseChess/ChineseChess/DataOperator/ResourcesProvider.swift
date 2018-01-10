@@ -34,6 +34,7 @@ class ResourcesProvider: NSObject {
 		"in": "icon_in",
 		"tips": "icon_tips",
 		"bgm": "icon_bgm",
+		"delete": "icon_delete",
 		"reverse": "icon_reverse",
 		"opposite": "icon_opposite",
 		"put": "icon_put",

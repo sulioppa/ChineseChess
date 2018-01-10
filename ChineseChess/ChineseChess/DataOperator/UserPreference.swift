@@ -119,7 +119,11 @@ extension UserPreference {
 				return "特 级 大 师"
 			}
 		}
-
+		
+		public var name: String {
+			return self.description.replacingOccurrences(of: " ", with: "")
+		}
+		
 		public static func <-(left: inout Level, right: Any?) {
 			guard let rawValue = right as? Int else { return }
 			left = Level(rawValue: rawValue) ?? .player
@@ -136,7 +140,7 @@ extension UserPreference {
 	public class History {
 		public var reverse: Bool = false
 		public var opposite: Bool = false
-		public var histories: [String : String] = [:]
+		public var histories: [String: String] = [:]
 		
 		public var dictionary: [String: Any] {
 			let key = Key()
@@ -152,6 +156,7 @@ extension UserPreference {
 			let key = Key()
 			left.reverse <- dictionary[key.reverse]
 			left.opposite <- dictionary[key.opposite]
+			left.histories <- dictionary[key.histories]
 		}
 		
 		public final func readHistory(name: String) -> String {
@@ -167,6 +172,14 @@ extension UserPreference {
 		public final func deleteHistroy(name: String) {
 			self.histories.removeValue(forKey: name)
 			UserFileHandler.deleteFile(name: name)
+		}
+		
+		public final func deleteAllHistroy() {
+			for (_, name) in self.histories {
+				UserFileHandler.deleteFile(name: name)
+			}
+			
+			self.histories.removeAll()
 		}
 	}
 }

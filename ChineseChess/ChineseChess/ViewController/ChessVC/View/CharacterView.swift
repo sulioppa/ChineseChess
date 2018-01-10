@@ -356,7 +356,7 @@ extension CharacterView {
 		
 		private lazy var button: UIButton = {
 			let button = UIButton()
-			button.backgroundColor = UIColor.white
+			button.backgroundColor = UIColor.clear
 			button.titleLabel?.font = UIFont.kaitiFont(ofSize: LayoutPartner.NavigationView().subTitleFontSize)
 			button.setTitle("开  局", for: .normal)
 			button.setTitleColor(.china, for: .normal)
@@ -366,7 +366,6 @@ extension CharacterView {
 		
 		override init(reuseIdentifier: String?) {
 			super.init(reuseIdentifier: reuseIdentifier)
-			self.backgroundColor = UIColor.clear
 			self.contentView.backgroundColor = UIColor.clear
 			
 			self.button.addTarget(self, action: #selector(self.didSelectHeaderView(sender:)), for: .touchUpInside)

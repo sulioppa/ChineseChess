@@ -39,8 +39,6 @@ class GameMenuView: MenuView {
 			WavHandler.playVoice(state: .normal)
 			self.dataSource[indexPath.row].status = UserPreference.shared.game.opposite.reverse().chinese
 			tableView.reloadRows(at: [indexPath], with: .automatic)
-		} else {
-			WavHandler.playButtonWav()
 		}
 		
 		self.delegate?.menuView(self, didSelectRowAt: indexPath.row)

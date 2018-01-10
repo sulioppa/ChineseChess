@@ -126,7 +126,20 @@ public class NavigationView: UIView {
 // MARK: - NavigationBar
 public final class NavigationBar: UIView {
 
-	public final var leftBarButtonItem: UIImageView?
+	public final lazy var leftBarButtonItem: UIImageView? = { [weak self] in
+		guard let `self` = self else { return nil }
+		
+		let item = self.barButtonItem()
+		item.image = ResourcesProvider.shared.image(named: "back")
+		self.addSubview(item)
+		item.snp.makeConstraints {
+			$0.left.equalTo(self)
+			$0.top.equalTo(self)
+			$0.bottom.equalTo(self)
+			$0.width.equalTo(self.snp.height)
+		}
+		return item
+	}()
 	
 	public final lazy var rightBarButtonItem: UIImageView? = { [weak self] in
 		guard let `self` = self else { return nil }
@@ -171,18 +184,6 @@ public final class NavigationBar: UIView {
 			$0.left.equalTo(superview)
 			$0.right.equalTo(superview)
 			$0.height.equalTo(44.0)
-		}
-		
-		let leftBarButtonItem = self.barButtonItem()
-		leftBarButtonItem.image = ResourcesProvider.shared.image(named: "back")
-		self.leftBarButtonItem = leftBarButtonItem
-		
-		self.addSubview(leftBarButtonItem)
-		leftBarButtonItem.snp.makeConstraints {
-			$0.left.equalTo(self)
-			$0.top.equalTo(self)
-			$0.bottom.equalTo(self)
-			$0.width.equalTo(self.snp.height)
 		}
 		
 		self.addSubview(self.titleView)

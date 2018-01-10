@@ -88,7 +88,7 @@ extension GameVC: MenuViewDelegate, CharacterViewDelegate {
 		case 2:
 			menuView.push(view: CharacterView(delegate: self, dataSource: self.AI.records.map({ return $0.item }), result: self.AI.state.result))
 		case 3:
-			break
+			menuView.push(view: HistoryView(delegate: nil))
 		default:
 			break
 		}
@@ -109,7 +109,7 @@ extension GameVC: MenuViewDelegate, CharacterViewDelegate {
 	}
 	
 	private var name: String {
-		return "\(Date.time) \(UserPreference.shared.game.red.description) \(self.AI.state.vs) \(UserPreference.shared.game.black.description)"
+		return "\(Date.time) \(UserPreference.shared.game.red.name) \(self.AI.state.vs) \(UserPreference.shared.game.black.name)"
 	}
 	
 }
