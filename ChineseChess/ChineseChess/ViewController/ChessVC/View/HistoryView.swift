@@ -29,7 +29,7 @@ class HistoryView: NavigationView {
 		}()
 	
 	private var dataSource: [String] = Array(UserPreference.shared.history.histories.keys)
-	private var delegate: HistoryViewDelegate? = nil
+	private weak var delegate: HistoryViewDelegate? = nil
 	
 	init(delegate: HistoryViewDelegate?) {
 		super.init(frame: .zero)

@@ -44,7 +44,7 @@ class GameSettingsView: NavigationView {
 		return array
 	}
 	
-	private var delegate: GameSettingsViewDelegate?
+	private weak var delegate: GameSettingsViewDelegate?
 	
 	private var isNew: Bool = false {
 		didSet {
@@ -288,7 +288,7 @@ extension GameSettingsView: LevelSelectViewDelegate {
 	private class LevelSelectView: UITableView, UITableViewDelegate, UITableViewDataSource {
 		
 		private var levels: [UserPreference.Level] = []
-		private var selectDelegate: LevelSelectViewDelegate?
+		private weak var selectDelegate: LevelSelectViewDelegate?
 		private var indexPath: IndexPath = IndexPath(row: 0, section: 0)
 		
 		init(frame: CGRect, delegate: LevelSelectViewDelegate, includePlayer: Bool) {

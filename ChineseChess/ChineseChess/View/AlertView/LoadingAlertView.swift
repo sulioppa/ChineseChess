@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol LoadingAlertViewDelegate {
+protocol LoadingAlertViewDelegate: NSObjectProtocol {
 	func loadingAlertViewDidDisappear(view: LoadingAlertView)
 }
 
@@ -20,7 +20,7 @@ class LoadingAlertView: UIView {
 	private weak var titleLabel: UILabel? = nil
 	private weak var closeView: UIView? = nil
 	
-	private var delegate: LoadingAlertViewDelegate? = nil
+	private weak var delegate: LoadingAlertViewDelegate? = nil
 	
 	// Layout
 	override init(frame: CGRect) {

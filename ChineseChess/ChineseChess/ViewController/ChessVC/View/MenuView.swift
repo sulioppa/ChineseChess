@@ -27,7 +27,7 @@ class MenuView: NavigationView, UITableViewDelegate, UITableViewDataSource {
 		return view
 		}()
 	
-	public var delegate: MenuViewDelegate?
+	public weak var delegate: MenuViewDelegate?
 	
 	public typealias DataItem = (image: String, title: String, status: String?)
 	public var dataSource: [DataItem] = []

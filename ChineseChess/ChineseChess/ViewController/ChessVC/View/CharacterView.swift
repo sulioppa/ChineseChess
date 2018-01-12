@@ -39,7 +39,7 @@ class CharacterView: NavigationView {
 	public typealias DataItem = (chess: Int, text: String, eat: Int)
 	
 	private var dataSource: [DataItem] = []
-	private var delegate: CharacterViewDelegate? = nil
+	private weak var delegate: CharacterViewDelegate? = nil
 	
 	init(delegate: CharacterViewDelegate?, dataSource: [DataItem], result: String) {
 		super.init(frame: .zero)
@@ -352,7 +352,7 @@ extension CharacterView {
 		
 		public static let identifier: String = "Header"
 		
-		public var delegate: CharacterViewDelegate? = nil
+		public weak var delegate: CharacterViewDelegate? = nil
 		
 		private lazy var button: UIButton = {
 			let button = UIButton()
