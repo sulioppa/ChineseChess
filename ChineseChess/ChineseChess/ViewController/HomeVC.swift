@@ -116,14 +116,20 @@ extension HomeVC {
 // MARK: - ScrollView Scroll Control
 extension HomeVC {
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.scrollVC.isViewWillAppear = true
+	}
+	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		self.scrollVC.isViewAppear = true
+		self.scrollVC.isViewDidAppear = true
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
-		self.scrollVC.isViewAppear = false
+		self.scrollVC.isViewWillAppear = false
+		self.scrollVC.isViewDidAppear = false
 	}
 	
 	@objc func applicationWillEnterForeground() {
@@ -151,10 +157,17 @@ extension HomeVC {
 			}
 		}
 		
-		public var isViewAppear: Bool = false {
+		public var isViewWillAppear: Bool = false {
 			didSet {
 				if !oldValue {
 					self.scrollViewShouldBeginScroll()
+				}
+			}
+		}
+		
+		public var isViewDidAppear: Bool = false {
+			didSet {
+				if !oldValue {
 					self.imageViewShouldBeginRipple()
 				}
 			}
@@ -196,7 +209,7 @@ extension HomeVC {
 		private var currentOffset: CGFloat = 0.0
 		
 		@objc func scrollViewShouldBeginScroll() {
-			guard self.isViewAppear && self.isForeground else { return }
+			guard self.isViewWillAppear && self.isForeground else { return }
 			
 			let targetOffset = self.currentOffset + self.direction
 			if targetOffset > self.scrollView.contentSize.width - self.scrollView.bounds.size.width {
@@ -211,6 +224,8 @@ extension HomeVC {
 		}
 		
 		private func imageViewShouldBeginRipple() {
+			guard self.isViewDidAppear && self.isForeground else { return }
+			
 			self.imageView?.layer.removeAllAnimations()
 			
 			let animation = CATransition()
