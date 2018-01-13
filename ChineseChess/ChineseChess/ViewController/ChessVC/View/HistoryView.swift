@@ -9,7 +9,7 @@
 import UIKit
 
 protocol HistoryViewDelegate: NSObjectProtocol {
-	func historyView(didLoadFile: String)
+	func historyView(didLoad file: String)
 }
 
 class HistoryView: NavigationView {
@@ -28,7 +28,7 @@ class HistoryView: NavigationView {
 		return view
 		}()
 	
-	private var dataSource: [String] = Array(UserPreference.shared.history.histories.keys)
+	private var dataSource: [String] = UserPreference.shared.history.files
 	private weak var delegate: HistoryViewDelegate? = nil
 	
 	init(delegate: HistoryViewDelegate?) {
@@ -146,7 +146,7 @@ extension HistoryView {
 		self.dataSource.removeAll()
 		self.tableview.reloadData()
 		self.refreshNumber()
-		UserPreference.shared.history.deleteAllHistroy()
+		UserPreference.shared.history.deleteAll()
 	}
 	
 	private func refreshNumber() {
@@ -168,14 +168,14 @@ extension HistoryView {
 		let fileName = self.dataSource[index]
 		if sender.tag == 0 {
 			self.dismiss()
-			self.delegate?.historyView(didLoadFile: UserPreference.shared.history.readHistory(name: fileName))
+			self.delegate?.historyView(didLoad: UserPreference.shared.history.read(name: fileName))
 		} else {
 			WavHandler.playButtonWav()
 			
 			self.dataSource.remove(at: index)
 			self.tableview.delete(indexPaths: [IndexPath(row: index, section: 0)])
 			self.refreshNumber()
-			UserPreference.shared.history.deleteHistroy(name: fileName)
+			UserPreference.shared.history.delete(name: fileName)
 		}
 	}
 	

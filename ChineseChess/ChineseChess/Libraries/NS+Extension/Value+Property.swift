@@ -25,3 +25,15 @@ extension Date {
 	}
 	
 }
+
+extension String {
+	
+	public var noSpace: String {
+		return self.replacingOccurrences(of: " ", with: "")
+	}
+	
+	public static var uuid: String {
+		return UUID().uuidString
+	}
+	
+}

@@ -121,7 +121,7 @@ extension UserPreference {
 		}
 		
 		public var name: String {
-			return self.description.replacingOccurrences(of: " ", with: "")
+			return self.description.noSpace
 		}
 		
 		public static func <-(left: inout Level, right: Any?) {
@@ -140,7 +140,7 @@ extension UserPreference {
 	public class History {
 		public var reverse: Bool = false
 		public var opposite: Bool = false
-		public var histories: [String: String] = [:]
+		private var histories: [String: [String]] = [:]
 		
 		public var dictionary: [String: Any] {
 			let key = Key()
@@ -159,27 +159,35 @@ extension UserPreference {
 			left.histories <- dictionary[key.histories]
 		}
 		
-		public final func readHistory(name: String) -> String {
-			guard let data = UserFileHandler.readFile(name: name) else { return "" }
+		public final func read(name: String) -> String {
+			guard let data = UserFileHandler.read(name: self.histories[name]?.first) else { return "" }
 			return String(data: data, encoding: .utf8) ?? ""
 		}
 		
-		public final func saveHistory(name: String, description: String, file: String) {
-			self.histories[name] = description
-			UserFileHandler.writeFile(name: name, data: file.data(using: .utf8))
+		public final func save(name: String, description: String, file: String) {
+			self.histories[name] = [.uuid, description]
+			UserFileHandler.write(name: self.histories[name]?.first, data: file.data(using: .utf8))
 		}
 		
-		public final func deleteHistroy(name: String) {
+		public final func delete(name: String) {
+			UserFileHandler.delete(name: self.histories[name]?.first)
 			self.histories.removeValue(forKey: name)
-			UserFileHandler.deleteFile(name: name)
 		}
 		
-		public final func deleteAllHistroy() {
-			for (_, name) in self.histories {
-				UserFileHandler.deleteFile(name: name)
+		public final func deleteAll() {
+			for (_, value) in self.histories {
+				UserFileHandler.delete(name: value.first)
 			}
 			
 			self.histories.removeAll()
+		}
+		
+		public var files: [String] {
+			return Array(self.histories.keys)
+		}
+		
+		public final func detail(name: String) -> String {
+			return self.histories[name]?.last ?? ""
 		}
 	}
 }

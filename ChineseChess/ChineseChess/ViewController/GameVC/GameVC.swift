@@ -72,8 +72,8 @@ extension GameVC: GameSettingsViewDelegate {
 }
 
 // MARK: - Menu.
-extension GameVC: MenuViewDelegate, CharacterViewDelegate {
-
+extension GameVC: MenuViewDelegate, CharacterViewDelegate, EditVCDelegate {
+	
 	@objc private func showMenu() {
 		GameMenuView().show(delegate: self)
 	}
@@ -88,7 +88,11 @@ extension GameVC: MenuViewDelegate, CharacterViewDelegate {
 		case 2:
 			menuView.push(view: CharacterView(delegate: self, dataSource: self.AI.records.map({ return $0.item }), result: self.AI.state.result))
 		case 3:
-			menuView.push(view: HistoryView(delegate: nil))
+			menuView.dismiss()
+			let vc = EditVC()
+			vc.AI.initBoard(withFile: self.AI.historyFile())
+			vc.delegate = self
+			self.present(vc, completion: nil)
 		default:
 			break
 		}
@@ -96,7 +100,7 @@ extension GameVC: MenuViewDelegate, CharacterViewDelegate {
 	
 	func characterView(didClickAt index: Int) {
 		if index == 0 {
-			UserPreference.shared.history.saveHistory(name: self.name, description: self.detail, file: self.AI.historyFile())
+			UserPreference.shared.history.save(name: self.name, description: self.detail, file: self.AI.historyFile())
 			TextAlertView.show(in: self.contentView, text: "棋谱已保存")
 		} else {
 			UIPasteboard.general.string = "\(self.detail)\n\(self.AI.characters)"
@@ -110,6 +114,10 @@ extension GameVC: MenuViewDelegate, CharacterViewDelegate {
 	
 	private var name: String {
 		return "\(Date.time) \(UserPreference.shared.game.red.name) \(self.AI.state.vs) \(UserPreference.shared.game.black.name)"
+	}
+	
+	func didDoneEdit(with file: String) {
+		UserPreference.shared.game.record = file
 	}
 	
 }
