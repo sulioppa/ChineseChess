@@ -22,12 +22,17 @@ class UserFileHandler: NSObject {
 	
 	private class func url(_ name: String?) -> URL? {
 		guard let name = name else { return nil }
-		return URL(string: "\(self.directory)/\(name)")
+		return URL(fileURLWithPath: "\(self.directory)/\(name)")
+	}
+	
+	private class func path(_ name: String?) -> String? {
+		guard let name = name else { return nil }
+		return "\(self.directory)/\(name)"
 	}
 	
 	public class func read(name: String?) -> Data? {
-		guard let url = self.url(name) else { return nil }
-		return FileManager.default.contents(atPath: url.absoluteString)
+		guard let path = self.path(name) else { return nil }
+		return FileManager.default.contents(atPath: path)
 	}
 
 	public class func write(name: String?, data: Data?) {
