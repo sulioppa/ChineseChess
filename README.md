@@ -11,3 +11,8 @@
 ![](ReadMeMedia/Game.png)
 
 ![](ReadMeMedia/GameSettings&History.png)
+
+### Edit Module（摆设棋局模块）
+![](ReadMeMedia/File&Edit.png)
+
+![](ReadMeMedia/FirstSide&CheckMate.png)

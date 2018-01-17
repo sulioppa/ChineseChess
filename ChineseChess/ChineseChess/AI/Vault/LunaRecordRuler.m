@@ -40,7 +40,7 @@
 	}
 	
 	// 和棋，双方无进攻棋子。
-	if (!(chesses & 0x07ff07ff)) {
+	if (!(chesses & 0xffe0ffe0)) {
 		return LunaBoardStateDrawBothSideHaveNoneAttckChess;
 	}
 	

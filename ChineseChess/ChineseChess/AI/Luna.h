@@ -34,11 +34,11 @@ typedef NS_ENUM(uint8_t, LunaMoveState) {
 };
 
 // MARK: - Typedef
-typedef uint8_t Luna_Location;
+typedef uint8_t LunaLocation;
 
-typedef uint8_t Luna_Chess;
+typedef uint8_t LunaChess;
 
-typedef uint16_t Luna_Move;
+typedef uint16_t LunaMove;
 
 // MARK: - AI Luna.
 @interface Luna : NSObject
@@ -61,16 +61,16 @@ typedef uint16_t Luna_Move;
 @property (nullable, nonatomic, readonly) LunaRecord *lastMove;
 
 // see if user want to choose another chess.
-- (BOOL)isAnotherChoiceWithLocation:(Luna_Location)location;
+- (BOOL)isAnotherChoiceWithLocation:(LunaLocation)location;
 
 // generate legal moves.
-- (nonnull NSArray<NSNumber *> *)legalMovesWithLocation:(Luna_Location)location;
+- (nonnull NSArray<NSNumber *> *)legalMovesWithLocation:(LunaLocation)location;
 
 // do a chess move, return a state indicates how this move affect the game.
-- (LunaMoveState)moveChessWithMove:(Luna_Move)move;
+- (LunaMoveState)moveChessWithMove:(LunaMove)move;
 
 // undo a chess move from move stack, move = 0 indicates there's no more move in stack.
-- (Luna_Chess)regretWithMove:(nonnull Luna_Move *)move;
+- (LunaChess)regretWithMove:(nonnull LunaMove *)move;
 
 @end
 
@@ -94,5 +94,48 @@ typedef uint16_t Luna_Move;
 
 // return the file record of game.
 - (nonnull NSString *)historyFile;
+
+@end
+
+// MARK: - LunaChessState
+typedef NS_ENUM(NSUInteger, LunaPutChessState) {
+	LunaPutChessStateNormalPut,
+	LunaPutChessStateNormalEat,
+	LunaPutChessStateWrongPut,
+	LunaPutChessStateWrongEat,
+};
+
+// MARK: - LunaDoneState
+typedef NS_ENUM(NSUInteger, LunaEditDoneState) {
+	LunaEditDoneStateNormal,
+	LunaEditDoneStateWrongFaceToFace,
+	LunaEditDoneStateWrongIsCheckedMate,
+	LunaEditDoneStateWrongCheck
+};
+
+// MARK: - AI Luna. (Edit)
+@interface Luna (Edit)
+
+// the chesses can put.
+@property (nonnull, nonatomic, readonly) NSArray<NSNumber *> *putChesses;
+
+// the chess at the location.
+- (LunaChess)chessAtLocation:(LunaLocation)location;
+
+// put, move, erase a chess.
+- (LunaPutChessState)putWithChess:(LunaChess)chess at:(LunaLocation)location;
+
+- (LunaPutChessState)moveWithMove:(LunaMove)move;
+
+- (LunaPutChessState)eraseWithLocation:(LunaLocation)location;
+
+// check the board with the expected side.
+- (LunaEditDoneState)isEditDone:(LunaBoardState)state;
+
+// init the board.
+- (void)resetBoard;
+
+// make the board only left the kings.
+- (void)clearBoard;
 
 @end

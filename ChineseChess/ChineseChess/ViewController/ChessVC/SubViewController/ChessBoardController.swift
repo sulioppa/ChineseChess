@@ -13,9 +13,9 @@ class ChessBoardController: NSObject {
 	
 	public final weak var AI: Luna!
 	public final weak var contentView: UIView!
+	public final weak var board: UIView!
 	
 	// MARK: - Private Properties
-	private weak var board: UIView!
 	private var chess: [GridPoint: CALayer] = [:]
 	
 	// MARK: - init
@@ -36,13 +36,13 @@ class ChessBoardController: NSObject {
 	
 	// MARK: - Tap Tap Tap~
 	@objc private func didTapInBoard(gesture: UITapGestureRecognizer) {
-		let point = MetaPoint.metaPoint(point: gesture.location(in: self.board))
-		if point.isLegal {
-			self.didTapInBoard(at: point)
+		let grid = MetaPoint.metaPoint(point: gesture.location(in: self.board))
+		if grid.isLegal {
+			self.didTapInBoard(at: grid, atPoint: MetaPoint.metaPosition(point: grid))
 		}
 	}
 	
-	public func didTapInBoard(at point: GridPoint) {
+	public func didTapInBoard(at grid: GridPoint, atPoint: CGPoint) {
 		fatalError("【Error】：\(#function) should be override at child class.")
 	}
 	
@@ -81,7 +81,7 @@ class ChessBoardController: NSObject {
 // MARK: - Public Draw a chess at grid or location
 extension ChessBoardController {
 	
-	public final func drawChess(chess: Int, location: Luna_Location, below sibling: CALayer? = nil) {
+	public final func drawChess(chess: Int, location: LunaLocation, below sibling: CALayer? = nil) {
 		guard location > 0 else { return }
 		assert(15 < chess && chess < 48 , "\(#function) 's chess must be more than 15 and less than 48")
 		guard let image = ResourcesProvider.shared.chess(index: chess) else { return }
@@ -92,14 +92,22 @@ extension ChessBoardController {
 		self.chess[grid] = self.drawChess(at: grid, isOppositie: opposite, image: image, below: sibling)
 	}
 	
-	public final func drawRuby(location: Luna_Location) -> (grid: GridPoint, ruby: CALayer?) {
+	public final func removeChess(at location: LunaLocation) {
+		guard location > 0 else { return }
+		
+		let grid = GridPoint(location: location, isReverse: self.reverse)
+		self.chess[grid]?.removeFromSuperlayer()
+		self.chess.removeValue(forKey: grid)
+	}
+	
+	public final func drawRuby(location: LunaLocation) -> (grid: GridPoint, ruby: CALayer?) {
 		guard let image = ResourcesProvider.shared.chess(index: 1) else { return (GridPoint.none, nil) }
 		
 		let grid = GridPoint(location: location, isReverse: self.reverse)
 		return (grid, self.drawChess(at: grid, isOppositie: false, image: image))
 	}
 	
-	public final func drawSquare(isRed: Bool, location: Luna_Location) -> CALayer? {
+	public final func drawSquare(isRed: Bool, location: LunaLocation) -> CALayer? {
 		let grid = GridPoint(location: location, isReverse: self.reverse)
 		return self.drawSquare(isRed: isRed, grid: grid)
 	}
@@ -199,11 +207,11 @@ extension ChessBoardController {
 		}
 		
 		// Location
-		public init(location: Luna_Location, isReverse: Bool) {
+		public init(location: LunaLocation, isReverse: Bool) {
 			self.reset(location: location, isReverse: isReverse)
 		}
 		
-		public mutating func reset(location: Luna_Location, isReverse: Bool) {
+		public mutating func reset(location: LunaLocation, isReverse: Bool) {
 			self.x = Int(location >> 4) - 3
 			self.y = Int(location & 0xf) - 3
 			if isReverse {
@@ -212,15 +220,15 @@ extension ChessBoardController {
 			}
 		}
 		
-		public func location(_ isReverse: Bool) -> Luna_Location {
+		public func location(_ isReverse: Bool) -> LunaLocation {
 			if isReverse {
-				return Luna_Location(((12 - self.x) << 4) + 11 - self.y)
+				return LunaLocation(((12 - self.x) << 4) + 11 - self.y)
 			} else {
-				return Luna_Location(((self.x + 3) << 4) + self.y + 3)
+				return LunaLocation(((self.x + 3) << 4) + self.y + 3)
 			}
 		}
 		
-		public static func move(from: GridPoint, to: GridPoint, isReverse: Bool) -> Luna_Move {
+		public static func move(from: GridPoint, to: GridPoint, isReverse: Bool) -> LunaMove {
 			let high = from.location(isReverse)
 			let low = to.location(isReverse)
 			return (UInt16(high) << 8) + UInt16(low)

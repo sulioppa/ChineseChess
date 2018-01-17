@@ -23,3 +23,5 @@ extern const uint8_t Luna_LegalLocation_A[256];
 extern const uint8_t Luna_LegalLocation_B[256];
 
 extern const uint8_t Luna_LegalLocation_P[512];
+
+extern const uint8_t Luna_RiverEdge;

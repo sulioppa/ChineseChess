@@ -14,7 +14,7 @@ protocol EditVCDelegate: NSObjectProtocol {
 
 class EditVC: ChessVC {
 
-	private lazy var chessBoardController: GameBoardController = GameBoardController(contentView: self.contentView, board: self.board, AI: self.AI, isUserInteractionEnabled: true)
+	private lazy var chessBoardController: EditBoardController = EditBoardController(contentView: self.contentView, board: self.board, AI: self.AI, isUserInteractionEnabled: true)
 	
 	public weak var delegate: EditVCDelegate?
 	
@@ -39,11 +39,15 @@ class EditVC: ChessVC {
 	
 }
 
-// MARK: - Action.
+// MARK: - HistoryViewDelegate.
 extension EditVC: HistoryViewDelegate {
 	
 	@objc private func load() {
 		HistoryView(delegate: self).show()
+	}
+	
+	var viewcontroller: UIViewController {
+		return self
 	}
 	
 	func historyView(didLoad file: String) {
@@ -75,15 +79,38 @@ extension EditVC {
 	}
 	
 	@objc private func reset() {
-		
+		WavHandler.playVoice(state: .normal)
+		self.AI.resetBoard()
+		self.chessBoardController.refreshBoard()
 	}
 	
 	@objc private func clear() {
-		
+		WavHandler.playVoice(state: .normal)
+		self.AI.clearBoard()
+		self.chessBoardController.refreshBoard()
 	}
 	
 	@objc private func ok() {
+		func didSelectSide(side: LunaBoardState) {
+			let state = self.AI.isEditDone(side)
+			
+			if state == .normal {
+				self.delegate?.didDoneEdit(with: self.AI.historyFile())
+				self.back()
+			} else {
+				TextAlertView.show(in: self.contentView, text: state.description(state: side))
+			}
+		}
 		
+		let controller = UIAlertController(title: "选择先手", message: nil, preferredStyle: .alert)
+		controller.addAction(UIAlertAction(title: "红方", style: .default, handler: { (_) in
+			didSelectSide(side: .turnRedSide)
+		}))
+		controller.addAction(UIAlertAction(title: "黑方", style: .default, handler: { (_) in
+			didSelectSide(side: .turnBlackSide)
+		}))
+		
+		self.present(controller, animated: true, completion: nil)
 	}
 	
 }

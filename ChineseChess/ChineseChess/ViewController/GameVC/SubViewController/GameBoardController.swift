@@ -30,7 +30,7 @@ class GameBoardController: ChessBoardController {
 	private let taskSignal: DispatchSemaphore = DispatchSemaphore(value: 1)
 	
 	// MARK: - Handle Tap
-	public override func didTapInBoard(at point: ChessBoardController.GridPoint) {
+	public override func didTapInBoard(at grid: ChessBoardController.GridPoint, atPoint: CGPoint) {
 		let canRespond = self.canRespond
 		if !canRespond.can {
 			TextAlertView.show(in: self.contentView, text: canRespond.error)
@@ -39,23 +39,23 @@ class GameBoardController: ChessBoardController {
 		
 		if self.choice.grid.isLegal {
 			// has chosen one.
-			if point == self.choice.grid {
+			if grid == self.choice.grid {
 				WavHandler.playVoice(state: .select)
 				return
 			}
 			
 			// not the same grid, try to make another choice.
-			if self.makeChoice(location: point.location(self.reverse)) {
+			if self.makeChoice(location: grid.location(self.reverse)) {
 				return
 			}
 			
 			// make the move
-			if self.legalMoves[point] != nil {
-				self.makeMove(to: point)
+			if self.legalMoves[grid] != nil {
+				self.makeMove(to: grid)
 			}
 		} else {
 			// not chose. try to make a choice.
-			let _ = self.makeChoice(location: point.location(self.reverse))
+			let _ = self.makeChoice(location: grid.location(self.reverse))
 		}
 	}
 	
@@ -124,7 +124,7 @@ extension GameBoardController {
 		return (true, nil)
 	}
 	
-	private func makeChoice(location: Luna_Location) -> Bool {
+	private func makeChoice(location: LunaLocation) -> Bool {
 		if self.AI.isAnotherChoice(withLocation: location) {
 			WavHandler.playVoice(state: .select)
 			self.refreshChoice(with: location)
@@ -155,7 +155,7 @@ extension GameBoardController {
 	}
 	
 	// choice
-	private func refreshChoice(with location: Luna_Location) {
+	private func refreshChoice(with location: LunaLocation) {
 		self.clearChoice()
 		self.choice.grid.reset(location: location, isReverse: self.reverse)
 		self.choice.layer = self.drawSquare(isRed: true, grid: self.choice.grid)
@@ -168,7 +168,7 @@ extension GameBoardController {
 	}
 	
 	// legal moves
-	private func refreshLegalMoves(with choice: Luna_Location) {
+	private func refreshLegalMoves(with choice: LunaLocation) {
 		self.clearLegalMoves()
 		// draw ruby
 		for (_, location) in self.AI.legalMoves(withLocation: choice).enumerated() {
@@ -185,7 +185,7 @@ extension GameBoardController {
 	}
 	
 	// last move
-	private func refreshLastMove(with move: Luna_Move?) {
+	private func refreshLastMove(with move: LunaMove?) {
 		self.clearLastMove()
 		if let move = move, move != 0 {
 			self.lastMove.from = self.drawSquare(isRed: false, location: move.from)
@@ -245,7 +245,7 @@ extension GameBoardController {
 extension GameBoardController {
 	
 	private func regretOneStep(release: Bool) {
-		var move: Luna_Move = 0
+		var move: LunaMove = 0
 		let ate = Int(self.AI.regret(withMove: &move))
 		
 		if move > 0 {

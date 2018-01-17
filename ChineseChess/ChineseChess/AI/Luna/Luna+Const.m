@@ -157,3 +157,5 @@ const uint8_t Luna_LegalLocation_P[512] = {
 	0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,0,
 	0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,0
 };
+
+const uint8_t Luna_RiverEdge = 123;

@@ -9,7 +9,11 @@
 import UIKit
 
 protocol HistoryViewDelegate: NSObjectProtocol {
+	
 	func historyView(didLoad file: String)
+	
+	var viewcontroller: UIViewController { get }
+	
 }
 
 class HistoryView: NavigationView {
@@ -143,10 +147,17 @@ extension HistoryView {
 
 		guard self.dataSource.count > 0 else { return }
 		
-		self.dataSource.removeAll()
-		self.tableview.reloadData()
-		self.refreshNumber()
-		UserPreference.shared.history.deleteAll()
+		let controller = UIAlertController(title: "确定要删除所有棋谱？", message: nil, preferredStyle: .alert)
+		controller.addAction(UIAlertAction(title: "删除", style: .destructive, handler: { (_) in
+			self.dataSource.removeAll()
+			self.tableview.reloadData()
+			self.refreshNumber()
+			UserPreference.shared.history.deleteAll()
+		}))
+		controller.addAction(UIAlertAction(title: "取消", style: .default, handler: { (_) in
+		}))
+		
+		self.delegate?.viewcontroller.present(controller, animated: true, completion: nil)
 	}
 	
 	private func refreshNumber() {
@@ -172,10 +183,17 @@ extension HistoryView {
 		} else {
 			WavHandler.playButtonWav()
 			
-			self.dataSource.remove(at: index)
-			self.tableview.delete(indexPaths: [IndexPath(row: index, section: 0)])
-			self.refreshNumber()
-			UserPreference.shared.history.delete(name: fileName)
+			let controller = UIAlertController(title: "确定要删除棋谱\(fileName)？", message: nil, preferredStyle: .alert)
+			controller.addAction(UIAlertAction(title: "删除", style: .destructive, handler: { (_) in
+				self.dataSource.remove(at: index)
+				self.tableview.delete(indexPaths: [IndexPath(row: index, section: 0)])
+				self.refreshNumber()
+				UserPreference.shared.history.delete(name: fileName)
+			}))
+			controller.addAction(UIAlertAction(title: "取消", style: .default, handler: { (_) in
+			}))
+			
+			self.delegate?.viewcontroller.present(controller, animated: true, completion: nil)
 		}
 	}
 	

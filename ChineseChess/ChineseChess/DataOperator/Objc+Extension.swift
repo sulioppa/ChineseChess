@@ -70,15 +70,58 @@ extension LunaBoardState {
 	
 }
 
-// MARK: - Luna_Move
-extension Luna_Move {
+// MARK: - LunaMove
+extension LunaMove {
 	
-	public var from: Luna_Location {
-		return Luna_Location(self >> 8)
+	public var from: LunaLocation {
+		return LunaLocation(self >> 8)
 	}
 	
-	public var to: Luna_Location {
-		return Luna_Location(self & 0xff)
+	public var to: LunaLocation {
+		return LunaLocation(self & 0xff)
+	}
+	
+}
+
+// MARK: - LunaChess
+extension LunaChess {
+	
+	public var name: String {
+		switch self {
+		case 16:
+			return "帥"
+		case 32:
+			return "將"
+			
+		case 17, 18:
+			return "仕"
+		case 33, 34:
+			return "士"
+			
+		case 19, 20:
+			return "相"
+		case 35, 36:
+			return "象"
+			
+		case 21, 22, 37, 38:
+			return "馬"
+			
+		case 23, 24, 39, 40:
+			return "車"
+			
+		case 25, 26:
+			return "炮"
+		case 41, 42:
+			return "砲"
+			
+		case 27, 28, 29, 30, 31:
+			return "兵"
+		case 43, 44, 45, 46, 47:
+			return "卒"
+		
+		default:
+			return ""
+		}
 	}
 	
 }
@@ -88,6 +131,41 @@ extension LunaRecord {
 	
 	var item: CharacterView.DataItem {
 		return CharacterView.DataItem(Int(self.chess), self.character, Int(self.eat))
+	}
+	
+}
+
+// MARK: - LunaPutChessState
+extension LunaPutChessState {
+	
+	public func description(name: String) -> String {
+		switch self {
+		case .wrongPut:
+			return "\(name)不能放在这里"
+		case .wrongEat:
+			return "\(name)不能被移除"
+		default:
+			return ""
+		}
+	}
+	
+}
+
+// MARK: - LunaEditDoneState
+extension LunaEditDoneState {
+	
+	public func description(state: LunaBoardState) -> String {
+		
+		switch self {
+		case .wrongFaceToFace:
+			return "帥將照面"
+		case .wrongIsCheckedMate:
+			return "\(state == .turnRedSide ? "红方" : "黑方")无子可走"
+		case .wrongCheck:
+			return "\(state == .turnRedSide ? "將" : "帥")被将军"
+		default:
+			return ""
+		}
 	}
 	
 }

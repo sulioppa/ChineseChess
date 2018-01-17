@@ -40,6 +40,7 @@
 		A7854A1E1FEF5BA100C977B7 /* UIView+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7854A1D1FEF5BA100C977B7 /* UIView+Window.swift */; };
 		A7884A021FC9995C00691385 /* mate.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A7884A011FC9995B00691385 /* mate.m4a */; };
 		A78AA3171FCFA785004DF6AE /* LunaRecordVault.m in Sources */ = {isa = PBXBuildFile; fileRef = A78AA3161FCFA785004DF6AE /* LunaRecordVault.m */; };
+		A78C6A6B200DABA900A51BC2 /* EditBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78C6A6A200DABA900A51BC2 /* EditBoardController.swift */; };
 		A78CC1BC1F8F783100563789 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */; };
 		A79128671F911F17002CC4E5 /* WavHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79128661F911F17002CC4E5 /* WavHandler.swift */; };
 		A79128681F9124E2002CC4E5 /* 沧海龙吟.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A7E51D161F905DBD0054DF93 /* 沧海龙吟.mp3 */; };
@@ -65,6 +66,7 @@
 		A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CE55F81F8DC28600641454 /* AppDelegate.swift */; };
 		A7CE56001F8DC28600641454 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7CE55FF1F8DC28600641454 /* Assets.xcassets */; };
 		A7D146C81FA48A9100A512FF /* GameBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D146C71FA48A9100A512FF /* GameBoardController.swift */; };
+		A7DB8F66200DE0490088DB94 /* EditChessesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DB8F65200DE0490088DB94 /* EditChessesView.swift */; };
 		A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DC614C1F92435C009A9205 /* UIFont+KaiTi.swift */; };
 		A7DC614F1F9249B5009A9205 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DC614E1F9249B5009A9205 /* UIColor+Colors.swift */; };
 		A7DFAD7C1F910D7D00FEB8AC /* Value+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */; };
@@ -115,6 +117,7 @@
 		A7884A011FC9995B00691385 /* mate.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = mate.m4a; sourceTree = "<group>"; };
 		A78AA3151FCFA785004DF6AE /* LunaRecordVault.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunaRecordVault.h; sourceTree = "<group>"; };
 		A78AA3161FCFA785004DF6AE /* LunaRecordVault.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunaRecordVault.m; sourceTree = "<group>"; };
+		A78C6A6A200DABA900A51BC2 /* EditBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBoardController.swift; sourceTree = "<group>"; };
 		A78CC1BB1F8F783100563789 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		A79128661F911F17002CC4E5 /* WavHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavHandler.swift; sourceTree = "<group>"; };
 		A7928ADB1FF916F1000DF584 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
@@ -142,6 +145,7 @@
 		A7CE55FF1F8DC28600641454 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7CE56041F8DC28600641454 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7D146C71FA48A9100A512FF /* GameBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardController.swift; sourceTree = "<group>"; };
+		A7DB8F65200DE0490088DB94 /* EditChessesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChessesView.swift; sourceTree = "<group>"; };
 		A7DC614C1F92435C009A9205 /* UIFont+KaiTi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+KaiTi.swift"; sourceTree = "<group>"; };
 		A7DC614E1F9249B5009A9205 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
 		A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Map.swift"; sourceTree = "<group>"; };
@@ -422,6 +426,7 @@
 		A7A19EE72005F0B200F5F9E8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A7DB8F65200DE0490088DB94 /* EditChessesView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -429,6 +434,7 @@
 		A7A19EE82005F0B700F5F9E8 /* SubViewController */ = {
 			isa = PBXGroup;
 			children = (
+				A78C6A6A200DABA900A51BC2 /* EditBoardController.swift */,
 			);
 			path = SubViewController;
 			sourceTree = "<group>";
@@ -691,6 +697,7 @@
 				A71E363A1F90EEE200D9BB62 /* UIColor+Hex.swift in Sources */,
 				A7B7D0D31FCC3A280048B304 /* LunaFENCoder.m in Sources */,
 				A77D8F172000BDBB000D3588 /* UserFileHandler.swift in Sources */,
+				A78C6A6B200DABA900A51BC2 /* EditBoardController.swift in Sources */,
 				A71E36361F90ECFA00D9BB62 /* UserPreference.swift in Sources */,
 				A7A19EEC2005F39D00F5F9E8 /* HistoryView.swift in Sources */,
 				A7B604C51FFB977400B8B5D8 /* Value+Property.swift in Sources */,
@@ -723,6 +730,7 @@
 				A79128671F911F17002CC4E5 /* WavHandler.swift in Sources */,
 				A78AA3171FCFA785004DF6AE /* LunaRecordVault.m in Sources */,
 				A7BEA8A41FCEBABE00605AAE /* LunaRecordRuler.m in Sources */,
+				A7DB8F66200DE0490088DB94 /* EditChessesView.swift in Sources */,
 				A7A19EE62005F09E00F5F9E8 /* EditVC.swift in Sources */,
 				A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */,
 				A723A7A41FFB6CEA00F780AF /* CharacterView.swift in Sources */,
