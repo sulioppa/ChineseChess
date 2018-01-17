@@ -31,10 +31,11 @@ class EditChessesView: UIView {
 		self.location = location
 		self.addTapTarget(self, action: #selector(self.hide))
 		
+		let size = LayoutPartner.ChessBoard().chessSize
 		self.contentview.frame = .zero
+		self.contentview.layer.cornerRadius = size / 2.0
 		self.addSubview(self.contentview)
 		
-		let size = LayoutPartner.ChessBoard().chessSize
 		func layoutButton(tag: Int, point: CGPoint) {
 			let button = UIButton()
 			button.frame = CGRect(origin: point, size: CGSize(width: size, height: size))
