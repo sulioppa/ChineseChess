@@ -32,7 +32,7 @@ class HistoryView: NavigationView {
 		return view
 		}()
 	
-	private var dataSource: [String] = UserPreference.shared.history.files
+	private var dataSource: [(time: String, name: String)] = UserPreference.shared.history.files
 	private weak var delegate: HistoryViewDelegate? = nil
 	
 	init(delegate: HistoryViewDelegate?) {
@@ -176,19 +176,19 @@ extension HistoryView {
 			return
 		}
 		
-		let fileName = self.dataSource[index]
+		let item = self.dataSource[index]
 		if sender.tag == 0 {
 			self.dismiss()
-			self.delegate?.historyView(didLoad: UserPreference.shared.history.read(name: fileName))
+			self.delegate?.historyView(didLoad: UserPreference.shared.history.read(time: item.time))
 		} else {
 			WavHandler.playButtonWav()
 			
-			let controller = UIAlertController(title: "确定要删除棋谱\(fileName)？", message: nil, preferredStyle: .alert)
+			let controller = UIAlertController(title: "确定要删除棋谱\(item.time) \(item.name)？", message: nil, preferredStyle: .alert)
 			controller.addAction(UIAlertAction(title: "删除", style: .destructive, handler: { (_) in
 				self.dataSource.remove(at: index)
 				self.tableview.delete(indexPaths: [IndexPath(row: index, section: 0)])
 				self.refreshNumber()
-				UserPreference.shared.history.delete(name: fileName)
+				UserPreference.shared.history.delete(time: item.time)
 			}))
 			controller.addAction(UIAlertAction(title: "取消", style: .default, handler: { (_) in
 			}))
@@ -226,7 +226,8 @@ extension HistoryView: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: Cell.identifier, for: indexPath) as! Cell
-		cell.reloadCell(with: self.dataSource[indexPath.row])
+		let item = self.dataSource[indexPath.row]
+		cell.reloadCell(with: "\(item.time) \(item.name)")
 		return cell
 	}
 	

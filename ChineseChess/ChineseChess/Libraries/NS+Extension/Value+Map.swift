@@ -29,6 +29,15 @@ extension Int {
 	
 }
 
+extension UInt64 {
+	
+	public static func <-(_ left: inout UInt64, _ right: Any?) {
+		guard let value = right as? UInt64 else { return }
+		left = value
+	}
+	
+}
+
 extension String {
 	
 	public static func <-(_ left: inout String, _ right: Any?) {

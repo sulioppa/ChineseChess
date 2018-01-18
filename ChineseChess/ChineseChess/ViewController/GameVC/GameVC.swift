@@ -100,7 +100,7 @@ extension GameVC: MenuViewDelegate, CharacterViewDelegate, EditVCDelegate {
 	
 	func characterView(didClickAt index: Int) {
 		if index == 0 {
-			UserPreference.shared.history.save(name: self.name, description: self.detail, file: self.AI.historyFile())
+			UserPreference.shared.history.save(time: Date.time, name: self.name, description: self.detail, file: self.AI.historyFile())
 			TextAlertView.show(in: self.contentView, text: "棋谱已保存")
 		} else {
 			UIPasteboard.general.string = "\(self.detail)\n\(self.AI.characters)"
@@ -113,7 +113,7 @@ extension GameVC: MenuViewDelegate, CharacterViewDelegate, EditVCDelegate {
 	}
 	
 	private var name: String {
-		return "\(Date.time) \(UserPreference.shared.game.red.name) \(self.AI.state.vs) \(UserPreference.shared.game.black.name)"
+		return "\(UserPreference.shared.game.red.name) \(self.AI.state.vs) \(UserPreference.shared.game.black.name)"
 	}
 	
 	func didDoneEdit(with file: String) {

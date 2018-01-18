@@ -140,6 +140,10 @@ extension UserPreference {
 	public class History {
 		public var reverse: Bool = false
 		public var opposite: Bool = false
+		public var record: String = ""
+		public var index: Int = -1
+		
+		private var id: UInt64 = 0
 		private var histories: [String: [String]] = [:]
 		
 		public var dictionary: [String: Any] {
@@ -147,6 +151,9 @@ extension UserPreference {
 			return [
 				key.reverse: self.reverse,
 				key.opposite: self.opposite,
+				key.record: self.record,
+				key.index: self.index,
+				key.id: self.id,
 				key.histories: self.histories
 			]
 		}
@@ -156,22 +163,27 @@ extension UserPreference {
 			let key = Key()
 			left.reverse <- dictionary[key.reverse]
 			left.opposite <- dictionary[key.opposite]
+			left.record <- dictionary[key.record]
+			left.index <- dictionary[key.index]
+			left.id <- dictionary[key.id]
 			left.histories <- dictionary[key.histories]
 		}
 		
-		public final func read(name: String) -> String {
-			guard let data = UserFileHandler.read(name: self.histories[name]?.first) else { return "" }
+		public final func read(time: String) -> String {
+			guard let data = UserFileHandler.read(name: self.histories[time]?.first) else { return "" }
 			return String(data: data, encoding: .utf8) ?? ""
 		}
 		
-		public final func save(name: String, description: String, file: String) {
-			self.histories[name] = [.uuid, description]
-			UserFileHandler.write(name: self.histories[name]?.first, data: file.data(using: .utf8))
+		public final func save(time: String, name: String, description: String, file: String) {
+			self.histories[time] = ["\(self.id)", name, description]
+			self.id += 1
+			
+			UserFileHandler.write(name: self.histories[time]?.first, data: file.data(using: .utf8))
 		}
 		
-		public final func delete(name: String) {
-			UserFileHandler.delete(name: self.histories[name]?.first)
-			self.histories.removeValue(forKey: name)
+		public final func delete(time: String) {
+			UserFileHandler.delete(name: self.histories[time]?.first)
+			self.histories.removeValue(forKey: time)
 		}
 		
 		public final func deleteAll() {
@@ -182,12 +194,19 @@ extension UserPreference {
 			self.histories.removeAll()
 		}
 		
-		public var files: [String] {
-			return Array(self.histories.keys)
+		public var files: [(time: String, name: String)] {
+			let files = self.histories.sorted { (a, b) -> Bool in
+				guard let timeA = UInt64(a.value[0]), let timeB = UInt64(b.value[0]) else { return false }
+				return  timeA > timeB
+			}
+			
+			return files.map({ (record) -> (String, String) in
+				return (record.key, record.value[1])
+			})
 		}
 		
-		public final func detail(name: String) -> String {
-			return self.histories[name]?.last ?? ""
+		public final func detail(time: String) -> String {
+			return self.histories[time]?.last ?? ""
 		}
 	}
 }
@@ -198,9 +217,8 @@ extension UserPreference {
 		public var nickname: String = "沧海龙吟"
 		
 		public var dictionary: [String: Any] {
-			let key = Key()
 			return [
-				key.nickname: self.nickname,
+				Key().nickname: self.nickname,
 			]
 		}
 		
@@ -227,6 +245,8 @@ extension UserPreference {
 		public let prompt = "prompt"
 		public let nickname = "nickname"
 		public let histories = "histories"
+		public let id = "uuid"
+		public let index = "index"
 		public let record = "record"
 	}
 }
