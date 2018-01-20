@@ -22,6 +22,17 @@
 
 - (NSString *)historyFileWithCode:(BOOL)withCode;
 
+// MARK: - History Operation
+@property (nonatomic) NSInteger currentIndex;
+
+- (NSString *)historyFileWithCode:(BOOL)withCode at:(NSInteger)idx;
+
+- (LunaRecord *)currentRecord;
+
+- (LunaRecord *)moveForward;
+
+- (LunaRecord *)backForward;
+
 // MARK: - Stack Operation.
 - (void)push:(LunaRecord *)record;
 

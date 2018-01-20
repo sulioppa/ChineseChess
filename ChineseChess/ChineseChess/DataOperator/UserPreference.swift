@@ -140,7 +140,11 @@ extension UserPreference {
 	public class History {
 		public var reverse: Bool = false
 		public var opposite: Bool = false
+		
 		public var record: String = ""
+		public var name: String = "开局"
+		public var detail: String = "暂无信息"
+		public var result: String = "结果: 未知"
 		public var index: Int = -1
 		
 		private var id: UInt64 = 0
@@ -152,6 +156,9 @@ extension UserPreference {
 				key.reverse: self.reverse,
 				key.opposite: self.opposite,
 				key.record: self.record,
+				key.name: self.name,
+				key.detail: self.detail,
+				key.result: self.result,
 				key.index: self.index,
 				key.id: self.id,
 				key.histories: self.histories
@@ -164,14 +171,17 @@ extension UserPreference {
 			left.reverse <- dictionary[key.reverse]
 			left.opposite <- dictionary[key.opposite]
 			left.record <- dictionary[key.record]
+			left.name <- dictionary[key.name]
+			left.detail <- dictionary[key.detail]
+			left.result <- dictionary[key.result]
 			left.index <- dictionary[key.index]
 			left.id <- dictionary[key.id]
 			left.histories <- dictionary[key.histories]
 		}
 		
-		public final func read(time: String) -> String {
-			guard let data = UserFileHandler.read(name: self.histories[time]?.first) else { return "" }
-			return String(data: data, encoding: .utf8) ?? ""
+		public final func read(time: String) -> (file: String, detail: String) {
+			guard let data = UserFileHandler.read(name: self.histories[time]?.first) else { return ("", "") }
+			return (String(data: data, encoding: .utf8) ?? "", self.histories[time]?.last ?? "")
 		}
 		
 		public final func save(time: String, name: String, description: String, file: String) {
@@ -203,10 +213,6 @@ extension UserPreference {
 			return files.map({ (record) -> (String, String) in
 				return (record.key, record.value[1])
 			})
-		}
-		
-		public final func detail(time: String) -> String {
-			return self.histories[time]?.last ?? ""
 		}
 	}
 }
@@ -246,7 +252,10 @@ extension UserPreference {
 		public let nickname = "nickname"
 		public let histories = "histories"
 		public let id = "uuid"
-		public let index = "index"
 		public let record = "record"
+		public let name = "name"
+		public let detail = "detail"
+		public let index = "index"
+		public let result = "result"
 	}
 }

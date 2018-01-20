@@ -57,6 +57,34 @@
 	return [NSString stringWithString:file];
 }
 
+// MARK: - History Operation.
+- (NSString *)historyFileWithCode:(BOOL)withCode at:(NSInteger)idx {
+	NSMutableString *file = [NSMutableString stringWithFormat:@"%d%@", self.firstSide, self.firstCode];
+	
+	[self.records enumerateObjectsUsingBlock:^(LunaRecord *record, NSUInteger index, BOOL *stop) {
+		if (index <= idx) {
+			[file appendString:@"\n"];
+			[file appendString: [record textWithCode:withCode]];
+		} else {
+			*stop = YES;
+		}
+	}];
+
+	return [NSString stringWithString:file];
+}
+
+- (LunaRecord *)currentRecord {
+	return self.currentIndex >= 0 && self.currentIndex < self.records.count ? self.records[self.currentIndex] : nil;
+}
+
+- (LunaRecord *)moveForward {
+	return self.currentIndex + 1 < self.records.count ? self.records[++self.currentIndex] : nil;
+}
+
+- (LunaRecord *)backForward {
+	return self.currentIndex < 0 ? nil : self.records[self.currentIndex--];
+}
+
 // MARK: - Stack Operation.
 - (void)push:(LunaRecord *)record {
 	[_records addObject:record];

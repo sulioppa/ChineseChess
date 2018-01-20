@@ -50,7 +50,7 @@ extension EditVC: HistoryViewDelegate {
 		return self
 	}
 	
-	func historyView(didLoad file: String) {
+	func historyView(didLoad file: String, name: String, detail: String) {
 		self.delegate?.didDoneEdit(with: file)
 		self.dismiss()
 	}

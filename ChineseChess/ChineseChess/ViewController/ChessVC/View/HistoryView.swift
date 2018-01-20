@@ -10,7 +10,7 @@ import UIKit
 
 protocol HistoryViewDelegate: NSObjectProtocol {
 	
-	func historyView(didLoad file: String)
+	func historyView(didLoad file: String, name: String, detail: String)
 	
 	var viewcontroller: UIViewController { get }
 	
@@ -179,7 +179,8 @@ extension HistoryView {
 		let item = self.dataSource[index]
 		if sender.tag == 0 {
 			self.dismiss()
-			self.delegate?.historyView(didLoad: UserPreference.shared.history.read(time: item.time))
+			let result = UserPreference.shared.history.read(time: item.time)
+			self.delegate?.historyView(didLoad: result.file, name: item.name, detail: result.detail)
 		} else {
 			WavHandler.playButtonWav()
 			

@@ -83,7 +83,9 @@ class MenuView: NavigationView, UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		fatalError("\(#function) should be override in subclass.")
+		let cell = tableView.dequeueReusableCell(withIdentifier: Cell.identifier, for: indexPath) as! Cell
+		cell.setDataItem(item: self.dataSource[indexPath.row])
+		return cell
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

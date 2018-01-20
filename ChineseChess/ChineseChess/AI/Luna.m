@@ -715,6 +715,55 @@
     return [_stack historyFileWithCode:NO];
 }
 
+- (NSString *)historyFileAt:(NSInteger)idx {
+	return [_stack historyFileWithCode:NO at:idx];
+}
+
+- (void)moveIndexAt:(NSInteger)idx {
+	_stack.currentIndex = idx;
+	
+	_side = _stack.firstSide;
+	_state =  _side;
+	[_coder decode:_stack.firstCode board:_board];
+	
+	memset(_chess, 0, 48);
+	for (int i = 0; i < 256; i++) {
+		if (_board[i]) {
+			_chess[_board[i]] = i;
+		}
+	}
+	
+	NSArray<LunaRecord *> *records = _stack.allRecords;
+	for (int i = 0; i <= idx; i++) {
+		[self doMoveWithMove:records[i].move];
+		[self oppositeSide];
+	}
+}
+
+- (LunaRecord *)currentRecord {
+	return _stack.currentRecord;
+}
+
+- (LunaRecord *)moveForward {
+	LunaRecord *record = [_stack moveForward];
+	
+	if (record) {
+		[self doMoveWithMove:record.move];
+		[self oppositeSide];
+	}
+	return record;
+}
+
+- (LunaRecord *)backForward {
+	LunaRecord *record = [_stack backForward];
+	
+	if (record) {
+		[self undoMoveWithMove:record.move ate:record.eat];
+		[self oppositeSide];
+	}
+	return record;
+}
+
 @end
 
 // MARK: - Edit

@@ -83,9 +83,6 @@ typedef uint16_t LunaMove;
 // count of records
 @property (nonatomic, readonly) NSUInteger count;
 
-// the record at index of records
-- (nonnull LunaRecord *)recordAtIndex:(NSUInteger)idx;
-
 // character history
 @property (nonnull, nonatomic, readonly) NSString *characters;
 
@@ -94,6 +91,20 @@ typedef uint16_t LunaMove;
 
 // return the file record of game.
 - (nonnull NSString *)historyFile;
+
+- (nonnull NSString *)historyFileAt:(NSInteger)idx;
+
+// move the index at index
+- (void)moveIndexAt:(NSInteger)idx;
+
+// current record
+@property (nullable, nonatomic, readonly) LunaRecord *currentRecord;
+
+// move Forward
+- (nullable LunaRecord *)moveForward;
+
+// back Forward
+- (nullable LunaRecord *)backForward;
 
 @end
 
