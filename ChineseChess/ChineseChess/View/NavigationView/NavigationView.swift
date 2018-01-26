@@ -26,7 +26,7 @@ public class NavigationView: UIView {
 		self.backgroundColor = UIColor(white: 1.0, alpha: LayoutPartner.NavigationView().backgroundColorAlpha)
 		self.isUserInteractionEnabled = true
 		
-		self.bar.leftBarButtonItem?.addTapTarget(self, action: #selector(self.dismiss))
+		self.bar.leftBarButtonItem?.addTapTarget(self, action: #selector(self.dismiss(withVoice:)))
 		
 		self.addSubview(self.contentView)
 		self.contentView.snp.makeConstraints {
@@ -47,11 +47,13 @@ public class NavigationView: UIView {
 		return view
 	}
 	
-	@objc public final func show() {
-		guard let window = UIView.window(), self.isUserInteractionEnabled else { return }
+	@objc public final func show(withVoice: Any? = true) {
+		guard self.superview == nil, self.isUserInteractionEnabled, let window = UIView.window() else { return }
 		
 		self.isUserInteractionEnabled = false
-		WavHandler.playButtonWav()
+		if withVoice != nil {
+			WavHandler.playButtonWav()
+		}
 		
 		let backgroundView = self.backgroundView
 		window.addSubview(backgroundView)
@@ -104,11 +106,13 @@ public class NavigationView: UIView {
 		}
 	}
 	
-	@objc public final func dismiss() {
+	@objc public final func dismiss(withVoice: Any? = true) {
 		guard let superview = self.superview else { return }
 		
 		self.isUserInteractionEnabled = false
-		WavHandler.playButtonWav()
+		if withVoice != nil {
+			WavHandler.playButtonWav()
+		}
 		
 		UIView.animate(withDuration: Macro.Time.alertViewHideTime, animations: {
 			self.snp.updateConstraints {

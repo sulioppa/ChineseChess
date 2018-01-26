@@ -166,20 +166,24 @@ extension CharacterView {
 	private func didInsert(item: DataItem, result: String?) {
 		self.dataSource.append(item)
 		self.tableview.insert(indexPaths: [IndexPath(row: self.dataSource.count - 1, section: 0)])
-		self.refreshRounds(index: nil)
+		self.refreshRounds(index: nil, scroll: false)
 		self.refreshResult(result: result ?? "结果: 未知")
 	}
 	
 	private func setDataSource(dataSource: [DataItem], result: String, index: Int?) {
 		self.dataSource = dataSource
 		self.tableview.reloadData()
-		self.refreshRounds(index: index)
+		self.refreshRounds(index: index, scroll: true)
 		self.refreshResult(result: result)
 	}
 	
-	private func refreshRounds(index: Int?) {
+	private func refreshRounds(index: Int?, scroll: Bool) {
 		let now: Int = index ?? self.dataSource.count - 1
 		self.roundsLabel?.text = "回合数: \((now + 2) >> 1) / \((self.dataSource.count + 1) >> 1)"
+		
+		if scroll && now >= 0 {
+			self.tableview.scrollToRow(at: IndexPath(row: now, section: 0), at: .top, animated: true)
+		}
 	}
 	
 	private func refreshResult(result: String) {
@@ -257,7 +261,7 @@ extension CharacterView: UITableViewDelegate, UITableViewDataSource, CharacterVi
 	func characterView(didSelectAt row: Int) {
 		guard self.delegate?.responds(to: #selector(characterView(didSelectAt:))) == true else { return }
 		
-		self.refreshRounds(index: row)
+		self.refreshRounds(index: row, scroll: false)
 		self.delegate?.characterView?(didSelectAt: row)
 	}
 	

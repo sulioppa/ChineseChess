@@ -23,10 +23,10 @@ extension UIViewController {
 		}
 	}
 	
-	public func present(_ viewControllerToPresent: UIViewController, completion: (() -> Void)? = nil) {
+	public func present(_ viewControllerToPresent: UIViewController) {
 		LoadingAlertView.show(in: self.view) {
 			self.present(viewControllerToPresent, animated: true) {
-				LoadingAlertView.hide(animation: false, completion: completion)
+				LoadingAlertView.hide(animation: false, completion: nil)
 			}
 		}
 	}

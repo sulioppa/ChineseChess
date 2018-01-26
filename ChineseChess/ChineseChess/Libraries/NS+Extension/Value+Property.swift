@@ -36,4 +36,8 @@ extension String {
 		return UUID().uuidString
 	}
 	
+	public static var empty: String {
+		return ""
+	}
+	
 }

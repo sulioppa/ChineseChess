@@ -11,7 +11,7 @@ import UIKit
 extension NSObject {
 	
 	public class func instance(from string: String) -> Any? {
-		return NSClassFromString("\(Macro.Project.name).\(string)")?.alloc()
+		return (NSClassFromString("\(Macro.Project.name).\(string)") as? NSObject.Type)?.init()
 	}
 	
 }

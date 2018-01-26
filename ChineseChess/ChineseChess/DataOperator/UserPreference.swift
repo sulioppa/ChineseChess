@@ -222,6 +222,10 @@ extension UserPreference {
 	public class MultiPeer {
 		public var nickname: String = "沧海龙吟"
 		
+		public var rivalname: String {
+			return "榣山遗韵"
+		}
+		
 		public var dictionary: [String: Any] {
 			return [
 				Key().nickname: self.nickname,

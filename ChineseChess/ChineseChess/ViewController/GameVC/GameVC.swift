@@ -92,7 +92,7 @@ extension GameVC: MenuViewDelegate, CharacterViewDelegate, EditVCDelegate {
 			let vc = EditVC()
 			vc.AI.initBoard(withFile: self.AI.historyFile())
 			vc.delegate = self
-			self.present(vc, completion: nil)
+			self.present(vc)
 		default:
 			break
 		}

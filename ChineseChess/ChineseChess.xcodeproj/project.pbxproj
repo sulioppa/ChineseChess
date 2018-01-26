@@ -67,13 +67,19 @@
 		A7CE55F91F8DC28600641454 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CE55F81F8DC28600641454 /* AppDelegate.swift */; };
 		A7CE56001F8DC28600641454 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7CE55FF1F8DC28600641454 /* Assets.xcassets */; };
 		A7D146C81FA48A9100A512FF /* GameBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D146C71FA48A9100A512FF /* GameBoardController.swift */; };
+		A7D4A47A2017570800E4FCDE /* MultipeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D4A4792017570800E4FCDE /* MultipeerManager.swift */; };
+		A7D4A47C20175FAF00E4FCDE /* Dictionary+Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D4A47B20175FAF00E4FCDE /* Dictionary+Json.swift */; };
 		A7DB8F66200DE0490088DB94 /* EditChessesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DB8F65200DE0490088DB94 /* EditChessesView.swift */; };
 		A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DC614C1F92435C009A9205 /* UIFont+KaiTi.swift */; };
 		A7DC614F1F9249B5009A9205 /* UIColor+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DC614E1F9249B5009A9205 /* UIColor+Colors.swift */; };
 		A7DFAD7C1F910D7D00FEB8AC /* Value+Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DFAD7B1F910D7D00FEB8AC /* Value+Map.swift */; };
 		A7E308BC1F9CE0DA00B0805B /* Luna.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E308BB1F9CE0DA00B0805B /* Luna.m */; };
+		A7E632D82018AA73005A54E0 /* MultiPeerMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E632D72018AA73005A54E0 /* MultiPeerMenuView.swift */; };
+		A7E632DA2018B0EB005A54E0 /* MultiPeerBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E632D92018B0EB005A54E0 /* MultiPeerBoardController.swift */; };
+		A7E632DC2018B11D005A54E0 /* MultiPeerWaittingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E632DB2018B11D005A54E0 /* MultiPeerWaittingView.swift */; };
 		A7E7ACFD1F91DE8E00B29C5A /* UIButton+Golden.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E7ACFC1F91DE8E00B29C5A /* UIButton+Golden.swift */; };
 		A7EB7BBA1FE419F200AA903A /* Value+Mutating.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EB7BB91FE419F200AA903A /* Value+Mutating.swift */; };
+		A7F7A31E201B057D00B6EC40 /* MultiPeerChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7A31D201B057D00B6EC40 /* MultiPeerChatView.swift */; };
 		A7FD59C02012D859006C18C2 /* HistoryBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FD59BF2012D859006C18C2 /* HistoryBoardController.swift */; };
 		A7FDC5101FD0140F008DC815 /* LunaRecordCharacter.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FDC50F1FD0140F008DC815 /* LunaRecordCharacter.m */; };
 /* End PBXBuildFile section */
@@ -148,6 +154,8 @@
 		A7CE55FF1F8DC28600641454 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7CE56041F8DC28600641454 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7D146C71FA48A9100A512FF /* GameBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardController.swift; sourceTree = "<group>"; };
+		A7D4A4792017570800E4FCDE /* MultipeerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerManager.swift; sourceTree = "<group>"; };
+		A7D4A47B20175FAF00E4FCDE /* Dictionary+Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Json.swift"; sourceTree = "<group>"; };
 		A7DB8F65200DE0490088DB94 /* EditChessesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChessesView.swift; sourceTree = "<group>"; };
 		A7DC614C1F92435C009A9205 /* UIFont+KaiTi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+KaiTi.swift"; sourceTree = "<group>"; };
 		A7DC614E1F9249B5009A9205 /* UIColor+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Colors.swift"; sourceTree = "<group>"; };
@@ -160,8 +168,12 @@
 		A7E51D181F905DBD0054DF93 /* eat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = eat.wav; sourceTree = "<group>"; };
 		A7E51D191F905DBD0054DF93 /* run.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = run.wav; sourceTree = "<group>"; };
 		A7E51D1A1F905DBD0054DF93 /* select.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = select.wav; sourceTree = "<group>"; };
+		A7E632D72018AA73005A54E0 /* MultiPeerMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerMenuView.swift; sourceTree = "<group>"; };
+		A7E632D92018B0EB005A54E0 /* MultiPeerBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerBoardController.swift; sourceTree = "<group>"; };
+		A7E632DB2018B11D005A54E0 /* MultiPeerWaittingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerWaittingView.swift; sourceTree = "<group>"; };
 		A7E7ACFC1F91DE8E00B29C5A /* UIButton+Golden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Golden.swift"; sourceTree = "<group>"; };
 		A7EB7BB91FE419F200AA903A /* Value+Mutating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Mutating.swift"; sourceTree = "<group>"; };
+		A7F7A31D201B057D00B6EC40 /* MultiPeerChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerChatView.swift; sourceTree = "<group>"; };
 		A7FD59BF2012D859006C18C2 /* HistoryBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryBoardController.swift; sourceTree = "<group>"; };
 		A7FDC50E1FD0140F008DC815 /* LunaRecordCharacter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunaRecordCharacter.h; sourceTree = "<group>"; };
 		A7FDC50F1FD0140F008DC815 /* LunaRecordCharacter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunaRecordCharacter.m; sourceTree = "<group>"; };
@@ -233,6 +245,7 @@
 				A73873D51FE6557300D24753 /* Value+Meta.swift */,
 				A7B604C41FFB977400B8B5D8 /* Value+Property.swift */,
 				A7B3FD7E1F9A03A900B379AD /* Array+Split.swift */,
+				A7D4A47B20175FAF00E4FCDE /* Dictionary+Json.swift */,
 				A72534D01FE39EF900C2AFAA /* NSObject+Class.swift */,
 			);
 			path = "NS+Extension";
@@ -265,6 +278,7 @@
 			children = (
 				A7075C0A1F8F900900652D0A /* NS+Extension */,
 				A7075C091F8F8FE600652D0A /* UI+Extension */,
+				A7D4A478201756CC00E4FCDE /* MultipeerConnectivity */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -364,6 +378,7 @@
 		A778E4861F94E27600D28B25 /* SubViewController */ = {
 			isa = PBXGroup;
 			children = (
+				A7E632D92018B0EB005A54E0 /* MultiPeerBoardController.swift */,
 			);
 			path = SubViewController;
 			sourceTree = "<group>";
@@ -391,9 +406,9 @@
 			isa = PBXGroup;
 			children = (
 				A71E36351F90ECFA00D9BB62 /* UserPreference.swift */,
-				A77D8F162000BDBB000D3588 /* UserFileHandler.swift */,
 				A71E36371F90EEC900D9BB62 /* ResourcesProvider.swift */,
 				A79128661F911F17002CC4E5 /* WavHandler.swift */,
+				A77D8F162000BDBB000D3588 /* UserFileHandler.swift */,
 				A7CD69F21F91E11700C3202A /* LayoutPartner.swift */,
 				A7607A711FE3DEDC0030039F /* Objc+Extension.swift */,
 			);
@@ -455,6 +470,9 @@
 		A7A19EEA2005F37B00F5F9E8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A7E632D72018AA73005A54E0 /* MultiPeerMenuView.swift */,
+				A7E632DB2018B11D005A54E0 /* MultiPeerWaittingView.swift */,
+				A7F7A31D201B057D00B6EC40 /* MultiPeerChatView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -523,6 +541,14 @@
 				A77E18771F8DE532003A2EC5 /* SupportFiles */,
 			);
 			path = ChineseChess;
+			sourceTree = "<group>";
+		};
+		A7D4A478201756CC00E4FCDE /* MultipeerConnectivity */ = {
+			isa = PBXGroup;
+			children = (
+				A7D4A4792017570800E4FCDE /* MultipeerManager.swift */,
+			);
+			path = MultipeerConnectivity;
 			sourceTree = "<group>";
 		};
 		A7E308BD1F9CE18900B0805B /* Luna */ = {
@@ -717,19 +743,23 @@
 				A7DC614F1F9249B5009A9205 /* UIColor+Colors.swift in Sources */,
 				A77429CB1FF929DE00B7D480 /* GameMenuView.swift in Sources */,
 				A71D3D7B1F9F30D500823384 /* ChessBoardController.swift in Sources */,
+				A7D4A47A2017570800E4FCDE /* MultipeerManager.swift in Sources */,
 				A7592D7F1F9DFB0C00E7EA0F /* Value+Random.swift in Sources */,
 				A73873D21FE649A500D24753 /* BladeAlertView.swift in Sources */,
 				A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */,
 				A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */,
+				A7E632DC2018B11D005A54E0 /* MultiPeerWaittingView.swift in Sources */,
 				A72F941B1F9753EE001FACC3 /* UIView+Tap.swift in Sources */,
 				A7EB7BBA1FE419F200AA903A /* Value+Mutating.swift in Sources */,
 				A778E4801F94E25200D28B25 /* HistoryVC.swift in Sources */,
 				A74F8AD91FEE370200782288 /* NavigationView.swift in Sources */,
 				A71E36381F90EEC900D9BB62 /* ResourcesProvider.swift in Sources */,
 				A7928ADC1FF916F1000DF584 /* MenuView.swift in Sources */,
+				A7E632D82018AA73005A54E0 /* MultiPeerMenuView.swift in Sources */,
 				A78239D51FFE1B3A0078A906 /* UITableView+Update.swift in Sources */,
 				A7B3FD7F1F9A03A900B379AD /* Array+Split.swift in Sources */,
 				A7BEA89F1FCEAE4100605AAE /* NSString+Subscript.m in Sources */,
+				A7F7A31E201B057D00B6EC40 /* MultiPeerChatView.swift in Sources */,
 				A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */,
 				A7FD59C02012D859006C18C2 /* HistoryBoardController.swift in Sources */,
 				A7FDC5101FD0140F008DC815 /* LunaRecordCharacter.m in Sources */,
@@ -743,6 +773,7 @@
 				A77E187F1F8DE5D0003A2EC5 /* HomeVC.swift in Sources */,
 				A723A7A41FFB6CEA00F780AF /* CharacterView.swift in Sources */,
 				A7B7D0E21FCC40B50048B304 /* LunaRecord.m in Sources */,
+				A7E632DA2018B0EB005A54E0 /* MultiPeerBoardController.swift in Sources */,
 				A70765F21F94E1A200FA6A43 /* GameVC.swift in Sources */,
 				A7E7ACFD1F91DE8E00B29C5A /* UIButton+Golden.swift in Sources */,
 				A7D146C81FA48A9100A512FF /* GameBoardController.swift in Sources */,
@@ -755,6 +786,7 @@
 				A7607A721FE3DEDC0030039F /* Objc+Extension.swift in Sources */,
 				A73873D61FE6557300D24753 /* Value+Meta.swift in Sources */,
 				A73069741FB2FBAF00D30876 /* Luna+PreGenerate.m in Sources */,
+				A7D4A47C20175FAF00E4FCDE /* Dictionary+Json.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

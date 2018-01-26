@@ -93,6 +93,7 @@ class LoadingAlertView: UIView {
 	@objc private func closeAlertView() {
 		self.hide() {
 			self.delegate?.loadingAlertViewDidDisappear(view: self)
+			self.delegate = nil
 		}
 	}
 	
