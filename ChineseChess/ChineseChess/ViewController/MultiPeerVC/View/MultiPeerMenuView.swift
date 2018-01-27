@@ -49,9 +49,9 @@ class MultiPeerMenuView: NavigationView {
 		
 		self.contentView.addSubview(self.tableview)
 		self.tableview.snp.makeConstraints {
-			$0.top.equalTo(self.contentView).offset(Cell.height)
+			$0.top.equalTo(self.contentView).offset(Cell.height / 2.0)
 			$0.left.equalTo(self.contentView).offset(Cell.edge)
-			$0.bottom.equalTo(self.contentView).offset(-Cell.height)
+			$0.bottom.equalTo(self.contentView).offset(-Cell.height / 2.0)
 			$0.right.equalTo(self.contentView).offset(-Cell.edge)
 			$0.width.equalTo(Cell.width)
 			$0.height.equalTo(Cell.estimatedHeight(rows: self.dataSource.count))

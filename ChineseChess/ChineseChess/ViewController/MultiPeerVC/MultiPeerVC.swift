@@ -14,8 +14,8 @@ class MultiPeerVC: ChessVC {
 	
 	private var rivalname: String = UserPreference.shared.multiPeer.rivalname
 
-	private lazy var multiPeerMenuView: NavigationView? = MultiPeerMenuView(delegate: self)
-	private weak var multipeerManager: MultipeerManager? = nil
+	private lazy var menuView: NavigationView? = MultiPeerMenuView(delegate: self)
+	private weak var manager: MultipeerManager? = nil
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -33,19 +33,26 @@ class MultiPeerVC: ChessVC {
 		
 		self.chessBoardController.refreshBoard()
 		
-		self.multipeerManager = MultipeerManager.shared
-		self.multipeerManager?.delegate = self
+		self.manager = MultipeerManager.shared
+		self.manager?.delegate = self
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		self.multiPeerMenuView?.show(withVoice: nil)
+		self.menuView?.show(in: self.view, withVoice: nil)
 	}
 	
 	public override func updateUserPreference() {
 		UserPreference.shared.savePreference()
 	}
 
+	private func refreshNickname(nickname: String) {
+		guard !nickname.isEmpty else { return }
+		
+		UserPreference.shared.multiPeer.nickname = nickname
+		self.setNickname(top: self.rivalname, bottom: nickname)
+	}
+	
 }
 
 // MARK: - MultiPeerMenuViewDelegate
@@ -73,15 +80,20 @@ extension MultiPeerVC: MultiPeerMenuViewDelegate, MultipeerManagerDelegate, Load
 	
 	private func create() {
 		LoadingAlertView.show(message: "等待加入中...", isCloseButtonHidden: false, delegate: self)
-		self.multipeerManager?.start(isBroswerMode: false, viewcontroller: self, displayName: UserPreference.shared.multiPeer.nickname)
+		self.manager?.start(isBroswerMode: false, viewcontroller: self, displayName: UserPreference.shared.multiPeer.nickname)
 	}
 	
 	private func join() {
-		self.multipeerManager?.start(isBroswerMode: true, viewcontroller: self, displayName: UserPreference.shared.multiPeer.nickname)
+		self.manager?.start(isBroswerMode: true, viewcontroller: self, displayName: UserPreference.shared.multiPeer.nickname)
 	}
 	
 	private func changeNickname() {
-		
+		InputAlertView(title: "修 改 昵 称", placeholder: "请输入昵称", left: ("确  定", { (text) in
+			WavHandler.playButtonWav()
+			self.refreshNickname(nickname: text)
+		}), right: ("取  消", { (text) in
+			WavHandler.playButtonWav()
+		})).show(in: self.view)
 	}
 	
 	func multipeerManager(_ manager: MultipeerManager, state: MultipeerManagerConnectionState, name: String) {
@@ -93,7 +105,7 @@ extension MultiPeerVC: MultiPeerMenuViewDelegate, MultipeerManagerDelegate, Load
 	}
 	
 	func loadingAlertViewDidDisappear(view: LoadingAlertView) {
-		self.multipeerManager?.stop()
+		self.manager?.stop()
 	}
 	
 }
@@ -123,7 +135,13 @@ extension MultiPeerVC {
 extension MultiPeerVC: CharacterViewDelegate {
 	
 	@objc private func leave() {
-		self.back()
+		WavHandler.playButtonWav()
+		
+		PromptAlertView(title: "提  示", message: "确定要离开此界面？", left: ("离  开", false, {
+			self.back()
+		}), right: ("取  消", false, {
+			WavHandler.playButtonWav()
+		})).show(in: self.view)
 	}
 	
 	@objc private func showHistory() {

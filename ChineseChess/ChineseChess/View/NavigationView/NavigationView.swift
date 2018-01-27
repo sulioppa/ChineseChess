@@ -47,8 +47,8 @@ public class NavigationView: UIView {
 		return view
 	}
 	
-	@objc public final func show(withVoice: Any? = true) {
-		guard self.superview == nil, self.isUserInteractionEnabled, let window = UIView.window() else { return }
+	@objc public final func show(in superview: UIView? = UIView.window(), withVoice: Any? = true) {
+		guard self.superview == nil, self.isUserInteractionEnabled, let window = superview else { return }
 		
 		self.isUserInteractionEnabled = false
 		if withVoice != nil {
