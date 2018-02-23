@@ -108,18 +108,22 @@ class InputAlertView: UIView {
 		NotificationCenter.default.addObserver(forName: .UIKeyboardWillShow, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
 			self?.keyboardWillShow(sender: notification)
 		}
+		
+		NotificationCenter.default.addObserver(forName: Macro.NotificationName.willShowAnotherAlertView, object: nil, queue: OperationQueue.main) { [weak self] (_) in
+			self?.hide(animated: false)
+		}
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+		
 	deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
 	
 	@objc private func didClickButton(sender: UIButton) {
-		self.hide()
+		self.hide(animated: true)
 		
 		let text = self.textField?.text ?? ""
 		if sender.tag == 0 {
@@ -135,7 +139,7 @@ class InputAlertView: UIView {
 		return view
 	}
 	
-	public func show(in superview: UIView? = UIView.window()) {
+	public func show(in superview: UIView? = UIWindow.window) {
 		guard let superview = superview else { return }
 		self.isUserInteractionEnabled = false
 		
@@ -165,10 +169,15 @@ class InputAlertView: UIView {
 		}
 	}
 	
-	private func hide() {
+	private func hide(animated: Bool) {
 		guard let superview = self.superview else { return }
-		self.isUserInteractionEnabled = false
 		
+		guard animated else {
+			superview.removeFromSuperview()
+			return
+		}
+		
+		self.isUserInteractionEnabled = false
 		UIView.animate(withDuration: Macro.Time.alertViewShowTime, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 1.0, options: .allowUserInteraction, animations: {
 			self.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
 		}) { (_) in

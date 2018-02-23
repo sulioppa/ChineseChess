@@ -53,7 +53,7 @@ class BladeAlertView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	private func show(in superview: UIView, text: String) {
+	private func show(in superview: UIView, text: String, completion: (() -> Void)?) {
 		self.textLabel?.text = text
 		
 		superview.addSubview(self)
@@ -75,12 +75,14 @@ class BladeAlertView: UIView {
 			self.layoutIfNeeded()
 		}) { (_) in
 			DispatchQueue.main.asyncAfter(deadline: Macro.Time.alertViewSuspendTime.intValue.dispatchTime, execute: {
-				self.hide()
+				self.hide() {
+					completion?()
+				}
 			})
 		}
 	}
 	
-	@objc private func hide() {
+	@objc private func hide(completion: (() -> Void)? = nil) {
 		UIView.animate(withDuration: Macro.Time.alertViewHideTime, animations: {
 			self.blade?.snp.updateConstraints({
 				$0.centerX.equalTo(self).offset(-LayoutPartner.safeArea.size.width)
@@ -88,6 +90,7 @@ class BladeAlertView: UIView {
 			self.layoutIfNeeded()
 		}) { (_) in
 			self.removeFromSuperview()
+			completion?()
 		}
 	}
 	
@@ -96,8 +99,8 @@ class BladeAlertView: UIView {
 // MARK: - Public
 extension BladeAlertView {
 	
-	public class func show(in view: UIView, text: String) {
-		BladeAlertView.shared.show(in: view, text: text)
+	public class func show(in view: UIView, text: String, completion: (() -> Void)? = nil) {
+		BladeAlertView.shared.show(in: view, text: text, completion: completion)
 	}
 	
 }

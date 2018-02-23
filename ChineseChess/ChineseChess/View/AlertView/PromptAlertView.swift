@@ -98,14 +98,90 @@ class PromptAlertView: UIView {
 			$0.top.equalTo(self.bar.snp.bottom).offset(layout.chessSize / 2.0)
 			$0.bottom.equalTo(button.snp.top).offset(-layout.chessSize / 2.0)
 		}
+		
+		self.addObserver()
+	}
+	
+	public init(title: String, message: String, action: Action) {
+		super.init(frame: .zero)
+		self.separtedBorder()
+		self.backgroundColor = .white
+		
+		self.bar.title = title
+		self.leftAction = action.action
+		
+		// button
+		func createButton(isRed: Bool = false) -> UIButton {
+			let button = UIButton()
+			button.backgroundColor = isRed ? .red : .white
+			button.titleLabel?.font = UIFont.kaitiFont(ofSize: LayoutPartner.NavigationView().subTitleFontSize)
+			button.setTitleColor(isRed ? .white : .china, for: .normal)
+			button.setTitleColor(.red, for: .highlighted)
+			return button
+		}
+		
+		let layout = LayoutPartner.ChessBoard()
+		
+		let button = createButton(isRed: action.isDestructive)
+		button.tag = 0
+		button.setTitle(action.title, for: .normal)
+		button.addTarget(self, action: #selector(self.didClickButton(sender:)), for: .touchUpInside)
+		self.addSubview(button)
+		button.snp.makeConstraints {
+			$0.left.equalTo(self)
+			$0.bottom.equalTo(self)
+			$0.right.equalTo(self)
+			$0.height.equalTo(layout.chessSize)
+		}
+		
+		let line = UIView()
+		line.backgroundColor = UIColor.separtor
+		self.addSubview(line)
+		line.snp.makeConstraints {
+			$0.left.equalTo(self)
+			$0.right.equalTo(self)
+			$0.height.equalTo(0.5)
+			$0.bottom.equalTo(button.snp.top)
+		}
+		
+		let messageView: UILabel = {
+			let label = UILabel()
+			label.textColor = UIColor.black
+			label.font = UIFont.kaitiFont(ofSize: LayoutPartner.NavigationView().subTitleFontSize)
+			label.numberOfLines = 0
+			label.text = message
+			label.lineBreakMode = .byWordWrapping
+			label.preferredMaxLayoutWidth = LayoutPartner.safeArea.width - 4 * LayoutPartner.ChessBoard().boardmargin
+			label.textAlignment = .center
+			return label
+		}()
+		
+		self.addSubview(messageView)
+		messageView.snp.makeConstraints {
+			$0.centerX.equalTo(self)
+			$0.top.equalTo(self.bar.snp.bottom).offset(layout.chessSize / 2.0)
+			$0.bottom.equalTo(button.snp.top).offset(-layout.chessSize / 2.0)
+		}
+		
+		self.addObserver()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	private func addObserver() {
+		NotificationCenter.default.addObserver(forName: Macro.NotificationName.willShowAnotherAlertView, object: nil, queue: OperationQueue.main) { [weak self] (_) in
+			self?.hide(animated: false)
+		}
+	}
+	
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
+	
 	@objc private func didClickButton(sender: UIButton) {
-		self.hide()
+		self.hide(animated: true)
 		
 		if sender.tag == 0 {
 			self.leftAction?()
@@ -120,7 +196,7 @@ class PromptAlertView: UIView {
 		return view
 	}
 	
-	public func show(in superview: UIView? = UIView.window()) {
+	public func show(in superview: UIView? = UIWindow.window) {
 		guard let superview = superview else { return }
 		self.isUserInteractionEnabled = false
 		
@@ -150,10 +226,15 @@ class PromptAlertView: UIView {
 		}
 	}
 	
-	private func hide() {
+	private func hide(animated: Bool) {
 		guard let superview = self.superview else { return }
-		self.isUserInteractionEnabled = false
 		
+		guard animated else {
+			superview.removeFromSuperview()
+			return
+		}
+		
+		self.isUserInteractionEnabled = false
 		UIView.animate(withDuration: Macro.Time.alertViewShowTime, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 1.0, options: .allowUserInteraction, animations: {
 			self.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
 		}) { (_) in

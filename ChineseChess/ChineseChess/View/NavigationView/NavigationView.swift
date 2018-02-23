@@ -35,10 +35,18 @@ public class NavigationView: UIView {
 			$0.bottom.equalTo(self)
 			$0.right.equalTo(self)
 		}
+		
+		NotificationCenter.default.addObserver(forName: Macro.NotificationName.willShowAnotherAlertView, object: nil, queue: OperationQueue.main) { [weak self] (_) in
+			self?.dismiss(withVoice: nil)
+		}
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	deinit {
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	private var backgroundView: UIView {
@@ -47,7 +55,7 @@ public class NavigationView: UIView {
 		return view
 	}
 	
-	@objc public final func show(in superview: UIView? = UIView.window(), withVoice: Any? = true) {
+	@objc public final func show(in superview: UIView? = UIWindow.window, withVoice: Any? = true) {
 		guard self.superview == nil, self.isUserInteractionEnabled, let window = superview else { return }
 		
 		self.isUserInteractionEnabled = false

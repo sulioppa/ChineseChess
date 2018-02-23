@@ -11,49 +11,36 @@ import UIKit
 // MARK: - Map. target <- Option(value)
 infix operator <-
 
-extension Bool {
+public protocol Mappable {
+	static func <-(_ left: inout Self, _ right: Any?)
+}
+
+extension Mappable {
 	
-	public static func <-(_ left: inout Bool, _ right: Any?) {
-		guard let value = right as? Bool else { return }
+	public static func <-(_ left: inout Self, _ right: Any?) {
+		guard let value = right as? Self else { return }
 		left = value
 	}
+
+}
+
+// MARK: - Structs conform Mappable
+extension Bool: Mappable {
+
+}
+
+extension Int: Mappable {
 	
 }
 
-extension Int {
-	
-	public static func <-(_ left: inout Int, _ right: Any?) {
-		guard let value = right as? Int else { return }
-		left = value
-	}
+extension UInt64: Mappable {
 	
 }
 
-extension UInt64 {
-	
-	public static func <-(_ left: inout UInt64, _ right: Any?) {
-		guard let value = right as? UInt64 else { return }
-		left = value
-	}
-	
+extension String: Mappable {
+
 }
 
-extension String {
-	
-	public static func <-(_ left: inout String, _ right: Any?) {
-		guard let value = right as? String else { return }
-		left = value
-	}
+extension Dictionary: Mappable {
 	
 }
-
-extension Dictionary {
-	
-	public static func <-(_ left: inout Dictionary, _ right: Any?) {
-		guard let value = right as? Dictionary else { return }
-		left = value
-	}
-	
-}
-
-

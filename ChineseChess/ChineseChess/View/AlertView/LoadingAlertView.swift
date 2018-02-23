@@ -102,7 +102,7 @@ class LoadingAlertView: UIView {
 // MARK: - Function
 extension LoadingAlertView {
 	
-	public func show(in superview: UIView? = UIView.window(), message: String? = nil, isCloseButtonHidden: Bool = true, delegate: LoadingAlertViewDelegate? = nil, completion: (() -> Void)? = nil) {
+	public func show(in superview: UIView? = UIWindow.window, message: String? = nil, isCloseButtonHidden: Bool = true, delegate: LoadingAlertViewDelegate? = nil, completion: (() -> Void)? = nil) {
 		guard let superview = superview else { return }
 		
 		self.removeFromSuperview()
@@ -149,7 +149,7 @@ extension LoadingAlertView {
 // MARK: - Static
 extension LoadingAlertView {
 	
-	public class func show(in superview: UIView? = UIView.window(), message: String? = nil, isCloseButtonHidden: Bool = true, delegate: LoadingAlertViewDelegate? = nil, completion: (() -> Void)? = nil) {
+	public class func show(in superview: UIView? = UIWindow.window, message: String? = nil, isCloseButtonHidden: Bool = true, delegate: LoadingAlertViewDelegate? = nil, completion: (() -> Void)? = nil) {
 		LoadingAlertView.shared.show(in: superview, message: message, isCloseButtonHidden: isCloseButtonHidden, completion: completion)
 	}
 	

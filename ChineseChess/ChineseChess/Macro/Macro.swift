@@ -29,6 +29,7 @@ public struct Macro {
 	
 	public struct NotificationName {
 		public static let didUpdateOneStep = Notification.Name("didUpdateOneStep")
+		public static let willShowAnotherAlertView = Notification.Name("willShowAnotherAlertView")
 	}
 	
 	public struct Project {

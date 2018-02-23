@@ -12,7 +12,7 @@ class LayoutPartner: NSObject {
 
 	public static let safeArea: CGRect = {
 		if #available(iOS 11.0, *) {
-			return UIView.window()?.safeAreaLayoutGuide.layoutFrame ?? UIScreen.main.bounds
+			return UIWindow.window?.safeAreaLayoutGuide.layoutFrame ?? UIScreen.main.bounds
 		}
 		return UIScreen.main.bounds
 	}()

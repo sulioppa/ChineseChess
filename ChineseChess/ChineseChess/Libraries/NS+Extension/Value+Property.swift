@@ -41,3 +41,11 @@ extension String {
 	}
 	
 }
+
+extension Bool {
+	
+	public var rawValue: Int {
+		return self ? 1 : 0
+	}
+	
+}

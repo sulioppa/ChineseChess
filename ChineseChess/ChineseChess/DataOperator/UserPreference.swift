@@ -221,14 +221,19 @@ extension UserPreference {
 extension UserPreference {
 	public class MultiPeer {
 		public var nickname: String = "沧海龙吟"
+		public var record: String = ""
+		public var red: Bool = true
 		
 		public var rivalname: String {
 			return "榣山遗韵"
 		}
 		
 		public var dictionary: [String: Any] {
+			let key = Key()
 			return [
-				Key().nickname: self.nickname,
+				key.nickname: self.nickname,
+				key.record: self.record,
+				key.red: self.red
 			]
 		}
 		
@@ -236,6 +241,8 @@ extension UserPreference {
 			guard let dictionary = right as? [String: Any] else { return }
 			let key = Key()
 			left.nickname <- dictionary[key.nickname]
+			left.record <- dictionary[key.record]
+			left.red <- dictionary[key.red]
 		}
 	}
 }

@@ -28,27 +28,39 @@ public class MultipeerManager: NSObject {
 	
 	public static let shared: MultipeerManager = MultipeerManager()
 	
-	public weak var delegate: MultipeerManagerDelegate? = nil
+	public var isBroswerMode: Bool {
+		return self.mode
+	}
 	
 	// MARK: - Private
 	private var session: MCSession?
 	private var advertiser: MCAdvertiserAssistant?
+	private weak var broswer: MCBrowserViewController?
+	
+	private weak var delegate: MultipeerManagerDelegate? = nil
+	private var mode: Bool = false
 	
 	private override init() {
 		super.init()
 	}
 	
 	// MARK: - Public
-	public final func start(isBroswerMode: Bool, viewcontroller: UIViewController?, displayName: String) {
+	public final func start(isBroswerMode: Bool, delegate: MultipeerManagerDelegate, viewcontroller: UIViewController?, displayName: String) {
 		self.disconnect()
 		
+		self.delegate = delegate
+		self.mode = isBroswerMode
+		
 		let session = MCSession(peer: MCPeerID(displayName: displayName))
+		session.delegate = self
 		self.session = session
 		
 		if isBroswerMode {
 			let broswer = MCBrowserViewController(serviceType: Macro.Project.name, session: session)
 			broswer.delegate = self
 			viewcontroller?.present(broswer, animated: true, completion: nil)
+			
+			self.broswer = broswer
 		} else {
 			self.advertiser = MCAdvertiserAssistant(serviceType: Macro.Project.name, discoveryInfo: nil, session: session)
 			self.advertiser?.start()
@@ -56,6 +68,7 @@ public class MultipeerManager: NSObject {
 	}
 	
 	public final func stop() {
+		self.broswer?.dismiss(animated: true, completion: nil)
 		self.advertiser?.stop()
 		self.advertiser = nil
 	}
@@ -67,10 +80,17 @@ public class MultipeerManager: NSObject {
 	}
 	
 	public final func disconnect() {
+		self.delegate = nil
+		
+		self.session?.delegate = nil
 		self.session?.disconnect()
 		self.session = nil
+		
 		self.advertiser?.stop()
 		self.advertiser = nil
+		
+		self.broswer?.dismiss(animated: true, completion: nil)
+		self.broswer = nil
 	}
 	
 }
@@ -84,20 +104,28 @@ extension MultipeerManager: MCSessionDelegate {
 		switch state {
 		case .connecting:
 			connectionState = .connecting
+			
 		case .connected:
 			connectionState = .connected
-			self.stop()
+			DispatchQueue.main.async {
+				self.stop()
+			}
+			
 		default:
-			break
+			connectionState = .disconnected
 		}
 		
-		self.delegate?.multipeerManager(self, state: connectionState, name: peerID.displayName)
+		DispatchQueue.main.async {
+			self.delegate?.multipeerManager(self, state: connectionState, name: peerID.displayName)
+		}
 	}
 
 	public func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
 		guard let dictionary = Dictionary<String, Any>.dictionary(from: data) else { return }
 		
-		self.delegate?.multipeerManager(self, didReceive: dictionary)
+		DispatchQueue.main.async {
+			self.delegate?.multipeerManager(self, didReceive: dictionary)
+		}
 	}
 	
 }
@@ -111,7 +139,6 @@ extension MultipeerManager: MCBrowserViewControllerDelegate {
 	
 	public func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
 		self.disconnect()
-		browserViewController.dismiss(animated: true, completion: nil)
 	}
 	
 	public func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {

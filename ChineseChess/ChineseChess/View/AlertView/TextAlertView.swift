@@ -34,10 +34,18 @@ class TextAlertView: UIView {
 		}
 		
 		self.addTapTarget(self, action: #selector(self.hide))
+		
+		NotificationCenter.default.addObserver(forName: Macro.NotificationName.willShowAnotherAlertView, object: nil, queue: OperationQueue.main) { [weak self] (_) in
+			self?.removeFromSuperview()
+		}
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	deinit {
+		NotificationCenter.default.removeObserver(self)
 	}
 	
 	private func show(in superview: UIView, text: String) {
@@ -79,7 +87,7 @@ class TextAlertView: UIView {
 // MARK: - Public
 extension TextAlertView {
 	
-	public class func show(in view: UIView? = UIView.window(), text: String?) {
+	public class func show(in view: UIView? = UIWindow.window, text: String?) {
 		guard let text = text, let view = view else { return }
 		TextAlertView.shared.show(in: view, text: text)
 	}

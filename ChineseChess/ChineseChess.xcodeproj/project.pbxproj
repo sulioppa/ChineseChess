@@ -63,6 +63,7 @@
 		A7B7D0E21FCC40B50048B304 /* LunaRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = A7B7D0E11FCC40B50048B304 /* LunaRecord.m */; };
 		A7BEA89F1FCEAE4100605AAE /* NSString+Subscript.m in Sources */ = {isa = PBXBuildFile; fileRef = A7BEA89E1FCEAE4100605AAE /* NSString+Subscript.m */; };
 		A7BEA8A41FCEBABE00605AAE /* LunaRecordRuler.m in Sources */ = {isa = PBXBuildFile; fileRef = A7BEA8A31FCEBABE00605AAE /* LunaRecordRuler.m */; };
+		A7C46506202050D4002CB196 /* MultiPeerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C46505202050D4002CB196 /* MultiPeerJson.swift */; };
 		A7C4E5401F9DC20E0018595A /* FlashLayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C4E53F1F9DC20E0018595A /* FlashLayerController.swift */; };
 		A7C8D4701FE3A4F6006AC172 /* UIView+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C8D46F1FE3A4F6006AC172 /* UIView+Border.swift */; };
 		A7CD69F31F91E11700C3202A /* LayoutPartner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CD69F21F91E11700C3202A /* LayoutPartner.swift */; };
@@ -81,7 +82,6 @@
 		A7E632DC2018B11D005A54E0 /* MultiPeerWaittingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E632DB2018B11D005A54E0 /* MultiPeerWaittingView.swift */; };
 		A7E7ACFD1F91DE8E00B29C5A /* UIButton+Golden.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E7ACFC1F91DE8E00B29C5A /* UIButton+Golden.swift */; };
 		A7EB7BBA1FE419F200AA903A /* Value+Mutating.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EB7BB91FE419F200AA903A /* Value+Mutating.swift */; };
-		A7F7A31E201B057D00B6EC40 /* MultiPeerChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7A31D201B057D00B6EC40 /* MultiPeerChatView.swift */; };
 		A7FD59C02012D859006C18C2 /* HistoryBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FD59BF2012D859006C18C2 /* HistoryBoardController.swift */; };
 		A7FDC5101FD0140F008DC815 /* LunaRecordCharacter.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FDC50F1FD0140F008DC815 /* LunaRecordCharacter.m */; };
 /* End PBXBuildFile section */
@@ -150,6 +150,7 @@
 		A7BEA89E1FCEAE4100605AAE /* NSString+Subscript.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Subscript.m"; sourceTree = "<group>"; };
 		A7BEA8A21FCEBABE00605AAE /* LunaRecordRuler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunaRecordRuler.h; sourceTree = "<group>"; };
 		A7BEA8A31FCEBABE00605AAE /* LunaRecordRuler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunaRecordRuler.m; sourceTree = "<group>"; };
+		A7C46505202050D4002CB196 /* MultiPeerJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerJson.swift; sourceTree = "<group>"; };
 		A7C4E53F1F9DC20E0018595A /* FlashLayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashLayerController.swift; sourceTree = "<group>"; };
 		A7C8D46F1FE3A4F6006AC172 /* UIView+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Border.swift"; sourceTree = "<group>"; };
 		A7CD69F21F91E11700C3202A /* LayoutPartner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutPartner.swift; sourceTree = "<group>"; };
@@ -177,7 +178,6 @@
 		A7E632DB2018B11D005A54E0 /* MultiPeerWaittingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerWaittingView.swift; sourceTree = "<group>"; };
 		A7E7ACFC1F91DE8E00B29C5A /* UIButton+Golden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Golden.swift"; sourceTree = "<group>"; };
 		A7EB7BB91FE419F200AA903A /* Value+Mutating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Mutating.swift"; sourceTree = "<group>"; };
-		A7F7A31D201B057D00B6EC40 /* MultiPeerChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPeerChatView.swift; sourceTree = "<group>"; };
 		A7FD59BF2012D859006C18C2 /* HistoryBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryBoardController.swift; sourceTree = "<group>"; };
 		A7FDC50E1FD0140F008DC815 /* LunaRecordCharacter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LunaRecordCharacter.h; sourceTree = "<group>"; };
 		A7FDC50F1FD0140F008DC815 /* LunaRecordCharacter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LunaRecordCharacter.m; sourceTree = "<group>"; };
@@ -322,6 +322,7 @@
 			children = (
 				A7A19EEA2005F37B00F5F9E8 /* View */,
 				A778E4861F94E27600D28B25 /* SubViewController */,
+				A7C46504202050B0002CB196 /* Json */,
 				A778E4811F94E26000D28B25 /* MultiPeerVC.swift */,
 			);
 			path = MultiPeerVC;
@@ -478,7 +479,6 @@
 			children = (
 				A7E632D72018AA73005A54E0 /* MultiPeerMenuView.swift */,
 				A7E632DB2018B11D005A54E0 /* MultiPeerWaittingView.swift */,
-				A7F7A31D201B057D00B6EC40 /* MultiPeerChatView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -511,6 +511,14 @@
 				A7BEA89E1FCEAE4100605AAE /* NSString+Subscript.m */,
 			);
 			path = Category;
+			sourceTree = "<group>";
+		};
+		A7C46504202050B0002CB196 /* Json */ = {
+			isa = PBXGroup;
+			children = (
+				A7C46505202050D4002CB196 /* MultiPeerJson.swift */,
+			);
+			path = Json;
 			sourceTree = "<group>";
 		};
 		A7CE55EC1F8DC28600641454 = {
@@ -741,6 +749,7 @@
 				A7B604C51FFB977400B8B5D8 /* Value+Property.swift in Sources */,
 				A7854A1E1FEF5BA100C977B7 /* UIView+Window.swift in Sources */,
 				A7B7D0DF1FCC3FA60048B304 /* LunaRecordStack.m in Sources */,
+				A7C46506202050D4002CB196 /* MultiPeerJson.swift in Sources */,
 				A708989D201322A6009CAF5F /* HistoryMenuView.swift in Sources */,
 				A72D652E1FF13B8700E44E60 /* GameSettingsView.swift in Sources */,
 				A749D7571FE11BB5005B8520 /* TextAlertView.swift in Sources */,
@@ -766,7 +775,6 @@
 				A78239D51FFE1B3A0078A906 /* UITableView+Update.swift in Sources */,
 				A7B3FD7F1F9A03A900B379AD /* Array+Split.swift in Sources */,
 				A7BEA89F1FCEAE4100605AAE /* NSString+Subscript.m in Sources */,
-				A7F7A31E201B057D00B6EC40 /* MultiPeerChatView.swift in Sources */,
 				A7DC614D1F92435C009A9205 /* UIFont+KaiTi.swift in Sources */,
 				A7FD59C02012D859006C18C2 /* HistoryBoardController.swift in Sources */,
 				A7FDC5101FD0140F008DC815 /* LunaRecordCharacter.m in Sources */,

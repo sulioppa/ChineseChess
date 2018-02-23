@@ -8,9 +8,9 @@
 
 import UIKit
 
-extension UIView {
+extension UIWindow {
 	
-	public class func window() -> UIWindow? {
+	public static var window: UIWindow? {
 		return UIApplication.shared.windows.first
 	}
 	
