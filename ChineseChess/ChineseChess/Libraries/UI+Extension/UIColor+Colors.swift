@@ -22,4 +22,6 @@ extension UIColor {
 	
 	public static let separtor = UIColor(hexColor: 0xe6e6e6)
 	
+	public static let disabled = UIColor(hexColor: 0xc7c6cc)
+	
 }

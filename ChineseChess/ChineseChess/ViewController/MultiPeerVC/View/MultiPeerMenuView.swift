@@ -42,7 +42,7 @@ class MultiPeerMenuView: NavigationView {
 				self.bar.leftBarButtonItem?.removeGestureRecognizer(gesture)
 			}
 		}
-		self.bar.leftBarButtonItem?.addTapTarget(self, action: #selector(back))
+		self.bar.leftBarButtonItem?.addTapTarget(self, action: #selector(self.back(sender:)))
 		
 		self.bar.rightBarButtonItem?.image = ResourcesProvider.shared.image(named: "tips")
 		self.bar.addTapTarget(self, action: #selector(self.showTips(sender:)))

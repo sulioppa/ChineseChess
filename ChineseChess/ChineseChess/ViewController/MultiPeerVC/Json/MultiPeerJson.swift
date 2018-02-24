@@ -12,6 +12,7 @@ class MultiPeerJson: NSObject {
 
 	public enum MessageType: Int {
 		case newGame = 0
+		case ready
 		case move
 		case lose
 		case chat

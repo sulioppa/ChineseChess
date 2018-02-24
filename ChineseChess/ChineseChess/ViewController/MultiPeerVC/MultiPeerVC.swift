@@ -17,6 +17,8 @@ class MultiPeerVC: ChessVC {
 	// navigation view
 	private lazy var menuView: NavigationView? = MultiPeerMenuView(delegate: self)
 	
+	private weak var waittingView: MultiPeerWaittingView? = nil
+	
 	private weak var navigationView: NavigationViewProtocol? = nil
 	
 	// rival information
@@ -135,6 +137,8 @@ extension MultiPeerVC: MultipeerManagerDelegate, LoadingAlertViewDelegate {
 			switch type {
 			case .newGame:
 				self.didReceiveCreateGame(history: data["record"], isRed: data["red"])
+			case .ready:
+				self.waittingView?.didReceiveReady()
 			case .move:
 				self.didReceiveMove(move: data["move"])
 			case .lose:
@@ -157,8 +161,8 @@ extension MultiPeerVC: MultipeerManagerDelegate, LoadingAlertViewDelegate {
 	
 }
 
-// MARK: - Creating Game
-extension MultiPeerVC {
+// MARK: - Creating Game, MultiPeerWaittingViewDelegate
+extension MultiPeerVC: MultiPeerWaittingViewDelegate {
 	
 	private func connected(_ isPositive: Bool) {
 		self.menuView?.dismiss(withVoice: nil)
@@ -205,6 +209,7 @@ extension MultiPeerVC {
 	private func didReceiveCreateGame(history: Any?, isRed: Any?) {
 		guard let history = history as? String, let isRed = isRed as? Bool else { return }
 		
+		self.waittingView?.dismiss(withVoice: nil)
 		UserPreference.shared.multiPeer.red = !isRed
 		self.startGame(history: history)
 	}
@@ -220,9 +225,24 @@ extension MultiPeerVC {
 		}
 	}
 	
+	func multiPeerWaittingView(shouldStartGame waittingView: MultiPeerWaittingView) {
+		waittingView.dismiss(withVoice: nil)
+		self.recreateGame()
+	}
+	
+	func multiPeerWaittingView(willCancel waittingView: MultiPeerWaittingView) {
+		PromptAlertView(title: "提  示", message: "确定要放弃新局并离开此界面？", left: ("离  开", false, {
+			waittingView.dismiss(withVoice: nil)
+			UserPreference.shared.multiPeer.record = .empty
+			self.back()
+		}), right: ("取  消", false, {
+			WavHandler.playButtonWav()
+		})).show(in: self.view)
+	}
+	
 }
 
-// MARK: - Connected
+// MARK: - Connected, MultiPeerBoardControllerDelegate
 extension MultiPeerVC: MultiPeerBoardControllerDelegate {
 	
 	func multiPeerBoardController(didMove oneStep: LunaMove) {
@@ -252,7 +272,10 @@ extension MultiPeerVC: MultiPeerBoardControllerDelegate {
 		
 		self.hasResponse = false
 		UserPreference.shared.multiPeer.record = .empty
-		MultiPeerWaittingView().show(in: self.view, withVoice: nil)
+		
+		let waittingView = MultiPeerWaittingView(manager: self.manager, delegate: self, rivalName: self.rivalname)
+		waittingView.show(in: self.view, withVoice: nil)
+		self.waittingView = waittingView
 	}
 	
 	var canRequest: Bool {
@@ -299,10 +322,10 @@ extension MultiPeerVC: MultiPeerBoardControllerDelegate {
 		if self.state == 0 {
 			return "双方议和"
 		} else {
-			if UserPreference.shared.multiPeer.red {
-				return self.state > 0 ? "黑方认输" : "红方认输"
+			if self.state > 0 {
+				return UserPreference.shared.multiPeer.red ? "黑方认输" : "红方认输"
 			} else {
-				return self.state > 0 ? "红方认输" : "黑方认输"
+				return UserPreference.shared.multiPeer.red ? "红方认输" : "黑方认输"
 			}
 		}
 	}
