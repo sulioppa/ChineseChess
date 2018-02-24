@@ -20,11 +20,15 @@
 ### History Module（棋谱模块）
 ![](ReadMeMedia/History&Play.png)
 
+### MultiPeer Module（联机模块）
+![](ReadMeMedia/MultiPeer&Waitting.png)
+
 ***
 
 [中文介绍点这里](https://github.com/sulioppa/ChineseChess/blob/master/[Chinese]README.md)
 ## Versions Track
 * 2017.10.11, right start the project.
+* 2018.2.24, done with MultiPeer module, begin developing AI.
 
 ## Overview Of Functions
 ### Game Module
@@ -43,7 +47,7 @@
 - support select a step and immediatly jump to the specific position.
 - support jump to Game Module to play a game.
 
-### MultiPeer Module（__is developing__）
+### MultiPeer Module
 - support two people's game through the bluetooth or LAN.
 - support regret, draw, give up.
 - support start a new game.

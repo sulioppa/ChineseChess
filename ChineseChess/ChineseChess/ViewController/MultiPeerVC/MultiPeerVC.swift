@@ -142,7 +142,7 @@ extension MultiPeerVC: MultipeerManagerDelegate, LoadingAlertViewDelegate {
 			case .move:
 				self.didReceiveMove(move: data["move"])
 			case .lose:
-				self.didReceiveLose(state: 1)
+				self.didReceiveLose(state: -1)
 			case .chat:
 				self.didReceiveChat(message: data["msg"])
 			case .request:
@@ -309,9 +309,11 @@ extension MultiPeerVC: MultiPeerBoardControllerDelegate {
 	}
 	
 	private var stateVS: String {
-		if self.state == 0 {
+		let state = UserPreference.shared.multiPeer.red ? self.state : -self.state
+		
+		if state == 0 {
 			return "先和"
-		} else if self.state > 0 {
+		} else if state > 0 {
 			return "先胜"
 		} else {
 			return "先负"
