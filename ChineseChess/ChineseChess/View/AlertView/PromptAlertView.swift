@@ -98,8 +98,6 @@ class PromptAlertView: UIView {
 			$0.top.equalTo(self.bar.snp.bottom).offset(layout.chessSize / 2.0)
 			$0.bottom.equalTo(button.snp.top).offset(-layout.chessSize / 2.0)
 		}
-		
-		self.addObserver()
 	}
 	
 	public init(title: String, message: String, action: Action) {
@@ -162,22 +160,10 @@ class PromptAlertView: UIView {
 			$0.top.equalTo(self.bar.snp.bottom).offset(layout.chessSize / 2.0)
 			$0.bottom.equalTo(button.snp.top).offset(-layout.chessSize / 2.0)
 		}
-		
-		self.addObserver()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
-	}
-	
-	private func addObserver() {
-		NotificationCenter.default.addObserver(forName: Macro.NotificationName.willShowAnotherAlertView, object: nil, queue: OperationQueue.main) { [weak self] (_) in
-			self?.hide(animated: false)
-		}
-	}
-	
-	deinit {
-		NotificationCenter.default.removeObserver(self)
 	}
 	
 	@objc private func didClickButton(sender: UIButton) {

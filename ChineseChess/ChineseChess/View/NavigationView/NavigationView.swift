@@ -8,7 +8,11 @@
 
 import UIKit
 
-public class NavigationView: UIView {
+public protocol NavigationViewProtocol: NSObjectProtocol {
+	func shouldDismiss()
+}
+
+public class NavigationView: UIView, NavigationViewProtocol {
 	
 	public final lazy var bar: NavigationBar = NavigationBar(superview: self)
 	
@@ -35,18 +39,10 @@ public class NavigationView: UIView {
 			$0.bottom.equalTo(self)
 			$0.right.equalTo(self)
 		}
-		
-		NotificationCenter.default.addObserver(forName: Macro.NotificationName.willShowAnotherAlertView, object: nil, queue: OperationQueue.main) { [weak self] (_) in
-			self?.dismiss(withVoice: nil)
-		}
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
-	}
-	
-	deinit {
-		NotificationCenter.default.removeObserver(self)
 	}
 	
 	private var backgroundView: UIView {
@@ -131,6 +127,10 @@ public class NavigationView: UIView {
 		}) { (_) in
 			superview.removeFromSuperview()
 		}
+	}
+	
+	public func shouldDismiss() {
+		self.dismiss(withVoice: nil)
 	}
 	
 }

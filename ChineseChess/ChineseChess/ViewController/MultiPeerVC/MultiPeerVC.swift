@@ -16,7 +16,9 @@ class MultiPeerVC: ChessVC {
 	
 	// navigation view
 	private lazy var menuView: NavigationView? = MultiPeerMenuView(delegate: self)
-		
+	
+	private weak var navigationView: NavigationViewProtocol? = nil
+	
 	// rival information
 	private var rivalname: String = UserPreference.shared.multiPeer.rivalname {
 		didSet {
@@ -40,9 +42,14 @@ class MultiPeerVC: ChessVC {
 			("棋 谱", #selector(showHistory)),
 			])
 		
-		self.setSideState(top: .black, bottom: .red)
 		self.setNickname(top: self.rivalname, bottom: UserPreference.shared.multiPeer.nickname)
+		if UserPreference.shared.multiPeer.red {
+			self.setSideState(top: .black, bottom: .red)
+		} else {
+			self.setSideState(top: .red, bottom: .black)
+		}
 		
+		self.AI.initBoard(withFile: UserPreference.shared.multiPeer.record)
 		self.chessBoardController.refreshBoard()
 		self.chessBoardController.delegate = self
 	}
@@ -204,7 +211,7 @@ extension MultiPeerVC {
 	
 	private func startGame(history: String) {
 		self.chessBoardController.createGame(with: history)
-		self.hasResponse = self.AI.state.rawValue == UserPreference.shared.multiPeer.red.rawValue
+		self.hasResponse = self.AI.state.rawValue != UserPreference.shared.multiPeer.red.rawValue
 		
 		if UserPreference.shared.multiPeer.red {
 			self.setSideState(top: .black, bottom: .red)
@@ -233,7 +240,7 @@ extension MultiPeerVC: MultiPeerBoardControllerDelegate {
 	}
 	
 	func multiPeerBoardControllerWillEndTheGame() {
-		NotificationCenter.default.post(name: Macro.NotificationName.willShowAnotherAlertView, object: nil)
+		self.navigationView?.shouldDismiss()
 	}
 	
 	func multiPeerBoardControllerDidEndTheGame(isNormal: Bool) {
@@ -362,6 +369,7 @@ extension MultiPeerVC {
 	
 	@objc private func regret() {
 		WavHandler.playButtonWav()
+		guard !self.chessBoardController.isRegreting else { return }
 		
 		guard self.hasResponse && self.AI.count > 1 else {
 			TextAlertView.show(in: self.contentView, text: "现在不能悔棋")
@@ -380,13 +388,16 @@ extension MultiPeerVC {
 	}
 	
 	private func didReceiveRegret() {
+		self.navigationView?.shouldDismiss()
 		self.chessBoardController.complexRegret()
-		self.hasResponse = self.AI.state.rawValue == UserPreference.shared.multiPeer.red.rawValue
+		self.hasResponse = true
 	}
 	
 	private func didReceiveRequest(type: Any?) {
 		guard let rawValue = type as? Int else { return }
 		guard let type = MultiPeerJson.MessageType(rawValue: rawValue) else { return }
+		
+		self.navigationView?.shouldDismiss()
 		
 		switch type {
 		case .regret:
@@ -444,19 +455,18 @@ extension MultiPeerVC {
 		InputAlertView(title: "聊  天", placeholder: "请输入非空的聊天内容", left: ("发 送", { (content) in
 			WavHandler.playButtonWav()
 			guard !content.isEmpty else { return }
-			
+			let message = "\(UserPreference.shared.multiPeer.nickname): \(content)"
 			self.manager?.write(dictionary: MultiPeerJson.json(type: .chat, parameters: [
-				"msg": content
+				"msg": message
 				]))
-			self.didReceiveChat(message: content)
+			self.didReceiveChat(message: message)
 		}), right: ("取消", { (_) in
 			WavHandler.playButtonWav()
 		})).show(in: self.view)
 	}
 	
 	private func didReceiveChat(message: Any?) {
-		guard let _ = message as? String else { return }
-		
+		TextAlertView.show(in: self.contentView, text: message as? String)
 	}
 	
 }
@@ -476,7 +486,10 @@ extension MultiPeerVC: CharacterViewDelegate {
 	}
 	
 	@objc private func showHistory() {
-		CharacterView(delegate: self, dataSource: self.AI.records.map({ return $0.item }), result: self.AI.state.result).show(in: self.view)
+		let characterView = CharacterView(delegate: self, dataSource: self.AI.records.map({ return $0.item }), result: self.AI.state.result)
+		characterView.show(in: self.view)
+		
+		self.navigationView = characterView
 	}
 	
 	func characterView(didClickAt index: Int) {

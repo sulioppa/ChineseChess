@@ -31,6 +31,9 @@ class MultiPeerBoardController: ChessBoardController {
 	// the lastest move.
 	private var lastMove: (from: CALayer?, to: CALayer?) = (nil, nil)
 	
+	// isRegreting reveals the game is in progress of regreting.
+	public var isRegreting: Bool = false
+	
 	public weak var delegate: MultiPeerBoardControllerDelegate? = nil
 	
 	// MARK: - Handle Tap
@@ -90,7 +93,8 @@ extension MultiPeerBoardController {
 	}
 	
 	public final func complexRegret() {
-		
+		self.isRegreting = true
+		self.regretOneStep(hasNext: true)
 	}
 	
 	public final func moveOneStep(move: LunaMove) {
@@ -122,7 +126,7 @@ extension MultiPeerBoardController {
 extension MultiPeerBoardController {
 	
 	private var canRespond: (can: Bool, error: String?) {
-		guard self.AI.state.isNormalState else { return (false, nil) }
+		guard self.AI.state.isNormalState && !self.isRegreting else { return (false, nil) }
 		
 		if self.AI.state == .turnRedSide && !UserPreference.shared.multiPeer.red {
 			return (false, "对方走")
@@ -229,16 +233,22 @@ extension MultiPeerBoardController {
 		self.moveChess(with: nil, from: from, to: to, completion: {})
 	}
 	
-	private func recoverChess(from: GridPoint, to: GridPoint, recover: Int) {
-		self.recoverChess(with: nil, from: from, to: to, recover: recover, completion: {})
+	private func recoverChess(from: GridPoint, to: GridPoint, recover: Int, hasNext: Bool) {
+		self.recoverChess(with: nil, from: from, to: to, recover: recover, completion: {
+			if hasNext {
+				self.regretOneStep(hasNext: false)
+			} else {
+				self.isRegreting = false
+			}
+		})
 	}
 	
-	private func regretOneStep() {
+	private func regretOneStep(hasNext: Bool) {
 		var move: LunaMove = 0
 		let ate = Int(self.AI.regret(withMove: &move))
 		
 		if move > 0 {
-			self.recoverChess(from: GridPoint(location: move.to, isReverse: self.reverse), to: GridPoint(location: move.from, isReverse: self.reverse), recover: ate)
+			self.recoverChess(from: GridPoint(location: move.to, isReverse: self.reverse), to: GridPoint(location: move.from, isReverse: self.reverse), recover: ate, hasNext: hasNext)
 			
 			self.clearChoice()
 			self.clearLegalMoves()

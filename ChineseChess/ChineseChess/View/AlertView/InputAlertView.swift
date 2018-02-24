@@ -108,10 +108,6 @@ class InputAlertView: UIView {
 		NotificationCenter.default.addObserver(forName: .UIKeyboardWillShow, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
 			self?.keyboardWillShow(sender: notification)
 		}
-		
-		NotificationCenter.default.addObserver(forName: Macro.NotificationName.willShowAnotherAlertView, object: nil, queue: OperationQueue.main) { [weak self] (_) in
-			self?.hide(animated: false)
-		}
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
