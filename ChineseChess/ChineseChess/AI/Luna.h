@@ -49,8 +49,12 @@ typedef uint16_t LunaMove;
 // the state reveals the state of game.
 @property (nonatomic, readonly) LunaBoardState state;
 
+@property (nonatomic, readonly) BOOL side;
+
 // AI Control, the isThinking reveals the AI is thinking or not, you can stop it by setting it 'NO'.
 @property (nonatomic, readwrite) BOOL isThinking;
+
+- (void)NextStep:(void (^ _Nonnull)(float progress, LunaMove move))block;
 
 @end
 

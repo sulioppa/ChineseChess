@@ -70,6 +70,15 @@ extension LunaBoardState {
 	
 }
 
+// MARK: - Bool, Side
+extension Bool {
+	
+	public var isRed: Bool {
+		return !self
+	}
+	
+}
+
 // MARK: - LunaMove
 extension LunaMove {
 	

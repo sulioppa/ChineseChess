@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol GameBoardControllerDelegate: NSObjectProtocol {
+	var progress: Float { set get }
+}
+
 class GameBoardController: ChessBoardController {
 	
 	// the GridPoint current player selected.
@@ -28,6 +32,8 @@ class GameBoardController: ChessBoardController {
 	// taskQueue, to avoid data mess. Reverse, opposite and chess move should be serially executed.
 	private let taskQueue: DispatchQueue = DispatchQueue(label: "com.sulioppa.game.taskQueue")
 	private let taskSignal: DispatchSemaphore = DispatchSemaphore(value: 1)
+	
+	public weak var delegate: GameBoardControllerDelegate? = nil
 	
 	// MARK: - Handle Tap
 	public override func didTapInBoard(at grid: ChessBoardController.GridPoint, atPoint: CGPoint) {
@@ -59,6 +65,25 @@ class GameBoardController: ChessBoardController {
 		}
 	}
 	
+	// MARK: - reverse & opposite
+	public override var reverse: Bool {
+		didSet {
+			self.asyncTask { (release) in
+				self.refreshBoard()
+				release()
+			}
+		}
+	}
+	
+	public override var opposite: Bool {
+		didSet {
+			self.asyncTask { (release) in
+				self.refreshBoard()
+				release()
+			}
+		}
+	}
+	
 	// MARK: - Board Operation
 	public override func refreshBoard() {
 		super.refreshBoard()
@@ -78,13 +103,10 @@ class GameBoardController: ChessBoardController {
 extension GameBoardController {
 	
 	func gameSettingsViewDidClickOk(isNew: Bool, levels: [UserPreference.Level]) {
-		UserPreference.shared.game.red = levels[0]
-		UserPreference.shared.game.black = levels[1]
-		UserPreference.shared.game.prompt = levels[2]
-		
 		if isNew {
-			self.AI.initBoard(withFile: nil)
-			self.refreshBoard()
+			self.newGame(with: levels)
+		} else {
+			self.didModifySettings(with: levels)
 		}
 	}
 	
@@ -96,7 +118,25 @@ extension GameBoardController {
 		
 		self.isRegreting = true
 		self.AI.isThinking = false
-		self.regretOneStep(release: true)
+		
+		if self.AI.side.isRed {
+			self.regretStep(onlyOne: UserPreference.shared.game.black.isPlayer)
+		} else {
+			self.regretStep(onlyOne: UserPreference.shared.game.red.isPlayer)
+		}
+	}
+	
+	public final func techMe() {
+		guard !self.AI.isThinking else { return }
+	}
+	
+	public final func tryThinking() {
+		guard !self.AI.isThinking else { return }
+	}
+	
+	public final func stopThinking() {
+		self.AI.isThinking = false
+		self.delegate?.progress = 0.0
 	}
 	
 }
@@ -202,7 +242,7 @@ extension GameBoardController {
 	
 }
 
-// MARK: - Chess move and recover
+// MARK: - Private - Chess move and recover
 extension GameBoardController {
 	
 	private func moveChess(from: GridPoint, to: GridPoint) {
@@ -241,25 +281,63 @@ extension GameBoardController {
 	
 }
 
-// MARK: - Complex Regret
+// MARK: - Private - Board Operation
 extension GameBoardController {
 	
-	private func regretOneStep(release: Bool) {
+	private func newGame(with levels: [UserPreference.Level]) {
+		self.stopThinking()
+		
+		UserPreference.shared.game.red = levels[0]
+		UserPreference.shared.game.black = levels[1]
+		UserPreference.shared.game.prompt = levels[2]
+		
+		self.asyncTask { [weak self] (release) in
+			self?.AI.initBoard(withFile: nil)
+			self?.refreshBoard()
+			
+			release()
+			self?.tryThinking()
+		}
+	}
+	
+	private func didModifySettings(with levels: [UserPreference.Level]) {
+		UserPreference.shared.game.red = levels[0]
+		UserPreference.shared.game.black = levels[1]
+		UserPreference.shared.game.prompt = levels[2]
+		
+		if self.AI.state == .turnRedSide {
+			if self.AI.isThinking && UserPreference.shared.game.red.isPlayer {
+				self.stopThinking()
+			} else if !self.AI.isThinking && !UserPreference.shared.game.red.isPlayer {
+				self.tryThinking()
+			}
+		} else if self.AI.state == .turnBlackSide {
+			if self.AI.isThinking && UserPreference.shared.game.black.isPlayer {
+				self.stopThinking()
+			} else if !self.AI.isThinking && !UserPreference.shared.game.black.isPlayer {
+				self.tryThinking()
+			}
+		}
+	}
+	
+	private func regretStep(onlyOne: Bool) {
 		var move: LunaMove = 0
 		let ate = Int(self.AI.regret(withMove: &move))
 		
-		if move > 0 {
-			self.recoverChess(from: GridPoint(location: move.to, isReverse: self.reverse), to: GridPoint(location: move.from, isReverse: self.reverse), recover: ate) {
-				if release {
-					self.isRegreting = false
-				}
+		guard move > 0 else { return }
+		
+		self.recoverChess(from: GridPoint(location: move.to, isReverse: self.reverse), to: GridPoint(location: move.from, isReverse: self.reverse), recover: ate) {
+			if onlyOne {
+				self.isRegreting = false
+			} else {
+				self.regretStep(onlyOne: true)
 			}
-			
-			self.clearChoice()
-			self.clearLegalMoves()
-			self.refreshLastMove(with: self.AI.lastMove?.move)
-			WavHandler.playVoice(state: .normal)
 		}
+		
+		self.clearChoice()
+		self.clearLegalMoves()
+		self.refreshLastMove(with: self.AI.lastMove?.move)
+		WavHandler.playVoice(state: .normal)
 	}
 	
 }

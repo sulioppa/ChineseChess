@@ -47,13 +47,13 @@ class ChessBoardController: NSObject {
 	}
 	
 	// MARK: - reverse & opposite
-	public final var reverse: Bool = false {
+	public var reverse: Bool = false {
 		didSet {
 			self.refreshBoard()
 		}
 	}
 	
-	public final var opposite: Bool = false {
+	public var opposite: Bool = false {
 		didSet {
 			self.refreshBoard()
 		}

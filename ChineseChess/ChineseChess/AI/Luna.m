@@ -14,7 +14,6 @@
 @interface Luna() {
 	LunaLocation _board[256];
 	LunaLocation _chess[48];
-	BOOL _side;
 	
 	id<LunaCoding> _coder;
 	LunaRecordStack *_stack;
@@ -99,6 +98,10 @@
 	if (ate) {
 		_chess[ate] = to;
 	}
+}
+
+- (void)NextStep:(void (^)(float progress, LunaMove move))block {
+	
 }
 
 @end

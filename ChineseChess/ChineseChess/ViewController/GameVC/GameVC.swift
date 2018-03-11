@@ -22,11 +22,23 @@ class GameVC: ChessVC {
 			("悔 棋", #selector(regretOneStep)),
 			("菜 单", #selector(showMenu)),
 			])
+		
+		self.chessBoardController.delegate = self
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		self.refreshUI()
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		self.chessBoardController.tryThinking()
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		self.chessBoardController.stopThinking()
 	}
 	
 	private func refreshUI() {
@@ -89,6 +101,7 @@ extension GameVC: MenuViewDelegate, CharacterViewDelegate, EditVCDelegate {
 			menuView.push(view: CharacterView(delegate: self, dataSource: self.AI.records.map({ return $0.item }), result: self.AI.state.result))
 		case 3:
 			menuView.dismiss()
+			
 			let vc = EditVC()
 			vc.AI.initBoard(withFile: self.AI.historyFile())
 			vc.delegate = self
@@ -123,7 +136,7 @@ extension GameVC: MenuViewDelegate, CharacterViewDelegate, EditVCDelegate {
 }
 
 // MARK: - Other
-extension GameVC {
+extension GameVC: GameBoardControllerDelegate {
 	
 	@objc private func back() {
 		WavHandler.playButtonWav()
@@ -135,7 +148,17 @@ extension GameVC {
 	}
 	
 	@objc private func teachMe() {
-		LoadingAlertView.show(message: "加载中...", isCloseButtonHidden: false, delegate: nil, completion: nil)
+		WavHandler.playButtonWav()
+		self.chessBoardController.techMe()
+	}
+	
+	var progress: Float {
+		get {
+			return 0.0
+		}
+		set {
+			self.setFlashProgress(progress: newValue)
+		}
 	}
 	
 }
