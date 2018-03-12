@@ -148,18 +148,46 @@ extension GameBoardController {
 	}
 	
 	public final func techMe() {
-		guard !self.AI.isThinking else { return }
+		guard !self.AI.isThinking && self.AI.state.isNormalState else { return }
+		
+		self.startThinking()
 	}
 	
 	public final func tryThinking() {
+		guard !self.AI.isThinking && self.AI.state.isNormalState else { return }
+		
+		if self.AI.side.isRed {
+			if !UserPreference.shared.game.red.isPlayer {
+				self.startThinking()
+			}
+		} else if !UserPreference.shared.game.black.isPlayer {
+			self.startThinking()
+		}
+	}
+	
+	private func startThinking() {
 		guard !self.AI.isThinking else { return }
+		
+		self.AI.nextStep { (progress, move) in
+			DispatchQueue.main.async { [weak self] in
+				guard let `self` = self else { return }
+				
+				self.delegate?.progress = progress
+				
+				if move > 0 && self.AI.isThinking {
+					self.stopThinking()
+					
+					self.makeMove(move: move)
+				}
+			}
+		}
 	}
 	
 	public final func stopThinking() {
 		self.AI.isThinking = false
 		self.delegate?.progress = 0.0
 	}
-	
+
 }
 
 // MARK: - Private - Support Handling Tap
@@ -202,6 +230,28 @@ extension GameBoardController {
 		WavHandler.playVoice(state: state)
 
 		self.moveChess(from: self.choice.grid, to: to)
+		self.refreshLastMove(with: self.AI.lastMove?.move)
+		self.clearChoice()
+		
+		if !self.AI.state.isNormalState {
+			BladeAlertView.show(in: self.contentView, text: self.AI.state.description)
+		}
+		
+		NotificationCenter.default.post(name: Macro.NotificationName.didUpdateOneStep, object: nil, userInfo: [
+			"item": self.AI.lastMove!.item,
+			"result": self.AI.state.result
+			])
+	}
+	
+	private func makeMove(move: LunaMove) {
+		self.clearLegalMoves()
+		let state = self.AI.moveChess(withMove: move)
+		WavHandler.playVoice(state: state)
+		
+		let from = GridPoint(location: move.from, isReverse: self.reverse)
+		let to = GridPoint(location: move.to, isReverse: self.reverse)
+		
+		self.moveChess(from: from, to: to)
 		self.refreshLastMove(with: self.AI.lastMove?.move)
 		self.clearChoice()
 		
