@@ -9,7 +9,11 @@
 import UIKit
 
 protocol GameBoardControllerDelegate: NSObjectProtocol {
+	
 	var progress: Float { set get }
+	
+	func gameBoardControllerDidChangeSide()
+	
 }
 
 class GameBoardController: ChessBoardController {
@@ -126,6 +130,7 @@ extension GameBoardController {
 				self.regretStep(onlyOne: false)
 			} else {
 				UserPreference.shared.game.black = .player
+				self.delegate?.gameBoardControllerDidChangeSide()
 				self.regretStep(onlyOne: true)
 			}
 		} else {
@@ -135,9 +140,11 @@ extension GameBoardController {
 				self.regretStep(onlyOne: false)
 			} else {
 				UserPreference.shared.game.red = .player
+				self.delegate?.gameBoardControllerDidChangeSide()
 				self.regretStep(onlyOne: true)
 			}
 		}
+		
 	}
 	
 	public final func techMe() {

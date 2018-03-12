@@ -161,4 +161,8 @@ extension GameVC: GameBoardControllerDelegate {
 		}
 	}
 	
+	func gameBoardControllerDidChangeSide() {
+		self.refreshTopBottom()
+	}
+	
 }
