@@ -120,9 +120,23 @@ extension GameBoardController {
 		self.AI.isThinking = false
 		
 		if self.AI.side.isRed {
-			self.regretStep(onlyOne: UserPreference.shared.game.black.isPlayer)
+			if UserPreference.shared.game.black.isPlayer {
+				self.regretStep(onlyOne: true)
+			} else if UserPreference.shared.game.red.isPlayer && self.AI.count > 1 {
+				self.regretStep(onlyOne: false)
+			} else {
+				UserPreference.shared.game.black = .player
+				self.regretStep(onlyOne: true)
+			}
 		} else {
-			self.regretStep(onlyOne: UserPreference.shared.game.red.isPlayer)
+			if UserPreference.shared.game.red.isPlayer {
+				self.regretStep(onlyOne: true)
+			} else if UserPreference.shared.game.black.isPlayer && self.AI.count > 1 {
+				self.regretStep(onlyOne: false)
+			} else {
+				UserPreference.shared.game.red = .player
+				self.regretStep(onlyOne: true)
+			}
 		}
 	}
 	
