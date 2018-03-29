@@ -6,6 +6,6 @@
 //  Copyright © 2017年 StarLab. All rights reserved.
 //
 
-// MARK: - C
+// MARK: - Luna C
 #import "Luna+Const.h"
 #import "Luna+PreGenerate.h"
