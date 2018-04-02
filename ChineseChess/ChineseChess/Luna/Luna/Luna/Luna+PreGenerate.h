@@ -49,7 +49,7 @@ LC_INLINE Bool _LCLocationColumnIsEqualToLocation(const LCLocation location, con
 
 // MARK: - Luna Move.
 LC_INLINE LCMove _LCMoveMake(const LCLocation from, const LCLocation to) {
-	return (from << 8) + to;
+	return (from << 8) | to;
 }
 
 LC_INLINE LCLocation _LCMoveGetLocationFrom(const LCMove move) {

@@ -691,14 +691,18 @@
 	
 	__block LunaRecord *last;
 	
+	const LunaLocation *const board = _board;
+	const LunaLocation *const chess = _chess;
+	const id<LunaCoding> coder = _coder;
+	
 	[_stack.allRecords enumerateObjectsUsingBlock:^(LunaRecord *record, NSUInteger idx, BOOL *stop) {
-		record.code = [_coder encode:_board];
-		[record setCharacter:[LunaRecordCharacter characterRecordWithMove:record.move board:_board array:_chess] count:idx];
+		record.code = [coder encode:board];
+		[record setCharacter:[LunaRecordCharacter characterRecordWithMove:record.move board:board array:chess] count:idx];
 		
-		record.chess = _board[_LCMoveGetLocationFrom(record.move)];
+		record.chess = board[_LCMoveGetLocationFrom(record.move)];
 		record.eat = [self doMoveWithMove:record.move];
 		
-		record.position = [_coder encode:_board];
+		record.position = [coder encode:board];
 		record.catch = [self catchWithChess:record.chess targetChess:last.chess hasEat:record.eat];
 		
 		[self oppositeSide];
