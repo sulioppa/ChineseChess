@@ -1,7 +1,5 @@
-# 中国象棋
+# 中国象棋（[English Click Here](/README.md)）
 *中国象棋 - 免费的 iOS App（C & Obj-C & Swift）*
-
-***
 
 ## App 一览
 ### 启动页 & 主页
@@ -25,7 +23,6 @@
 
 ***
 
-[English README.md Click Here](https://github.com/sulioppa/ChineseChess/blob/master/README.md)
 ## 版本记录
 * 2017.10.11, 正式启动工程.
 * 2018.2.24, 完成联机模块，开始开发AI.
@@ -52,3 +49,11 @@
 - 支持悔棋、认输、提和。
 - 支持新局。
 
+## AI一览（[参考前辈黄晨的网站](http://www.xqbase.com/computer/eleeye_intro.htm)）
+### 棋盘棋子表示
+- 棋盘：长度为256的数组。
+- 棋子：16~31为红方棋子，依次为帥、仕仕、相相、馬馬、車車、炮炮、兵兵兵兵兵，32~47为黑方棋子，类似。
+
+### 走法生成
+- 短程类：帥仕相馬兵，走法预生成数组。
+- 远程类：車炮，位行位列。

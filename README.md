@@ -1,7 +1,5 @@
-# ChineseChess（中国象棋）
+# ChineseChess（[中文点这里](/[Chinese]README.md)）
 *Chinese Chess - A Free iOS App（C & Obj-C & Swift）*
-
-***
 
 ## Overview Of This App（App 一览）
 ### Launch & Home Page（启动页 & 主页）
@@ -25,7 +23,6 @@
 
 ***
 
-[中文介绍点这里](https://github.com/sulioppa/ChineseChess/blob/master/[Chinese]README.md)
 ## Versions Track
 * 2017.10.11, right start the project.
 * 2018.2.24, done with MultiPeer module, begin developing AI.
@@ -51,3 +48,12 @@
 - support two people's game through the bluetooth or LAN.
 - support regret, draw, give up.
 - support start a new game.
+
+## Overview Of AI（[Refer to scholar Morning Yellow's blog](http://www.xqbase.com/computer/eleeye_intro.htm)）
+### The Expression Of Chess and Board
+- Board：an array, the length of it is 256.
+- Chess：red is 16~31, rank like King, Advisor, Advisor, Bishop, Bishop, Knight, Knight, Rook, Rook, Cannon, Cannon, Pawn, Pawn, Pawn, Pawn, Pawn, black is 32~47, the same as red.
+
+### Move Generate
+- Short Type：King, Advisor, Bishop, Knight, Pawn, previous generate move array.
+- Long Type：Rook, Cannon, bit row bit column.
