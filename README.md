@@ -52,8 +52,8 @@
 ## Overview Of AI（[Refer to scholar Morning Yellow's blog](http://www.xqbase.com/computer/eleeye_intro.htm)）
 ### The Expression Of Chess and Board
 - Board：an array, the length of it is 256.
-- Chess：red is 16~31, rank like King, Advisor, Advisor, Bishop, Bishop, Knight, Knight, Rook, Rook, Cannon, Cannon, Pawn, Pawn, Pawn, Pawn, Pawn, black is 32~47, the same as red.
+- Chess：red is from 16 to 31, rank like King, Advisor, Advisor, Bishop, Bishop, Knight, Knight, Rook, Rook, Cannon, Cannon, Pawn, Pawn, Pawn, Pawn, Pawn, black is from 32 to 47, the same as red.
 
 ### Move Generate
-- Short Type：King, Advisor, Bishop, Knight, Pawn, previous generate move array.
-- Long Type：Rook, Cannon, bit row bit column.
+- Short Type: King, Advisor, Bishop, Knight, Pawn, previous generate move array.
+- Long Type: Rook, Cannon, bit row bit column.
