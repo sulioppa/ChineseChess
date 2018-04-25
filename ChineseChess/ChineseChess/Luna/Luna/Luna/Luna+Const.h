@@ -10,20 +10,20 @@
 
 // MARK: - Luna Init Data.（棋子数组、棋盘数组初始化数据）
 typedef struct {
-	const LCLocation Chess[_LCLengthChess];
-	const LCLocation Board[_LCLengthBoard];
+	const LCLocation Chess[LCChessLength];
+	const LCLocation Board[LCBoardLength];
 } LCInitialData;
 
-extern const LCInitialData _LCInitialData;
+extern const LCInitialData LCInitialDataConst;
 
 // MARK: - Luna Legal Location.（合理位置数据）
 typedef struct {
-	const Bool Board[_LCLengthBoard];
-	const Bool K[_LCLengthBoard];
-	const Bool A[_LCLengthBoard];
-	const Bool B[_LCLengthBoard];
-	const Bool P[_LCLengthBoard << 1];
+	const Bool Board[LCBoardLength];
+	const Bool K[LCBoardLength];
+	const Bool A[LCBoardLength];
+	const Bool B[LCBoardLength];
+	const Bool P[LCBoardLength << 1];
 	const LCLocation River;
 } LCLegalLocation;
 
-extern const LCLegalLocation _LCLegalLocation;
+extern const LCLegalLocation LCLegalLocationConst;

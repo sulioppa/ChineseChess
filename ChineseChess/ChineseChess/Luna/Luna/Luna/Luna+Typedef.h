@@ -27,8 +27,8 @@ typedef unsigned char LCRowColumnMapState;
 
 #define LC_INLINE static inline
 
-#define _LCLengthChess 48
-#define _LCLengthBoard 256
-#define _LCLengthBoardMap 65536
+#define LCChessLength 48
+#define LCBoardLength 256
+#define LCBoardMapLength 65536
 
 #endif /* Luna_Typedef_h */

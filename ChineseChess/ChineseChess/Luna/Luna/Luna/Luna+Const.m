@@ -9,7 +9,7 @@
 #import "Luna+Const.h"
 
 // MARK: - Luna Init Data.
-const LCInitialData _LCInitialData = {
+const LCInitialData LCInitialDataConst = {
 	.Chess = {
 		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,0,
 		199,
@@ -47,7 +47,7 @@ const LCInitialData _LCInitialData = {
 };
 
 // MARK: - Luna Legal Location.
-const LCLegalLocation _LCLegalLocation = {
+const LCLegalLocation LCLegalLocationConst = {
 	.Board = {
 		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,0,
 		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,0,

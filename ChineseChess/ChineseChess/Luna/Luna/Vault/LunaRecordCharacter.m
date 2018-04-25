@@ -13,7 +13,7 @@
 @implementation LunaRecordCharacter
 
 + (NSString *)characterRecordWithMove:(const uint16_t)move board:(const uint8_t *const)board array:(const uint8_t *const)array {
-	const uint8_t from = _LCMoveGetLocationFrom(move), to = _LCMoveGetLocationTo(move);
+	const uint8_t from = LCMoveGetLocationFrom(move), to = LCMoveGetLocationTo(move);
 	const uint8_t chess = board[from];
 	const BOOL isBlack = chess > 31;
 	
@@ -23,24 +23,24 @@
 	NSString *multi = [self multiChessDescription:from board:board array:array];
 	
 	if (multi.isEmpty) {
-		NSString *column = [self columnStringWithNumber:_LCLocationGetColumn(from) - 2 isBlack:isBlack];
+		NSString *column = [self columnStringWithNumber:LCLocationGetColumn(from) - 2 isBlack:isBlack];
 		[character appendFormat:@"%@%@", name, column];
 	} else {
 		[character appendFormat:@"%@%@", multi, name];
 	}
 
-	if (_LCLocationRowIsEqualToLocation(from, to)) {
+	if (LCLocationRowIsEqualToLocation(from, to)) {
 		// 直行 平
-		NSString *column = [self columnStringWithNumber:_LCLocationGetColumn(to) - 2 isBlack:isBlack];
+		NSString *column = [self columnStringWithNumber:LCLocationGetColumn(to) - 2 isBlack:isBlack];
 		[character appendFormat:@"平%@", column];
-	} else if (_LCLocationColumnIsEqualToLocation(from, to)) {
+	} else if (LCLocationColumnIsEqualToLocation(from, to)) {
 		// 直行 进退
 		NSString *offset = [self offsetStringWithNumber:abs(from - to) >> 4 isBlack:isBlack];
 		NSString *direction = [self directionWithFrom:from to:to isBlack:isBlack];
 		[character appendFormat:@"%@%@", direction, offset];
 	} else {
 		// 其他 进退
-		NSString *column = [self columnStringWithNumber:_LCLocationGetColumn(to) - 2 isBlack:isBlack];
+		NSString *column = [self columnStringWithNumber:LCLocationGetColumn(to) - 2 isBlack:isBlack];
 		NSString *direction = [self directionWithFrom:from to:to isBlack:isBlack];
 		[character appendFormat:@"%@%@", direction, column];
 	}
@@ -81,7 +81,7 @@
 		// A, B, N, R, C
 		const uint8_t another = (chess & 1) ? chess + 1 : chess - 1;
 		
-		if (array[another] && _LCLocationColumnIsEqualToLocation(from, array[another])) {
+		if (array[another] && LCLocationColumnIsEqualToLocation(from, array[another])) {
 			return (isBlack ^ (from < array[another])) ? @"前" : @"后";
 		}
 	} else {
@@ -89,7 +89,7 @@
 		uint8_t count = 1, biggerCount = 0;
 		
 		for (uint8_t i = 27 + (isBlack << 4); i & 15; i++) {
-			if (i != chess && array[i] && _LCLocationColumnIsEqualToLocation(from, array[i])) {
+			if (i != chess && array[i] && LCLocationColumnIsEqualToLocation(from, array[i])) {
 				count++;
 				if (from > array[i]) {
 					biggerCount++;

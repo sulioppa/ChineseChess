@@ -13,50 +13,50 @@
  * 16 ~ 31 is red. like 01xxxx. from 16 to 31: King(16), Advisor, Advisor, Bishop, Bishop, Knight, Knight, Rook, Rook, Cannon, Cannon, Pawn, Pawn, Pawn, Pawn, Pawn(31).
  * 32 ~ 47 is black. like 10xxxx. from 32 to 47, range also like above.
  * 5th or 6th bit indicates red or black. */
-LC_INLINE LCSide _LCChessGetSide(const LCChess chess) {
+LC_INLINE LCSide LCChessGetSide(const LCChess chess) {
 	return chess >> 5;
 }
 
-LC_INLINE Bool _LCChessIsNotEqualToSide(const LCChess chess, const LCSide side) {
+LC_INLINE Bool LCChessSideIsNotSide(const LCChess chess, const LCSide side) {
 	return (chess >> 5) ^ side;
 }
 
-LC_INLINE Bool _LCChessSideIsNotEqualToChess(const LCChess chess, const LCChess chess1) {
+LC_INLINE Bool LCChessSideIsNotEqualToChess(const LCChess chess, const LCChess chess1) {
 	return (chess >> 5) ^ (chess1 >> 5);
 }
 
 // MARK: - Luna King.
-LC_INLINE LCChess _LCSideGetKing(const LCSide side) {
+LC_INLINE LCChess LCSideGetKing(const LCSide side) {
 	return (side + 1) << 4;
 }
 
 // MARK: - Luna Row & Column.
-LC_INLINE LCRow _LCLocationGetRow(const LCLocation location) {
+LC_INLINE LCRow LCLocationGetRow(const LCLocation location) {
 	return location >> 4;
 }
 
-LC_INLINE LCColumn _LCLocationGetColumn(const LCLocation location) {
+LC_INLINE LCColumn LCLocationGetColumn(const LCLocation location) {
 	return location & 15;
 }
 
-LC_INLINE Bool _LCLocationRowIsEqualToLocation(const LCLocation location, const LCLocation location1) {
+LC_INLINE Bool LCLocationRowIsEqualToLocation(const LCLocation location, const LCLocation location1) {
 	return (location >> 4) == (location1 >> 4);
 }
 
-LC_INLINE Bool _LCLocationColumnIsEqualToLocation(const LCLocation location, const LCLocation location1) {
+LC_INLINE Bool LCLocationColumnIsEqualToLocation(const LCLocation location, const LCLocation location1) {
 	return (location & 15) == (location1 & 15);
 }
 
 // MARK: - Luna Move.
-LC_INLINE LCMove _LCMoveMake(const LCLocation from, const LCLocation to) {
+LC_INLINE LCMove LCMoveMake(const LCLocation from, const LCLocation to) {
 	return (from << 8) | to;
 }
 
-LC_INLINE LCLocation _LCMoveGetLocationFrom(const LCMove move) {
+LC_INLINE LCLocation LCMoveGetLocationFrom(const LCMove move) {
 	return move >> 8;
 }
 
-LC_INLINE LCLocation _LCMoveGetLocationTo(const LCMove move) {
+LC_INLINE LCLocation LCMoveGetLocationTo(const LCMove move) {
 	return move & 0xff;
 }
 
@@ -73,11 +73,11 @@ LC_INLINE LCLocation _LCMoveGetLocationTo(const LCMove move) {
  * Luna Row & Column Flexibility（位行位列 灵活度）
  * the third dimension indicates the flexibility of rook and cannon. { rook flexibility, cannon flexibility } */
 typedef struct {
-	LCLocation K[_LCLengthBoard << 2]; // [256][4]
-	LCLocation A[_LCLengthBoard << 2];
-	LCLocation B[_LCLengthBoard << 2];
-	LCLocation N[_LCLengthBoard << 3]; // [256][8]
-	LCLocation P[_LCLengthBoard << 3]; // [2][256][4]
+	LCLocation K[LCBoardLength << 2]; // [256][4]
+	LCLocation A[LCBoardLength << 2];
+	LCLocation B[LCBoardLength << 2];
+	LCLocation N[LCBoardLength << 3]; // [256][8]
+	LCLocation P[LCBoardLength << 3]; // [2][256][4]
 	
 	LCRowColumnOffset Row[1 << 19]; // [2 ^ 12][2 ^ 4][2 ^ 3]
 	LCRowColumnOffset Column[1 << 20]; // [2 ^ 13][2 ^ 4][2 ^ 3]
@@ -91,14 +91,22 @@ typedef struct {
 	LCRowColumnFlexibility ColumnFlexibility[1 << 18]; // [2 ^ 13][2 ^ 4][2 ^ 1]
 } LCMoveArray;
 
-extern const LCMoveArray *const _LCMoveArray;
+extern const LCMoveArray *const LCMoveArrayConstRef;
 
-LC_INLINE const LCRowColumnOffset * _LCMoveArrayGetRowColumnOffset(const Bool isRow, const LCRowColumn rank, const LCRowColumnIndex idx, const LCRowColumnIndex offset) {
-	return (isRow ? _LCMoveArray->Row : _LCMoveArray->Column) + (rank << 7) + (idx << 3) + offset;
+LC_INLINE const LCRowColumnOffset * LCMoveArrayGetRowOffset(const LCRowColumn rank, const LCRowColumnIndex idx, const LCRowColumnIndex offset) {
+	return LCMoveArrayConstRef->Row + (rank << 7) + (idx << 3) + offset;
 }
 
-LC_INLINE LCRowColumnFlexibility _LCMoveArrayGetRowColumnFlexibility(const Bool isRow, const LCRowColumn rank, const LCRowColumnIndex idx, const Bool isCannon) {
-	return *((isRow ? _LCMoveArray->RowFlexibility : _LCMoveArray->ColumnFlexibility) + (rank << 5) + (idx << 1) + isCannon);
+LC_INLINE const LCRowColumnOffset * LCMoveArrayGetColumnOffset(const LCRowColumn rank, const LCRowColumnIndex idx, const LCRowColumnIndex offset) {
+	return LCMoveArrayConstRef->Column + (rank << 7) + (idx << 3) + offset;
+}
+
+LC_INLINE LCRowColumnFlexibility LCMoveArrayGetRowFlexibility(const LCRowColumn rank, const LCRowColumnIndex idx, const Bool isCannon) {
+	return *(LCMoveArrayConstRef->RowFlexibility + (rank << 5) + (idx << 1) + isCannon);
+}
+
+LC_INLINE LCRowColumnFlexibility LCMoveArrayGetColumnFlexibility(const LCRowColumn rank, const LCRowColumnIndex idx, const Bool isCannon) {
+	return *(LCMoveArrayConstRef->ColumnFlexibility + (rank << 5) + (idx << 1) + isCannon);
 }
 
 /* MARK: - Luna Move Map.（走法映射）
@@ -111,12 +119,12 @@ LC_INLINE LCRowColumnFlexibility _LCMoveArrayGetRowColumnFlexibility(const Bool 
  * so I can ask, is index to target index is rook eat? cannon eat? super cannon eat? eat nothing? or it cannot move to target index.
  */
 typedef struct {
-	Bool K[_LCLengthBoardMap]; // [256][256]
-	Bool A[_LCLengthBoardMap];
-	Bool P[_LCLengthBoardMap << 1]; // [2][256][256]
+	Bool K[LCBoardMapLength]; // [256][256]
+	Bool A[LCBoardMapLength];
+	Bool P[LCBoardMapLength << 1]; // [2][256][256]
 	
-	LCLocation B[_LCLengthBoardMap]; // whitch can also be B's leg map.
-	LCLocation N[_LCLengthBoardMap]; // whitch can also be N's leg map.
+	LCLocation B[LCBoardMapLength]; // whitch can also be B's leg map.
+	LCLocation N[LCBoardMapLength]; // whitch can also be N's leg map.
 	
 	LCRowColumnMapState Row[1 << 20]; // [2 ^ 12][2 ^ 4][2 ^ 4]
 	LCRowColumnMapState Column[1 << 21]; // [2 ^ 13][2 ^ 4][2 ^ 4]
@@ -131,11 +139,15 @@ typedef struct {
 	LCRowColumnMapState MaskC;
 } LCMoveMap;
 
-extern const LCMoveMap *const _LCMoveMap;
+extern const LCMoveMap *const LCMoveMapConstRef;
 
-LC_INLINE LCRowColumnMapState _LCMoveMapGetRowColumnMapState(const Bool isRow, const LCRowColumn rank, const LCRowColumnIndex from, const LCRowColumnIndex to) {
-	return *((isRow ? _LCMoveMap->Row : _LCMoveMap->Column) + (rank << 8) + (from << 4) + to);
+LC_INLINE LCRowColumnMapState LCMoveMapGetRowMapState(const LCRowColumn rank, const LCRowColumnIndex from, const LCRowColumnIndex to) {
+	return *(LCMoveMapConstRef->Row + (rank << 8) + (from << 4) + to);
+}
+
+LC_INLINE LCRowColumnMapState LCMoveMapGetColumnMapState(const LCRowColumn rank, const LCRowColumnIndex from, const LCRowColumnIndex to) {
+	return *(LCMoveMapConstRef->Column + (rank << 8) + (from << 4) + to);
 }
 
 // MARK: - Luna Init PreGenerate.（走法预生成 计算）
-extern void _LCInitPreGenerate(void);
+extern void LCInitPreGenerate(void);

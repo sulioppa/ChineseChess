@@ -11,10 +11,10 @@
 #include <memory.h>
 
 LCMoveArray _Internal_LCMoveArray;
-const LCMoveArray *const _LCMoveArray = &_Internal_LCMoveArray;
+const LCMoveArray *const LCMoveArrayConstRef = &_Internal_LCMoveArray;
 
 LCMoveMap _Internal_LCMoveMap;
-const LCMoveMap *const _LCMoveMap = &_Internal_LCMoveMap;
+const LCMoveMap *const LCMoveMapConstRef = &_Internal_LCMoveMap;
 
 // MARK: - Init PreGenerate
 void _LCInitRank(LCRowColumnOffset *const rankBit, LCRowColumnFlexibility *const rankFlex, LCRowColumnMapState *const rankMap, const LCRowColumnIndex maxIdx, const LCRowColumn maxBound);
@@ -39,7 +39,7 @@ void _LCInitRowColumn(void) {
 	_LCInitRank(_Internal_LCMoveArray.Column, _Internal_LCMoveArray.ColumnFlexibility, _Internal_LCMoveMap.Column, 12, 0x1fff);
 }
 
-void _LCInitPreGenerate(void) {
+void LCInitPreGenerate(void) {
 	// R、C
 	_LCInitRowColumn();
 	
@@ -54,71 +54,71 @@ void _LCInitPreGenerate(void) {
 	int index, count;
 	for (int from = 0, to; from < 256; from++) {
 		// K
-		if (_LCLegalLocation.K[from]) {
+		if (LCLegalLocationConst.K[from]) {
 			for (index = 0, count = 0; index < 4; index++) {
 				to = from + K_Dir[index];
-				if (_LCLegalLocation.K[to]) {
+				if (LCLegalLocationConst.K[to]) {
 					_Internal_LCMoveArray.K[(from << 2) + count] = to;
-					_Internal_LCMoveMap.K[_LCMoveMake(from, to)] = 1;
+					_Internal_LCMoveMap.K[LCMoveMake(from, to)] = 1;
 					count++;
 				}
 			}
 		}
 		
 		// A
-		if (_LCLegalLocation.A[from]) {
+		if (LCLegalLocationConst.A[from]) {
 			for (index = 0, count = 0; index < 4; index++) {
 				to = from + A_Dir[index];
-				if (_LCLegalLocation.A[to]) {
+				if (LCLegalLocationConst.A[to]) {
 					_Internal_LCMoveArray.A[(from << 2) + count] = to;
-					_Internal_LCMoveMap.A[_LCMoveMake(from, to)] = 1;
+					_Internal_LCMoveMap.A[LCMoveMake(from, to)] = 1;
 					count++;
 				}
 			}
 		}
 		
 		// B
-		if (_LCLegalLocation.B[from]) {
+		if (LCLegalLocationConst.B[from]) {
 			for (index = 0, count = 0; index < 4; index++) {
 				to = from + B_Dir[index];
-				if (_LCLegalLocation.B[to]) {
+				if (LCLegalLocationConst.B[to]) {
 					_Internal_LCMoveArray.B[(from << 2) + count] = to;
-					_Internal_LCMoveMap.B[_LCMoveMake(from, to)] = (from + to) >> 1;
+					_Internal_LCMoveMap.B[LCMoveMake(from, to)] = (from + to) >> 1;
 					count++;
 				}
 			}
 		}
 		
 		// N
-		if (_LCLegalLocation.Board[from]) {
+		if (LCLegalLocationConst.Board[from]) {
 			for (index = 0, count = 0; index < 8; index++) {
 				to = from + N_Dir[index];
-				if (_LCLegalLocation.Board[to]) {
+				if (LCLegalLocationConst.Board[to]) {
 					_Internal_LCMoveArray.N[(from << 3) + count] = to;
-					_Internal_LCMoveMap.N[_LCMoveMake(from, to)] = from + N_Leg[index];;
+					_Internal_LCMoveMap.N[LCMoveMake(from, to)] = from + N_Leg[index];;
 					count++;
 				}
 			}
 		}
 		
 		// P
-		if (_LCLegalLocation.P[from]) {
+		if (LCLegalLocationConst.P[from]) {
 			for (index = 0, count = 0; index < 3; index++) {
 				to = from + P_Dir[0][index];
-				if (_LCLegalLocation.P[to]) {
+				if (LCLegalLocationConst.P[to]) {
 					_Internal_LCMoveArray.P[(from << 2) + count] = to;
-					_Internal_LCMoveMap.P[_LCMoveMake(from, to)] = 1;
+					_Internal_LCMoveMap.P[LCMoveMake(from, to)] = 1;
 					count++;
 				}
 			}
 		}
 		
-		if (_LCLegalLocation.P[from + 256]) {
+		if (LCLegalLocationConst.P[from + 256]) {
 			for (index = 0, count = 0; index < 3; index++) {
 				to = from + P_Dir[1][index];
-				if (_LCLegalLocation.P[to + 256]) {
+				if (LCLegalLocationConst.P[to + 256]) {
 					_Internal_LCMoveArray.P[(from << 2) + count + (1 << 10)] = to;
-					_Internal_LCMoveMap.P[_LCMoveMake(from, to) + (1 << 16)] = 1;
+					_Internal_LCMoveMap.P[LCMoveMake(from, to) + (1 << 16)] = 1;
 					count++;
 				}
 			}
@@ -147,16 +147,16 @@ void _LCInitRank(LCRowColumnOffset *const rankBit, LCRowColumnFlexibility *const
 	const LCRowColumnIndex minIdx = 3;
 	const LCRowColumn minBound = 1 << minIdx;
 	
-	const LCRowColumnIndex leftRookEatOffset = _LCMoveArray->EatR;
+	const LCRowColumnIndex leftRookEatOffset = LCMoveArrayConstRef->EatR;
 	const LCRowColumnIndex rightRookEatOffset = leftRookEatOffset + 1;
 	
-	const LCRowColumnIndex leftCannonEatOffset = _LCMoveArray->EatC;
+	const LCRowColumnIndex leftCannonEatOffset = LCMoveArrayConstRef->EatC;
 	const LCRowColumnIndex rightCannonEatOffset = leftCannonEatOffset + 1;
 	
-	const LCRowColumnIndex leftNonEatOffset = _LCMoveArray->EatNone;
+	const LCRowColumnIndex leftNonEatOffset = LCMoveArrayConstRef->EatNone;
 	const LCRowColumnIndex rightNonEatOffset = leftNonEatOffset + 1;
 	
-	const LCRowColumnIndex leftSuperCEatOffset = _LCMoveArray->EatSuperC;
+	const LCRowColumnIndex leftSuperCEatOffset = LCMoveArrayConstRef->EatSuperC;
 	const LCRowColumnIndex rightSuperCEatOffset = leftSuperCEatOffset + 1;
 	
 	const LCRowColumnIndex rookFlexOffset = 0, cannonFlexOffset = 1;
@@ -176,7 +176,7 @@ void _LCInitRank(LCRowColumnOffset *const rankBit, LCRowColumnFlexibility *const
 				// exist rook eat move
 				rankBit[_bitIndex(rank, from, leftRookEatOffset)] = to - from;
 				rankFlex[_flexIndex(rank, from, rookFlexOffset)] += 1;
-				rankMap[_mapIndex(rank, from, to)] = _LCMoveMap->EatR;
+				rankMap[_mapIndex(rank, from, to)] = LCMoveMapConstRef->EatR;
 				
 				// store the rook eat in idx
 				idx = to;
@@ -190,7 +190,7 @@ void _LCInitRank(LCRowColumnOffset *const rankBit, LCRowColumnFlexibility *const
 					// exist cannon eat move
 					rankBit[_bitIndex(rank, from, leftCannonEatOffset)] = to - from;
 					rankFlex[_flexIndex(rank, from, cannonFlexOffset)] += 1;
-					rankMap[_mapIndex(rank, from, to)] = _LCMoveMap->EatC;
+					rankMap[_mapIndex(rank, from, to)] = LCMoveMapConstRef->EatC;
 					
 					// search the super cannon eat
 					for (to--; to >= minIdx; to--) {
@@ -200,7 +200,7 @@ void _LCInitRank(LCRowColumnOffset *const rankBit, LCRowColumnFlexibility *const
 					if (to >= minIdx) {
 						// exist super cannon eat move
 						rankBit[_bitIndex(rank, from, leftSuperCEatOffset)] = to - from;
-						rankMap[_mapIndex(rank, from, to)] = _LCMoveMap->EatSuperC;
+						rankMap[_mapIndex(rank, from, to)] = LCMoveMapConstRef->EatSuperC;
 					}
 				}
 				
@@ -219,7 +219,7 @@ void _LCInitRank(LCRowColumnOffset *const rankBit, LCRowColumnFlexibility *const
 				rankFlex[_flexIndex(rank, from, cannonFlexOffset)] += from - to;
 				
 				for (idx = to; idx < from; idx++) {
-					rankMap[_mapIndex(rank, from, idx)] = _LCMoveMap->EatNone;
+					rankMap[_mapIndex(rank, from, idx)] = LCMoveMapConstRef->EatNone;
 				}
 			}
 			
@@ -232,7 +232,7 @@ void _LCInitRank(LCRowColumnOffset *const rankBit, LCRowColumnFlexibility *const
 				// exist rook eat move
 				rankBit[_bitIndex(rank, from, rightRookEatOffset)] = to - from;
 				rankFlex[_flexIndex(rank, from, rookFlexOffset)] += 1;
-				rankMap[_mapIndex(rank, from, to)] = _LCMoveMap->EatR;
+				rankMap[_mapIndex(rank, from, to)] = LCMoveMapConstRef->EatR;
 				
 				// store the rook eat in idx.
 				idx = to;
@@ -246,7 +246,7 @@ void _LCInitRank(LCRowColumnOffset *const rankBit, LCRowColumnFlexibility *const
 					// exist cannon eat move
 					rankBit[_bitIndex(rank, from, rightCannonEatOffset)] = to - from;
 					rankFlex[_flexIndex(rank, from, cannonFlexOffset)] += 1;
-					rankMap[_mapIndex(rank, from, to)] = _LCMoveMap->EatC;
+					rankMap[_mapIndex(rank, from, to)] = LCMoveMapConstRef->EatC;
 					
 					// search the super cannon eat
 					for (to++; to <= maxIdx; to++) {
@@ -256,7 +256,7 @@ void _LCInitRank(LCRowColumnOffset *const rankBit, LCRowColumnFlexibility *const
 					if (to <= maxIdx) {
 						// exist super cannon eat move
 						rankBit[_bitIndex(rank, from, rightSuperCEatOffset)] = to - from;
-						rankMap[_mapIndex(rank, from, to)] = _LCMoveMap->EatSuperC;
+						rankMap[_mapIndex(rank, from, to)] = LCMoveMapConstRef->EatSuperC;
 					}
 				}
 				
@@ -275,7 +275,7 @@ void _LCInitRank(LCRowColumnOffset *const rankBit, LCRowColumnFlexibility *const
 				rankFlex[_flexIndex(rank, from, cannonFlexOffset)] += to - from;
 				
 				for (idx = to; idx > from; idx--) {
-					rankMap[_mapIndex(rank, from, idx)] = _LCMoveMap->EatNone;
+					rankMap[_mapIndex(rank, from, idx)] = LCMoveMapConstRef->EatNone;
 				}
 			}
 		}
