@@ -682,8 +682,8 @@
     _state =  _side;
     [_coder decode:_stack.firstCode board:_board];
     
-    memset(_chess, 0, 48);
-    for (int i = 0; i < 256; i++) {
+    memset(_chess, 0, LCChessLength);
+    for (int i = 0; i < LCBoardLength; i++) {
         if (_board[i]) {
             _chess[_board[i]] = i;
         }
@@ -733,8 +733,8 @@
 	_state =  _side;
 	[_coder decode:_stack.firstCode board:_board];
 	
-	memset(_chess, 0, 48);
-	for (int i = 0; i < 256; i++) {
+	memset(_chess, 0, LCChessLength);
+	for (int i = 0; i < LCBoardLength; i++) {
 		if (_board[i]) {
 			_chess[_board[i]] = i;
 		}

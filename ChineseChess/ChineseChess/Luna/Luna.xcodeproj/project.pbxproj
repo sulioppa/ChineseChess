@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A73758832090631600944EAC /* Luna+Position.h in Headers */ = {isa = PBXBuildFile; fileRef = A73758812090631600944EAC /* Luna+Position.h */; };
+		A73758842090631600944EAC /* Luna+Position.m in Sources */ = {isa = PBXBuildFile; fileRef = A73758822090631600944EAC /* Luna+Position.m */; };
+		A737588720906DE500944EAC /* libc.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A737588620906DE500944EAC /* libc.tbd */; };
 		A75AB905206C869C00FA7B1F /* Luna.m in Sources */ = {isa = PBXBuildFile; fileRef = A75AB8EB206C869B00FA7B1F /* Luna.m */; };
 		A75AB906206C869C00FA7B1F /* Luna.h in Headers */ = {isa = PBXBuildFile; fileRef = A75AB8EC206C869B00FA7B1F /* Luna.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A75AB907206C869C00FA7B1F /* Luna+PreGenerate.h in Headers */ = {isa = PBXBuildFile; fileRef = A75AB8EE206C869B00FA7B1F /* Luna+PreGenerate.h */; };
@@ -38,6 +41,9 @@
 /* Begin PBXFileReference section */
 		A72C22E0206C84BB00520E72 /* Luna.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Luna.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A72C22E4206C84BB00520E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A73758812090631600944EAC /* Luna+Position.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Position.h"; sourceTree = "<group>"; };
+		A73758822090631600944EAC /* Luna+Position.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+Position.m"; sourceTree = "<group>"; };
+		A737588620906DE500944EAC /* libc.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libc.tbd; path = usr/lib/libc.tbd; sourceTree = SDKROOT; };
 		A75AB8EB206C869B00FA7B1F /* Luna.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Luna.m; sourceTree = "<group>"; };
 		A75AB8EC206C869B00FA7B1F /* Luna.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Luna.h; sourceTree = "<group>"; };
 		A75AB8EE206C869B00FA7B1F /* Luna+PreGenerate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Luna+PreGenerate.h"; sourceTree = "<group>"; };
@@ -71,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A737588720906DE500944EAC /* libc.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +89,7 @@
 			children = (
 				A72C22E2206C84BB00520E72 /* Luna */,
 				A72C22E1206C84BB00520E72 /* Products */,
+				A737588520906DE500944EAC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -106,6 +114,14 @@
 			path = Luna;
 			sourceTree = "<group>";
 		};
+		A737588520906DE500944EAC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A737588620906DE500944EAC /* libc.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A75AB8ED206C869B00FA7B1F /* Luna */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +131,8 @@
 				A75AB8F2206C869B00FA7B1F /* Luna+Const.m */,
 				A75AB8EE206C869B00FA7B1F /* Luna+PreGenerate.h */,
 				A75AB8F1206C869B00FA7B1F /* Luna+PreGenerate.m */,
+				A73758812090631600944EAC /* Luna+Position.h */,
+				A73758822090631600944EAC /* Luna+Position.m */,
 				A7EBF1D9209027FC0072E389 /* Luna+Generate.h */,
 				A7EBF1DA209027FC0072E389 /* Luna+Generate.m */,
 			);
@@ -163,6 +181,7 @@
 				A75AB912206C869C00FA7B1F /* LunaCodingProtocol.h in Headers */,
 				A75AB913206C869C00FA7B1F /* LunaRecordRuler.h in Headers */,
 				A75AB909206C869C00FA7B1F /* Luna+Const.h in Headers */,
+				A73758832090631600944EAC /* Luna+Position.h in Headers */,
 				A75AB908206C869C00FA7B1F /* Luna+C.h in Headers */,
 				A75AB919206C869C00FA7B1F /* Luna+Objc.h in Headers */,
 				A75AB911206C869C00FA7B1F /* LunaRecordVault.h in Headers */,
@@ -250,6 +269,7 @@
 				A75AB90A206C869C00FA7B1F /* Luna+PreGenerate.m in Sources */,
 				A75AB910206C869C00FA7B1F /* LunaRecordCharacter.m in Sources */,
 				A7EBF1DC209027FC0072E389 /* Luna+Generate.m in Sources */,
+				A73758842090631600944EAC /* Luna+Position.m in Sources */,
 				A75AB905206C869C00FA7B1F /* Luna.m in Sources */,
 				A75AB915206C869C00FA7B1F /* LunaRecord.m in Sources */,
 				A75AB91B206C869C00FA7B1F /* NSString+Subscript.m in Sources */,

@@ -30,5 +30,6 @@ typedef unsigned char LCRowColumnMapState;
 #define LCChessLength 48
 #define LCBoardLength 256
 #define LCBoardMapLength 65536
+#define LCBoardRowsColumnsLength 16
 
 #endif /* Luna_Typedef_h */
