@@ -1,3 +1,4 @@
+![](/icon.png)
 # 中国象棋（[English Click Here](/README.md)）
 *中国象棋 - 免费的 iOS App（C & Obj-C & Swift）*
 

@@ -1,3 +1,4 @@
+![](/icon.png)
 # ChineseChess（[中文点这里](/[Chinese]README.md)）
 *Chinese Chess - A Free iOS App（C & Obj-C & Swift）*
 
