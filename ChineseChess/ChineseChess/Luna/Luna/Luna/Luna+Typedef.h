@@ -15,6 +15,9 @@ typedef unsigned char LCSide;
 typedef unsigned char LCChess;
 typedef unsigned char LCLocation;
 typedef unsigned short LCMove;
+typedef unsigned short LCScore;
+typedef unsigned short LCLength;
+typedef unsigned int LCMoveTrack;
 
 typedef unsigned char LCRow;
 typedef unsigned char LCColumn;
@@ -31,5 +34,7 @@ typedef unsigned char LCRowColumnMapState;
 #define LCBoardLength 256
 #define LCBoardMapLength 65536
 #define LCBoardRowsColumnsLength 16
+
+#define LCMoveTrackMaxLength 120
 
 #endif /* Luna_Typedef_h */

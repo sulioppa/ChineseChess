@@ -55,8 +55,6 @@ void LCPositionRelease(LCPositionRef position) {
 	free((void *)position);
 }
 
-// MARK: - LCPosition Changed
-
 // MARK: - LCPosition Row & Column Set
 LCRowColumn LCLocationArrayGetLCRowColumn(const LCLocation *const array) {
 	LCRowColumn bit = 0;
