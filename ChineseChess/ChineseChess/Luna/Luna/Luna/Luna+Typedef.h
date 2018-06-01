@@ -10,13 +10,12 @@
 #define Luna_Typedef_h
 
 typedef _Bool Bool;
+typedef unsigned short UShort;
 
 typedef unsigned char LCSide;
 typedef unsigned char LCChess;
 typedef unsigned char LCLocation;
 typedef unsigned short LCMove;
-typedef unsigned short LCScore;
-typedef unsigned short LCLength;
 typedef unsigned int LCMoveTrack;
 
 typedef unsigned char LCRow;

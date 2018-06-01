@@ -12,15 +12,11 @@
  * score(high 16)
  * move(low 16)
  */
-LC_INLINE LCMoveTrack LCMoveTrackMake(const LCMove move, const LCScore score) {
-	return (score << 16) | move;
+LC_INLINE LCMoveTrack LCMoveTrackMake(const LCMove move, const UShort score) {
+	return (move << 16) | score;
 }
 
 LC_INLINE LCMove LCMoveTrackGetMove(const LCMoveTrack track) {
-	return track & 0xffff;
-}
-
-LC_INLINE LCScore LCMoveTrackGetScore(const LCMoveTrack track) {
 	return track >> 16;
 }
 
@@ -42,7 +38,7 @@ LC_INLINE void LCMovesTrackPopAll(LCMutableMovesTrackRef moves) {
 	moves->top = moves->track;
 }
 
-LC_INLINE LCLength LCMovesTrackCapcity(LCMutableMovesTrackRef moves) {
+LC_INLINE UShort LCMovesTrackGetCapcity(LCMutableMovesTrackRef moves) {
 	return moves->top - moves->track;
 }
 
@@ -50,7 +46,7 @@ LC_INLINE LCLength LCMovesTrackCapcity(LCMutableMovesTrackRef moves) {
  * the index is move.
  */
 typedef struct {
-	LCScore history[LCBoardMapLength];
+	UShort history[LCBoardMapLength];
 } LCHistoryTrack;
 
 typedef const LCHistoryTrack *const LCHistoryTrackRef;
@@ -59,16 +55,16 @@ typedef LCHistoryTrack *const LCMutableHistoryTrackRef;
 
 extern void LCHistoryTrackClear(LCMutableHistoryTrackRef history);
 
-LC_INLINE void LCHistoryTrackRecord(LCMutableHistoryTrackRef history, LCMove move, LCScore value) {
+LC_INLINE void LCHistoryTrackRecord(LCMutableHistoryTrackRef history, LCMove move, UShort value) {
 	history->history[move] += value;
 }
 
 /* MARK: - Generate Eat Moves
  * sorted by mvv
  */
-extern void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRef *moves);
+extern void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRef moves);
 
 /* MARK: - Generate Eat Moves
  * sorted by history
  */
-extern void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef history, LCMutableMovesTrackRef *moves);
+extern void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef history, LCMutableMovesTrackRef moves);
