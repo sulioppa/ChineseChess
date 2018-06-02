@@ -48,7 +48,7 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRe
 	LCMovesTrackPopAll(moves);
 	
 	// K
-	for (to = LCMoveArrayConstRef->K + *chess, toBoundary = to + 4; *to && to < toBoundary; to++) {
+	for (to = LCMoveArrayConstRef->K + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
 		if (position->board[*to]) {
 			LCMovesTrackPushBack(moves, LCMoveTrackMake(LCMoveMake(*chess, *to), LCMvvValue[position->board[*to]]));
 		}
@@ -61,7 +61,7 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRe
 			continue;
 		}
 		
-		for (to = LCMoveArrayConstRef->A + *chess, toBoundary = to + 4; *to && to < toBoundary; to++) {
+		for (to = LCMoveArrayConstRef->A + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
 			if (position->board[*to]) {
 				LCMovesTrackPushBack(moves, LCMoveTrackMake(LCMoveMake(*chess, *to), LCMvvValue[position->board[*to]]));
 			}
@@ -74,7 +74,7 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRe
 			continue;
 		}
 		
-		for (to = LCMoveArrayConstRef->B + *chess, toBoundary = to + 4; *to && to < toBoundary; to++) {
+		for (to = LCMoveArrayConstRef->B + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
 			buffer = LCMoveMake(*chess, *to);
 			
 			if (position->board[*to] && !position->board[LCMoveMapConstRef->B[buffer]]) {
@@ -89,7 +89,7 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRe
 			continue;
 		}
 		
-		for (to = LCMoveArrayConstRef->N + *chess, toBoundary = to + 8; *to && to < toBoundary; to++) {
+		for (to = LCMoveArrayConstRef->N + *chess, toBoundary = to + 8; to < toBoundary && *to; to++) {
 			buffer = LCMoveMake(*chess, *to);
 			
 			if (position->board[*to] && !position->board[LCMoveMapConstRef->N[buffer]]) {
@@ -175,7 +175,7 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRe
 			continue;
 		}
 		
-		for (to = LCMoveArrayConstRef->P + *chess + buffer, toBoundary = to + 3; *to && to < toBoundary; to++) {
+		for (to = LCMoveArrayConstRef->P + *chess + buffer, toBoundary = to + 3; to < toBoundary && *to; to++) {
 			if (position->board[*to]) {
 				LCMovesTrackPushBack(moves, LCMoveTrackMake(LCMoveMake(*chess, *to), LCMvvValue[position->board[*to]]));
 			}
@@ -192,5 +192,135 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRe
  * sorted by history
  */
 void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef history, LCMutableMovesTrackRef moves) {
+	const LCChess *chess, *chessBoundary;
+	const LCLocation *to, *toBoundary;
+	const LCRowColumnOffset *offset;
 	
+	UShort move;
+	
+	chess = position->chess + LCSideGetKing(position->side);
+	LCMovesTrackPopAll(moves);
+	
+	// K
+	for (to = LCMoveArrayConstRef->K + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
+		if (!position->board[*to]) {
+			move = LCMoveMake(*chess, *to);
+			LCMovesTrackPushBack(moves, LCMoveTrackMake(move, history->history[move]));
+		}
+	}
+	chess++;
+	
+	// A
+	for (chessBoundary = chess + 2; chess < chessBoundary; chess++) {
+		if (!*chess) {
+			continue;
+		}
+		
+		for (to = LCMoveArrayConstRef->A + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
+			if (!position->board[*to]) {
+				move = LCMoveMake(*chess, *to);
+				LCMovesTrackPushBack(moves, LCMoveTrackMake(move, history->history[move]));
+			}
+		}
+	}
+	
+	// B
+	for (chessBoundary = chess + 2; chess < chessBoundary; chess++) {
+		if (!*chess) {
+			continue;
+		}
+		
+		for (to = LCMoveArrayConstRef->B + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
+			move = LCMoveMake(*chess, *to);
+			
+			if (!position->board[*to] && !position->board[LCMoveMapConstRef->B[move]]) {
+				LCMovesTrackPushBack(moves, LCMoveTrackMake(move, history->history[move]));
+			}
+		}
+	}
+	
+	// N
+	for (chessBoundary = chess + 2; chess < chessBoundary; chess++) {
+		if (!*chess) {
+			continue;
+		}
+		
+		for (to = LCMoveArrayConstRef->N + *chess, toBoundary = to + 8; to < toBoundary && *to; to++) {
+			move = LCMoveMake(*chess, *to);
+			
+			if (!position->board[*to] && !position->board[LCMoveMapConstRef->N[move]]) {
+				LCMovesTrackPushBack(moves, LCMoveTrackMake(move, history->history[move]));
+			}
+		}
+	}
+	
+	// R、C
+	for (chessBoundary = chess + 4; chess < chessBoundary; chess++) {
+		if (!*chess) {
+			continue;
+		}
+		
+		// Row
+		offset = LCMoveArrayGetRowOffset(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), LCMoveArrayConstRef->EatNone);
+		
+		if (*offset) {
+			move = *chess + *offset;
+			
+			while (move < *chess) {
+				LCMovesTrackPushBack(moves, LCMoveTrackMake(LCMoveMake(*chess, move), history->history[LCMoveMake(*chess, move)]));
+				move++;
+			}
+		}
+		
+		offset++;
+		if (*offset) {
+			move = *chess + *offset;
+			
+			while (move > *chess) {
+				LCMovesTrackPushBack(moves, LCMoveTrackMake(LCMoveMake(*chess, move), history->history[LCMoveMake(*chess, move)]));
+				move--;
+			}
+		}
+		
+		// Column
+		offset = LCMoveArrayGetColumnOffset(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), LCMoveArrayConstRef->EatNone);
+		
+		if (*offset) {
+			move = *chess + (*offset << 4);
+			
+			while (move < *chess) {
+				LCMovesTrackPushBack(moves, LCMoveTrackMake(LCMoveMake(*chess, move), history->history[LCMoveMake(*chess, move)]));
+				move += 16;
+			}
+		}
+		
+		offset++;
+		if (*offset) {
+			move = *chess + (*offset << 4);
+			
+			while (move > *chess) {
+				LCMovesTrackPushBack(moves, LCMoveTrackMake(LCMoveMake(*chess, move), history->history[LCMoveMake(*chess, move)]));
+				move -= 16;
+			}
+		}
+	}
+	
+	// P
+	for (chessBoundary = chess + 5; chess < chessBoundary; chess++) {
+		if (!*chess) {
+			continue;
+		}
+		
+		for (to = LCMoveArrayConstRef->P + *chess + (position->side << 10), toBoundary = to + 3; to < toBoundary && *to; to++) {
+			if (!position->board[*to]) {
+				move = LCMoveMake(*chess, *to);
+				LCMovesTrackPushBack(moves, LCMoveTrackMake(move, history->history[move]));
+			}
+		}
+	}
+	
+	// Sort by history
+	qsort_b(moves->track, LCMovesTrackGetCapcity(moves), LCMoveTrackSize, ^ int (const void *a, const void *b) {
+		return *(short *)b - *(short *)a;
+	});
 }
