@@ -51,7 +51,8 @@ uint16_t StringToMove(NSString *string) {
 	if (count & 1) {
 		_character = [NSString stringWithFormat:@"%4c %@", ' ',character];
 	} else {
-		_character = [NSString stringWithFormat:@"%3lu. %@", (count >> 1) + 1, character];
+		count = (count >> 1) + 1;
+		_character = [NSString stringWithFormat:@"%3lu. %@", (unsigned long)count, character];
 	}
 }
 

@@ -15,7 +15,7 @@
 /* MARK: - LCMvvValue
  * the index is LCChess.
  */
-const UShort LCMvvValue[16] = {
+const UInt16 LCMvvValue[16] = {
 	64,
 	9, 9,
 	8, 8,
@@ -42,7 +42,7 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRe
 	const LCLocation *to, *toBoundary;
 	const LCRowColumnOffset *offset;
 	
-	UShort buffer;
+	UInt16 buffer;
 	
 	chess = position->chess + LCSideGetKing(position->side);
 	LCMovesTrackPopAll(moves);
@@ -196,7 +196,7 @@ void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef 
 	const LCLocation *to, *toBoundary;
 	const LCRowColumnOffset *offset;
 	
-	UShort move;
+	UInt16 move;
 	
 	chess = position->chess + LCSideGetKing(position->side);
 	LCMovesTrackPopAll(moves);

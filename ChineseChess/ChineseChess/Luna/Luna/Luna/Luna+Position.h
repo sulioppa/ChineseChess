@@ -38,3 +38,7 @@ LC_INLINE void LCRowColumnSetBitValue(LCRowColumn *const rc, const LCRowColumnIn
 		*rc &= ~(1 << index);
 	}
 }
+
+LC_INLINE void LCPositionReveseSide(LCMutablePositionRef position) {
+	position->side ^= 1;
+}

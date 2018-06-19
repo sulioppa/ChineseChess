@@ -9,10 +9,12 @@
 #ifndef Luna_Typedef_h
 #define Luna_Typedef_h
 
-typedef _Bool Bool;
-typedef unsigned short UShort;
+#include <MacTypes.h>
 
-typedef unsigned char LCSide;
+typedef _Bool Bool;
+typedef short Int16;
+
+typedef _Bool LCSide;
 typedef unsigned char LCChess;
 typedef unsigned char LCLocation;
 typedef unsigned short LCMove;
