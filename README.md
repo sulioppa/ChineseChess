@@ -51,6 +51,12 @@
 - support start a new game.
 
 ## Overview Of AI（[Refer to scholar Morning Yellow's blog](http://www.xqbase.com/computer/eleeye_intro.htm)）
+### Simple Chess Rule
+- Long check or long catch will lead to lose.
+- Both of side have no chess can attack will lead to draw.
+- 50 rounds of moves have no eat will lead to draw.
+- Same position appears many times will lead to draw.
+
 ### The Expression Of Chess and Board
 - Board：an array, the length of it is 256.
 - Chess：red is from 16 to 31, rank like King, Advisor, Advisor, Bishop, Bishop, Knight, Knight, Rook, Rook, Cannon, Cannon, Pawn, Pawn, Pawn, Pawn, Pawn, black is from 32 to 47, the same as red.

@@ -33,6 +33,8 @@
 		A75AB919206C869C00FA7B1F /* Luna+Objc.h in Headers */ = {isa = PBXBuildFile; fileRef = A75AB901206C869B00FA7B1F /* Luna+Objc.h */; };
 		A75AB91A206C869C00FA7B1F /* NSString+Subscript.h in Headers */ = {isa = PBXBuildFile; fileRef = A75AB903206C869B00FA7B1F /* NSString+Subscript.h */; };
 		A75AB91B206C869C00FA7B1F /* NSString+Subscript.m in Sources */ = {isa = PBXBuildFile; fileRef = A75AB904206C869B00FA7B1F /* NSString+Subscript.m */; };
+		A786AA8F20D8D51D00D16E72 /* Luna+Evaluate.h in Headers */ = {isa = PBXBuildFile; fileRef = A786AA8D20D8D51D00D16E72 /* Luna+Evaluate.h */; };
+		A786AA9020D8D51D00D16E72 /* Luna+Evaluate.m in Sources */ = {isa = PBXBuildFile; fileRef = A786AA8E20D8D51D00D16E72 /* Luna+Evaluate.m */; };
 		A7E4FD20206CD83B0086707B /* Luna+Typedef.h in Headers */ = {isa = PBXBuildFile; fileRef = A7E4FD1F206CD83B0086707B /* Luna+Typedef.h */; };
 		A7EBF1DB209027FC0072E389 /* Luna+Generate.h in Headers */ = {isa = PBXBuildFile; fileRef = A7EBF1D9209027FC0072E389 /* Luna+Generate.h */; };
 		A7EBF1DC209027FC0072E389 /* Luna+Generate.m in Sources */ = {isa = PBXBuildFile; fileRef = A7EBF1DA209027FC0072E389 /* Luna+Generate.m */; };
@@ -67,6 +69,8 @@
 		A75AB901206C869B00FA7B1F /* Luna+Objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Luna+Objc.h"; sourceTree = "<group>"; };
 		A75AB903206C869B00FA7B1F /* NSString+Subscript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Subscript.h"; sourceTree = "<group>"; };
 		A75AB904206C869B00FA7B1F /* NSString+Subscript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Subscript.m"; sourceTree = "<group>"; };
+		A786AA8D20D8D51D00D16E72 /* Luna+Evaluate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Evaluate.h"; sourceTree = "<group>"; };
+		A786AA8E20D8D51D00D16E72 /* Luna+Evaluate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+Evaluate.m"; sourceTree = "<group>"; };
 		A7E4FD1F206CD83B0086707B /* Luna+Typedef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Typedef.h"; sourceTree = "<group>"; };
 		A7EBF1D9209027FC0072E389 /* Luna+Generate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Generate.h"; sourceTree = "<group>"; };
 		A7EBF1DA209027FC0072E389 /* Luna+Generate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+Generate.m"; sourceTree = "<group>"; };
@@ -135,6 +139,8 @@
 				A73758822090631600944EAC /* Luna+Position.m */,
 				A7EBF1D9209027FC0072E389 /* Luna+Generate.h */,
 				A7EBF1DA209027FC0072E389 /* Luna+Generate.m */,
+				A786AA8D20D8D51D00D16E72 /* Luna+Evaluate.h */,
+				A786AA8E20D8D51D00D16E72 /* Luna+Evaluate.m */,
 			);
 			path = Luna;
 			sourceTree = "<group>";
@@ -178,6 +184,7 @@
 			files = (
 				A75AB906206C869C00FA7B1F /* Luna.h in Headers */,
 				A75AB90F206C869C00FA7B1F /* LunaRecord.h in Headers */,
+				A786AA8F20D8D51D00D16E72 /* Luna+Evaluate.h in Headers */,
 				A75AB912206C869C00FA7B1F /* LunaCodingProtocol.h in Headers */,
 				A75AB913206C869C00FA7B1F /* LunaRecordRuler.h in Headers */,
 				A75AB909206C869C00FA7B1F /* Luna+Const.h in Headers */,
@@ -266,6 +273,7 @@
 				A75AB90B206C869C00FA7B1F /* Luna+Const.m in Sources */,
 				A75AB917206C869C00FA7B1F /* LunaRecordVault.m in Sources */,
 				A75AB916206C869C00FA7B1F /* LunaRecordStack.m in Sources */,
+				A786AA9020D8D51D00D16E72 /* Luna+Evaluate.m in Sources */,
 				A75AB90A206C869C00FA7B1F /* Luna+PreGenerate.m in Sources */,
 				A75AB910206C869C00FA7B1F /* LunaRecordCharacter.m in Sources */,
 				A7EBF1DC209027FC0072E389 /* Luna+Generate.m in Sources */,
