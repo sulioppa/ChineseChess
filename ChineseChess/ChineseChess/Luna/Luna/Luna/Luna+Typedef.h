@@ -14,28 +14,15 @@
 typedef _Bool Bool;
 typedef short Int16;
 
-typedef _Bool LCSide;
-typedef unsigned char LCChess;
-typedef unsigned char LCLocation;
-typedef unsigned short LCMove;
-typedef unsigned int LCMoveTrack;
-
-typedef unsigned char LCRow;
-typedef unsigned char LCColumn;
-typedef unsigned short LCRowColumn;
-
-typedef signed char LCRowColumnOffset;
-typedef unsigned char LCRowColumnIndex;
-typedef unsigned char LCRowColumnFlexibility;
-typedef unsigned char LCRowColumnMapState;
-
-#define LC_INLINE static inline
+typedef UInt8 LCChess;
+typedef UInt8 LCLocation;
 
 #define LCChessLength 48
 #define LCBoardLength 256
+
 #define LCBoardMapLength 65536
 #define LCBoardRowsColumnsLength 16
 
-#define LCMoveTrackMaxLength 120
+#define LC_INLINE static inline
 
 #endif /* Luna_Typedef_h */

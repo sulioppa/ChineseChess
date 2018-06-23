@@ -13,6 +13,16 @@
  * 16 ~ 31 is red. like 01xxxx. from 16 to 31: King(16), Advisor, Advisor, Bishop, Bishop, Knight, Knight, Rook, Rook, Cannon, Cannon, Pawn, Pawn, Pawn, Pawn, Pawn(31).
  * 32 ~ 47 is black. like 10xxxx. from 32 to 47, range also like above.
  * 5th or 6th bit indicates red or black. */
+typedef Bool LCSide;
+
+LC_INLINE void LCSideRevese(LCSide *const side) {
+	*side ^= 1;
+}
+
+LC_INLINE LCChess LCSideGetKing(const LCSide side) {
+	return (side + 1) << 4;
+}
+
 LC_INLINE LCSide LCChessGetSide(const LCChess chess) {
 	return chess >> 5;
 }
@@ -25,12 +35,10 @@ LC_INLINE Bool LCChessSideIsNotEqualToChess(const LCChess chess, const LCChess c
 	return (chess >> 5) ^ (chess1 >> 5);
 }
 
-// MARK: - Luna King.
-LC_INLINE LCChess LCSideGetKing(const LCSide side) {
-	return (side + 1) << 4;
-}
-
 // MARK: - Luna Row & Column.
+typedef UInt8 LCRow;
+typedef UInt8 LCColumn;
+
 LC_INLINE LCRow LCLocationGetRow(const LCLocation location) {
 	return location >> 4;
 }
@@ -48,6 +56,8 @@ LC_INLINE Bool LCLocationColumnIsEqualToLocation(const LCLocation location, cons
 }
 
 // MARK: - Luna Move.
+typedef UInt16 LCMove;
+
 LC_INLINE LCMove LCMoveMake(const LCLocation from, const LCLocation to) {
 	return (from << 8) | to;
 }
@@ -58,6 +68,21 @@ LC_INLINE LCLocation LCMoveGetLocationFrom(const LCMove move) {
 
 LC_INLINE LCLocation LCMoveGetLocationTo(const LCMove move) {
 	return move & 0xff;
+}
+
+// MARK: - LCRowColumn
+typedef UInt16 LCRowColumn;
+typedef UInt8 LCRowColumnIndex;
+typedef SInt8 LCRowColumnOffset;
+typedef UInt8 LCRowColumnFlexibility;
+typedef UInt8 LCRowColumnMapState;
+
+LC_INLINE void LCRowColumnModified(LCRowColumn *const rc, const LCRowColumnIndex index, const Bool value) {
+	if (value) {
+		*rc |= (1 << index);
+	} else {
+		*rc &= ~(1 << index);
+	}
 }
 
 /* MARK: - Luna Move Array.（走法数组）

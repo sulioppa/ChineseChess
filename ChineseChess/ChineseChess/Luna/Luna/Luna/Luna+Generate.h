@@ -9,9 +9,11 @@
 #import "Luna+Position.h"
 
 /* MARK: - LCMoveTrack
- * score(high 16)
- * move(low 16)
+ * move(high 16)
+ * score(low 16)
  */
+typedef UInt32 LCMoveTrack;
+
 LC_INLINE LCMoveTrack LCMoveTrackMake(const LCMove move, const UInt16 score) {
 	return (move << 16) | score;
 }
@@ -19,6 +21,8 @@ LC_INLINE LCMoveTrack LCMoveTrackMake(const LCMove move, const UInt16 score) {
 LC_INLINE LCMove LCMoveTrackGetMove(const LCMoveTrack track) {
 	return track >> 16;
 }
+
+#define LCMoveTrackMaxLength 120
 
 // MARK: - LCMovesTrack
 typedef struct {

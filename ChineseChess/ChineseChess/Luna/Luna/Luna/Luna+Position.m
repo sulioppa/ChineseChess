@@ -35,6 +35,7 @@ void LCPositionInit(LCMutablePositionRef position, NSString *FEN, const LCSide s
 	for (int i = 0; i < LCBoardLength; i++) {
 		if (position->board[i]) {
 			position->chess[position->board[i]] = i;
+			LCBitChessModified(&(position->bitchess), position->board[i], true);
 		}
 	}
 	
@@ -60,7 +61,7 @@ LCRowColumn LCLocationArrayGetLCRowColumn(const LCLocation *const array) {
 	LCRowColumn bit = 0;
 	
 	for (LCRowColumnIndex i = 0; i < LCBoardRowsColumnsLength; i++) {
-		LCRowColumnSetBitValue(&bit, i, array[i]);
+		LCRowColumnModified(&bit, i, array[i]);
 	}
 	return bit;
 }

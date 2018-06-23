@@ -6,8 +6,23 @@
 //  Copyright © 2018年 李夙璃. All rights reserved.
 //
 
-#import "Luna+Typedef.h"
+#import "Luna+PreGenerate.h"
 
+// MARK: - LCBitChess
+typedef union {
+	UInt32 chess;
+	UInt16 *bit[2];
+} LCBitChess;
+
+LC_INLINE void LCBitChessModified(LCBitChess *bitchess, const LCChess chess, const Bool isOnBoard) {
+	if (isOnBoard) {
+		bitchess->chess |= 1 << (chess - 16);
+	} else {
+		bitchess->chess &= ~(1 << (chess - 16));
+	}
+}
+
+// MARK: - LCPosition
 typedef struct {
 	LCLocation board[LCBoardLength];
 	LCLocation chess[LCChessLength];
@@ -16,6 +31,7 @@ typedef struct {
 	LCRowColumn column[LCBoardRowsColumnsLength];
 	
 	LCSide side;
+	LCBitChess bitchess;
 } LCPosition;
 
 typedef const LCPosition *const LCPositionRef;
@@ -30,15 +46,9 @@ extern void LCPositionInit(LCMutablePositionRef position, NSString *FEN, const L
 
 extern void LCPositionRelease(LCPositionRef position);
 
-// MARK: - LCPosition Changed
-LC_INLINE void LCRowColumnSetBitValue(LCRowColumn *const rc, const LCRowColumnIndex index, const Bool value) {
-	if (value) {
-		*rc |= (1 << index);
-	} else {
-		*rc &= ~(1 << index);
-	}
+// MARK: - LCPosition Property
+LC_INLINE Bool LCPositionIsDraw(LCPositionRef position) {
+	return !(position->bitchess.chess & 0x07ff07ff);
 }
 
-LC_INLINE void LCPositionReveseSide(LCMutablePositionRef position) {
-	position->side ^= 1;
-}
+// MARK: - LCPosition Changed
