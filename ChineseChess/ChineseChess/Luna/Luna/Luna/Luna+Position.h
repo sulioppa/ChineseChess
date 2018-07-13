@@ -9,16 +9,13 @@
 #import "Luna+PreGenerate.h"
 
 // MARK: - LCBitChess
-typedef union {
-	UInt32 chess;
-	UInt16 *bit[2];
-} LCBitChess;
+typedef UInt32 LCBitChess;
 
 LC_INLINE void LCBitChessModified(LCBitChess *bitchess, const LCChess chess, const Bool isOnBoard) {
 	if (isOnBoard) {
-		bitchess->chess |= 1 << (chess - 16);
+		*bitchess |= 1 << (chess - 16);
 	} else {
-		bitchess->chess &= ~(1 << (chess - 16));
+		*bitchess &= ~(1 << (chess - 16));
 	}
 }
 
@@ -48,7 +45,7 @@ extern void LCPositionRelease(LCPositionRef position);
 
 // MARK: - LCPosition Property
 LC_INLINE Bool LCPositionIsDraw(LCPositionRef position) {
-	return !(position->bitchess.chess & 0x07ff07ff);
+	return !(position->bitchess & 0x07ff07ff);
 }
 
 // MARK: - LCPosition Changed

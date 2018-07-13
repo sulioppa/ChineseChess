@@ -10,6 +10,7 @@
 
 typedef struct {
 	const Int16 * dynamicChessValue[LCChessLength];
+	Int16 material;
 	Int16 value;
 } LCEvaluate;
 
