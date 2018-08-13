@@ -64,3 +64,6 @@
 ### Move Generate
 - Short Type: King, Advisor, Bishop, Knight, Pawn, previous generate move array.
 - Long Type: Rook, Cannon, bit row bit column.
+
+### Position Evaluate
+- Pre Evaluate: Analysis the status of position, judging whether the position is in the middle or the end,  the value of different status is different.

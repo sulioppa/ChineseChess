@@ -36,7 +36,7 @@ void LCEvaluateInit(LCPositionRef position, LCMutableEvaluateRef evaluate) {
 	memset(evaluate, 0, sizeof(LCEvaluate));
     
     // 阈值、权重
-    const UInt8 threadhold = 20;
+    const UInt8 threadhold = 32;
     const UInt8 w[48] = {
         0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,0,
         0,
