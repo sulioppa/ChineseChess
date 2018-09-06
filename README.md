@@ -58,8 +58,8 @@
 - Same position appears many times will lead to draw.
 
 ### The Expression Of Chess and Board
-- Board：an array, the length of it is 256.
-- Chess：red is from 16 to 31, rank like King, Advisor, Advisor, Bishop, Bishop, Knight, Knight, Rook, Rook, Cannon, Cannon, Pawn, Pawn, Pawn, Pawn, Pawn, black is from 32 to 47, the same as red.
+- Board: an array, the length of it is 256.
+- Chess: red is from 16 to 31, rank like King, Advisor, Advisor, Bishop, Bishop, Knight, Knight, Rook, Rook, Cannon, Cannon, Pawn, Pawn, Pawn, Pawn, Pawn, black is from 32 to 47, the same as red.
 
 ### Move Generate
 - Short Type: King, Advisor, Bishop, Knight, Pawn, previous generate move array.
@@ -67,3 +67,4 @@
 
 ### Position Evaluate
 - Pre Evaluate: Analysis the status of position, judging whether the position is in the middle or the end,  the value of different status is different.
+- Dynamic Evaluate: Called when search at the leaf node of PVS,  include two parts, one is location-chess value, another is dynamic evaluate, it includes the punishment of lack advisor or bishop, the control, hold, protection of knight, the hold, protection, threat, flexibility of rook and cannon, and the hollow cannon to the king (it means there's nothing between cannon and king).
