@@ -168,7 +168,191 @@ void LCEvaluateRelease(LCEvaluateRef evaluate) {
 	free((void *)evaluate);
 }
 
-// MARK: - Evaluate
+/* MARK: - Dynamic Evaluate
+ * 动态评估常量
+ */
+#define _ThreatK 12
+#define _ThreatA 5
+#define _ThreatB 4
+#define _ThreatN 8
+#define _ThreatR 18
+#define _ThreatC 9
+#define _ThreatP 3
+
+#define _ThreatStrong 4
+#define _ThreatMiddle 2
+#define _ThreatWeak 1
+
+/* MARK: - Dynamic Evaluate（动态评估）
+ * 少仕相的惩罚
+ */
+const Int16 _LCThreatAB[16] = {
+    _ThreatP * 4, _ThreatP * 3, _ThreatP * 3, _ThreatP * 2,
+    _ThreatP * 3, _ThreatP * 2, _ThreatP * 2, _ThreatP * 1,
+    _ThreatP * 3, _ThreatP * 2, _ThreatP * 2, _ThreatP * 1,
+    _ThreatP * 2, _ThreatP * 1, _ThreatP * 1, _ThreatP * 0
+};
+
+// MARK: - 馬的控制、牵制、保护
+const Int16 _LCThreatRedN[LCChessLength] = {
+    _ThreatP, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    
+    0, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatMiddle, _ThreatMiddle,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    
+    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatStrong, _ThreatR / 2, _ThreatR / 2, _ThreatC / 2, _ThreatC / 2,
+    _ThreatP, _ThreatP, _ThreatP, _ThreatP, _ThreatP
+};
+
+const Int16 _LCThreatBlackN[LCChessLength] = {
+    _ThreatP, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    
+    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatStrong, _ThreatR / 2, _ThreatR / 2, _ThreatC / 2, _ThreatC / 2,
+    _ThreatP, _ThreatP, _ThreatP, _ThreatP, _ThreatP,
+    
+    0, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatMiddle, _ThreatMiddle,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak
+};
+
+// MARK: - 車的威胁、隔子牵制
+const Int16 _LCThreatRedR[LCChessLength] = {
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    
+    0, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong, _ThreatMiddle, _ThreatMiddle,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    
+    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong,
+    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle
+};
+
+const Int16 _LCThreatBlackR[LCChessLength] = {
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+
+    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong,
+    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
+    
+    0, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong, _ThreatMiddle, _ThreatMiddle,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak
+};
+
+const Int16 _LCHoldRedR[LCChessLength] = {
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    
+    0, 0, 0, 0, 0,
+    0, 0, 0, 0, _ThreatWeak, _ThreatWeak,
+    0, 0, 0, 0, 0,
+    
+    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, 0, 0,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak
+};
+
+const Int16 _LCHoldBlackR[LCChessLength] = {
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    
+    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, 0, 0,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    
+    0, 0, 0, 0, 0,
+    0, 0, 0, 0, _ThreatWeak, _ThreatWeak,
+    0, 0, 0, 0, 0
+};
+
+// MARK: - 炮的威胁、隔双子牵制、空头炮/沉底炮的距离
+const Int16 _LCThreatRedC[LCChessLength] = {
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    
+    0, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    
+    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong,
+    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle
+};
+
+const Int16 _LCThreatBlackC[LCChessLength] = {
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+
+    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong,
+    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
+    
+    0, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak
+};
+
+const Int16 _LCHoldRedC[LCChessLength] = {
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    
+    0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0,
+    
+    _ThreatK, _ThreatWeak, _ThreatWeak, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak
+};
+
+const Int16 _LCHoldBlackC[LCChessLength] = {
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+    
+    _ThreatK, _ThreatWeak, _ThreatWeak, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    
+    0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0
+};
+
+const Int16 _LCHollowC[8] = {
+    _ThreatC, _ThreatR, // 沉底炮、铁门栓，距离≦2
+    _ThreatC, _ThreatN, // 河口线
+    _ThreatStrong, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle // 远程炮，起牵制作用
+};
+
+// MARK: - Multiple Evaluate（局面评估）
 void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
 	
 }
