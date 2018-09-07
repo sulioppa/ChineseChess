@@ -168,7 +168,7 @@ void LCEvaluateRelease(LCEvaluateRef evaluate) {
 	free((void *)evaluate);
 }
 
-/* MARK: - Dynamic Evaluate
+/* MARK: - Dynamic Evaluate Value
  * 动态评估常量
  */
 #define _ThreatK 12
@@ -183,15 +183,17 @@ void LCEvaluateRelease(LCEvaluateRef evaluate) {
 #define _ThreatMiddle 2
 #define _ThreatWeak 1
 
-/* MARK: - Dynamic Evaluate（动态评估）
- * 少仕相的惩罚
- */
+// MARK: - 少仕相的惩罚
 const Int16 _LCThreatAB[16] = {
     _ThreatP * 4, _ThreatP * 3, _ThreatP * 3, _ThreatP * 2,
     _ThreatP * 3, _ThreatP * 2, _ThreatP * 2, _ThreatP * 1,
     _ThreatP * 3, _ThreatP * 2, _ThreatP * 2, _ThreatP * 1,
     _ThreatP * 2, _ThreatP * 1, _ThreatP * 1, _ThreatP * 0
 };
+
+LC_INLINE LCBitChess _LCBitChessGetAB(const LCBitChess bitchess, const LCSide side) {
+    return (side ? bitchess >> 17 : bitchess >> 1) & 0xf;
+}
 
 // MARK: - 馬的控制、牵制、保护
 const Int16 _LCThreatRedN[LCChessLength] = {
@@ -352,9 +354,37 @@ const Int16 _LCHollowC[8] = {
     _ThreatStrong, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle // 远程炮，起牵制作用
 };
 
-// MARK: - Multiple Evaluate（局面评估）
+// MARK: - Multiple Evaluate（综合 局面评估）
 void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
-	
+    /* MARK: - 第一部分。
+     * 剩余 子力位置 价值。
+     */
+    evaluate->value = evaluate->material;
+    
+    /* MARK: - 第二部分。
+     * 少 仕相/士象 的惩罚。
+     */
+    evaluate->value -= _LCThreatAB[_LCBitChessGetAB(position->bitchess, LCSideRed)];
+    evaluate->value += _LCThreatAB[_LCBitChessGetAB(position->bitchess, LCSideBlack)];
+    
+    // 红馬 的强控制、强保护、弱牵制。
+    
+    // 红車 的威胁、隔子牵制、灵活度。
+    
+    // 红炮 的威胁、隔双子牵制、空头炮/沉底炮、灵活度。
+    
+    // 黑馬 的强控制、强保护、弱牵制。
+    
+    // 黑車 的威胁、隔子牵制、灵活度。
+    
+    // 黑炮 的威胁、隔双子牵制、空头炮/沉底炮、灵活度。
+    
+    /* MARK: - 估值取反。
+     * 估值是相对于红方来说的，如果当前结点先行方是黑方，需要取反。
+     */
+    if (position->side) {
+        evaluate->value = -evaluate->value;
+    }
 }
 
 // MARK: - Const（子力、位置）
