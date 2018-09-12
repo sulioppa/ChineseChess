@@ -29,6 +29,14 @@ LC_INLINE LCSide LCChessGetSide(const LCChess chess) {
 	return chess >> 5;
 }
 
+LC_INLINE Bool LCChessIsRed(const LCChess chess) {
+    return (chess >> 4) & 0x01;
+}
+
+LC_INLINE Bool LCChessIsBlack(const LCChess chess) {
+    return (chess >> 4) & 0x02;
+}
+
 LC_INLINE Bool LCChessSideIsNotSide(const LCChess chess, const LCSide side) {
 	return (chess >> 5) ^ side;
 }

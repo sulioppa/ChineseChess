@@ -367,17 +367,93 @@ void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
     evaluate->value -= _LCThreatAB[_LCBitChessGetAB(position->bitchess, LCSideRed)];
     evaluate->value += _LCThreatAB[_LCBitChessGetAB(position->bitchess, LCSideBlack)];
     
+    // Buffer
+    LCLocationRef to, toBoundary;
+    LCChess target;
+    
     // 红馬 的强控制、强保护、弱牵制。
+    LCLocationRef chess = position->chess + LCChessOffsetRedN;
+    LCLocationRef chessBoundary = chess + 2;
+    
+    do {
+        if (*chess) {
+            for (to = LCMoveArrayConstRef->N + *chess, toBoundary = to + 8; to < toBoundary && *to; to++) {
+                target = position->board[*to];
+                
+                if (LCChessIsBlack(target)) {
+                    evaluate->value += _LCThreatRedN[target];
+                } else if (!position->board[LCMoveMapConstRef->N[LCMoveMake(*chess, *to)]]) {
+                    evaluate->value += _LCThreatRedN[target];
+                }
+            }
+        }
+        
+        chess++;
+    } while (chess < chessBoundary);
     
     // 红車 的威胁、隔子牵制、灵活度。
+    chessBoundary = chess + 2;
+    
+    do {
+        if (*chess) {
+            
+        }
+        
+        chess++;
+    } while (chess < chessBoundary);
     
     // 红炮 的威胁、隔双子牵制、空头炮/沉底炮、灵活度。
+    chessBoundary = chess + 2;
+    
+    do {
+        if (*chess) {
+            
+        }
+        
+        chess++;
+    } while (chess < chessBoundary);
     
     // 黑馬 的强控制、强保护、弱牵制。
+    chess = position->chess + LCChessOffsetBlackN;
+    chessBoundary = chess + 2;
+    
+    do {
+        if (*chess) {
+            for (to = LCMoveArrayConstRef->N + *chess, toBoundary = to + 8; to < toBoundary && *to; to++) {
+                target = position->board[*to];
+                
+                if (LCChessIsRed(target)) {
+                    evaluate->value -= _LCThreatBlackN[target];
+                } else if (!position->board[LCMoveMapConstRef->N[LCMoveMake(*chess, *to)]]) {
+                    evaluate->value -= _LCThreatBlackN[target];
+                }
+            }
+        }
+        
+        chess++;
+    } while (chess < chessBoundary);
     
     // 黑車 的威胁、隔子牵制、灵活度。
+    chessBoundary = chess + 2;
+    
+    do {
+        if (*chess) {
+            
+        }
+        
+        chess++;
+    } while (chess < chessBoundary);
     
     // 黑炮 的威胁、隔双子牵制、空头炮/沉底炮、灵活度。
+    chessBoundary = chess + 2;
+    
+    do {
+        if (*chess) {
+            
+        }
+        
+        chess++;
+    } while (chess < chessBoundary);
     
     /* MARK: - 估值取反。
      * 估值是相对于红方来说的，如果当前结点先行方是黑方，需要取反。

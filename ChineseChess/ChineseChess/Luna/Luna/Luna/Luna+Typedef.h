@@ -17,8 +17,14 @@ typedef short Int16;
 typedef UInt8 LCChess;
 typedef UInt8 LCLocation;
 
+typedef const UInt8 * LCLocationRef;
+typedef UInt8 * LCMutableLocationRef;
+
 #define LCChessLength 48
 #define LCBoardLength 256
+
+#define LCChessOffsetRedN 21
+#define LCChessOffsetBlackN 37
 
 #define LCBoardMapLength 65536
 #define LCBoardRowsColumnsLength 16
