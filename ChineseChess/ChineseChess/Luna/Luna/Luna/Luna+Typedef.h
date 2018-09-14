@@ -23,7 +23,10 @@ typedef UInt8 * LCMutableLocationRef;
 #define LCChessLength 48
 #define LCBoardLength 256
 
+#define LCChessOffsetRedK 16
 #define LCChessOffsetRedN 21
+
+#define LCChessOffsetBlackK 32
 #define LCChessOffsetBlackN 37
 
 #define LCBoardMapLength 65536

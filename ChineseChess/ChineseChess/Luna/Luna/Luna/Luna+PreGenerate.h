@@ -83,7 +83,10 @@ LC_INLINE LCLocation LCMoveGetLocationTo(const LCMove move) {
 // MARK: - LCRowColumn
 typedef UInt16 LCRowColumn;
 typedef UInt8 LCRowColumnIndex;
+
 typedef SInt8 LCRowColumnOffset;
+typedef const LCRowColumnOffset * LCRowColumnOffsetRef;
+
 typedef UInt8 LCRowColumnFlexibility;
 typedef UInt8 LCRowColumnMapState;
 
@@ -128,11 +131,11 @@ typedef struct {
 
 extern const LCMoveArray *const LCMoveArrayConstRef;
 
-LC_INLINE const LCRowColumnOffset * LCMoveArrayGetRowOffset(const LCRowColumn rank, const LCRowColumnIndex idx, const LCRowColumnIndex offset) {
+LC_INLINE LCRowColumnOffsetRef LCMoveArrayGetRowOffset(const LCRowColumn rank, const LCRowColumnIndex idx, const LCRowColumnIndex offset) {
 	return LCMoveArrayConstRef->Row + (rank << 7) + (idx << 3) + offset;
 }
 
-LC_INLINE const LCRowColumnOffset * LCMoveArrayGetColumnOffset(const LCRowColumn rank, const LCRowColumnIndex idx, const LCRowColumnIndex offset) {
+LC_INLINE LCRowColumnOffsetRef LCMoveArrayGetColumnOffset(const LCRowColumn rank, const LCRowColumnIndex idx, const LCRowColumnIndex offset) {
 	return LCMoveArrayConstRef->Column + (rank << 7) + (idx << 3) + offset;
 }
 

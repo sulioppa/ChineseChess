@@ -348,11 +348,13 @@ const Int16 _LCHoldBlackC[LCChessLength] = {
     0, 0, 0, 0, 0
 };
 
-const Int16 _LCHollowC[8] = {
-    _ThreatC, _ThreatR, // 沉底炮、铁门栓，距离≦2
-    _ThreatC, _ThreatN, // 河口线
-    _ThreatStrong, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle // 远程炮，起牵制作用
-};
+LC_INLINE const LCLocation _LCLocationGetRowLocation(const LCLocation location, const LCRowColumnOffset offset) {
+    return location + offset;
+}
+
+LC_INLINE const LCLocation _LCLocationGetColumnLocation(const LCLocation location, const LCRowColumnOffset offset) {
+    return location + (offset << 4);
+}
 
 // MARK: - Multiple Evaluate（综合 局面评估）
 void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
@@ -369,7 +371,7 @@ void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
     
     // Buffer
     LCLocationRef to, toBoundary;
-    LCChess target;
+    LCRowColumnOffsetRef offset;
     
     // 红馬 的强控制、强保护、弱牵制。
     LCLocationRef chess = position->chess + LCChessOffsetRedN;
@@ -378,12 +380,10 @@ void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
     do {
         if (*chess) {
             for (to = LCMoveArrayConstRef->N + *chess, toBoundary = to + 8; to < toBoundary && *to; to++) {
-                target = position->board[*to];
-                
-                if (LCChessIsBlack(target)) {
-                    evaluate->value += _LCThreatRedN[target];
+                if (LCChessIsBlack(position->board[*to])) {
+                    evaluate->value += _LCThreatRedN[position->board[*to]];
                 } else if (!position->board[LCMoveMapConstRef->N[LCMoveMake(*chess, *to)]]) {
-                    evaluate->value += _LCThreatRedN[target];
+                    evaluate->value += _LCThreatRedN[position->board[*to]];
                 }
             }
         }
@@ -396,7 +396,57 @@ void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
     
     do {
         if (*chess) {
+            // 横向，左右威胁
+            offset = LCMoveArrayGetRowOffset(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), LCMoveArrayConstRef->EatR);
             
+            if (*offset) {
+                evaluate->value += _LCThreatRedR[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value += _LCThreatRedR[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            // 横向，左右牵制
+            offset++;
+            if (*offset) {
+                evaluate->value += _LCHoldRedR[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value += _LCHoldRedR[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            // 横向，灵活度
+            evaluate->value += LCMoveArrayGetRowFlexibility(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), false);
+            
+            // 纵向，上下威胁
+            offset = LCMoveArrayGetColumnOffset(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), LCMoveArrayConstRef->EatR);
+            
+            if (*offset) {
+                evaluate->value += _LCThreatRedR[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value += _LCThreatRedR[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            // 纵向，上下牵制
+            offset++;
+            if (*offset) {
+                evaluate->value += _LCHoldRedR[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value += _LCHoldRedR[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            // 纵向，灵活度
+            evaluate->value += LCMoveArrayGetColumnFlexibility(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), false);
         }
         
         chess++;
@@ -407,7 +457,64 @@ void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
     
     do {
         if (*chess) {
+            // 横向，左右威胁
+            offset = LCMoveArrayGetRowOffset(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), LCMoveArrayConstRef->EatC);
             
+            if (*offset) {
+                evaluate->value += _LCThreatRedC[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value += _LCThreatRedC[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            // 横向，左右牵制
+            offset += 3;
+            if (*offset) {
+                evaluate->value += _LCHoldRedC[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value += _LCHoldRedC[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            // 横向，灵活度
+            evaluate->value += LCMoveArrayGetRowFlexibility(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), true);
+            
+            // 纵向，上下威胁
+            offset = LCMoveArrayGetColumnOffset(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), LCMoveArrayConstRef->EatC);
+            
+            if (*offset) {
+                evaluate->value += _LCThreatRedC[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value += _LCThreatRedC[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            // 纵向，上下牵制
+            offset += 3;
+            if (*offset) {
+                evaluate->value += _LCHoldRedC[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value += _LCHoldRedC[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            // 纵向，灵活度
+            evaluate->value += LCMoveArrayGetColumnFlexibility(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), true);
+            
+            // 空头炮、沉底炮
+            if (LCLocationRowIsEqualToLocation(*chess, position->chess[LCChessOffsetBlackK])) {
+                evaluate->value += LCMoveMapGetRowMapState(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), LCLocationGetColumn(position->chess[LCChessOffsetBlackK])) == LCMoveMapConstRef->EatR ? _ThreatK : 0;
+            } else if (LCLocationColumnIsEqualToLocation(*chess, position->chess[LCChessOffsetBlackK])) {
+                evaluate->value += LCMoveMapGetColumnMapState(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), LCLocationGetRow(position->chess[LCChessOffsetBlackK])) == LCMoveMapConstRef->EatR ? _ThreatK : 0;
+            }
         }
         
         chess++;
@@ -420,12 +527,10 @@ void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
     do {
         if (*chess) {
             for (to = LCMoveArrayConstRef->N + *chess, toBoundary = to + 8; to < toBoundary && *to; to++) {
-                target = position->board[*to];
-                
-                if (LCChessIsRed(target)) {
-                    evaluate->value -= _LCThreatBlackN[target];
+                if (LCChessIsRed(position->board[*to])) {
+                    evaluate->value -= _LCThreatBlackN[position->board[*to]];
                 } else if (!position->board[LCMoveMapConstRef->N[LCMoveMake(*chess, *to)]]) {
-                    evaluate->value -= _LCThreatBlackN[target];
+                    evaluate->value -= _LCThreatBlackN[position->board[*to]];
                 }
             }
         }
@@ -438,7 +543,57 @@ void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
     
     do {
         if (*chess) {
+            // 横向，左右威胁
+            offset = LCMoveArrayGetRowOffset(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), LCMoveArrayConstRef->EatR);
             
+            if (*offset) {
+                evaluate->value -= _LCThreatBlackR[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value -= _LCThreatBlackR[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            // 横向，左右牵制
+            offset++;
+            if (*offset) {
+                evaluate->value -= _LCHoldBlackR[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value -= _LCHoldBlackR[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            // 横向，灵活度
+            evaluate->value -= LCMoveArrayGetRowFlexibility(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), false);
+            
+            // 纵向，上下威胁
+            offset = LCMoveArrayGetColumnOffset(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), LCMoveArrayConstRef->EatR);
+            
+            if (*offset) {
+                evaluate->value -= _LCThreatBlackR[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value -= _LCThreatBlackR[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            // 纵向，上下牵制
+            offset++;
+            if (*offset) {
+                evaluate->value -= _LCHoldBlackR[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value -= _LCHoldBlackR[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            // 纵向，灵活度
+            evaluate->value -= LCMoveArrayGetColumnFlexibility(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), false);
         }
         
         chess++;
@@ -449,7 +604,64 @@ void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
     
     do {
         if (*chess) {
+            // 横向，左右威胁
+            offset = LCMoveArrayGetRowOffset(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), LCMoveArrayConstRef->EatC);
             
+            if (*offset) {
+                evaluate->value -= _LCThreatBlackC[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value -= _LCThreatBlackC[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            // 横向，左右牵制
+            offset += 3;
+            if (*offset) {
+                evaluate->value -= _LCHoldBlackC[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value -= _LCHoldBlackC[position->board[_LCLocationGetRowLocation(*chess, *offset)]];
+            }
+            
+            // 横向，灵活度
+            evaluate->value -= LCMoveArrayGetRowFlexibility(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), true);
+            
+            // 纵向，上下威胁
+            offset = LCMoveArrayGetColumnOffset(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), LCMoveArrayConstRef->EatC);
+            
+            if (*offset) {
+                evaluate->value -= _LCThreatBlackC[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value -= _LCThreatBlackC[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            // 纵向，上下牵制
+            offset += 3;
+            if (*offset) {
+                evaluate->value -= _LCHoldBlackC[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            offset++;
+            if (*offset) {
+                evaluate->value -= _LCHoldBlackC[position->board[_LCLocationGetColumnLocation(*chess, *offset)]];
+            }
+            
+            // 纵向，灵活度
+            evaluate->value -= LCMoveArrayGetColumnFlexibility(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), true);
+            
+            // 空头炮、沉底炮
+            if (LCLocationRowIsEqualToLocation(*chess, position->chess[LCChessOffsetRedK])) {
+                evaluate->value -= LCMoveMapGetRowMapState(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), LCLocationGetColumn(position->chess[LCChessOffsetRedK])) == LCMoveMapConstRef->EatR ? _ThreatK : 0;
+            } else if (LCLocationColumnIsEqualToLocation(*chess, position->chess[LCChessOffsetRedK])) {
+                evaluate->value -= LCMoveMapGetColumnMapState(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), LCLocationGetRow(position->chess[LCChessOffsetRedK])) == LCMoveMapConstRef->EatR ? _ThreatK : 0;
+            }
         }
         
         chess++;
