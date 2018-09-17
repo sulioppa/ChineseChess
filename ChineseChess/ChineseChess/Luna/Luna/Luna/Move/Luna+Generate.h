@@ -7,10 +7,11 @@
 //
 
 #import "Luna+Position.h"
+#import "Luna+Heuristic.h"
 
 /* MARK: - LCMoveTrack
  * move(high 16)
- * score(low 16)
+ * buffer(low 16)
  */
 typedef UInt32 LCMoveTrack;
 
@@ -20,6 +21,10 @@ LC_INLINE LCMoveTrack LCMoveTrackMake(const LCMove move, const UInt16 score) {
 
 LC_INLINE LCMove LCMoveTrackGetMove(const LCMoveTrack track) {
 	return track >> 16;
+}
+
+LC_INLINE UInt16 LCMoveTrackGetBuffer(const LCMoveTrack track) {
+    return track & 0xffff;
 }
 
 #define LCMoveTrackMaxLength 120
@@ -44,23 +49,6 @@ LC_INLINE void LCMovesTrackPopAll(LCMutableMovesTrackRef moves) {
 
 LC_INLINE UInt16 LCMovesTrackGetCapcity(LCMutableMovesTrackRef moves) {
 	return moves->top - moves->track;
-}
-
-/* MARK: - LCHistoryTrack
- * the index is move.
- */
-typedef struct {
-	UInt16 history[LCBoardMapLength];
-} LCHistoryTrack;
-
-typedef const LCHistoryTrack *const LCHistoryTrackRef;
-
-typedef LCHistoryTrack *const LCMutableHistoryTrackRef;
-
-extern void LCHistoryTrackClear(LCMutableHistoryTrackRef history);
-
-LC_INLINE void LCHistoryTrackRecord(LCMutableHistoryTrackRef history, LCMove move, UInt16 value) {
-	history->history[move] += value;
 }
 
 /* MARK: - Generate Eat Moves

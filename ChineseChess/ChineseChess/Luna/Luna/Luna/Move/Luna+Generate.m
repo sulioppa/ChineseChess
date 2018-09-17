@@ -27,13 +27,6 @@ const UInt16 LCMvvValue[16] = {
 
 const unsigned long LCMoveTrackSize = sizeof(LCMoveTrack);
 
-/* MARK: - LCHistoryTrack
- * the index is move.
- */
-void LCHistoryTrackClear(LCMutableHistoryTrackRef history) {
-	memset(history->history, 0, LCBoardMapLength);
-}
-
 /* MARK: - Generate Eat Moves
  * sorted by mvv
  */

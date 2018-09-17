@@ -62,7 +62,7 @@ LC_INLINE Bool LCLocationRowIsEqualToLocation(const LCLocation location, const L
 }
 
 LC_INLINE Bool LCLocationColumnIsEqualToLocation(const LCLocation location, const LCLocation location1) {
-	return (location & 15) == (location1 & 15);
+	return (location & 0xf) == (location1 & 0xf);
 }
 
 // MARK: - Luna Move.

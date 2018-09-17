@@ -47,5 +47,3 @@ extern void LCPositionRelease(LCPositionRef position);
 LC_INLINE Bool LCPositionIsDraw(LCPositionRef position) {
 	return !(position->bitchess & 0x07ff07ff);
 }
-
-// MARK: - LCPosition Changed
