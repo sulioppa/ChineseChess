@@ -148,6 +148,19 @@ Bool LCPositionIsLegal(LCPositionRef position) {
             return false;
         }
         
+        // 馬
+        register LCLocation leg = LCMoveArrayConstRef->N[LCMoveMake(position->chess[LCChessOffsetRedN], king)];
+        
+        if (leg && !position->board[leg]) {
+            return false;
+        }
+        
+        leg = LCMoveArrayConstRef->N[LCMoveMake(position->chess[LCChessOffsetRedN + 1], king)];
+        
+        if (leg && !position->board[leg]) {
+            return false;
+        }
+        
         return true;
     } else {
         const LCLocation king = position->chess[LCChessOffsetRedK];
@@ -209,6 +222,19 @@ Bool LCPositionIsLegal(LCPositionRef position) {
         }
         
         if (_LCEatPLegalRed[position->board[king + 1]]) {
+            return false;
+        }
+        
+        // 馬
+        register LCLocation leg = LCMoveArrayConstRef->N[LCMoveMake(position->chess[LCChessOffsetBlackN], king)];
+        
+        if (leg && !position->board[leg]) {
+            return false;
+        }
+        
+        leg = LCMoveArrayConstRef->N[LCMoveMake(position->chess[LCChessOffsetBlackN + 1], king)];
+        
+        if (leg && !position->board[leg]) {
             return false;
         }
         
