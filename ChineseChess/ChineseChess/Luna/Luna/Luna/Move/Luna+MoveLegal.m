@@ -47,6 +47,7 @@ Bool (*const _LCMoveIsLegal[16])(LCPositionRef, const LCMove *const) = {
     _LCMoveIsLegal_P, _LCMoveIsLegal_P, _LCMoveIsLegal_P, _LCMoveIsLegal_P, _LCMoveIsLegal_P
 };
 
+// MARK: - LCChessSideMap
 const UInt8 _LCChessSideMap[LCChessLength] = {
     LCSideNull, LCSideNull, LCSideNull, LCSideNull,
     LCSideNull, LCSideNull, LCSideNull, LCSideNull,
