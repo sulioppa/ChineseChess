@@ -14,6 +14,8 @@
  * 32 ~ 47 is black. like 10xxxx. from 32 to 47, range also like above.
  * 5th or 6th bit indicates red or black. */
 typedef Bool LCSide;
+
+#define LCSideNull 0xff
 #define LCSideRed 0
 #define LCSideBlack 1
 
