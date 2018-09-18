@@ -1024,3 +1024,5 @@ const _LCEvaluateConstValue LCEvaluateConstValue = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
+
+const Int16 LCPositionDrawValue = 0;

@@ -7,7 +7,3 @@
 //
 
 #import "Luna+Position.h"
-
-LC_INLINE Bool LCPositionMoveIsLegal(LCPositionRef position, const LCMove move) {
-    return position->board[move >> 8] >> 4 != position->board[move & 0xff] >> 4;
-}

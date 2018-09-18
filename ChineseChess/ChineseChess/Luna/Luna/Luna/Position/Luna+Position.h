@@ -42,8 +42,3 @@ extern LCMutablePositionRef LCPositionCreateMutable(void);
 extern void LCPositionInit(LCMutablePositionRef position, NSString *FEN, const LCSide side);
 
 extern void LCPositionRelease(LCPositionRef position);
-
-// MARK: - LCPosition Property
-LC_INLINE Bool LCPositionIsDraw(LCPositionRef position) {
-	return !(position->bitchess & 0x07ff07ff);
-}
