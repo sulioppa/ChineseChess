@@ -10,31 +10,47 @@
 
 // MARK: - 任意着法 合理检测函数簇
 Bool _LCMoveIsLegal_K(LCPositionRef position, const LCMove *const move) {
-    return true;
+    return LCMoveMapConstRef->K[*move];
 }
 
 Bool _LCMoveIsLegal_A(LCPositionRef position, const LCMove *const move) {
-    return true;
+    return LCMoveMapConstRef->A[*move];
 }
 
 Bool _LCMoveIsLegal_B(LCPositionRef position, const LCMove *const move) {
-    return true;
+    return LCMoveMapConstRef->B[*move] && !position->board[LCMoveMapConstRef->B[*move]];
 }
 
 Bool _LCMoveIsLegal_N(LCPositionRef position, const LCMove *const move) {
-    return true;
+    return LCMoveMapConstRef->N[*move] && !position->board[LCMoveMapConstRef->N[*move]];
 }
 
 Bool _LCMoveIsLegal_R(LCPositionRef position, const LCMove *const move) {
-    return true;
+    register const LCLocation from = LCMoveGetLocationFrom(*move), to = LCMoveGetLocationTo(*move);
+    
+    if (LCLocationRowIsEqualToLocation(from, to)) {
+        return LCMoveMapGetRowMapState(position->row[LCLocationGetRow(from)], LCLocationGetColumn(from), LCLocationGetColumn(to)) | LCMoveMapConstRef->MaskR;
+    } else if (LCLocationColumnIsEqualToLocation(from, to)) {
+        return LCMoveMapGetColumnMapState(position->column[LCLocationGetColumn(from)], LCLocationGetRow(from), LCLocationGetRow(to)) | LCMoveMapConstRef->MaskR;
+    } else {
+        return false;
+    }
 }
 
 Bool _LCMoveIsLegal_C(LCPositionRef position, const LCMove *const move) {
-    return true;
+    register const LCLocation from = LCMoveGetLocationFrom(*move), to = LCMoveGetLocationTo(*move);
+    
+    if (LCLocationRowIsEqualToLocation(from, to)) {
+        return LCMoveMapGetRowMapState(position->row[LCLocationGetRow(from)], LCLocationGetColumn(from), LCLocationGetColumn(to)) | LCMoveMapConstRef->MaskC;
+    } else if (LCLocationColumnIsEqualToLocation(from, to)) {
+        return LCMoveMapGetColumnMapState(position->column[LCLocationGetColumn(from)], LCLocationGetRow(from), LCLocationGetRow(to)) | LCMoveMapConstRef->MaskC;
+    } else {
+        return false;
+    }
 }
 
 Bool _LCMoveIsLegal_P(LCPositionRef position, const LCMove *const move) {
-    return true;
+    return LCMoveMapConstRef->P[(position->side << 16) + *move];
 }
 
 Bool (*const _LCMoveIsLegal[16])(LCPositionRef, const LCMove *const) = {
