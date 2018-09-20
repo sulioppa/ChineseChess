@@ -121,6 +121,8 @@
 
 - (BOOL)isLegalWithChess:(LunaChess)chess atLocation:(LunaLocation)location;
 
+- (NSArray<NSNumber *> *)bannedMoves;
+
 @end
 
 @implementation Luna (AI)
@@ -474,6 +476,26 @@
 	}
 }
 
+- (NSArray<NSNumber *> *)bannedMoves {
+    NSMutableArray<NSNumber *> *allMoves = [NSMutableArray array];
+    
+    for (LCChess chess = LCSideGetKing(_side), chessBoundary = chess + 16; chess < chessBoundary; chess++) {
+        if (_chess[chess]) {
+            [allMoves addObjectsFromArray:[self generateMovesWithLocation:_chess[chess]]];
+        }
+    }
+    
+    NSMutableArray<NSNumber *> *bannedMoves = [NSMutableArray array];
+    
+    for (NSNumber *move in allMoves) {
+        if ([self isBannedMove:move]) {
+            [bannedMoves addObject:move];
+        }
+    }
+    
+    return [bannedMoves copy];
+}
+
 // MARK: - Private
 - (BOOL)isFaceToFace {
 	if (LCLocationColumnIsEqualToLocation(_chess[16], _chess[32])) {
@@ -573,6 +595,21 @@
 	}
 	
 	return rank;
+}
+
+- (BOOL)isBannedMove:(NSNumber *)move {
+    BOOL isBanned = NO;
+    LCChess eat;
+    
+    [self moveChessWithMove:[move unsignedShortValue]]
+    
+    if (_state == LunaBoardStateWinLongCatchRed || _state == LunaBoardStateWinLongCatchBlack) {
+        isBanned = YES;
+    }
+    
+    [self regretWithMove:&eat];
+    
+    return isBanned;
 }
 
 @end

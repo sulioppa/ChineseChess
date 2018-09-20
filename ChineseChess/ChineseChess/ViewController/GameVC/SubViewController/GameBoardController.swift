@@ -323,6 +323,8 @@ extension GameBoardController {
 			}, from: from, to: to, completion: {
 				self?.isMoving = false
 				release()
+                
+                self?.tryThinking()
 			})
 		}
 	}

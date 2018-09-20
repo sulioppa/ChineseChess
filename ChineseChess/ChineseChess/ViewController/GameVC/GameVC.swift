@@ -156,6 +156,7 @@ extension GameVC: GameBoardControllerDelegate {
 		get {
 			return 0.0
 		}
+        
 		set {
 			self.setFlashProgress(progress: newValue)
 		}
