@@ -599,16 +599,15 @@
 
 - (BOOL)isBannedMove:(NSNumber *)move {
     BOOL isBanned = NO;
-    LCChess eat;
+    LCMove aMove;
     
-    [self moveChessWithMove:[move unsignedShortValue]]
+    [self moveChessWithMove:[move unsignedShortValue]];
     
     if (_state == LunaBoardStateWinLongCatchRed || _state == LunaBoardStateWinLongCatchBlack) {
         isBanned = YES;
     }
     
-    [self regretWithMove:&eat];
-    
+    [self regretWithMove:&aMove];
     return isBanned;
 }
 
