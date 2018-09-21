@@ -10,4 +10,12 @@
 
 @interface LunaRecordVault : NSObject
 
++ (UInt16)searchVaultWithFEN:(NSString *)FEN targetSide:(BOOL)side;
+
+#if DEBUG
++ (void)expandVaultWithDirectory:(NSString *)directory;
+
++ (void)writeToFile:(NSString *)path;
+#endif
+
 @end

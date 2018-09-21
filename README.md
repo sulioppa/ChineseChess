@@ -2,24 +2,24 @@
 # ChineseChess（[中文点这里](/[Chinese]README.md)）
 *Chinese Chess - A Free iOS App（C & Obj-C & Swift）*
 
-## Overview Of This App（App 一览）
-### Launch & Home Page（启动页 & 主页）
+## Overview Of This App
+### Launch & Home Page
 ![](ReadMeMedia/Launch&Home.png)
 
-### Game Module（对弈模块）
+### Game Module
 ![](ReadMeMedia/Game.png)
 
 ![](ReadMeMedia/GameSettings&History.png)
 
-### Edit Module（摆设棋局模块）
+### Edit Module
 ![](ReadMeMedia/File&Edit.png)
 
 ![](ReadMeMedia/FirstSide&CheckMate.png)
 
-### History Module（棋谱模块）
+### History Module
 ![](ReadMeMedia/History&Play.png)
 
-### MultiPeer Module（联机模块）
+### MultiPeer Module
 ![](ReadMeMedia/MultiPeer&Waitting.png)
 
 ***
@@ -68,3 +68,7 @@
 ### Position Evaluate
 - Pre Evaluate: Analysis the status of position, judging whether the position is in the middle or the end,  the value of different status is different.
 - Dynamic Evaluate: Called when search at the leaf node of PVS,  include two parts, one is location-chess value, another is dynamic evaluate, it includes the punishment of lack advisor or bishop, the control, hold, protection of knight, the hold, protection, threat, flexibility of rook and cannon, and the hollow cannon to the king (it means there's nothing between cannon and king).
+
+### Record Vault
+- Hit The Target: Before searching, refer the vault to get the move, if do hit the target, it can return, or AI will begin searching. By the way, it can be not the exact position in the vault, it can be left-right mirrored, red-black mirrored, 4 position will be searching totally.
+- Expand The Vault: There are two kinds of record files, whitch depends on whether the each step contains FEN string or not. If that, it can be used to expand the vault. We can input many games to enhance the power of AI. Following the steps, 1. [LunaRecordStack historyFileWithCode:YES]; 2. [LunaRecordVault expandVaultWithDirectory:@"the directory of record files"]; 3. [LunaRecordVault writeToFile:@"the path of saved vault"];

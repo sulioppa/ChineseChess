@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		423381D80836935A6E9A0D8D /* Pods_ChineseChess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */; };
+		8596C0282154D71500F85077 /* Vault.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8596C0272154D71500F85077 /* Vault.txt */; };
 		A70765F21F94E1A200FA6A43 /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70765F11F94E1A200FA6A43 /* GameVC.swift */; };
 		A70765F61F94E1E600FA6A43 /* ChessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70765F51F94E1E600FA6A43 /* ChessVC.swift */; };
 		A708989D201322A6009CAF5F /* HistoryMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A708989C201322A6009CAF5F /* HistoryMenuView.swift */; };
@@ -112,6 +113,7 @@
 /* Begin PBXFileReference section */
 		0960C69523E81DB1C0565640 /* Pods-ChineseChess.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChineseChess.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChineseChess/Pods-ChineseChess.release.xcconfig"; sourceTree = "<group>"; };
 		2230DA2D05560831F6ABD1E3 /* Pods_ChineseChess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChineseChess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8596C0272154D71500F85077 /* Vault.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vault.txt; sourceTree = "<group>"; };
 		A70765F11F94E1A200FA6A43 /* GameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
 		A70765F51F94E1E600FA6A43 /* ChessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessVC.swift; sourceTree = "<group>"; };
 		A708989C201322A6009CAF5F /* HistoryMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryMenuView.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 			children = (
 				A7E51D151F905DBD0054DF93 /* Wavs */,
 				A71C6A591FF0E68100D9F0F6 /* AppInformation.txt */,
+				8596C0272154D71500F85077 /* Vault.txt */,
 				A7E51D141F9058BF0054DF93 /* KaiTi.ttf */,
 			);
 			path = Resources;
@@ -645,6 +648,7 @@
 				A791286C1F9124E2002CC4E5 /* select.wav in Resources */,
 				A791286D1F9124E2002CC4E5 /* KaiTi.ttf in Resources */,
 				A78CC1BC1F8F783100563789 /* Launch Screen.storyboard in Resources */,
+				8596C0282154D71500F85077 /* Vault.txt in Resources */,
 				A7CE56001F8DC28600641454 /* Assets.xcassets in Resources */,
 				A71C6A5A1FF0E68100D9F0F6 /* AppInformation.txt in Resources */,
 			);
