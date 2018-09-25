@@ -7,6 +7,7 @@
 //
 
 #import "LunaRecordVault.h"
+#import "NSString+Subscript.h"
 
 // MARK: - Move
 @interface LunaMove: NSObject
@@ -208,7 +209,36 @@ static inline UInt16 HexValueOfUnichar(const unichar c) {
 #if DEBUG
 // MARK: - 扩展棋谱库
 + (void)expandVaultWithDirectory:(NSString *)directory {
+    NSArray<NSString *> *filePaths = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directory error:nil];
     
+    for (NSString *fileName in filePaths) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", directory, fileName];
+        NSString *file = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+        
+        NSArray<NSString *> *rows = [file componentsSeparatedByString:@"\n"];
+        __block BOOL side = rows.firstObject[0].unsignedShortValue - '0';
+        
+        [rows enumerateObjectsUsingBlock:^(NSString *string, NSUInteger idx, BOOL *stop) {
+            if (idx == 0) return;
+            
+            if (string.length > 4) {
+                NSRange range = [string rangeOfString:@" "];
+                
+                NSString *FEN = [string substringToIndex:range.location];
+                LunaMove *move = [[LunaMove alloc] initWithString:[string substringFromIndex:range.location + range.length]];
+                
+                LunaRecordVaultData *data = [LunaRecordVault vault]->_vault[FEN];
+                
+                if (data == nil) {
+                    data = [[LunaRecordVaultData alloc] init];
+                    [LunaRecordVault vault]->_vault[FEN] = data;
+                }
+                
+                [data expandWithMove:move targetSide:side];
+                side = !side;
+            }
+        }];
+    }
 }
 
 + (void)writeToFile:(NSString *)path {
