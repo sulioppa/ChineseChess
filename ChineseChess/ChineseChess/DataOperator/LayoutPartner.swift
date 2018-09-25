@@ -14,6 +14,7 @@ class LayoutPartner: NSObject {
 		if #available(iOS 11.0, *) {
 			return UIWindow.window?.safeAreaLayoutGuide.layoutFrame ?? UIScreen.main.bounds
 		}
+        
 		return UIScreen.main.bounds
 	}()
 	

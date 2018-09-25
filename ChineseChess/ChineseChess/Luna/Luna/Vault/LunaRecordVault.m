@@ -22,11 +22,13 @@ static inline UInt16 HexValueOfUnichar(const unichar c) {
     return '0' <= c && c <= '9' ? c - '0' : c - 'A' + 10;
 }
 
-UInt16 StringToMove(NSString *string) {
+- (UInt16)StringToMove:(NSString *)string {
     UInt16 move = 0;
+    
     for (int i = (int)(string.length - 1), offset = 0; i >= 0; i--, offset += 4) {
         move += HexValueOfUnichar([string characterAtIndex:i]) << offset;
     }
+    
     return move;
 }
 
@@ -40,7 +42,7 @@ UInt16 StringToMove(NSString *string) {
 
 - (instancetype)initWithString:(NSString *)string {
     if (self = [super init]) {
-        _value = StringToMove(string);
+        _value = [self StringToMove:string];
     }
     
     return self;
