@@ -7,6 +7,7 @@
 //
 
 #import "LunaRecordVault.h"
+#import "LunaFENCoder.h"
 #import "NSString+Subscript.h"
 
 // MARK: - Move
@@ -201,8 +202,86 @@ static inline UInt16 HexValueOfUnichar(const unichar c) {
     return description;
 }
 
+// MARK: - Function
+#define LCLocationLeftRightMirrorred(location) (((location) & 0xf0) + 15 - ((location) & 0x0f))
+
++ (void)LCBoardLeftRightMirrorred:(UInt8 *)board {
+    UInt8 target[256] = { 0 };
+    
+    for (int i = 0; i < 256; i++) {
+        target[i] = board[LCLocationLeftRightMirrorred(i)];
+    }
+    
+    memcpy(board, target, 256);
+}
+
+static inline UInt16 LCMoveLeftRightMirrorred(UInt16 move) {
+    return (LCLocationLeftRightMirrorred(move >> 8) << 8) + LCLocationLeftRightMirrorred(move & 0xff);
+}
+
+#define LCLocationUpDownMirrorred(location) (240 - ((location) & 0xf0) + ((location) & 0x0f))
+
++ (void)LCBoardRedBlackExchanged:(UInt8 *)board {
+    UInt8 target[256] = { 0 };
+    
+    for (int i = 0; i < 256; i++) {
+        board[i] ^= 0x30;
+    }
+    
+    for (int i = 0; i < 256; i++) {
+        target[i] = board[LCLocationUpDownMirrorred(i)];
+    }
+    
+    memcpy(board, target, 256);
+}
+
+static inline UInt16 LCMoveRedBlackExchanged(UInt16 move) {
+    return (LCLocationUpDownMirrorred(move >> 8) << 8) + LCLocationUpDownMirrorred(move & 0xff);
+}
+
 // MARK: - 4种命中。
 + (UInt16)searchVaultWithFEN:(NSString *)FEN targetSide:(BOOL)side {
+    const NSDictionary<NSString *, LunaRecordVaultData *> *vault = [LunaRecordVault vault]->_vault;
+    const LunaMove *move;
+    
+    move = [vault[FEN] searchMoveWithSide:side];
+    if (move) {
+        return move.value;
+    }
+
+    // 解码
+    const id<LunaCoding> coder = [LunaFENCoder new];
+    UInt8 board[256];
+    
+    [coder decode:FEN board:board];
+    
+    // 左右翻转
+    [self LCBoardLeftRightMirrorred:board];
+    FEN = [coder encode:board];
+    
+    move = [vault[FEN] searchMoveWithSide:side];
+    if (move) {
+        return LCMoveLeftRightMirrorred(move.value);
+    }
+    
+    // 左右翻转 + 红黑交换
+    [self LCBoardRedBlackExchanged:board];
+    FEN = [coder encode:board];
+    
+    move = [vault[FEN] searchMoveWithSide:!side];
+    if (move) {
+        return LCMoveLeftRightMirrorred(LCMoveRedBlackExchanged(move.value));
+    }
+
+    // 红黑交换
+    [self LCBoardLeftRightMirrorred:board];
+    FEN = [coder encode:board];
+    
+    move = [vault[FEN] searchMoveWithSide:!side];
+    if (move) {
+        return LCMoveRedBlackExchanged(move.value);
+    }
+    
     return 0;
 }
 
@@ -220,23 +299,22 @@ static inline UInt16 HexValueOfUnichar(const unichar c) {
         
         [rows enumerateObjectsUsingBlock:^(NSString *string, NSUInteger idx, BOOL *stop) {
             if (idx == 0) return;
+            if (string.length < 4) return;
             
-            if (string.length > 4) {
-                NSRange range = [string rangeOfString:@" "];
-                
-                NSString *FEN = [string substringToIndex:range.location];
-                LunaMove *move = [[LunaMove alloc] initWithString:[string substringFromIndex:range.location + range.length]];
-                
-                LunaRecordVaultData *data = [LunaRecordVault vault]->_vault[FEN];
-                
-                if (data == nil) {
-                    data = [[LunaRecordVaultData alloc] init];
-                    [LunaRecordVault vault]->_vault[FEN] = data;
-                }
-                
-                [data expandWithMove:move targetSide:side];
-                side = !side;
+            NSRange range = [string rangeOfString:@" "];
+            
+            NSString *FEN = [string substringToIndex:range.location];
+            LunaMove *move = [[LunaMove alloc] initWithString:[string substringFromIndex:range.location + range.length]];
+            
+            LunaRecordVaultData *data = [LunaRecordVault vault]->_vault[FEN];
+            
+            if (data == nil) {
+                data = [[LunaRecordVaultData alloc] init];
+                [LunaRecordVault vault]->_vault[FEN] = data;
             }
+            
+            [data expandWithMove:move targetSide:side];
+            side = !side;
         }];
     }
 }
