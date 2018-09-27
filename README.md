@@ -24,9 +24,10 @@
 
 ***
 
-## Versions Track
+## Development Track
 * 2017.10.11, right start the project.
 * 2018.2.24, done with MultiPeer module, begin developing AI.
+* 2018.9.27, __can move as vault gives__, the vault is small now, we can expand it in the future.
 
 ## Overview Of Functions
 ### Game Module
