@@ -20,7 +20,7 @@ class ChessVC: UIViewController {
 		self.layoutChessBoard()
 		self.layoutFlashLayer()
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(updateUserPreference), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUserPreference), name: UIApplication.willResignActiveNotification, object: nil)
     }
 	
 	// MARK: - Update UserPreference

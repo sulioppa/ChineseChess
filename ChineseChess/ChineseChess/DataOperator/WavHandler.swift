@@ -17,14 +17,17 @@ class WavHandler: NSObject {
 		if UserPreference.shared.playBGM {
 			self.bgm?.currentTime = isLaunch ? 48.0 : 0.0
 			self.bgm?.numberOfLoops = -1
+            
 			let audioSession = AVAudioSession.sharedInstance()
-			try? audioSession.setCategory(AVAudioSessionCategorySoloAmbient)
+            try? audioSession.setCategory(.soloAmbient, mode: .default)
 			try? audioSession.setActive(true)
+            
 			self.bgm?.play()
 		} else {
 			self.bgm?.stop()
+            
 			let audioSession = AVAudioSession.sharedInstance()
-			try? audioSession.setCategory(AVAudioSessionCategoryAmbient)
+            try? audioSession.setCategory(.ambient, mode: .default)
 			try? audioSession.setActive(true)
 		}
 	}

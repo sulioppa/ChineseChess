@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}()
 
 	// MARK: - App Entrance
-	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		// BGM - 沧海龙吟
 		WavHandler.playBGM(isLaunch: true)
 		

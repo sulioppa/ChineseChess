@@ -572,7 +572,6 @@
 				A7CE55F21F8DC28600641454 /* Frameworks */,
 				A7CE55F31F8DC28600641454 /* Resources */,
 				D23401FE36AABAFEA363FFB0 /* [CP] Embed Pods Frameworks */,
-				82D267196FEA9A518BFCF518 /* [CP] Copy Pods Resources */,
 				A75AB921206C8C1B00FA7B1F /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -597,6 +596,7 @@
 				TargetAttributes = {
 					A7CE55F41F8DC28600641454 = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -673,21 +673,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		82D267196FEA9A518BFCF518 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ChineseChess/Pods-ChineseChess-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D23401FE36AABAFEA363FFB0 /* [CP] Embed Pods Frameworks */ = {
@@ -913,7 +898,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ChineseChess/SupportFiles/ChineseChess-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -935,7 +920,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/ChineseChess/SupportFiles/ChineseChess-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

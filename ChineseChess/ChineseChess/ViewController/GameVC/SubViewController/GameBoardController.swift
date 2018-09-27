@@ -121,7 +121,7 @@ extension GameBoardController {
 		}
 		
 		self.isRegreting = true
-		self.AI.isThinking = false
+		self.stopThinking()
 		
 		if self.AI.side.isRed {
 			if UserPreference.shared.game.black.isPlayer {
@@ -144,7 +144,6 @@ extension GameBoardController {
 				self.regretStep(onlyOne: true)
 			}
 		}
-		
 	}
 	
 	public final func techMe() {

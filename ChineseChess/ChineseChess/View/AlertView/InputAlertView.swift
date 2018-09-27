@@ -105,7 +105,7 @@ class InputAlertView: UIView {
 		
 		self.textField = inputView
 		
-		NotificationCenter.default.addObserver(forName: .UIKeyboardWillShow, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
 			self?.keyboardWillShow(sender: notification)
 		}
 	}
@@ -184,9 +184,9 @@ class InputAlertView: UIView {
 	private func keyboardWillShow(sender: Notification) {
 		guard let superview = self.superview else { return }
 		
-		guard let endRect = sender.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+        guard let endRect = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
 		
-		guard let lastTime = sender.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
+        guard let lastTime = sender.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
 		
 		guard let keyboardRect = self.window?.convert(endRect, to: superview) else { return }
 		

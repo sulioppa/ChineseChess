@@ -23,8 +23,8 @@ class HomeVC: UIViewController {
 	// Scrollview
 	private func initScrollView() {
 		self.scrollVC.setSuperview(superView: self.view)
-		NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
 	}
 	
 	// Entrances
@@ -230,8 +230,8 @@ extension HomeVC {
 			
 			let animation = CATransition()
 			animation.duration = Macro.Time.homeRippleInterval
-			animation.type = "rippleEffect"
-			animation.subtype = kCATransitionFade
+            animation.type = CATransitionType(rawValue: "rippleEffect")
+            animation.subtype = CATransitionSubtype.fromRight
 			animation.repeatCount = Float.infinity
 			
 			self.imageView?.layer.add(animation, forKey: "animation")
