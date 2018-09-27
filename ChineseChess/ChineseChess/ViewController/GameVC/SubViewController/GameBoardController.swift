@@ -167,7 +167,8 @@ extension GameBoardController {
 	
 	private func startThinking() {
 		guard !self.AI.isThinking else { return }
-		
+        
+		self.AI.isThinking = true
 		self.AI.nextStep { (progress, move) in
 			DispatchQueue.main.async { [weak self] in
 				guard let `self` = self else { return }
@@ -175,8 +176,6 @@ extension GameBoardController {
 				self.delegate?.progress = progress
 				
 				if move > 0 && self.AI.isThinking {
-					self.stopThinking()
-					
 					self.makeMove(move: move)
 				}
 			}
@@ -324,6 +323,7 @@ extension GameBoardController {
 				self?.isMoving = false
 				release()
                 
+                self?.stopThinking()
                 self?.tryThinking()
 			})
 		}

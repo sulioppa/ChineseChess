@@ -101,7 +101,18 @@
 }
 
 - (void)NextStep:(void (^)(float progress, LunaMove move))block {
-	
+    Bool side = _side;
+    NSString *FEN = [_coder encode:_board];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        LunaMove move = [LunaRecordVault searchVaultWithFEN:FEN targetSide:side];
+        
+        if (move) {
+            block(1.0, move);
+        } else {
+            block(0.75, 0);
+        }
+    });
 }
 
 @end

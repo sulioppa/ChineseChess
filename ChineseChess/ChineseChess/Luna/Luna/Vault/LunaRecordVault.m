@@ -128,7 +128,13 @@ static inline UInt16 HexValueOfUnichar(const unichar c) {
 }
 
 - (LunaMove *)searchMoveWithSide:(BOOL)side {
-    return [[self collection:side] anyObject];
+    NSArray<LunaMove *> *moves = [[self collection:side] allObjects];
+    
+    if (moves.count == 0) {
+        return nil;
+    }
+
+    return moves[arc4random() % moves.count];
 }
 
 - (void)expandWithMove:(LunaMove *)move targetSide:(BOOL)side {
@@ -203,7 +209,7 @@ static inline UInt16 HexValueOfUnichar(const unichar c) {
 }
 
 // MARK: - Function
-#define LCLocationLeftRightMirrorred(location) (((location) & 0xf0) + 15 - ((location) & 0x0f))
+#define LCLocationLeftRightMirrorred(location) (((location) & 0xf0) + 14 - ((location) & 0x0f))
 
 + (void)LCBoardLeftRightMirrorred:(UInt8 *)board {
     UInt8 target[256] = { 0 };
@@ -225,7 +231,9 @@ static inline UInt16 LCMoveLeftRightMirrorred(UInt16 move) {
     UInt8 target[256] = { 0 };
     
     for (int i = 0; i < 256; i++) {
-        board[i] ^= 0x30;
+        if (board[i]) {
+            board[i] ^= 0x30;
+        }
     }
     
     for (int i = 0; i < 256; i++) {
@@ -321,6 +329,16 @@ static inline UInt16 LCMoveRedBlackExchanged(UInt16 move) {
 
 + (void)writeToFile:(NSString *)path {
     [[[LunaRecordVault vault] description] writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
+}
+
++ (void)PrintBoard:(UInt8 *)board {
+    for (int row = 0; row < 16; row++) {
+        for (int col = 0; col < 16; col++) {
+            printf("%d, ", board[(row << 4) + col]);
+        }
+        
+        printf("\n");
+    }
 }
 #endif
 
