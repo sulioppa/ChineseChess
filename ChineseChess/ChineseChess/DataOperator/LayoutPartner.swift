@@ -81,7 +81,7 @@ extension LayoutPartner {
 				self.chessSize = 42
 				self.boardmargin = 14.5
 				
-			case 736.0:
+			case 736.0, 818.0:
 				self.basePoint = CGPoint(x: 24.33, y: 45)
 				self.gridSize = 45.76
 				self.chessSize = 46
