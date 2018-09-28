@@ -49,7 +49,7 @@ class UserPreference: NSObject {
 extension UserPreference {
 	public class Game {
 		public var red: Level = .player
-		public var black: Level = .player
+		public var black: Level = .rookie
 		public var prompt: Level = .supermaster
 		public var record: String = ""
 		public var reverse: Bool = false
