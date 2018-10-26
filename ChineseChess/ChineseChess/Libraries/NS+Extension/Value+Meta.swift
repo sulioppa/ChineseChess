@@ -11,7 +11,7 @@ import UIKit
 extension DispatchTime: ExpressibleByIntegerLiteral {
 	
 	public init(integerLiteral value: Int) {
-		self = DispatchTime.now() + .seconds(value)
+		self = .now() + .seconds(value)
 	}
 	
 }

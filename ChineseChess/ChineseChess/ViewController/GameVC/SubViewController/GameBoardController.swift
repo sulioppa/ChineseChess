@@ -69,25 +69,6 @@ class GameBoardController: ChessBoardController {
 		}
 	}
 	
-	// MARK: - reverse & opposite
-	public override var reverse: Bool {
-		didSet {
-			self.asyncTask { (release) in
-				self.refreshBoard()
-				release()
-			}
-		}
-	}
-	
-	public override var opposite: Bool {
-		didSet {
-			self.asyncTask { (release) in
-				self.refreshBoard()
-				release()
-			}
-		}
-	}
-	
 	// MARK: - Board Operation
 	public override func refreshBoard() {
 		super.refreshBoard()
@@ -169,15 +150,23 @@ extension GameBoardController {
         
 		self.AI.isThinking = true
 		self.AI.nextStep { (progress, move) in
-			DispatchQueue.main.async { [weak self] in
-				guard let `self` = self else { return }
-				
-				self.delegate?.progress = progress
-				
-				if move > 0 && self.AI.isThinking {
-					self.makeMove(move: move)
-				}
-			}
+            DispatchQueue.main.async { [weak self] in
+                guard let `self` = self else { return }
+                guard self.AI.isThinking else { return }
+                
+                self.delegate?.progress = progress
+                
+                guard move > 0 else { return }
+
+                self.asyncTask(task: { (release) in
+                    guard self.AI.isThinking else {
+                        release()
+                        return
+                    }
+                    
+                    self.makeMove(move: move, completion: release)
+                })
+            }
 		}
 	}
 	
@@ -241,7 +230,7 @@ extension GameBoardController {
 			])
 	}
 	
-	private func makeMove(move: LunaMove) {
+    private func makeMove(move: LunaMove, completion: @escaping () -> Void) {
 		self.clearLegalMoves()
 		let state = self.AI.moveChess(withMove: move)
 		WavHandler.playVoice(state: state)
@@ -249,7 +238,19 @@ extension GameBoardController {
 		let from = GridPoint(location: move.from, isReverse: self.reverse)
 		let to = GridPoint(location: move.to, isReverse: self.reverse)
 		
-		self.moveChess(from: from, to: to)
+        self.moveChess(with: {
+            self.isMoving = true
+        }, from: from, to: to, completion: {
+            self.isMoving = false
+            completion()
+            
+            self.stopThinking()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + Macro.Time.AIThinkingInterval, execute: {
+                self.tryThinking()
+            })
+        })
+        
 		self.refreshLastMove(with: self.AI.lastMove?.move)
 		self.clearChoice()
 		
@@ -323,7 +324,10 @@ extension GameBoardController {
 				release()
                 
                 self?.stopThinking()
-                self?.tryThinking()
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + Macro.Time.AIThinkingInterval, execute: {
+                    self?.tryThinking()
+                })
 			})
 		}
 	}
@@ -340,7 +344,7 @@ extension GameBoardController {
 		}
 	}
 	
-	private func asyncTask(task: @escaping (@escaping () -> Void) -> Void) {
+	internal func asyncTask(task: @escaping (@escaping () -> Void) -> Void) {
 		self.taskQueue.async { [weak self] in
 			self?.taskSignal.wait()
 			DispatchQueue.main.async {

@@ -93,19 +93,32 @@ extension GameVC: MenuViewDelegate, CharacterViewDelegate, EditVCDelegate {
 	func menuView(_ menuView: NavigationView, didSelectRowAt index: Int) {
 		switch index {
 		case 0:
-			self.chessBoardController.reverse = UserPreference.shared.game.reverse
-			self.refreshTopBottom()
+            self.chessBoardController.asyncTask { (release) in
+                self.chessBoardController.reverse = UserPreference.shared.game.reverse
+                self.refreshTopBottom()
+                
+                release()
+            }
+            
 		case 1:
-			self.chessBoardController.opposite = UserPreference.shared.game.opposite
+            self.chessBoardController.asyncTask { (release) in
+                self.chessBoardController.opposite = UserPreference.shared.game.opposite
+                
+                release()
+            }
+            
 		case 2:
 			menuView.push(view: CharacterView(delegate: self, dataSource: self.AI.records.map({ return $0.item }), result: self.AI.state.result))
+            
 		case 3:
 			menuView.dismiss()
 			
 			let vc = EditVC()
 			vc.AI.initBoard(withFile: self.AI.historyFile())
 			vc.delegate = self
+            
 			self.present(vc)
+            
 		default:
 			break
 		}
