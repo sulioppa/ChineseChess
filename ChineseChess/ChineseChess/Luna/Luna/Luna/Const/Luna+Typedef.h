@@ -12,6 +12,8 @@
 #include <MacTypes.h>
 
 typedef _Bool Bool;
+typedef signed char Int8;
+
 typedef short Int16;
 
 typedef UInt8 LCChess;
