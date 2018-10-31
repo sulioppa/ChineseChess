@@ -9,7 +9,7 @@
 #import "Luna+PositionChanged.h"
 
 /* MARK: - 着法合理性检测
- * 生成的着法 检测
+ * 生成的着法 检测（吃子检测）
  */
 LC_INLINE Bool LCPositionGenerateMoveIsLegal(LCPositionRef position, const LCMove move) {
     return position->board[move >> 8] >> 4 != position->board[move & 0xff] >> 4;
