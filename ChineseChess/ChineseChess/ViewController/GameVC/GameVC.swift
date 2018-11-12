@@ -135,7 +135,7 @@ extension GameVC: MenuViewDelegate, CharacterViewDelegate, EditVCDelegate {
 	}
 	
 	var detail: String {
-		return "红方：\(UserPreference.shared.game.red.description)\n黑方：\(UserPreference.shared.game.black.description)\n回合数：\((self.AI.count + 1) >> 1)\n步数：\(self.AI.count)\n\(self.AI.state.description)"
+        return "红方：\(UserPreference.shared.game.red.description)\n黑方：\(UserPreference.shared.game.black.description)\n回合数：\((self.AI.count + 1) >> 1)\n步数：\(self.AI.count)\n状态：\(self.AI.state.description)"
 	}
 	
 	private var name: String {

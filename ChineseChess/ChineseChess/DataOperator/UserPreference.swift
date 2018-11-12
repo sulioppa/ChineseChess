@@ -143,7 +143,7 @@ extension UserPreference {
 		
 		public var record: String = ""
 		public var name: String = "开局"
-		public var detail: String = "暂无信息"
+        public var detail: String = "状态：暂无信息"
 		public var result: String = "结果: 未知"
 		public var index: Int = -1
 		

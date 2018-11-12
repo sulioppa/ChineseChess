@@ -531,7 +531,7 @@ extension MultiPeerVC: CharacterViewDelegate {
 		let red = self.chessBoardController.reverse ? self.rivalname : UserPreference.shared.multiPeer.nickname
 		let black = self.chessBoardController.reverse ? UserPreference.shared.multiPeer.nickname : self.rivalname
 		
-		return "红方：\(red)\n黑方：\(black)\n回合数：\((self.AI.count + 1) >> 1)\n步数：\(self.AI.count)\n\(self.AI.state.description)"
+		return "红方：\(red)\n黑方：\(black)\n回合数：\((self.AI.count + 1) >> 1)\n步数：\(self.AI.count)\n状态：\(self.AI.state.description)"
 	}
 	
 	private var name: String {

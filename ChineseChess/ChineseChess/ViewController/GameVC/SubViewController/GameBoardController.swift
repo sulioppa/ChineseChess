@@ -185,17 +185,9 @@ extension GameBoardController {
 			return (false, nil)
 		} else if self.AI.isThinking {
 			return (false, "AI正在思考...")
-		} else {
-			if self.AI.state.isNormalState {
-				if self.AI.state == .turnRedSide && !UserPreference.shared.game.red.isPlayer {
-					return (false, "红方AI走")
-				} else if self.AI.state == .turnBlackSide && !UserPreference.shared.game.black.isPlayer {
-					return (false, "黑方AI走")
-				}
-			} else {
-				return (false, self.AI.state.description)
-			}
-		}
+        } else if !self.AI.state.isNormalState {
+            return (false, self.AI.state.description)
+        }
 		
 		return (true, nil)
 	}
