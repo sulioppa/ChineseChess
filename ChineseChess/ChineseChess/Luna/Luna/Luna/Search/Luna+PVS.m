@@ -7,3 +7,18 @@
 //
 
 #import "Luna+PVS.h"
+#import "Luna+PositionChanged.h"
+#import "Luna+Generate.h"
+
+// MARK: - Root Search
+void LunaGetNextStep(NSString *FEN, LCSide side, NSArray<NSNumber *> *bannedMoves, void (^ block)(float progress, LCMove move)) {
+    LCMutablePositionRef position = LCPositionCreateMutable();
+    LCPositionInit(position, FEN, side);
+    
+    LCPositionRelease(position);
+}
+
+// MARK: - PVS
+void LCPrincipalVariationSearch() {
+    
+}

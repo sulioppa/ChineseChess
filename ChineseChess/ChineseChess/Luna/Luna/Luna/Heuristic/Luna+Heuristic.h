@@ -19,6 +19,12 @@ typedef const LCHistoryTrack *const LCHistoryTrackRef;
 
 typedef LCHistoryTrack *const LCMutableHistoryTrackRef;
 
+// MARK: - LCHistoryTrack Life Cycle
+extern LCMutableHistoryTrackRef LCHistoryTrackCreateMutable(void);
+
+extern void LCHistoryTrackRelease(LCHistoryTrackRef history);
+
+// MARK: - Write
 LC_INLINE void LCHistoryTrackRecord(LCMutableHistoryTrackRef history, const LCMove move, const UInt16 depth) {
     history->history[move] += depth << 1;
 }

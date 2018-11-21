@@ -39,7 +39,10 @@ typedef LCHashHeuristic *const LCMutableHashHeuristicRef;
  */
 extern const UInt8 LCHashHeuristicMaxDepth;
 
-extern void LCHashHeuristicInit(void);
+// MARK: - LCHashHeuristic Life Cycle
+extern LCMutableHashHeuristicRef LCHashHeuristicCreateMutable(void);
+
+extern void LCHashHeuristicRelease(LCHashHeuristicRef hash);
 
 // MARK: - Write & Read
 extern void LCHashHeuristicWrite(LCHashHeuristicRef hash);

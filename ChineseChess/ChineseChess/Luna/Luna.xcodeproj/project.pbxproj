@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		850A55CA21A5638000999376 /* Luna+Heuristic.m in Sources */ = {isa = PBXBuildFile; fileRef = 850A55C921A5638000999376 /* Luna+Heuristic.m */; };
+		850A55CC21A5671400999376 /* Luna+Killer.m in Sources */ = {isa = PBXBuildFile; fileRef = 850A55CB21A5671400999376 /* Luna+Killer.m */; };
 		85300BED214F762E00B05B06 /* Luna+PositionChanged.h in Headers */ = {isa = PBXBuildFile; fileRef = 85300BEB214F762E00B05B06 /* Luna+PositionChanged.h */; };
 		85300BEE214F762E00B05B06 /* Luna+PositionChanged.m in Sources */ = {isa = PBXBuildFile; fileRef = 85300BEC214F762E00B05B06 /* Luna+PositionChanged.m */; };
 		85300BF1214F7B0B00B05B06 /* Luna+PositionLegal.h in Headers */ = {isa = PBXBuildFile; fileRef = 85300BEF214F7B0B00B05B06 /* Luna+PositionLegal.h */; };
@@ -53,6 +55,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		850A55C921A5638000999376 /* Luna+Heuristic.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+Heuristic.m"; sourceTree = "<group>"; };
+		850A55CB21A5671400999376 /* Luna+Killer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+Killer.m"; sourceTree = "<group>"; };
 		85300BEB214F762E00B05B06 /* Luna+PositionChanged.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+PositionChanged.h"; sourceTree = "<group>"; };
 		85300BEC214F762E00B05B06 /* Luna+PositionChanged.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+PositionChanged.m"; sourceTree = "<group>"; };
 		85300BEF214F7B0B00B05B06 /* Luna+PositionLegal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+PositionLegal.h"; sourceTree = "<group>"; };
@@ -170,7 +174,9 @@
 			isa = PBXGroup;
 			children = (
 				85300BFD214F7E5400B05B06 /* Luna+Heuristic.h */,
+				850A55C921A5638000999376 /* Luna+Heuristic.m */,
 				8575D29B214F804300A7969E /* Luna+Killer.h */,
+				850A55CB21A5671400999376 /* Luna+Killer.m */,
 				8575D297214F803600A7969E /* Luna+Hash.h */,
 				8575D298214F803600A7969E /* Luna+Hash.m */,
 			);
@@ -363,6 +369,7 @@
 			files = (
 				A75AB90B206C869C00FA7B1F /* Luna+Const.m in Sources */,
 				85300BEE214F762E00B05B06 /* Luna+PositionChanged.m in Sources */,
+				850A55CC21A5671400999376 /* Luna+Killer.m in Sources */,
 				85300BF6214F7BC900B05B06 /* Luna+MoveLegal.m in Sources */,
 				A75AB917206C869C00FA7B1F /* LunaRecordVault.m in Sources */,
 				A75AB916206C869C00FA7B1F /* LunaRecordStack.m in Sources */,
@@ -372,6 +379,7 @@
 				8575D29A214F803600A7969E /* Luna+Hash.m in Sources */,
 				A7EBF1DC209027FC0072E389 /* Luna+Generate.m in Sources */,
 				85300BF2214F7B0B00B05B06 /* Luna+PositionLegal.m in Sources */,
+				850A55CA21A5638000999376 /* Luna+Heuristic.m in Sources */,
 				A73758842090631600944EAC /* Luna+Position.m in Sources */,
 				A75AB905206C869C00FA7B1F /* Luna.m in Sources */,
 				A75AB915206C869C00FA7B1F /* LunaRecord.m in Sources */,

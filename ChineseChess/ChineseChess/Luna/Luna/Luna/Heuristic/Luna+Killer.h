@@ -24,6 +24,11 @@ typedef struct {
 typedef const LCKillerMove *const LCKillerMoveRef;
 typedef LCKillerMove *const LCMutableKillerMoveRef;
 
+// MARK: - LCKillerMove Life Cycle
+extern LCMutableKillerMoveRef LCKillerMoveCreateMutable(void);
+
+extern void LCKillerMoveRelease(LCKillerMoveRef killer);
+
 // MARK: - Write & Read
 LC_INLINE void LCKillerMoveWrite(LCMutableKillerMoveRef killer, const LCMove move) {
     killer->killers[(killer->indexOfWrite++) & LCKillerMoveLengthMask] = move;

@@ -29,6 +29,24 @@
 
 @end
 
+@interface Luna (AI)
+
+- (NSArray<NSNumber *> *)generateMovesWithLocation:(LunaLocation)location;
+
+- (BOOL)isCheckedMateWithTargetSide:(BOOL)isBlack;
+
+- (BOOL)isCheckedWithTargetSide:(BOOL)isBlack;
+
+- (LunaChess)catchWithChess:(LunaChess)chess targetChess:(LunaChess)target hasEat:(BOOL)has;
+
+- (uint32_t)bitChess;
+
+- (BOOL)isLegalWithChess:(LunaChess)chess atLocation:(LunaLocation)location;
+
+- (NSArray<NSNumber *> *)bannedMoves;
+
+@end
+
 @implementation Luna
 
 - (instancetype)init
@@ -103,6 +121,7 @@
 - (void)NextStep:(void (^)(float progress, LunaMove move))block {
     Bool side = _side;
     NSString *FEN = [_coder encode:_board];
+    NSArray *bannedMoves = [self bannedMoves];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         LunaMove move = [LunaRecordVault searchVaultWithFEN:FEN targetSide:side];
@@ -110,7 +129,7 @@
         if (move) {
             block(1.0, move);
         } else {
-            block(0.75, 0);
+            LunaGetNextStep(FEN, side, bannedMoves, block);
         }
     });
 }
@@ -118,24 +137,6 @@
 @end
 
 // MARK: - AI.
-@interface Luna (AI)
-
-- (NSArray<NSNumber *> *)generateMovesWithLocation:(LunaLocation)location;
-
-- (BOOL)isCheckedMateWithTargetSide:(BOOL)isBlack;
-
-- (BOOL)isCheckedWithTargetSide:(BOOL)isBlack;
-
-- (LunaChess)catchWithChess:(LunaChess)chess targetChess:(LunaChess)target hasEat:(BOOL)has;
-
-- (uint32_t)bitChess;
-
-- (BOOL)isLegalWithChess:(LunaChess)chess atLocation:(LunaLocation)location;
-
-- (NSArray<NSNumber *> *)bannedMoves;
-
-@end
-
 @implementation Luna (AI)
 
 // MARK: - Gernerate Moves

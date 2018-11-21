@@ -7,19 +7,28 @@
 //
 
 #import "Luna+Hash.h"
+
 #include <stdlib.h>
 #include <memory.h>
 
 // 最大搜索步数
 const UInt8 LCHashHeuristicMaxDepth = 32;
 
-static LCHashHeuristic *_HashTable;
-
-void LCHashHeuristicInit(void) {
+LCMutableHashHeuristicRef LCHashHeuristicCreateMutable(void) {
     const UInt64 size = LCHashHeuristicMaxDepth * (UINT16_MAX + 1) * sizeof(LCHashHeuristic);
     
-    _HashTable = malloc(size);
-    memset(_HashTable, 0, size);
+    void *memory = malloc(size);
+    memset(memory, 0, size);
+    
+    return memory == NULL ? NULL : (LCHashHeuristic *)memory;
+}
+
+void LCHashHeuristicRelease(LCHashHeuristicRef hash) {
+    if (hash == NULL) {
+        return;
+    }
+    
+    free((void *)hash);
 }
 
 // MARK: - Write & Read
