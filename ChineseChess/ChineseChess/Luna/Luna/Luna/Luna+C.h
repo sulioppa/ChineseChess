@@ -8,5 +8,4 @@
 
 // MARK: - Luna C
 #import "Luna+Const.h"
-#import "Luna+PreGenerate.h"
 #import "Luna+PVS.h"

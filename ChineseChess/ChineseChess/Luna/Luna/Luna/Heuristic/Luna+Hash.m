@@ -11,11 +11,8 @@
 #include <stdlib.h>
 #include <memory.h>
 
-// 最大搜索步数
-const UInt8 LCHashHeuristicMaxDepth = 32;
-
 LCMutableHashHeuristicRef LCHashHeuristicCreateMutable(void) {
-    const UInt64 size = LCHashHeuristicMaxDepth * (UINT16_MAX + 1) * sizeof(LCHashHeuristic);
+    const UInt64 size = LCSearchMaxDepth * (UINT16_MAX + 1) * sizeof(LCHashHeuristic);
     
     void *memory = malloc(size);
     memset(memory, 0, size);

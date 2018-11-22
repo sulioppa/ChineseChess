@@ -129,7 +129,7 @@
         if (move) {
             block(1.0, move);
         } else {
-            LunaGetNextStep(FEN, side, bannedMoves, block);
+            LunaGetNextStep(FEN, side, bannedMoves, &(self->_isThinking), block);
         }
     });
 }

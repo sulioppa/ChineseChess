@@ -7,14 +7,13 @@
 //
 
 #import "Luna+Killer.h"
-#import "Luna+Hash.h"
 
 #include <stdlib.h>
 #include <memory.h>
 
 // MARK: - LCKillerMove Life Cycle
 extern LCMutableKillerMoveRef LCKillerMoveCreateMutable(void) {
-    const UInt64 size = LCHashHeuristicMaxDepth * sizeof(LCKillerMove);
+    const UInt64 size = LCSearchMaxDepth * sizeof(LCKillerMove);
     
     void *memory = malloc(size);
     memset(memory, 0, size);

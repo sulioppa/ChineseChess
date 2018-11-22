@@ -9,4 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "Luna+PreGenerate.h"
 
-extern void LunaGetNextStep(NSString *FEN, LCSide side, NSArray<NSNumber *> *bannedMoves, void (^ block)(float progress, LCMove move));
+extern void LunaGetNextStep(
+                            NSString *FEN,
+                            LCSide side,
+                            NSArray<NSNumber *> *bannedMoves,
+                            Bool *isThinking,
+                            void (^ block)(float progress, LCMove move)
+                            );

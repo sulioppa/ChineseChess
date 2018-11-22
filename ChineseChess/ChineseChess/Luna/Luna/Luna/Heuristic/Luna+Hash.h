@@ -19,7 +19,10 @@ typedef enum : Int8 {
     LCHashHeuristicBeta = 1,
 } LCHashHeuristicType;
 
-// MARK: - LCHashHeuristic: 16 bytes
+/* MARK: - LCHashHeuristic: 16 bytes
+    LCHashHeuristic[LCSearchMaxDepth][UINT16_MAX + 1]
+    Needs `LCSearchMaxDepth` MB.
+*/
 typedef struct {
     LCZobristKey zobrist;
     
@@ -32,12 +35,6 @@ typedef struct {
 
 typedef const LCHashHeuristic *const LCHashHeuristicRef;
 typedef LCHashHeuristic *const LCMutableHashHeuristicRef;
-
-/* MARK: - 置换表设置
- * LCHashHeuristicMaxDepth = 32.
- * 置换表 占用内存 为 `LCHashHeuristicMaxDepth` MB.
- */
-extern const UInt8 LCHashHeuristicMaxDepth;
 
 // MARK: - LCHashHeuristic Life Cycle
 extern LCMutableHashHeuristicRef LCHashHeuristicCreateMutable(void);

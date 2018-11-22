@@ -25,6 +25,23 @@ const UInt16 LCMvvValue[16] = {
 	5, 5, 5, 5, 5
 };
 
+LCMutableMovesTrackRef LCMovesTrackCreateMutable(void) {
+    const UInt64 size = LCSearchMaxDepth * sizeof(LCMovesTrack);
+    
+    void *memory = malloc(size);
+    memset(memory, 0, size);
+    
+    return memory == NULL ? NULL : (LCMovesTrack *)memory;
+}
+
+void LCMovesTrackRelease(LCMovesTrackRef track) {
+    if (track == NULL) {
+        return;
+    }
+    
+    free((void *)track);
+}
+
 const unsigned long LCMoveTrackSize = sizeof(LCMoveTrack);
 
 /* MARK: - Generate Eat Moves

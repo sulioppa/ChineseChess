@@ -39,6 +39,11 @@ typedef const LCMovesTrack *const LCMovesTrackRef;
 
 typedef LCMovesTrack *const LCMutableMovesTrackRef;
 
+// MARK: - LCMovesTrack Life Cycle
+extern LCMutableMovesTrackRef LCMovesTrackCreateMutable(void);
+
+extern void LCMovesTrackRelease(LCMovesTrackRef track);
+
 LC_INLINE void LCMovesTrackPushBack(LCMutableMovesTrackRef moves, const LCMoveTrack track) {
 	*(moves->top++) = track;
 }
