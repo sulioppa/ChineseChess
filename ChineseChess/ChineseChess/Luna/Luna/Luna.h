@@ -54,7 +54,7 @@ typedef uint16_t LunaMove;
 // AI Control, the isThinking reveals the AI is thinking or not, you can stop it by setting it 'NO'.
 @property (nonatomic, readwrite) BOOL isThinking;
 
-- (void)NextStep:(void (^ _Nonnull)(float progress, LunaMove move))block;
+- (void)nextStepWithDepth:(int)depth block:(void (^ _Nonnull)(float progress, LunaMove move))block;
 
 @end
 

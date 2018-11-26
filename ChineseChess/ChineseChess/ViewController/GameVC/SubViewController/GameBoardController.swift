@@ -149,7 +149,9 @@ extension GameBoardController {
 		guard !self.AI.isThinking else { return }
         
 		self.AI.isThinking = true
-		self.AI.nextStep { (progress, move) in
+        let level = self.AI.side ? UserPreference.shared.game.black : UserPreference.shared.game.red
+        
+        self.AI.nextStep(withDepth: Int32(level.rawValue)) { (progress, move) in
             DispatchQueue.main.async { [weak self] in
                 guard let `self` = self else { return }
                 guard self.AI.isThinking else { return }

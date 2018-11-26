@@ -65,10 +65,10 @@ Bool (*const _LCMoveIsLegal[16])(LCPositionRef, const LCMove *const) = {
 
 // MARK: - LCChessSideMap
 const UInt8 _LCChessSideMap[LCChessLength] = {
-    LCSideNull, LCSideNull, LCSideNull, LCSideNull,
-    LCSideNull, LCSideNull, LCSideNull, LCSideNull,
-    LCSideNull, LCSideNull, LCSideNull, LCSideNull,
-    LCSideNull, LCSideNull, LCSideNull, LCSideNull,
+    LCSideNan, LCSideNan, LCSideNan, LCSideNan,
+    LCSideNan, LCSideNan, LCSideNan, LCSideNan,
+    LCSideNan, LCSideNan, LCSideNan, LCSideNan,
+    LCSideNan, LCSideNan, LCSideNan, LCSideNan,
     
     LCSideRed, LCSideRed, LCSideRed, LCSideRed,
     LCSideRed, LCSideRed, LCSideRed, LCSideRed,

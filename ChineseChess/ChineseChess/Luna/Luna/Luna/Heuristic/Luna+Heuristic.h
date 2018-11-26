@@ -22,6 +22,8 @@ typedef LCHistoryTrack *const LCMutableHistoryTrackRef;
 // MARK: - LCHistoryTrack Life Cycle
 extern LCMutableHistoryTrackRef LCHistoryTrackCreateMutable(void);
 
+extern void LCHistoryTrackClear(LCMutableHistoryTrackRef history);
+
 extern void LCHistoryTrackRelease(LCHistoryTrackRef history);
 
 // MARK: - Write

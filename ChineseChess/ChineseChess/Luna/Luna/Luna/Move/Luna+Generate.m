@@ -53,10 +53,9 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRe
 	const LCRowColumnOffset *offset;
 	
 	UInt16 buffer;
-	
+    
 	chess = position->chess + LCSideGetKing(position->side);
-	LCMovesTrackPopAll(moves);
-	
+
 	// K
 	for (to = LCMoveArrayConstRef->K + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
 		if (position->board[*to]) {
@@ -193,7 +192,7 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRe
 	}
 	
 	// Sort by mvv
-	qsort_b(moves->track, LCMovesTrackGetCapcity(moves), LCMoveTrackSize, ^ int (const void *a, const void *b) {
+	qsort_b(moves->begin, LCMovesTrackGetCapcity(moves), LCMoveTrackSize, ^ int (const void *a, const void *b) {
 		return *(short *)b - *(short *)a;
 	});
 }
@@ -209,7 +208,6 @@ void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef 
 	UInt16 move;
 	
 	chess = position->chess + LCSideGetKing(position->side);
-	LCMovesTrackPopAll(moves);
 	
 	// K
 	for (to = LCMoveArrayConstRef->K + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
@@ -330,7 +328,7 @@ void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef 
 	}
 	
 	// Sort by history
-	qsort_b(moves->track, LCMovesTrackGetCapcity(moves), LCMoveTrackSize, ^ int (const void *a, const void *b) {
+	qsort_b(moves->begin, LCMovesTrackGetCapcity(moves), LCMoveTrackSize, ^ int (const void *a, const void *b) {
 		return *(short *)b - *(short *)a;
 	});
 }

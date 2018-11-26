@@ -7,21 +7,40 @@
 //
 
 #import "Luna+PVS.h"
-#import "Luna+Generate.h"
-#import "Luna+PositionChanged.h"
 
-// MARK: - Root Search
-void LunaGetNextStep(
-                     NSString *FEN,
-                     LCSide side,
-                     NSArray<NSNumber *> *bannedMoves,
-                     Bool *isThinking,
-                     void (^ block)(float progress, LCMove move)
-                     ) {
-    LCMutablePositionRef position = LCPositionCreateMutable();
-    LCPositionInit(position, FEN, side);
+// MARK: - LCNextStep Life Cycle
+void LCNextStepAlloc(LCMutableNextStepRef nextStep) {
+    *nextStep = (LCNextStep) {
+        .position = LCPositionCreateMutable(),
+        
+        .hashTable = LCHashHeuristicCreateMutable(),
+        .killerLayers = LCKillerMoveCreateMutable(),
+        
+        .moveLayers = LCMovesTrackCreateMutable(),
+        .historyTable = LCHistoryTrackCreateMutable(),
+        
+        .evaluate = LCEvaluateCreateMutable(),
+        
+        .isThinking = NULL,
+        .searchDepth = 0
+    };
+}
+
+void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth searchDepth) {
+    nextStep->isThinking = isThinking;
+    nextStep->searchDepth = searchDepth;
+}
+
+void LCNextStepDealloc(LCNextStepRef nextStep) {
+    LCEvaluateRelease(nextStep->evaluate);
     
-    LCPositionRelease(position);
+    LCHistoryTrackRelease(nextStep->historyTable);
+    LCMovesTrackRelease(nextStep->moveLayers);
+    
+    LCKillerMoveRelease(nextStep->killerLayers);
+    LCHashHeuristicRelease(nextStep->hashTable);
+    
+    LCPositionRelease(nextStep->position);
 }
 
 // MARK: - PVS

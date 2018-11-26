@@ -15,7 +15,7 @@
  * 5th or 6th bit indicates red or black. */
 typedef Bool LCSide;
 
-#define LCSideNull 0xff
+#define LCSideNan 0xff
 #define LCSideRed 0
 #define LCSideBlack 1
 
@@ -169,7 +169,7 @@ typedef struct {
 	LCRowColumnMapState Row[1 << 20]; // [2 ^ 12][2 ^ 4][2 ^ 4]
 	LCRowColumnMapState Column[1 << 21]; // [2 ^ 13][2 ^ 4][2 ^ 4]
 	
-	LCRowColumnMapState Null;
+	LCRowColumnMapState Nan;
 	LCRowColumnMapState EatNone;
 	LCRowColumnMapState EatR;
 	LCRowColumnMapState EatC;
@@ -187,6 +187,22 @@ LC_INLINE LCRowColumnMapState LCMoveMapGetRowMapState(const LCRowColumn rank, co
 
 LC_INLINE LCRowColumnMapState LCMoveMapGetColumnMapState(const LCRowColumn rank, const LCRowColumnIndex from, const LCRowColumnIndex to) {
 	return *(LCMoveMapConstRef->Column + (rank << 8) + (from << 4) + to);
+}
+
+// MARK: - Zobrist 散列
+typedef UInt16 LCZobristHash;
+typedef UInt64 LCZobristKey;
+
+extern const LCChess LCZobristMap[LCChessLength];
+extern const LCZobristHash *const LCZobristConstHash;
+extern const LCZobristKey *const LCZobristConstKey;
+
+LC_INLINE LCZobristHash LCChessGetZobristHash(LCChess chess, LCLocation location) {
+    return LCZobristConstHash[(LCZobristMap[chess] << 8) + location];
+}
+
+LC_INLINE LCZobristKey LCChessGetZobristKey(LCChess chess, LCLocation location) {
+    return LCZobristConstKey[(LCZobristMap[chess] << 8) + location];
 }
 
 // MARK: - Luna Init PreGenerate.（走法预生成 计算）

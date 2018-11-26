@@ -29,10 +29,10 @@ void LCHashHeuristicRelease(LCHashHeuristicRef hash) {
 }
 
 // MARK: - Write & Read
-void LCHashHeuristicWrite(LCHashHeuristicRef hash) {
+ void LCHashHeuristicWrite(LCMutableHashHeuristicRef hashTable, LCPositionRef position, LCHashHeuristic hash) {
     
 }
 
-void LCHashHeuristicRead(LCMutableHashHeuristicRef hash) {
+void LCHashHeuristicRead(LCHashHeuristic hashTable, LCPositionRef position, LCMutableHashHeuristicRef hash) {
     
 }

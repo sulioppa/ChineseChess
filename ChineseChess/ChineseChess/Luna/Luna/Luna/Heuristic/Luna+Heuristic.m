@@ -19,6 +19,10 @@ LCMutableHistoryTrackRef LCHistoryTrackCreateMutable(void) {
     return memory == NULL ? NULL : (LCHistoryTrack *)memory;
 }
 
+void LCHistoryTrackClear(LCMutableHistoryTrackRef history) {
+    memset(history, 0, sizeof(LCHistoryTrack));
+}
+
 void LCHistoryTrackRelease(LCHistoryTrackRef history) {
     if (history == NULL) {
         return;

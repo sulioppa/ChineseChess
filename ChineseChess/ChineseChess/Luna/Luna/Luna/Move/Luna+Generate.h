@@ -32,7 +32,8 @@ LC_INLINE UInt16 LCMoveTrackGetBuffer(const LCMoveTrack track) {
 // MARK: - LCMovesTrack
 typedef struct {
 	LCMoveTrack track[LCMoveTrackMaxLength];
-	LCMoveTrack *top;
+    LCMoveTrack *begin;
+    LCMoveTrack *end;
 } LCMovesTrack;
 
 typedef const LCMovesTrack *const LCMovesTrackRef;
@@ -45,15 +46,16 @@ extern LCMutableMovesTrackRef LCMovesTrackCreateMutable(void);
 extern void LCMovesTrackRelease(LCMovesTrackRef track);
 
 LC_INLINE void LCMovesTrackPushBack(LCMutableMovesTrackRef moves, const LCMoveTrack track) {
-	*(moves->top++) = track;
+	*(moves->end++) = track;
 }
 
 LC_INLINE void LCMovesTrackPopAll(LCMutableMovesTrackRef moves) {
-	moves->top = moves->track;
+    moves->begin = moves->track;
+	moves->end = moves->begin;
 }
 
 LC_INLINE UInt16 LCMovesTrackGetCapcity(LCMutableMovesTrackRef moves) {
-	return moves->top - moves->track;
+	return moves->end - moves->begin;
 }
 
 /* MARK: - Generate Eat Moves

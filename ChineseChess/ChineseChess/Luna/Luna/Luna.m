@@ -17,6 +17,8 @@
 	
 	id<LunaCoding> _coder;
 	LunaRecordStack *_stack;
+    
+    LunaNextStep *_nextStep;
 }
 
 - (void)initBoard;
@@ -69,6 +71,14 @@
 	return [NSArray arrayWithArray:array];
 }
 
+- (LunaNextStep *)nextStep {
+    if (_nextStep == nil) {
+        _nextStep = [LunaNextStep new];
+    }
+    
+    return _nextStep;
+}
+
 // Board Operation
 - (void)initBoard {
 	static dispatch_once_t onceToken;
@@ -118,10 +128,10 @@
 	}
 }
 
-- (void)NextStep:(void (^)(float progress, LunaMove move))block {
-    Bool side = _side;
-    NSString *FEN = [_coder encode:_board];
+- (void)nextStepWithDepth:(int)depth block:(void (^)(float progress, LunaMove move))block {
     NSArray *bannedMoves = [self bannedMoves];
+    NSString *FEN = [_coder encode:_board];
+    Bool side = _side;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         LunaMove move = [LunaRecordVault searchVaultWithFEN:FEN targetSide:side];
@@ -129,7 +139,13 @@
         if (move) {
             block(1.0, move);
         } else {
-            LunaGetNextStep(FEN, side, bannedMoves, &(self->_isThinking), block);
+            [self.nextStep nextStepWithFEN:FEN
+                                  targetSide:side
+                                 searchDepth:depth
+                                 bannedMoves:bannedMoves
+                                  isThinking:&(self->_isThinking)
+                                       block:block
+             ];
         }
     });
 }

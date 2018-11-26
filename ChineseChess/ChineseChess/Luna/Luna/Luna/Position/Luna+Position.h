@@ -21,18 +21,20 @@ LC_INLINE void LCBitChessModified(LCBitChess *bitchess, const LCChess chess, con
 
 // MARK: - LCPosition
 typedef struct {
-	LCLocation board[LCBoardLength];
-	LCLocation chess[LCChessLength];
-	
-	LCRowColumn row[LCBoardRowsColumnsLength];
-	LCRowColumn column[LCBoardRowsColumnsLength];
-	
-	LCSide side;
-	LCBitChess bitchess;
+    LCLocation board[LCBoardLength];
+    LCLocation chess[LCChessLength];
+    
+    LCRowColumn row[LCBoardRowsColumnsLength];
+    LCRowColumn column[LCBoardRowsColumnsLength];
+    
+    LCSide side;
+    LCBitChess bitchess;
+    
+    LCZobristHash hash;
+    LCZobristKey key;
 } LCPosition;
 
 typedef const LCPosition *const LCPositionRef;
-
 typedef LCPosition *const LCMutablePositionRef;
 
 // MARK: - LCPosition Life Cycle

@@ -7,26 +7,26 @@
 //
 
 #import "Luna+PreGenerate.h"
+#import "Luna+Position.h"
 
-typedef struct {
-    UInt16 hash;
-    UInt64 check;
-} LCZobristKey;
-
-typedef enum : Int8 {
-    LCHashHeuristicAlpha = -1,
-    LCHashHeuristicExact = 0,
-    LCHashHeuristicBeta = 1,
+typedef enum : UInt8 {
+    LCHashHeuristicTypeNan = 0,
+    LCHashHeuristicTypeAlpha = 1 << 0,
+    LCHashHeuristicTypeExact = 1 << 1,
+    LCHashHeuristicTypeBeta = 1 << 2,
 } LCHashHeuristicType;
+
+typedef Int8 LCDepth;
 
 /* MARK: - LCHashHeuristic: 16 bytes
     LCHashHeuristic[LCSearchMaxDepth][UINT16_MAX + 1]
     Needs `LCSearchMaxDepth` MB.
 */
 typedef struct {
-    LCZobristKey zobrist;
-    
+    LCZobristKey key;
+
     LCSide side;
+    LCDepth depth;
     LCHashHeuristicType type;
     
     Int16 value;
@@ -42,6 +42,6 @@ extern LCMutableHashHeuristicRef LCHashHeuristicCreateMutable(void);
 extern void LCHashHeuristicRelease(LCHashHeuristicRef hash);
 
 // MARK: - Write & Read
-extern void LCHashHeuristicWrite(LCHashHeuristicRef hash);
+extern void LCHashHeuristicWrite(LCMutableHashHeuristicRef hashTable, LCPositionRef position, LCHashHeuristic hash);
 
-extern void LCHashHeuristicRead(LCMutableHashHeuristicRef hash);
+extern void LCHashHeuristicRead(LCHashHeuristic hashTable, LCPositionRef position, LCMutableHashHeuristicRef hash);

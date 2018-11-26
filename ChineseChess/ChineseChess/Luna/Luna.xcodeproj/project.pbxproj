@@ -16,6 +16,8 @@
 		85300BF5214F7BC900B05B06 /* Luna+MoveLegal.h in Headers */ = {isa = PBXBuildFile; fileRef = 85300BF3214F7BC900B05B06 /* Luna+MoveLegal.h */; };
 		85300BF6214F7BC900B05B06 /* Luna+MoveLegal.m in Sources */ = {isa = PBXBuildFile; fileRef = 85300BF4214F7BC900B05B06 /* Luna+MoveLegal.m */; };
 		85300BFF214F7E5400B05B06 /* Luna+Heuristic.h in Headers */ = {isa = PBXBuildFile; fileRef = 85300BFD214F7E5400B05B06 /* Luna+Heuristic.h */; };
+		8537174C21A7ECA200688F75 /* Luna+NextStep.h in Headers */ = {isa = PBXBuildFile; fileRef = 8537174A21A7ECA200688F75 /* Luna+NextStep.h */; };
+		8537174D21A7ECA200688F75 /* Luna+NextStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 8537174B21A7ECA200688F75 /* Luna+NextStep.m */; };
 		8575D299214F803600A7969E /* Luna+Hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575D297214F803600A7969E /* Luna+Hash.h */; };
 		8575D29A214F803600A7969E /* Luna+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 8575D298214F803600A7969E /* Luna+Hash.m */; };
 		8575D29D214F804300A7969E /* Luna+Killer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575D29B214F804300A7969E /* Luna+Killer.h */; };
@@ -64,6 +66,8 @@
 		85300BF3214F7BC900B05B06 /* Luna+MoveLegal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+MoveLegal.h"; sourceTree = "<group>"; };
 		85300BF4214F7BC900B05B06 /* Luna+MoveLegal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+MoveLegal.m"; sourceTree = "<group>"; };
 		85300BFD214F7E5400B05B06 /* Luna+Heuristic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Heuristic.h"; sourceTree = "<group>"; };
+		8537174A21A7ECA200688F75 /* Luna+NextStep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+NextStep.h"; sourceTree = "<group>"; };
+		8537174B21A7ECA200688F75 /* Luna+NextStep.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+NextStep.m"; sourceTree = "<group>"; };
 		8575D297214F803600A7969E /* Luna+Hash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Hash.h"; sourceTree = "<group>"; };
 		8575D298214F803600A7969E /* Luna+Hash.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+Hash.m"; sourceTree = "<group>"; };
 		8575D29B214F804300A7969E /* Luna+Killer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Killer.h"; sourceTree = "<group>"; };
@@ -183,6 +187,15 @@
 			path = Heuristic;
 			sourceTree = "<group>";
 		};
+		8537174921A7EBB900688F75 /* NextStep */ = {
+			isa = PBXGroup;
+			children = (
+				8537174A21A7ECA200688F75 /* Luna+NextStep.h */,
+				8537174B21A7ECA200688F75 /* Luna+NextStep.m */,
+			);
+			path = NextStep;
+			sourceTree = "<group>";
+		};
 		A72C22D6206C84BB00520E72 = {
 			isa = PBXGroup;
 			children = (
@@ -229,8 +242,9 @@
 				85300BF8214F7C7D00B05B06 /* Position */,
 				85300BF9214F7C8400B05B06 /* Move */,
 				85300BFC214F7DEA00B05B06 /* Heuristic */,
-				85300BFB214F7CE500B05B06 /* Search */,
 				85300BFA214F7CDB00B05B06 /* Evaluate */,
+				85300BFB214F7CE500B05B06 /* Search */,
+				8537174921A7EBB900688F75 /* NextStep */,
 			);
 			path = Luna;
 			sourceTree = "<group>";
@@ -272,6 +286,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8537174C21A7ECA200688F75 /* Luna+NextStep.h in Headers */,
 				A75AB906206C869C00FA7B1F /* Luna.h in Headers */,
 				85300BF5214F7BC900B05B06 /* Luna+MoveLegal.h in Headers */,
 				A75AB90F206C869C00FA7B1F /* LunaRecord.h in Headers */,
@@ -370,6 +385,7 @@
 				A75AB90B206C869C00FA7B1F /* Luna+Const.m in Sources */,
 				85300BEE214F762E00B05B06 /* Luna+PositionChanged.m in Sources */,
 				850A55CC21A5671400999376 /* Luna+Killer.m in Sources */,
+				8537174D21A7ECA200688F75 /* Luna+NextStep.m in Sources */,
 				85300BF6214F7BC900B05B06 /* Luna+MoveLegal.m in Sources */,
 				A75AB917206C869C00FA7B1F /* LunaRecordVault.m in Sources */,
 				A75AB916206C869C00FA7B1F /* LunaRecordStack.m in Sources */,
