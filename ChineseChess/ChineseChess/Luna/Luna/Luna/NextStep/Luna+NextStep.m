@@ -40,7 +40,9 @@
     LCNextStepInit(&_nextStep, (Bool *)isThinking, depth);
     
     LCPositionInit(_nextStep.position, FEN, side);
-    LCEvaluatePosition(_nextStep.evaluate, _nextStep.position);
+    LCEvaluateInit(_nextStep.evaluate, _nextStep.position);
+    
+    LCHistoryTrackClear(_nextStep.historyTable);
 }
 
 @end

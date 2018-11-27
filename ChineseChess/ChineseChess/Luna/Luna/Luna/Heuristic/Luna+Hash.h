@@ -14,6 +14,7 @@ typedef enum : UInt8 {
     LCHashHeuristicTypeAlpha = 1 << 0,
     LCHashHeuristicTypeExact = 1 << 1,
     LCHashHeuristicTypeBeta = 1 << 2,
+    LCHashHeuristicTypeMove = 1 << 3
 } LCHashHeuristicType;
 
 typedef Int8 LCDepth;
@@ -24,8 +25,8 @@ typedef Int8 LCDepth;
 */
 typedef struct {
     LCZobristKey key;
-
     LCSide side;
+    
     LCDepth depth;
     LCHashHeuristicType type;
     

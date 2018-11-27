@@ -21,7 +21,7 @@ typedef LCEvaluate *const LCMutableEvaluateRef;
 // MARK: - LCEvaluate Life Cycle
 extern LCMutableEvaluateRef LCEvaluateCreateMutable(void);
 
-extern void LCEvaluateInit(LCPositionRef position, LCMutableEvaluateRef evaluate);
+extern void LCEvaluateInit(LCMutableEvaluateRef evaluate, LCPositionRef position);
 
 extern void LCEvaluateRelease(LCEvaluateRef evaluate);
 

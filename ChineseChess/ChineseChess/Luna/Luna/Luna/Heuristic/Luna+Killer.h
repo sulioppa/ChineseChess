@@ -17,7 +17,8 @@
  */
 typedef struct {
     LCMove killers[LCKillerMoveLength];
-    UInt8 indexOfRead;
+    const LCMove *iter;
+    const LCMove *iter_end;
     UInt8 indexOfWrite;
 } LCKillerMove;
 
@@ -27,8 +28,6 @@ typedef LCKillerMove *const LCMutableKillerMoveRef;
 // MARK: - LCKillerMove Life Cycle
 extern LCMutableKillerMoveRef LCKillerMoveCreateMutable(void);
 
-extern void LCKillerMoveClearKillers(LCMutableKillerMoveRef killer);
-
 extern void LCKillerMoveRelease(LCKillerMoveRef killer);
 
 // MARK: - Write & Read
@@ -37,9 +36,5 @@ LC_INLINE void LCKillerMoveWrite(LCMutableKillerMoveRef killer, const LCMove mov
 }
 
 LC_INLINE void LCKillerMoveBeginRead(LCMutableKillerMoveRef killer) {
-    killer->indexOfRead = 0;
-}
-
-LC_INLINE LCMove LCKillerMoveRead(LCMutableKillerMoveRef killer) {
-    return killer->indexOfRead < LCKillerMoveLength ? killer->killers[killer->indexOfRead++] : 0;
+    killer->iter = killer->killers;
 }

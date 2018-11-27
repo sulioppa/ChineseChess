@@ -15,16 +15,17 @@
 extern LCMutableKillerMoveRef LCKillerMoveCreateMutable(void) {
     const UInt64 size = LCSearchMaxDepth * sizeof(LCKillerMove);
     
-    void *memory = malloc(size);
+    void *const memory = malloc(size);
     memset(memory, 0, size);
     
-    return memory == NULL ? NULL : (LCKillerMove *)memory;
-}
-
-void LCKillerMoveClearKillers(LCMutableKillerMoveRef killer) {
-    const UInt64 size = LCSearchMaxDepth * sizeof(LCKillerMove);
+    LCKillerMove *iter = (LCKillerMove *)memory;
     
-    memset(killer, 0, size);
+    for (int idx = 0; idx < LCSearchMaxDepth; idx++) {
+        iter->iter_end = iter->killers + LCKillerMoveLength;
+        iter++;
+    }
+    
+    return memory == NULL ? NULL : (LCKillerMove *)memory;
 }
 
 void LCKillerMoveRelease(LCKillerMoveRef killer) {

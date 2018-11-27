@@ -29,7 +29,7 @@ LCMutableEvaluateRef LCEvaluateCreateMutable(void) {
 	return memory == NULL ? NULL : (LCEvaluate *)memory;
 }
 
-void LCEvaluateInit(LCPositionRef position, LCMutableEvaluateRef evaluate) {
+void LCEvaluateInit(LCMutableEvaluateRef evaluate, LCPositionRef position) {
 	if (position == NULL || evaluate == NULL) {
 		return;
 	}
