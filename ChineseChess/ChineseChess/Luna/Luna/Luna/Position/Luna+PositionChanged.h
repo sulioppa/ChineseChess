@@ -7,3 +7,10 @@
 //
 
 #import "Luna+Position.h"
+#import "Luna+Generate.h"
+
+extern void LCPositionChanged(LCMutablePositionRef position, LCMoveTrack *const track);
+
+extern void LCPositionRecover(LCMutablePositionRef position, LCMoveTrack *const track);
+
+extern Bool LCPositionIsLegalIfChangedByTrack(LCMutablePositionRef position, LCMoveTrack *const track);

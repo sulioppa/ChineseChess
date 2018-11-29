@@ -3,7 +3,7 @@
 //  Luna
 //
 //  Created by 李夙璃 on 2018/11/23.
-//  Copyright © 2018 李夙璃. All rights reserved.
+//  Copyright © 2018 StarLab. All rights reserved.
 //
 
 #import "Luna+NextStep.h"
@@ -38,11 +38,7 @@
                   block:(void (^)(float, UInt16))block
 {
     LCNextStepInit(&_nextStep, (Bool *)isThinking, depth);
-    
-    LCPositionInit(_nextStep.position, FEN, side);
-    LCEvaluateInit(_nextStep.evaluate, _nextStep.position);
-    
-    LCHistoryTrackClear(_nextStep.historyTable);
+    LCNextStepSearch(&_nextStep, block);
 }
 
 @end

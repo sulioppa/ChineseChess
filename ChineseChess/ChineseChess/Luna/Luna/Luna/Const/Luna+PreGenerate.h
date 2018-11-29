@@ -100,6 +100,14 @@ LC_INLINE void LCRowColumnModified(LCRowColumn *const rc, const LCRowColumnIndex
 	}
 }
 
+LC_INLINE void LCRowColumnAdd(LCRowColumn *const rc, const LCRowColumnIndex index) {
+    *rc |= (1 << index);
+}
+
+LC_INLINE void LCRowColumnRemove(LCRowColumn *const rc, const LCRowColumnIndex index) {
+    *rc &= ~(1 << index);
+}
+
 /* MARK: - Luna Move Array.（走法数组）
  *
  * Luna Row & Column Bit Position （位行位列 走法偏移）
@@ -197,12 +205,8 @@ extern const LCChess LCZobristMap[LCChessLength];
 extern const LCZobristHash *const LCZobristConstHash;
 extern const LCZobristKey *const LCZobristConstKey;
 
-LC_INLINE LCZobristHash LCChessGetZobristHash(LCChess chess, LCLocation location) {
-    return LCZobristConstHash[(LCZobristMap[chess] << 8) + location];
-}
-
-LC_INLINE LCZobristKey LCChessGetZobristKey(LCChess chess, LCLocation location) {
-    return LCZobristConstKey[(LCZobristMap[chess] << 8) + location];
+LC_INLINE UInt16 LCChessGetZobristOffset(const LCChess chess, const LCLocation location) {
+    return (LCZobristMap[chess] << 8) + location;
 }
 
 // MARK: - Luna Init PreGenerate.（走法预生成 计算）

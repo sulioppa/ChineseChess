@@ -48,12 +48,20 @@ const unsigned long LCMoveTrackSize = sizeof(LCMoveTrack);
  * sorted by mvv
  */
 void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRef moves) {
-	const LCChess *chess, *chessBoundary;
-	const LCLocation *to, *toBoundary;
-	const LCRowColumnOffset *offset;
-	
-	UInt16 buffer;
+#if LC_SingleThread
+	static const LCChess *chess, *chessBoundary;
+	static const LCLocation *to, *toBoundary;
+	static const LCRowColumnOffset *offset;
     
+    static UInt16 buffer;
+#else
+    const LCChess *chess, *chessBoundary;
+    const LCLocation *to, *toBoundary;
+    const LCRowColumnOffset *offset;
+    
+    UInt16 buffer;
+#endif
+	
 	chess = position->chess + LCSideGetKing(position->side);
 
 	// K
@@ -201,11 +209,19 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRe
  * sorted by history
  */
 void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef history, LCMutableMovesTrackRef moves) {
-	const LCChess *chess, *chessBoundary;
-	const LCLocation *to, *toBoundary;
-	const LCRowColumnOffset *offset;
-	
-	UInt16 move;
+#if LC_SingleThread
+    static const LCChess *chess, *chessBoundary;
+    static const LCLocation *to, *toBoundary;
+    static const LCRowColumnOffset *offset;
+    
+    static UInt16 move;
+#else
+    const LCChess *chess, *chessBoundary;
+    const LCLocation *to, *toBoundary;
+    const LCRowColumnOffset *offset;
+    
+    UInt16 move;
+#endif
 	
 	chess = position->chess + LCSideGetKing(position->side);
 	

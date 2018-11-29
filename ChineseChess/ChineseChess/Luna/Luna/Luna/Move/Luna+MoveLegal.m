@@ -26,7 +26,14 @@ Bool _LCMoveIsLegal_N(LCPositionRef position, const LCMove *const move) {
 }
 
 Bool _LCMoveIsLegal_R(LCPositionRef position, const LCMove *const move) {
-    register const LCLocation from = LCMoveGetLocationFrom(*move), to = LCMoveGetLocationTo(*move);
+#if LC_SingleThread
+    static LCLocation from, to;
+#else
+    LCLocation from, to;
+#endif
+    
+    from = LCMoveGetLocationFrom(*move);
+    to = LCMoveGetLocationTo(*move);
     
     if (LCLocationRowIsEqualToLocation(from, to)) {
         return LCMoveMapGetRowMapState(position->row[LCLocationGetRow(from)], LCLocationGetColumn(from), LCLocationGetColumn(to)) | LCMoveMapConstRef->MaskR;
@@ -38,7 +45,14 @@ Bool _LCMoveIsLegal_R(LCPositionRef position, const LCMove *const move) {
 }
 
 Bool _LCMoveIsLegal_C(LCPositionRef position, const LCMove *const move) {
-    register const LCLocation from = LCMoveGetLocationFrom(*move), to = LCMoveGetLocationTo(*move);
+#if LC_SingleThread
+    static LCLocation from, to;
+#else
+    LCLocation from, to;
+#endif
+    
+    from = LCMoveGetLocationFrom(*move);
+    to = LCMoveGetLocationTo(*move);
     
     if (LCLocationRowIsEqualToLocation(from, to)) {
         return LCMoveMapGetRowMapState(position->row[LCLocationGetRow(from)], LCLocationGetColumn(from), LCLocationGetColumn(to)) | LCMoveMapConstRef->MaskC;
@@ -83,7 +97,13 @@ const UInt8 _LCChessSideMap[LCChessLength] = {
 
 // MARK: - 任意着法 合理检测（用于杀手着法）
 Bool LCPositionAnyMoveIsLegal(LCPositionRef position, const LCMove *const move) {
-    register const LCChess chess = position->board[LCMoveGetLocationFrom(*move)];
+#if LC_SingleThread
+    static LCChess chess;
+#else
+    LCChess chess;
+#endif
+    
+    chess = position->board[LCMoveGetLocationFrom(*move)];
     
     if (_LCChessSideMap[chess] == position->side && _LCChessSideMap[position->board[LCMoveGetLocationTo(*move)]] != position->side) {
         return _LCMoveIsLegal[chess & 0xf](position, move);

@@ -29,23 +29,42 @@ void LCPositionInit(LCMutablePositionRef position, NSString *FEN, const LCSide s
 	
 	memset(position, 0, sizeof(LCPosition));
 	
+    // init board
 	id<LunaCoding> coder = [[LunaFENCoder alloc] init];
 	[coder decode:FEN board:position->board];
 	
-	for (int i = 0; i < LCBoardLength; i++) {
-		if (position->board[i]) {
-			position->chess[position->board[i]] = i;
-			LCBitChessModified(&(position->bitchess), position->board[i], true);
-		}
-	}
-	
-	// init row & column
-	for (LCRowColumnIndex index = 0; index < LCBoardRowsColumnsLength; index++) {
-		position->row[index] = LCPositionGetRowFromBoard(position, index);
-		position->column[index] = LCPositionGetColumnFromBoard(position, index);
-	}
-	
-	position->side = side;
+    // init chess, bitchess
+    LCLocation location;
+    for (int i = 0; i < LCBoardLength; i++) {
+        location = position->board[i];
+        
+        if (location) {
+            position->chess[location] = i;
+            LCBitChessAddChess(&(position->bitchess), location);
+        }
+    }
+    
+    // init row & column
+    for (LCRowColumnIndex index = 0; index < LCBoardRowsColumnsLength; index++) {
+        position->row[index] = LCPositionGetRowFromBoard(position, index);
+        position->column[index] = LCPositionGetColumnFromBoard(position, index);
+    }
+    
+    // init side
+    position->side = side;
+    
+    // init hash, key
+    UInt16 offset;
+    for (LCChess chess = LCChessOffsetRedK; chess < LCChessLength; chess++) {
+        location = position->chess[chess];
+        
+        if (location) {
+            offset = LCChessGetZobristOffset(chess, location);
+            
+            position->hash ^= LCZobristConstHash[offset];
+            position->key ^= LCZobristConstKey[offset];
+        }
+    }
 }
 
 void LCPositionRelease(LCPositionRef position) {

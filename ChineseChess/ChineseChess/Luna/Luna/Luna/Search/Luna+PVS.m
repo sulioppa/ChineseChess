@@ -44,6 +44,6 @@ void LCNextStepDealloc(LCNextStepRef nextStep) {
 }
 
 // MARK: - PVS
-void LCPrincipalVariationSearch() {
+void LCNextStepSearch(LCNextStepRef nextStep, void (^ block)(float, UInt16)) {
     
 }

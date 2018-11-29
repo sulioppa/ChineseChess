@@ -38,3 +38,6 @@ extern void LCNextStepAlloc(LCMutableNextStepRef nextStep);
 extern void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth searchDepth);
 
 extern void LCNextStepDealloc(LCNextStepRef nextStep);
+
+// MARK: - Search
+extern void LCNextStepSearch(LCNextStepRef nextStep, void (^ block)(float, UInt16));

@@ -85,10 +85,18 @@ Bool _LCEatPLegalRed[LCChessLength] = {
  * 将军检测
  */
 Bool LCPositionIsLegal(LCPositionRef position) {
+#if LC_SingleThread
+    static LCLocation king;
+    static LCRowColumnOffsetRef offset;
+#else
+    LCLocation king;
+    LCRowColumnOffsetRef offset;
+#endif
+    
     if (position->side) {
-        const LCLocation king = position->chess[LCChessOffsetBlackK];
+        king = position->chess[LCChessOffsetBlackK];
         
-        LCRowColumnOffsetRef offset = LCMoveArrayGetColumnOffset(position->column[LCLocationGetColumn(king)], LCLocationGetRow(king), LCMoveArrayConstRef->EatR);
+        offset = LCMoveArrayGetColumnOffset(position->column[LCLocationGetColumn(king)], LCLocationGetRow(king), LCMoveArrayConstRef->EatR);
         
         // 向下搜索。
         if (*(offset + 1)) {
@@ -163,9 +171,9 @@ Bool LCPositionIsLegal(LCPositionRef position) {
         
         return true;
     } else {
-        const LCLocation king = position->chess[LCChessOffsetRedK];
+        king = position->chess[LCChessOffsetRedK];
         
-        LCRowColumnOffsetRef offset = LCMoveArrayGetColumnOffset(position->column[LCLocationGetColumn(king)], LCLocationGetRow(king), LCMoveArrayConstRef->EatR);
+        offset = LCMoveArrayGetColumnOffset(position->column[LCLocationGetColumn(king)], LCLocationGetRow(king), LCMoveArrayConstRef->EatR);
         
         // 向上搜索。
         if (*offset) {

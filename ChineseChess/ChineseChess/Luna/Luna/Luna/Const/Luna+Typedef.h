@@ -10,6 +10,7 @@
 #define Luna_Typedef_h
 
 #include <MacTypes.h>
+#include "Luna+Settings.h"
 
 typedef _Bool Bool;
 typedef signed char Int8;
@@ -33,8 +34,6 @@ typedef UInt8 * LCMutableLocationRef;
 
 #define LCBoardMapLength 65536
 #define LCBoardRowsColumnsLength 16
-
-#define LCSearchMaxDepth 32
 
 #define LC_INLINE static inline
 

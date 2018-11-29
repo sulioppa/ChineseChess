@@ -68,10 +68,11 @@ void _LCInitRowColumn(void) {
 }
 
 void _LCInitZobristValue(void) {
+    uint32_t bound = UINT16_MAX + 1;
     LCZobristKey buffer;
     
     for (int idx = 0; idx < 3584; idx++) {
-        _Internal_LCZobristHash[idx] = arc4random_uniform(UINT16_MAX);
+        _Internal_LCZobristHash[idx] = arc4random_uniform(bound);
         
         buffer = arc4random();
         buffer <<= 32;

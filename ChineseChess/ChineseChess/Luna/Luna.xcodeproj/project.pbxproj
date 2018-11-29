@@ -23,6 +23,7 @@
 		8575D29D214F804300A7969E /* Luna+Killer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575D29B214F804300A7969E /* Luna+Killer.h */; };
 		8575D2A1214F80CF00A7969E /* Luna+PVS.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575D29F214F80CF00A7969E /* Luna+PVS.h */; };
 		8575D2A2214F80CF00A7969E /* Luna+PVS.m in Sources */ = {isa = PBXBuildFile; fileRef = 8575D2A0214F80CF00A7969E /* Luna+PVS.m */; };
+		85ACFA0221AE9BC800B74334 /* Luna+Settings.h in Headers */ = {isa = PBXBuildFile; fileRef = 85ACFA0121AE9BC800B74334 /* Luna+Settings.h */; };
 		A73758832090631600944EAC /* Luna+Position.h in Headers */ = {isa = PBXBuildFile; fileRef = A73758812090631600944EAC /* Luna+Position.h */; };
 		A73758842090631600944EAC /* Luna+Position.m in Sources */ = {isa = PBXBuildFile; fileRef = A73758822090631600944EAC /* Luna+Position.m */; };
 		A737588720906DE500944EAC /* libc.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A737588620906DE500944EAC /* libc.tbd */; };
@@ -73,6 +74,7 @@
 		8575D29B214F804300A7969E /* Luna+Killer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Killer.h"; sourceTree = "<group>"; };
 		8575D29F214F80CF00A7969E /* Luna+PVS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+PVS.h"; sourceTree = "<group>"; };
 		8575D2A0214F80CF00A7969E /* Luna+PVS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+PVS.m"; sourceTree = "<group>"; };
+		85ACFA0121AE9BC800B74334 /* Luna+Settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Settings.h"; sourceTree = "<group>"; };
 		A72C22E0206C84BB00520E72 /* Luna.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Luna.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A72C22E4206C84BB00520E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A73758812090631600944EAC /* Luna+Position.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Position.h"; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 		85300BF7214F7C5500B05B06 /* Const */ = {
 			isa = PBXGroup;
 			children = (
+				85ACFA0121AE9BC800B74334 /* Luna+Settings.h */,
 				A7E4FD1F206CD83B0086707B /* Luna+Typedef.h */,
 				A75AB8F0206C869B00FA7B1F /* Luna+Const.h */,
 				A75AB8F2206C869B00FA7B1F /* Luna+Const.m */,
@@ -309,6 +312,7 @@
 				A75AB907206C869C00FA7B1F /* Luna+PreGenerate.h in Headers */,
 				8575D2A1214F80CF00A7969E /* Luna+PVS.h in Headers */,
 				8575D29D214F804300A7969E /* Luna+Killer.h in Headers */,
+				85ACFA0221AE9BC800B74334 /* Luna+Settings.h in Headers */,
 				A75AB91A206C869C00FA7B1F /* NSString+Subscript.h in Headers */,
 				A75AB918206C869C00FA7B1F /* LunaRecordCharacter.h in Headers */,
 			);
@@ -342,7 +346,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0930;
-				ORGANIZATIONNAME = "李夙璃";
+				ORGANIZATIONNAME = "StarLab";
 				TargetAttributes = {
 					A72C22DF206C84BB00520E72 = {
 						CreatedOnToolsVersion = 9.2;

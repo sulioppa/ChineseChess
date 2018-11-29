@@ -19,12 +19,20 @@ LC_INLINE LCMoveTrack LCMoveTrackMake(const LCMove move, const UInt16 score) {
 	return (move << 16) | score;
 }
 
-LC_INLINE LCMove LCMoveTrackGetMove(const LCMoveTrack track) {
-	return track >> 16;
+LC_INLINE LCMove LCMoveTrackGetMove(const LCMoveTrack *const track) {
+	return *((LCMove *)track + 1);
 }
 
-LC_INLINE UInt16 LCMoveTrackGetBuffer(const LCMoveTrack track) {
-    return track & 0xffff;
+LC_INLINE UInt16 LCMoveTrackGetBuffer(const LCMoveTrack *const track) {
+    return *((UInt16 *)track);
+}
+
+LC_INLINE void LCMoveTrackSetMove(LCMoveTrack *const track, const LCMove move) {
+    *((LCMove *)track + 1) = move;
+}
+
+LC_INLINE void LCMoveTrackSetBuffer(LCMoveTrack *const track, const UInt16 value) {
+    *((UInt16 *)track) = value;
 }
 
 #define LCMoveTrackMaxLength 120

@@ -370,13 +370,21 @@ void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
     evaluate->value -= _LCThreatAB[_LCBitChessGetAB(position->bitchess, LCSideRed)];
     evaluate->value += _LCThreatAB[_LCBitChessGetAB(position->bitchess, LCSideBlack)];
     
-    // Buffer
+#if LC_SingleThread
+    static LCLocationRef to, toBoundary;
+    static LCLocationRef chess, chessBoundary;
+    
+    static LCRowColumnOffsetRef offset;
+#else
     LCLocationRef to, toBoundary;
+    LCLocationRef chess, chessBoundary;
+    
     LCRowColumnOffsetRef offset;
+#endif
     
     // 红馬 的强控制、强保护、弱牵制。
-    LCLocationRef chess = position->chess + LCChessOffsetRedN;
-    LCLocationRef chessBoundary = chess + 2;
+    chess = position->chess + LCChessOffsetRedN;
+    chessBoundary = chess + 2;
     
     do {
         if (*chess) {

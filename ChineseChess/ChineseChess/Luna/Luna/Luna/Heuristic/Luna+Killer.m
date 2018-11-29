@@ -3,7 +3,7 @@
 //  Luna
 //
 //  Created by 李夙璃 on 2018/11/21.
-//  Copyright © 2018 李夙璃. All rights reserved.
+//  Copyright © 2018 StarLab. All rights reserved.
 //
 
 #import "Luna+Killer.h"
