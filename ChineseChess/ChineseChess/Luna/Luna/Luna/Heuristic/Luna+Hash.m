@@ -12,7 +12,7 @@
 #include <memory.h>
 
 LCMutableHashHeuristicRef LCHashHeuristicCreateMutable(void) {
-    const UInt64 size = LCSearchMaxDepth * (UINT16_MAX + 1) * sizeof(LCHashHeuristic);
+    const UInt64 size = sizeof(LCHashHeuristic) * (1 << (16 + LCHashHeuristicPower));
     
     void *memory = malloc(size);
     memset(memory, 0, size);

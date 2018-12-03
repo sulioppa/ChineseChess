@@ -198,7 +198,7 @@ LC_INLINE LCRowColumnMapState LCMoveMapGetColumnMapState(const LCRowColumn rank,
 }
 
 // MARK: - Zobrist 散列
-typedef UInt16 LCZobristHash;
+typedef UInt32 LCZobristHash;
 typedef UInt64 LCZobristKey;
 
 extern const LCChess LCZobristMap[LCChessLength];

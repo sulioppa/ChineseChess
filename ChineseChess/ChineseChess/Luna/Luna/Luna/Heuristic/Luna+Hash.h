@@ -19,9 +19,8 @@ typedef enum : UInt8 {
 
 typedef Int8 LCDepth;
 
-/* MARK: - LCHashHeuristic: 16 bytes
-    LCHashHeuristic[LCSearchMaxDepth][UINT16_MAX + 1]
-    Needs `LCSearchMaxDepth` MB.
+/* MARK: - LCHashHeuristic ≤16 bytes
+ * 双层置换表（深度优先、始终替换）
 */
 typedef struct {
     LCZobristKey key;
