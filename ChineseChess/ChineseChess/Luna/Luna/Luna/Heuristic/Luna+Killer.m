@@ -28,6 +28,19 @@ extern LCMutableKillerMoveRef LCKillerMoveCreateMutable(void) {
     return memory == NULL ? NULL : (LCKillerMove *)memory;
 }
 
+void LCKillerMoveClear(LCMutableKillerMoveRef killer) {
+    const UInt64 size = LCSearchMaxDepth * sizeof(LCKillerMove);
+    
+    memset(killer, 0, size);
+    
+    LCKillerMove *iter = killer;
+    
+    for (int idx = 0; idx < LCSearchMaxDepth; idx++) {
+        iter->iter_end = iter->killers + LCKillerMoveLength;
+        iter++;
+    }
+}
+
 void LCKillerMoveRelease(LCKillerMoveRef killer) {
     if (killer == NULL) {
         return;

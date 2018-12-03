@@ -34,13 +34,13 @@ void LCPositionInit(LCMutablePositionRef position, NSString *FEN, const LCSide s
 	[coder decode:FEN board:position->board];
 	
     // init chess, bitchess
-    LCLocation location;
+    LCChess chess;
     for (int i = 0; i < LCBoardLength; i++) {
-        location = position->board[i];
+        chess = position->board[i];
         
-        if (location) {
-            position->chess[location] = i;
-            LCBitChessAddChess(&(position->bitchess), location);
+        if (chess) {
+            position->chess[chess] = i;
+            LCBitChessAddChess(&(position->bitchess), chess);
         }
     }
     
@@ -55,11 +55,12 @@ void LCPositionInit(LCMutablePositionRef position, NSString *FEN, const LCSide s
     
     // init hash, key
     UInt16 offset;
+    LCLocation *location = &chess;
     for (LCChess chess = LCChessOffsetRedK; chess < LCChessLength; chess++) {
-        location = position->chess[chess];
+        *location = position->chess[chess];
         
-        if (location) {
-            offset = LCChessGetZobristOffset(chess, location);
+        if (*location) {
+            offset = LCChessGetZobristOffset(chess, *location);
             
             position->hash ^= LCZobristConstHash[offset];
             position->key ^= LCZobristConstKey[offset];

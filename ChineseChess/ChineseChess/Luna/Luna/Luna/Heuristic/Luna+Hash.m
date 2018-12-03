@@ -20,6 +20,12 @@ LCMutableHashHeuristicRef LCHashHeuristicCreateMutable(void) {
     return memory == NULL ? NULL : (LCHashHeuristic *)memory;
 }
 
+void LCHashHeuristicClear(LCMutableHashHeuristicRef hash) {
+    const UInt64 size = sizeof(LCHashHeuristic) * (1 << (16 + LCHashHeuristicPower));
+    
+    memset(hash, 0, size);
+}
+
 void LCHashHeuristicRelease(LCHashHeuristicRef hash) {
     if (hash == NULL) {
         return;

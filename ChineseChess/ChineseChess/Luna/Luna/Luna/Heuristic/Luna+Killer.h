@@ -28,6 +28,8 @@ typedef LCKillerMove *const LCMutableKillerMoveRef;
 // MARK: - LCKillerMove Life Cycle
 extern LCMutableKillerMoveRef LCKillerMoveCreateMutable(void);
 
+extern void LCKillerMoveClear(LCMutableKillerMoveRef killer);
+
 extern void LCKillerMoveRelease(LCKillerMoveRef killer);
 
 // MARK: - Write & Read

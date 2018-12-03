@@ -39,6 +39,8 @@ typedef LCHashHeuristic *const LCMutableHashHeuristicRef;
 // MARK: - LCHashHeuristic Life Cycle
 extern LCMutableHashHeuristicRef LCHashHeuristicCreateMutable(void);
 
+extern void LCHashHeuristicClear(LCMutableHashHeuristicRef hash);
+
 extern void LCHashHeuristicRelease(LCHashHeuristicRef hash);
 
 // MARK: - Write & Read
