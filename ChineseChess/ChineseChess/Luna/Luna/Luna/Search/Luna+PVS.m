@@ -20,18 +20,20 @@ void LCNextStepAlloc(LCMutableNextStepRef nextStep) {
         .historyTable = LCHistoryTrackCreateMutable(),
         
         .evaluate = LCEvaluateCreateMutable(),
+        .io = LCHashHeuristicIOCreateMutable(),
         
         .isThinking = NULL,
-        .searchDepth = 0
+        .rootSearchDepth = 0
     };
 }
 
-void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth searchDepth) {
+void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth rootSearchDepth) {
     nextStep->isThinking = isThinking;
-    nextStep->searchDepth = searchDepth;
+    nextStep->rootSearchDepth = rootSearchDepth;
 }
 
 void LCNextStepDealloc(LCNextStepRef nextStep) {
+    LCHashHeuristicIORelease(nextStep->io);
     LCEvaluateRelease(nextStep->evaluate);
     
     LCHistoryTrackRelease(nextStep->historyTable);

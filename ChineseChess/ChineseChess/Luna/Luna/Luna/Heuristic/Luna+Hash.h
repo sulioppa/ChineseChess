@@ -43,7 +43,31 @@ extern void LCHashHeuristicClear(LCMutableHashHeuristicRef hash);
 
 extern void LCHashHeuristicRelease(LCHashHeuristicRef hash);
 
-// MARK: - Write & Read
-extern void LCHashHeuristicWrite(LCMutableHashHeuristicRef hashTable, LCPositionRef position, LCHashHeuristic hash);
+// MARK: - IO
+typedef struct {
+    LCDepth depth;
+    LCHashHeuristicType type;
+    
+    Int16 value;
+    LCMove move;
+} LCHashHeuristicIO;
 
-extern void LCHashHeuristicRead(LCHashHeuristic hashTable, LCPositionRef position, LCMutableHashHeuristicRef hash);
+typedef const LCHashHeuristicIO *const LCHashHeuristicIORef;
+typedef LCHashHeuristicIO *const LCMutableHashHeuristicIORef;
+
+// MARK: - IO Life Cycle
+extern LCMutableHashHeuristicIORef LCHashHeuristicIOCreateMutable(void);
+
+LC_INLINE void LCHashHeuristicIOReload(LCMutableHashHeuristicIORef io, const LCDepth depth, const LCHashHeuristicType type, const Int16 value, const LCMove move) {
+    io->depth = depth;
+    io->type = type;
+    io->value = value;
+    io->move = move;
+}
+
+extern void LCHashHeuristicIORelease(LCHashHeuristicIORef io);
+
+// MARK: - Hash Write & Read
+extern void LCHashHeuristicWrite(LCMutableHashHeuristicRef hashTable, LCPositionRef position, LCMutableHashHeuristicIORef io);
+
+extern void LCHashHeuristicRead(LCHashHeuristic hashTable, LCPositionRef position, LCMutableHashHeuristicIORef io);

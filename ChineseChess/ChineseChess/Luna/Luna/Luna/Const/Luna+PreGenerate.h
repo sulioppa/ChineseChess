@@ -206,7 +206,7 @@ extern const LCZobristHash *const LCZobristConstHash;
 extern const LCZobristKey *const LCZobristConstKey;
 
 LC_INLINE UInt16 LCChessGetZobristOffset(const LCChess chess, const LCLocation location) {
-    return (LCZobristMap[chess] << 8) + location;
+    return (LCZobristMap[chess] << 8) | location;
 }
 
 // MARK: - Luna Init PreGenerate.（走法预生成 计算）

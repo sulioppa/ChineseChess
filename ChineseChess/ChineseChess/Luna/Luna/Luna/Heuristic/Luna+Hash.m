@@ -7,6 +7,7 @@
 //
 
 #import "Luna+Hash.h"
+#import "Luna+Evaluate.h"
 
 #include <stdlib.h>
 #include <memory.h>
@@ -34,11 +35,53 @@ void LCHashHeuristicRelease(LCHashHeuristicRef hash) {
     free((void *)hash);
 }
 
-// MARK: - Write & Read
- void LCHashHeuristicWrite(LCMutableHashHeuristicRef hashTable, LCPositionRef position, LCHashHeuristic hash) {
-    
+// MARK: - IO Life Cycle
+LCMutableHashHeuristicIORef LCHashHeuristicIOCreateMutable(void) {
+    void *memory = malloc(sizeof(LCHashHeuristicIO));
+
+    return memory == NULL ? NULL : (LCHashHeuristicIO *)memory;
 }
 
-void LCHashHeuristicRead(LCHashHeuristic hashTable, LCPositionRef position, LCMutableHashHeuristicRef hash) {
+void LCHashHeuristicIORelease(LCHashHeuristicIORef io) {
+    if (io == NULL) {
+        return;
+    }
+    
+    free((void *)io);
+}
+
+const int _LCHashHeuristicIOOffset = sizeof(LCZobristKey) + sizeof(LCSide);
+
+// MARK: - Write & Read
+void LCHashHeuristicWrite(LCMutableHashHeuristicRef hashTable, LCPositionRef position, LCMutableHashHeuristicIORef io) {
+#if LC_SingleThread
+    static LCHashHeuristic *hash;
+#else
+    LCHashHeuristic *hash;
+#endif
+    
+    hash = hashTable + position->hash;
+    
+    if (hash->depth > io->depth) {
+        hash++;
+        // 始终覆盖
+    } else {
+        // 深度优先
+    }
+    
+    // 杀棋调整
+    if (io->value > LCPositionMateValue) {
+        io->value = LCPositionCheckMateValue;
+    } else if (io->value < -LCPositionMateValue) {
+        io->value = -LCPositionCheckMateValue;
+    }
+    
+    hash->key = position->key;
+    hash->side = position->side;
+    
+    *((LCHashHeuristicIO *)((void *)hash + _LCHashHeuristicIOOffset)) = *io;
+}
+
+void LCHashHeuristicRead(LCHashHeuristic hashTable, LCPositionRef position, LCMutableHashHeuristicIORef io) {
     
 }

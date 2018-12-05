@@ -24,9 +24,10 @@ typedef struct {
     LCMutableHistoryTrackRef historyTable;
     
     LCMutableEvaluateRef evaluate;
+    LCMutableHashHeuristicIORef io;
     
     const Bool *isThinking;
-    LCDepth searchDepth;
+    LCDepth rootSearchDepth;
 } LCNextStep;
 
 typedef const LCNextStep *const LCNextStepRef;
@@ -35,7 +36,7 @@ typedef LCNextStep *const LCMutableNextStepRef;
 // MARK: - LCNextStep Life Cycle
 extern void LCNextStepAlloc(LCMutableNextStepRef nextStep);
 
-extern void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth searchDepth);
+extern void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth rootSearchDepth);
 
 extern void LCNextStepDealloc(LCNextStepRef nextStep);
 
