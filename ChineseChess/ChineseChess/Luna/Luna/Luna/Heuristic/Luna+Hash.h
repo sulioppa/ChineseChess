@@ -9,28 +9,81 @@
 #import "Luna+PreGenerate.h"
 #import "Luna+Position.h"
 
+typedef Int8 LCDepth;
+
 typedef enum : UInt8 {
     LCHashHeuristicTypeNan = 0,
     LCHashHeuristicTypeAlpha = 1 << 0,
     LCHashHeuristicTypeExact = 1 << 1,
-    LCHashHeuristicTypeBeta = 1 << 2,
-    LCHashHeuristicTypeMove = 1 << 3
+    LCHashHeuristicTypeBeta = LCHashHeuristicTypeAlpha | LCHashHeuristicTypeExact,
+    LCHashHeuristicTypeValue = LCHashHeuristicTypeBeta,
+    LCHashHeuristicTypeMove = 1 << 2
 } LCHashHeuristicType;
 
-typedef Int8 LCDepth;
+// MARK: - IO = 8 bytes
+typedef struct {
+    LCSide side;
+    LCDepth distance;
+    LCDepth depth;
+    LCHashHeuristicType type;
+    
+    union {
+        Int16 value;
+        Int16 alpha;
+    };
+    
+    union {
+        LCMove move;
+        Int16 beta;
+    };
+} LCHashHeuristicIO;
 
-/* MARK: - LCHashHeuristic ≤16 bytes
+typedef const LCHashHeuristicIO *const LCHashHeuristicIORef;
+typedef LCHashHeuristicIO *const LCMutableHashHeuristicIORef;
+
+// MARK: - IO Life Cycle
+extern LCMutableHashHeuristicIORef LCHashHeuristicIOCreateMutable(void);
+
+LC_INLINE void LCHashHeuristicIOBeginWrite(
+                                           LCMutableHashHeuristicIORef io,
+                                           const LCSide side,
+                                           const LCDepth distance,
+                                           const LCDepth depth,
+                                           const LCHashHeuristicType type,
+                                           const Int16 value,
+                                           const LCMove move
+                                           )
+{
+    io->side = side;
+    io->distance = distance;
+    io->depth = depth;
+    io->type = type;
+    io->value = value;
+    io->move = move;
+}
+
+LC_INLINE void LCHashHeuristicIOBeginRead(
+                                          LCMutableHashHeuristicIORef io,
+                                          const LCDepth distance,
+                                          const LCDepth depth,
+                                          const Int16 alpha,
+                                          const Int16 beta
+                                          )
+{
+    io->distance = distance;
+    io->depth = depth;
+    io->alpha = alpha;
+    io->beta = beta;
+}
+
+extern void LCHashHeuristicIORelease(LCHashHeuristicIORef io);
+
+/* MARK: - LCHashHeuristic = 16 bytes
  * 双层置换表（深度优先、始终替换）
 */
 typedef struct {
     LCZobristKey key;
-    LCSide side;
-    
-    LCDepth depth;
-    LCHashHeuristicType type;
-    
-    Int16 value;
-    LCMove move;
+    LCHashHeuristicIO io;
 } LCHashHeuristic;
 
 typedef const LCHashHeuristic *const LCHashHeuristicRef;
@@ -43,31 +96,7 @@ extern void LCHashHeuristicClear(LCMutableHashHeuristicRef hash);
 
 extern void LCHashHeuristicRelease(LCHashHeuristicRef hash);
 
-// MARK: - IO
-typedef struct {
-    LCDepth depth;
-    LCHashHeuristicType type;
-    
-    Int16 value;
-    LCMove move;
-} LCHashHeuristicIO;
+// MARK: - LCHashHeuristic Write & Read
+extern void LCHashHeuristicWrite(LCMutableHashHeuristicRef hashTable, LCPositionRef position, LCHashHeuristicIORef io);
 
-typedef const LCHashHeuristicIO *const LCHashHeuristicIORef;
-typedef LCHashHeuristicIO *const LCMutableHashHeuristicIORef;
-
-// MARK: - IO Life Cycle
-extern LCMutableHashHeuristicIORef LCHashHeuristicIOCreateMutable(void);
-
-LC_INLINE void LCHashHeuristicIOReload(LCMutableHashHeuristicIORef io, const LCDepth depth, const LCHashHeuristicType type, const Int16 value, const LCMove move) {
-    io->depth = depth;
-    io->type = type;
-    io->value = value;
-    io->move = move;
-}
-
-extern void LCHashHeuristicIORelease(LCHashHeuristicIORef io);
-
-// MARK: - Hash Write & Read
-extern void LCHashHeuristicWrite(LCMutableHashHeuristicRef hashTable, LCPositionRef position, LCMutableHashHeuristicIORef io);
-
-extern void LCHashHeuristicRead(LCHashHeuristic hashTable, LCPositionRef position, LCMutableHashHeuristicIORef io);
+extern void LCHashHeuristicRead(LCHashHeuristicRef hashTable, LCPositionRef position, LCMutableHashHeuristicIORef io);

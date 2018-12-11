@@ -1037,4 +1037,4 @@ const _LCEvaluateConstValue LCEvaluateConstValue = {
 // MARK: - 常量数值
 const Int16 LCPositionDrawValue = 0;
 const Int16 LCPositionCheckMateValue = 10000;
-const Int16 LCPositionMateValue = LCPositionCheckMateValue - 1000;
+const Int16 LCPositionWinValue = LCPositionCheckMateValue - 1000;

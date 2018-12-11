@@ -37,4 +37,4 @@ LC_INLINE Bool LCPositionIsDraw(LCPositionRef position) {
 
 // MARK: - Position Death（杀棋检测）
 extern const Int16 LCPositionCheckMateValue;
-extern const Int16 LCPositionMateValue;
+extern const Int16 LCPositionWinValue;
