@@ -28,13 +28,8 @@ extern void LCEvaluateRelease(LCEvaluateRef evaluate);
 // MARK: - Evaluate
 extern void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position);
 
-// MARK: - Position Draw （和棋检测）
+// MARK: - Const Value
 extern const Int16 LCPositionDrawValue;
-
-LC_INLINE Bool LCPositionIsDraw(LCPositionRef position) {
-    return !(position->bitchess & 0x07ff07ff);
-}
-
-// MARK: - Position Death（杀棋检测）
 extern const Int16 LCPositionCheckMateValue;
 extern const Int16 LCPositionWinValue;
+extern const Int16 LCPositionRepetitionValue;

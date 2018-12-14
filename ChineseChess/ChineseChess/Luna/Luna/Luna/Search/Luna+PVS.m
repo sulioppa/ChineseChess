@@ -20,7 +20,9 @@ void LCNextStepAlloc(LCMutableNextStepRef nextStep) {
         .historyTable = LCHistoryTrackCreateMutable(),
         
         .evaluate = LCEvaluateCreateMutable(),
+        
         .io = LCHashHeuristicIOCreateMutable(),
+        .hash = LCPositionHashCreateMutable(),
         
         .isThinking = NULL,
         .rootSearchDepth = 0
@@ -33,7 +35,9 @@ void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth roo
 }
 
 void LCNextStepDealloc(LCNextStepRef nextStep) {
+    LCPositionHashRelease(nextStep->hash);
     LCHashHeuristicIORelease(nextStep->io);
+    
     LCEvaluateRelease(nextStep->evaluate);
     
     LCHistoryTrackRelease(nextStep->historyTable);

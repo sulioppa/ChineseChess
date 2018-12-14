@@ -12,7 +12,7 @@
 #import "Luna+Generate.h"
 #import "Luna+Heuristic.h"
 
-#import "Luna+Evaluate.h"
+#import "Luna+PositionDetect.h"
 
 typedef struct {
     LCMutablePositionRef position;
@@ -24,7 +24,9 @@ typedef struct {
     LCMutableHistoryTrackRef historyTable;
     
     LCMutableEvaluateRef evaluate;
+    
     LCMutableHashHeuristicIORef io;
+    LCMutablePositionHashRef hash;
     
     const Bool *isThinking;
     LCDepth rootSearchDepth;

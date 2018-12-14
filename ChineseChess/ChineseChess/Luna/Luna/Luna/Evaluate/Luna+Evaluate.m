@@ -1038,3 +1038,4 @@ const _LCEvaluateConstValue LCEvaluateConstValue = {
 const Int16 LCPositionDrawValue = 0;
 const Int16 LCPositionCheckMateValue = 10000;
 const Int16 LCPositionWinValue = LCPositionCheckMateValue - 1000;
+const Int16 LCPositionRepetitionValue = LCPositionDrawValue - 20;
