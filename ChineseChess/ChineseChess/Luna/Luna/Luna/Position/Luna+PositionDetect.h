@@ -34,7 +34,7 @@ extern void LCPositionHashClear(LCMutablePositionHashRef hash);
 
 extern void LCPositionHashRelease(LCPositionHashRef hash);
 
-#define LCPositionGetHashKey(position) ((((position->key & LCPositionHashHighMask) >> 32) | (position->hash & LCPositionHashLowMask)) + position->side)
+#define LCPositionGetHashKey(position) (((position->key & LCPositionHashHighMask >> 32) | (position->hash & LCPositionHashLowMask)) + position->side)
 #define LCPositionGetHashValue(position) ((LCPositionHash)(position->key))
 
 // MARK: - Write & Read

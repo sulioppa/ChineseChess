@@ -23,6 +23,7 @@ void LCNextStepAlloc(LCMutableNextStepRef nextStep) {
         
         .io = LCHashHeuristicIOCreateMutable(),
         .hash = LCPositionHashCreateMutable(),
+        .detail = LCMoveExistDetailCreateMutable(),
         
         .isThinking = NULL,
         .rootSearchDepth = 0
@@ -35,6 +36,7 @@ void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth roo
 }
 
 void LCNextStepDealloc(LCNextStepRef nextStep) {
+    LCMoveExistDetailRelease(nextStep->detail);
     LCPositionHashRelease(nextStep->hash);
     LCHashHeuristicIORelease(nextStep->io);
     

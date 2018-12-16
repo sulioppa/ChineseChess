@@ -37,8 +37,18 @@
              isThinking:(BOOL *)isThinking
                   block:(void (^)(float, UInt16))block
 {
+    [self LCMoveExistDetailSetBannedMoves:bannedMoves detail:_nextStep.detail];
+    
     LCNextStepInit(&_nextStep, (Bool *)isThinking, depth);
     LCNextStepSearch(&_nextStep, block);
+}
+
+- (void)LCMoveExistDetailSetBannedMoves:(NSArray<NSNumber *> *)bannedMoves detail:(LCMutableMoveExistDetailRef)detail {
+    LCMoveExistDetailClear(detail);
+    
+    for (NSNumber *bannedMove in bannedMoves) {
+        LCMoveExistDetailSetMoveExist(detail, [bannedMove unsignedShortValue], 0);
+    }
 }
 
 @end
