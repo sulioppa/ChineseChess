@@ -14,16 +14,10 @@
  */
 #define LC_SingleThread 1
 
-/* MARK: - Max Search Depth
- * 影响 `着法列表` 的内存大小
- * 影响 `杀手着法` 的内存大小
- */
-#define LCSearchMaxDepth 32
-
 /* MARK: - Size Of HashHeuristic
  * 影响 `置换表` 的大小
  * size = pow(2, LCHashHeuristicPower) MB.
  */
-#define LCHashHeuristicPower 6
+#define LCHashHeuristicPower 5
 
 #endif /* Luna_Settings_h */

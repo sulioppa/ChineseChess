@@ -35,6 +35,8 @@ typedef UInt8 * LCMutableLocationRef;
 #define LCBoardMapLength 65536
 #define LCBoardRowsColumnsLength 16
 
+#define LCSearchMaxDepth 64
+
 #define LC_INLINE static inline
 
 #endif /* Luna_Typedef_h */

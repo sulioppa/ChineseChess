@@ -11,8 +11,8 @@
 #include <stdlib.h>
 #include <memory.h>
 
-const LCZobristHash LCPositionHashLowMask = 0x3ff;
-const LCZobristKey LCPositionHashHighMask = 0xffc0000000000;
+const LCZobristHash LCPositionHashLowMask = 0x7fe; // the lowest bit has being left shift, it = 0.
+const LCZobristKey LCPositionHashHighMask = 0x1ff800000000;
 
 LCMutablePositionHashRef LCPositionHashCreateMutable(void) {
     const UInt64 size = sizeof(LCZobristHash) * (1 << 21);
