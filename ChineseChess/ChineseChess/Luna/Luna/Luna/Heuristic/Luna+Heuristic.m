@@ -13,14 +13,18 @@
 
 // MARK: - LCHistoryTrack Life Cycle
 LCMutableHistoryTrackRef LCHistoryTrackCreateMutable(void) {
-    void *memory = malloc(sizeof(LCHistoryTrack));
-    memset(memory, 0, sizeof(LCHistoryTrack));
+    unsigned long size = sizeof(LCHistoryTrack) * LCBoardMapLength;
+    
+    void *memory = malloc(size);
+    memset(memory, 0, size);
     
     return memory == NULL ? NULL : (LCHistoryTrack *)memory;
 }
 
 void LCHistoryTrackClear(LCMutableHistoryTrackRef history) {
-    memset(history, 0, sizeof(LCHistoryTrack));
+    unsigned long size = sizeof(LCHistoryTrack) * LCBoardMapLength;
+    
+    memset(history, 0, size);
 }
 
 void LCHistoryTrackRelease(LCHistoryTrackRef history) {

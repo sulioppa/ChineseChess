@@ -11,9 +11,7 @@
 /* MARK: - LCHistoryTrack
  * the index is move.
  */
-typedef struct {
-    UInt16 history[LCBoardMapLength];
-} LCHistoryTrack;
+typedef UInt64 LCHistoryTrack;
 
 typedef const LCHistoryTrack *const LCHistoryTrackRef;
 typedef LCHistoryTrack *const LCMutableHistoryTrackRef;
@@ -26,6 +24,6 @@ extern void LCHistoryTrackClear(LCMutableHistoryTrackRef history);
 extern void LCHistoryTrackRelease(LCHistoryTrackRef history);
 
 // MARK: - Write
-LC_INLINE void LCHistoryTrackRecord(LCMutableHistoryTrackRef history, const LCMove move, const UInt16 depth) {
-    history->history[move] += depth;
+LC_INLINE void LCHistoryTrackRecord(LCMutableHistoryTrackRef history, const LCMove move, const UInt8 depth) {
+    history[move] += depth;
 }

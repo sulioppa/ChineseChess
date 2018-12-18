@@ -17,21 +17,20 @@
 
 typedef struct {
     LCMutablePositionRef position;
+    LCMutableEvaluateRef evaluate;
     
     LCMutableHashHeuristicRef hashTable;
-    LCMutableKillerMoveRef killerLayers;
-    
-    LCMutableMovesTrackRef moveLayers;
     LCMutableHistoryTrackRef historyTable;
-    
-    LCMutableEvaluateRef evaluate;
     
     LCMutableHashHeuristicIORef io;
     LCMutablePositionHashRef hash;
+    
     LCMutableMoveExistDetailRef detail;
+    LCMutableKillerMoveRef killersLayers;
+    LCMutableMovesArrayRef movesLayers;
     
     const Bool *isThinking;
-    LCDepth rootSearchDepth;
+    LCDepth rootDepth;
 } LCNextStep;
 
 typedef const LCNextStep *const LCNextStepRef;
@@ -40,7 +39,7 @@ typedef LCNextStep *const LCMutableNextStepRef;
 // MARK: - LCNextStep Life Cycle
 extern void LCNextStepAlloc(LCMutableNextStepRef nextStep);
 
-extern void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth rootSearchDepth);
+extern void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth rootDepth);
 
 extern void LCNextStepDealloc(LCNextStepRef nextStep);
 

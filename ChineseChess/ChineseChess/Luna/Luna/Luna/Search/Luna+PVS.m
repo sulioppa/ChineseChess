@@ -12,42 +12,40 @@
 void LCNextStepAlloc(LCMutableNextStepRef nextStep) {
     *nextStep = (LCNextStep) {
         .position = LCPositionCreateMutable(),
+        .evaluate = LCEvaluateCreateMutable(),
         
         .hashTable = LCHashHeuristicCreateMutable(),
-        .killerLayers = LCKillerMoveCreateMutable(),
-        
-        .moveLayers = LCMovesTrackCreateMutable(),
         .historyTable = LCHistoryTrackCreateMutable(),
-        
-        .evaluate = LCEvaluateCreateMutable(),
         
         .io = LCHashHeuristicIOCreateMutable(),
         .hash = LCPositionHashCreateMutable(),
+        
         .detail = LCMoveExistDetailCreateMutable(),
+        .killersLayers = LCKillerMoveCreateMutable(),
+        .movesLayers = LCMovesArrayCreateMutable(),
         
         .isThinking = NULL,
-        .rootSearchDepth = 0
+        .rootDepth = 0
     };
 }
 
-void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth rootSearchDepth) {
+void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth rootDepth) {
     nextStep->isThinking = isThinking;
-    nextStep->rootSearchDepth = rootSearchDepth;
+    nextStep->rootDepth = rootDepth;
 }
 
 void LCNextStepDealloc(LCNextStepRef nextStep) {
+    LCMovesArrayRelease(nextStep->movesLayers);
+    LCKillerMoveRelease(nextStep->killersLayers);
     LCMoveExistDetailRelease(nextStep->detail);
+    
     LCPositionHashRelease(nextStep->hash);
     LCHashHeuristicIORelease(nextStep->io);
     
-    LCEvaluateRelease(nextStep->evaluate);
-    
     LCHistoryTrackRelease(nextStep->historyTable);
-    LCMovesTrackRelease(nextStep->moveLayers);
-    
-    LCKillerMoveRelease(nextStep->killerLayers);
     LCHashHeuristicRelease(nextStep->hashTable);
     
+    LCEvaluateRelease(nextStep->evaluate);
     LCPositionRelease(nextStep->position);
 }
 

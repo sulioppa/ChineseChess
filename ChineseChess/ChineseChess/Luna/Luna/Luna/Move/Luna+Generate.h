@@ -9,69 +9,49 @@
 #import "Luna+Position.h"
 #import "Luna+Heuristic.h"
 
-/* MARK: - LCMoveTrack
- * move(high 16)
- * buffer(low 16)
- */
-typedef UInt32 LCMoveTrack;
+#define LCMovesArrayLength 120
 
-LC_INLINE LCMoveTrack LCMoveTrackMake(const LCMove move, const UInt16 score) {
-	return (move << 16) | score;
-}
-
-LC_INLINE LCMove LCMoveTrackGetMove(const LCMoveTrack *const track) {
-	return *((LCMove *)track + 1);
-}
-
-LC_INLINE UInt16 LCMoveTrackGetBuffer(const LCMoveTrack *const track) {
-    return *((UInt16 *)track);
-}
-
-LC_INLINE void LCMoveTrackSetMove(LCMoveTrack *const track, const LCMove move) {
-    *((LCMove *)track + 1) = move;
-}
-
-LC_INLINE void LCMoveTrackSetBuffer(LCMoveTrack *const track, const UInt16 value) {
-    *((UInt16 *)track) = value;
-}
-
-#define LCMoveTrackMaxLength 120
-
-// MARK: - LCMovesTrack
+// MARK: - LCMovesArray
 typedef struct {
-	LCMoveTrack track[LCMoveTrackMaxLength];
-    LCMoveTrack *begin;
-    LCMoveTrack *end;
-} LCMovesTrack;
+	LCMove moves[LCMovesArrayLength];
+    LCMove *bottom;
+    LCMove *top;
+    LCMove *move;
+    LCMove buffer;
+} LCMovesArray;
 
-typedef const LCMovesTrack *const LCMovesTrackRef;
+typedef const LCMovesArray *const LCMovesArrayRef;
+typedef LCMovesArray *const LCMutableMovesArrayRef;
 
-typedef LCMovesTrack *const LCMutableMovesTrackRef;
+// MARK: - LCMovesArray Life Cycle
+extern LCMutableMovesArrayRef LCMovesArrayCreateMutable(void);
 
-// MARK: - LCMovesTrack Life Cycle
-extern LCMutableMovesTrackRef LCMovesTrackCreateMutable(void);
+extern void LCMovesArrayRelease(LCMovesArrayRef moves);
 
-extern void LCMovesTrackRelease(LCMovesTrackRef track);
-
-LC_INLINE void LCMovesTrackPushBack(LCMutableMovesTrackRef moves, const LCMoveTrack track) {
-	*(moves->end++) = track;
+// MARK: - Write & Read
+LC_INLINE void LCMovesArrayPushBack(LCMutableMovesArrayRef moves, const LCMove move) {
+	*(moves->top++) = move;
 }
 
-LC_INLINE void LCMovesTrackPopAll(LCMutableMovesTrackRef moves) {
-    moves->begin = moves->track;
-	moves->end = moves->begin;
+LC_INLINE void LCMovesArrayPopAll(LCMutableMovesArrayRef moves) {
+    moves->bottom = moves->moves;
+	moves->top = moves->bottom;
 }
 
-LC_INLINE UInt16 LCMovesTrackGetCapcity(LCMutableMovesTrackRef moves) {
-	return moves->end - moves->begin;
+LC_INLINE void LCMoveArrayAdjustBottom(LCMutableMovesArrayRef moves) {
+    moves->bottom = moves->top;
+}
+
+LC_INLINE UInt16 LCMovesArrayGetCapcity(LCMovesArrayRef moves) {
+	return moves->bottom - moves->top;
 }
 
 /* MARK: - Generate Eat Moves
  * sorted by mvv
  */
-extern void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesTrackRef moves);
+extern void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesArrayRef moves);
 
-/* MARK: - Generate Eat Moves
+/* MARK: - Generate Non Eat Moves
  * sorted by history
  */
-extern void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef history, LCMutableMovesTrackRef moves);
+extern void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef history, LCMutableMovesArrayRef moves);

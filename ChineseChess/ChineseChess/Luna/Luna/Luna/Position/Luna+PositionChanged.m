@@ -9,7 +9,7 @@
 #import "Luna+PositionChanged.h"
 #import "Luna+PositionLegal.h"
 
-void LCPositionChanged(LCMutablePositionRef position, LCMoveTrack *const track) {
+void LCPositionChanged(LCMutablePositionRef position, const LCMove *const move, UInt16 *const buffer) {
 #if LC_SingleThread
     static LCLocation from, to;
     static LCChess chess, eat;
@@ -20,8 +20,8 @@ void LCPositionChanged(LCMutablePositionRef position, LCMoveTrack *const track) 
     LCRow row, column;
 #endif
     
-    from = *((LCLocation *)track + 3);
-    to = *((LCLocation *)track + 2);
+    from = *((LCLocation *)move + 1);
+    to = *((LCLocation *)move);
     
     chess = position->board[from];
     eat = position->board[to];
@@ -40,24 +40,24 @@ void LCPositionChanged(LCMutablePositionRef position, LCMoveTrack *const track) 
     LCRowColumnRemove(position->column + column, row);
     
     // hash, key
-    LCMoveTrackSetBuffer(track, LCChessGetZobristOffset(chess, from));
+    *buffer = LCChessGetZobristOffset(chess, from);
+
+    position->hash ^= LCZobristConstHash[*buffer];
+    position->key ^= LCZobristConstKey[*buffer];
     
-    position->hash ^= LCZobristConstHash[LCMoveTrackGetBuffer(track)];
-    position->key ^= LCZobristConstKey[LCMoveTrackGetBuffer(track)];
-    
-    LCMoveTrackSetBuffer(track, LCChessGetZobristOffset(chess, to));
-    
-    position->hash ^= LCZobristConstHash[LCMoveTrackGetBuffer(track)];
-    position->key ^= LCZobristConstKey[LCMoveTrackGetBuffer(track)];
+    *buffer = LCChessGetZobristOffset(chess, to);
+
+    position->hash ^= LCZobristConstHash[*buffer];
+    position->key ^= LCZobristConstKey[*buffer];
     
     if (eat) {
         position->chess[eat] = 0;
 
-        LCMoveTrackSetBuffer(track, LCChessGetZobristOffset(eat, to));
+        *buffer = LCChessGetZobristOffset(eat, to);
         
-        position->hash ^= LCZobristConstHash[LCMoveTrackGetBuffer(track)];
-        position->key ^= LCZobristConstKey[LCMoveTrackGetBuffer(track)];
-        
+        position->hash ^= LCZobristConstHash[*buffer];
+        position->key ^= LCZobristConstKey[*buffer];
+
         LCBitChessRemoveChess(&(position->bitchess), eat);
     } else {
         row = LCLocationGetRow(to);
@@ -67,10 +67,10 @@ void LCPositionChanged(LCMutablePositionRef position, LCMoveTrack *const track) 
         LCRowColumnAdd(position->column + column, row);
     }
     
-    LCMoveTrackSetBuffer(track, eat);
+    *buffer = eat;
 }
 
-void LCPositionRecover(LCMutablePositionRef position, LCMoveTrack *const track) {
+void LCPositionRecover(LCMutablePositionRef position, const LCMove *const move, UInt16 *const buffer) {
 #if LC_SingleThread
     static LCLocation from, to;
     static LCChess chess, eat;
@@ -81,11 +81,11 @@ void LCPositionRecover(LCMutablePositionRef position, LCMoveTrack *const track) 
     LCRow row, column;
 #endif
     
-    from = *((LCLocation *)track + 3);
-    to = *((LCLocation *)track + 2);
+    from = *((LCLocation *)move + 1);
+    to = *((LCLocation *)move);
     
     chess = position->board[to];
-    eat = LCMoveTrackGetBuffer(track);
+    eat = *buffer;
     
     // board, chess
     position->board[from] = chess;
@@ -101,23 +101,23 @@ void LCPositionRecover(LCMutablePositionRef position, LCMoveTrack *const track) 
     LCRowColumnAdd(position->column + column, row);
     
     // hash, key
-    LCMoveTrackSetBuffer(track, LCChessGetZobristOffset(chess, to));
+    *buffer = LCChessGetZobristOffset(chess, to);
+
+    position->hash ^= LCZobristConstHash[*buffer];
+    position->key ^= LCZobristConstKey[*buffer];
     
-    position->hash ^= LCZobristConstHash[LCMoveTrackGetBuffer(track)];
-    position->key ^= LCZobristConstKey[LCMoveTrackGetBuffer(track)];
-    
-    LCMoveTrackSetBuffer(track, LCChessGetZobristOffset(chess, from));
-    
-    position->hash ^= LCZobristConstHash[LCMoveTrackGetBuffer(track)];
-    position->key ^= LCZobristConstKey[LCMoveTrackGetBuffer(track)];
+    *buffer = LCChessGetZobristOffset(chess, from);
+
+    position->hash ^= LCZobristConstHash[*buffer];
+    position->key ^= LCZobristConstKey[*buffer];
     
     if (eat) {
         position->chess[eat] = to;
         
-        LCMoveTrackSetBuffer(track, LCChessGetZobristOffset(eat, to));
+        *buffer = LCChessGetZobristOffset(eat, to);
         
-        position->hash ^= LCZobristConstHash[LCMoveTrackGetBuffer(track)];
-        position->key ^= LCZobristConstKey[LCMoveTrackGetBuffer(track)];
+        position->hash ^= LCZobristConstHash[*buffer];
+        position->key ^= LCZobristConstKey[*buffer];
 
         LCBitChessAddChess(&(position->bitchess), eat);
     } else {
@@ -129,7 +129,7 @@ void LCPositionRecover(LCMutablePositionRef position, LCMoveTrack *const track) 
     }
 }
 
-Bool LCPositionIsLegalIfChangedByTrack(LCMutablePositionRef position, LCMoveTrack *const track) {
+Bool LCPositionIsLegalIfChangedByTrack(LCMutablePositionRef position, const LCMove *const move, UInt16 *const buffer) {
 #if LC_SingleThread
     static LCLocation from, to;
     static LCChess chess, eat;
@@ -140,8 +140,8 @@ Bool LCPositionIsLegalIfChangedByTrack(LCMutablePositionRef position, LCMoveTrac
     LCRow row, column;
 #endif
     
-    from = *((LCLocation *)track + 3);
-    to = *((LCLocation *)track + 2);
+    from = *((LCLocation *)move + 1);
+    to = *((LCLocation *)move);
     
     chess = position->board[from];
     eat = position->board[to];
@@ -169,8 +169,8 @@ Bool LCPositionIsLegalIfChangedByTrack(LCMutablePositionRef position, LCMoveTrac
         LCRowColumnAdd(position->column + column, row);
     }
     
-    LCMoveTrackSetBuffer(track, LCPositionIsLegal(position));
-   
+    *buffer = LCPositionIsLegal(position);
+
     // board, chess
     position->board[from] = chess;
     position->board[to] = eat;
@@ -194,5 +194,5 @@ Bool LCPositionIsLegalIfChangedByTrack(LCMutablePositionRef position, LCMoveTrac
         LCRowColumnRemove(position->column + column, row);
     }
 
-    return LCMoveTrackGetBuffer(track);
+    return *buffer;
 }
