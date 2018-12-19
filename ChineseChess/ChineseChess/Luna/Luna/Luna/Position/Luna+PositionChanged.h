@@ -13,4 +13,4 @@ extern void LCPositionChanged(LCMutablePositionRef position, const LCMove *const
 
 extern void LCPositionRecover(LCMutablePositionRef position, const LCMove *const move, UInt16 *const buffer);
 
-extern Bool LCPositionIsLegalIfChangedByTrack(LCMutablePositionRef position, const LCMove *const move, UInt16 *const buffer);
+extern Bool LCPositionIsLegalIfChangedByMove(LCMutablePositionRef position, const LCMove *const move, UInt16 *const buffer);

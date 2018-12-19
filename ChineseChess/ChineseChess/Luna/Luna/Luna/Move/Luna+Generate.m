@@ -44,10 +44,18 @@ void LCMovesArrayRelease(LCMovesArrayRef moves) {
     free((void *)moves);
 }
 
+LC_INLINE UInt16 LS2(const LCLocation location) {
+    return location << 2;
+}
+
+LC_INLINE UInt16 LS3(const LCLocation location) {
+    return location << 3;
+}
+
 /* MARK: - Generate Eat Moves
  * sorted by mvv
  */
-void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesArrayRef moves) {
+void LCGenerateSortedEatMoves(LCPositionRef position, LCMutableMovesArrayRef moves) {
 #if LC_SingleThread
 	static const LCChess *chess, *chessBoundary;
 	static const LCLocation *to, *toBoundary;
@@ -65,7 +73,7 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesArrayRe
 	chess = position->chess + LCSideGetKing(position->side);
 
 	// K
-	for (to = LCMoveArrayConstRef->K + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
+	for (to = LCMoveArrayConstRef->K + LS2(*chess), toBoundary = to + 4; to < toBoundary && *to; to++) {
 		if (position->board[*to]) {
             LCMovesArrayPushBack(moves, LCMoveMake(*chess, *to));
 		}
@@ -78,7 +86,7 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesArrayRe
 			continue;
 		}
 		
-		for (to = LCMoveArrayConstRef->A + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
+		for (to = LCMoveArrayConstRef->A + LS2(*chess), toBoundary = to + 4; to < toBoundary && *to; to++) {
 			if (position->board[*to]) {
 				LCMovesArrayPushBack(moves, LCMoveMake(*chess, *to));
 			}
@@ -91,7 +99,7 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesArrayRe
 			continue;
 		}
 		
-		for (to = LCMoveArrayConstRef->B + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
+		for (to = LCMoveArrayConstRef->B + LS2(*chess), toBoundary = to + 4; to < toBoundary && *to; to++) {
 			buffer = LCMoveMake(*chess, *to);
 			
 			if (position->board[*to] && !position->board[LCMoveMapConstRef->B[buffer]]) {
@@ -106,7 +114,7 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesArrayRe
 			continue;
 		}
 		
-		for (to = LCMoveArrayConstRef->N + *chess, toBoundary = to + 8; to < toBoundary && *to; to++) {
+		for (to = LCMoveArrayConstRef->N + LS3(*chess), toBoundary = to + 8; to < toBoundary && *to; to++) {
 			buffer = LCMoveMake(*chess, *to);
 			
 			if (position->board[*to] && !position->board[LCMoveMapConstRef->N[buffer]]) {
@@ -192,7 +200,7 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesArrayRe
 			continue;
 		}
 		
-		for (to = LCMoveArrayConstRef->P + *chess + buffer, toBoundary = to + 3; to < toBoundary && *to; to++) {
+		for (to = LCMoveArrayConstRef->P + LS2(*chess) + buffer, toBoundary = to + 3; to < toBoundary && *to; to++) {
 			if (position->board[*to]) {
                 LCMovesArrayPushBack(moves, LCMoveMake(*chess, *to));
 			}
@@ -210,7 +218,7 @@ void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesArrayRe
 /* MARK: - Generate Eat Moves
  * sorted by history
  */
-void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef history, LCMutableMovesArrayRef moves) {
+void LCGenerateSortedNonEatMoves(LCPositionRef position, LCHistoryTrackRef history, LCMutableMovesArrayRef moves) {
 #if LC_SingleThread
     static const LCChess *chess, *chessBoundary;
     static const LCLocation *to, *toBoundary;
@@ -228,7 +236,7 @@ void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef 
 	chess = position->chess + LCSideGetKing(position->side);
 	
 	// K
-	for (to = LCMoveArrayConstRef->K + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
+	for (to = LCMoveArrayConstRef->K + LS2(*chess), toBoundary = to + 4; to < toBoundary && *to; to++) {
 		if (!position->board[*to]) {
 			move = LCMoveMake(*chess, *to);
             LCMovesArrayPushBack(moves, move);
@@ -242,7 +250,7 @@ void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef 
 			continue;
 		}
 		
-		for (to = LCMoveArrayConstRef->A + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
+		for (to = LCMoveArrayConstRef->A + LS2(*chess), toBoundary = to + 4; to < toBoundary && *to; to++) {
 			if (!position->board[*to]) {
 				move = LCMoveMake(*chess, *to);
                 LCMovesArrayPushBack(moves, move);
@@ -256,7 +264,7 @@ void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef 
 			continue;
 		}
 		
-		for (to = LCMoveArrayConstRef->B + *chess, toBoundary = to + 4; to < toBoundary && *to; to++) {
+		for (to = LCMoveArrayConstRef->B + LS2(*chess), toBoundary = to + 4; to < toBoundary && *to; to++) {
 			move = LCMoveMake(*chess, *to);
 			
 			if (!position->board[*to] && !position->board[LCMoveMapConstRef->B[move]]) {
@@ -271,7 +279,7 @@ void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef 
 			continue;
 		}
 		
-		for (to = LCMoveArrayConstRef->N + *chess, toBoundary = to + 8; to < toBoundary && *to; to++) {
+		for (to = LCMoveArrayConstRef->N + LS3(*chess), toBoundary = to + 8; to < toBoundary && *to; to++) {
 			move = LCMoveMake(*chess, *to);
 			
 			if (!position->board[*to] && !position->board[LCMoveMapConstRef->N[move]]) {
@@ -337,7 +345,7 @@ void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef 
 			continue;
 		}
 		
-		for (to = LCMoveArrayConstRef->P + *chess + (position->side << 10), toBoundary = to + 3; to < toBoundary && *to; to++) {
+		for (to = LCMoveArrayConstRef->P + LS2(*chess) + (position->side << 10), toBoundary = to + 3; to < toBoundary && *to; to++) {
 			if (!position->board[*to]) {
 				move = LCMoveMake(*chess, *to);
                 LCMovesArrayPushBack(moves, move);

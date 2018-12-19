@@ -100,11 +100,11 @@ Bool LCPositionIsLegal(LCPositionRef position) {
         
         // 向下搜索。
         if (*(offset + 1)) {
-            if (_LCEatRLegalBlack[position->board[king + *(offset + 1)]]) {
+            if (_LCEatRLegalBlack[position->board[king + (*(offset + 1) << 4)]]) {
                 return false;
             }
             
-            if (*(offset + 3) && _LCEatCLegalBlack[position->board[king + *(offset + 3)]]) {
+            if (*(offset + 3) && _LCEatCLegalBlack[position->board[king + (*(offset + 3) << 4)]]) {
                 return false;
             }
         }
@@ -115,11 +115,11 @@ Bool LCPositionIsLegal(LCPositionRef position) {
         
         // 向上搜索。
         if (*offset) {
-            if (_LCEatRLegalBlack[position->board[king + *offset]]) {
+            if (_LCEatRLegalBlack[position->board[king + (*offset << 4)]]) {
                 return false;
             }
             
-            if (*(offset + 2) && _LCEatCLegalBlack[position->board[king + *(offset + 2)]]) {
+            if (*(offset + 2) && _LCEatCLegalBlack[position->board[king + (*(offset + 2) << 4)]]) {
                 return false;
             }
         }
@@ -177,11 +177,11 @@ Bool LCPositionIsLegal(LCPositionRef position) {
         
         // 向上搜索。
         if (*offset) {
-            if (_LCEatRLegalRed[position->board[king + *offset]]) {
+            if (_LCEatRLegalRed[position->board[king + (*offset << 4)]]) {
                 return false;
             }
             
-            if (*(offset + 2) && _LCEatCLegalRed[position->board[king + *(offset + 2)]]) {
+            if (*(offset + 2) && _LCEatCLegalRed[position->board[king + (*(offset + 2) << 4)]]) {
                 return false;
             }
         }
@@ -192,11 +192,11 @@ Bool LCPositionIsLegal(LCPositionRef position) {
         
         // 向下搜索。
         if (*(offset + 1)) {
-            if (_LCEatRLegalRed[position->board[king + *(offset + 1)]]) {
+            if (_LCEatRLegalRed[position->board[king + (*(offset + 1) << 4)]]) {
                 return false;
             }
             
-            if (*(offset + 3) && _LCEatCLegalRed[position->board[king + *(offset + 3)]]) {
+            if (*(offset + 3) && _LCEatCLegalRed[position->board[king + (*(offset + 3) << 4)]]) {
                 return false;
             }
         }

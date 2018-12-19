@@ -129,7 +129,7 @@ void LCPositionRecover(LCMutablePositionRef position, const LCMove *const move, 
     }
 }
 
-Bool LCPositionIsLegalIfChangedByTrack(LCMutablePositionRef position, const LCMove *const move, UInt16 *const buffer) {
+Bool LCPositionIsLegalIfChangedByMove(LCMutablePositionRef position, const LCMove *const move, UInt16 *const buffer) {
 #if LC_SingleThread
     static LCLocation from, to;
     static LCChess chess, eat;

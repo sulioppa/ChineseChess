@@ -7,6 +7,7 @@
 //
 
 #import "Luna+PVS.h"
+#import "Luna+PositionChanged.h"
 
 // MARK: - LCNextStep Life Cycle
 void LCNextStepAlloc(LCMutableNextStepRef nextStep) {
@@ -31,7 +32,7 @@ void LCNextStepAlloc(LCMutableNextStepRef nextStep) {
 
 void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth rootDepth) {
     nextStep->isThinking = isThinking;
-    nextStep->rootDepth = rootDepth;
+    nextStep->rootDepth = rootDepth > LCSearchMaxDepth ? LCSearchMaxDepth : rootDepth;
 }
 
 void LCNextStepDealloc(LCNextStepRef nextStep) {
@@ -51,5 +52,59 @@ void LCNextStepDealloc(LCNextStepRef nextStep) {
 
 // MARK: - PVS
 void LCNextStepSearch(LCNextStepRef nextStep, void (^ block)(float, UInt16)) {
+    LCMutableMovesArrayRef moves = nextStep->movesLayers;
+    LCMutablePositionRef position = nextStep->position;
     
+    // 吃子着法
+    LCMovesArrayPopAll(moves);
+    LCGenerateSortedEatMoves(position, moves);
+    
+    // 不吃子着法
+    moves->bottom = moves->top;
+    LCGenerateSortedNonEatMoves(position, nextStep->historyTable, moves);
+    
+    // 合理过滤
+    LCMove onlyMove = 0;
+    UInt8 countOfMoves = 0;
+    
+    moves->bottom = moves->moves;
+    for (moves->move = moves->bottom; moves->move < moves->top; moves->move++) {
+        if (LCPositionIsLegalIfChangedByMove(position, moves->move, &(moves->buffer))) {
+            onlyMove = *(moves->move);
+            countOfMoves++;
+        } else {
+            *(moves->move) = 0;
+        }
+    }
+    
+    // 唯一着法
+    if (countOfMoves <= 1) {
+        block(1.0, onlyMove);
+        return;
+    }
+    
+    // 过滤禁着, onlyMove为某一合理着法
+    countOfMoves = 0;
+    
+    for (moves->move = moves->bottom; moves->move < moves->top; moves->move++) {
+        if (*(moves->move) == 0) {
+            continue;
+        }
+        
+        if (LCMoveExistDetailGetMoveExist(nextStep->detail, *(moves->move), 0)) {
+            *(moves->move) = 0;
+        } else {
+            onlyMove = *(moves->move);
+            countOfMoves++;
+        }
+    }
+    
+    // 唯一着法
+    if (countOfMoves <= 1) {
+        block(1.0, onlyMove);
+        return;
+    }
+    
+    // 调整次序，hash, eat, killer, non eat.
+    block(1.0, onlyMove);
 }

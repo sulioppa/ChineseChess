@@ -38,20 +38,16 @@ LC_INLINE void LCMovesArrayPopAll(LCMutableMovesArrayRef moves) {
 	moves->top = moves->bottom;
 }
 
-LC_INLINE void LCMoveArrayAdjustBottom(LCMutableMovesArrayRef moves) {
-    moves->bottom = moves->top;
-}
-
 LC_INLINE UInt16 LCMovesArrayGetCapcity(LCMovesArrayRef moves) {
-	return moves->bottom - moves->top;
+	return moves->top - moves->bottom;
 }
 
 /* MARK: - Generate Eat Moves
  * sorted by mvv
  */
-extern void LCGenerateSortedEatMoveTracks(LCPositionRef position, LCMutableMovesArrayRef moves);
+extern void LCGenerateSortedEatMoves(LCPositionRef position, LCMutableMovesArrayRef moves);
 
 /* MARK: - Generate Non Eat Moves
  * sorted by history
  */
-extern void LCGenerateSortedNonEatMoveTracks(LCPositionRef position, LCHistoryTrackRef history, LCMutableMovesArrayRef moves);
+extern void LCGenerateSortedNonEatMoves(LCPositionRef position, LCHistoryTrackRef history, LCMutableMovesArrayRef moves);

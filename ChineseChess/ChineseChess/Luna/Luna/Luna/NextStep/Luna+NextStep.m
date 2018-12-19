@@ -39,7 +39,9 @@
 {
     [self LCMoveExistDetailSetBannedMoves:bannedMoves detail:_nextStep.detail];
     
+    LCPositionInit(_nextStep.position, FEN, side);
     LCNextStepInit(&_nextStep, (Bool *)isThinking, depth);
+    
     LCNextStepSearch(&_nextStep, block);
 }
 
