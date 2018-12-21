@@ -16,7 +16,7 @@ void LCNextStepAlloc(LCMutableNextStepRef nextStep) {
         .evaluate = LCEvaluateCreateMutable(),
         
         .hashTable = LCHashHeuristicCreateMutable(),
-        .killersLayers = LCKillerMoveCreateMutable(),
+        .killersLayers = LCKillerMovesCreateMutable(),
         .historyTable = LCHistoryTrackCreateMutable(),
         
         .movesLayers = LCMovesArrayCreateMutable(),
@@ -31,8 +31,6 @@ void LCNextStepAlloc(LCMutableNextStepRef nextStep) {
 }
 
 void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth rootDepth) {
-    rootDepth = rootDepth < 0 ? -rootDepth : rootDepth;
-    
     nextStep->isThinking = isThinking;
     nextStep->rootDepth = rootDepth > LCSearchMaxDepth ? LCSearchMaxDepth : rootDepth;
 }
@@ -45,73 +43,72 @@ void LCNextStepDealloc(LCNextStepRef nextStep) {
     LCMovesArrayRelease(nextStep->movesLayers);
     
     LCHistoryTrackRelease(nextStep->historyTable);
-    LCKillerMoveRelease(nextStep->killersLayers);
+    LCKillerMovesRelease(nextStep->killersLayers);
     LCHashHeuristicRelease(nextStep->hashTable);
     
     LCEvaluateRelease(nextStep->evaluate);
     LCPositionRelease(nextStep->position);
 }
 
-// MARK: - Root Search
-Int16 LCPVSSearch(LCNextStepRef nextStep, Int16 alpha, Int16 beta, UInt8 distance);
+// MARK: - PVS
+Int16 _LCPVSSearch(LCNextStepRef nextStep, Int16 alpha, Int16 beta, UInt8 distance) {
+    return 0;
+}
 
+// MARK: - Root Search
 void LCNextStepSearch(LCNextStepRef nextStep, void (^ block)(float, UInt16)) {
     LCMutableMovesArrayRef moves = nextStep->movesLayers;
     LCMutablePositionRef position = nextStep->position;
     
-    // 吃子着法
+    // 着法生成
     LCMovesArrayPopAll(moves);
     LCGenerateSortedEatMoves(position, moves);
     
-    // 不吃子着法
-    moves->bottom = moves->top;
+    LCMovesArrayResetBottom(moves, true);
     LCGenerateSortedNonEatMoves(position, nextStep->historyTable, moves);
+    LCMovesArrayResetBottom(moves, false);
     
     // 合理过滤
-    LCMove onlyMove = 0;
-    UInt8 countOfMoves = 0;
+    __block LCMove onlyMove = 0;
+    __block UInt8 countOfMoves = 0;
     
-    moves->bottom = moves->moves;
-    for (moves->move = moves->bottom; moves->move < moves->top; moves->move++) {
-        if (LCPositionIsLegalIfChangedByMove(position, moves->move, &(moves->buffer))) {
-            onlyMove = *(moves->move);
+    LCMovesArrayEnumerateMovesUsingBlock(moves, ^(LCMove *const move, Bool *const stop) {
+        if (LCPositionIsLegalIfChangedByMove(position, move, &(moves->buffer))) {
+            onlyMove = *move;
             countOfMoves++;
         } else {
-            *(moves->move) = 0;
+            *move = 0;
         }
-    }
+    });
     
-    // 唯一着法
     if (countOfMoves <= 1) {
         block(1.0, onlyMove);
         return;
     }
     
-    // 过滤禁着, onlyMove为某一合理着法
-    const UInt8 distance = 0;
+    // 过滤禁着
     countOfMoves = 0;
     
-    for (moves->move = moves->bottom; moves->move < moves->top; moves->move++) {
-        if (*(moves->move) == 0) {
-            continue;
+    LCMovesArrayEnumerateMovesUsingBlock(moves, ^(LCMove *const move, Bool *const stop) {
+        if (*move == 0) {
+            return;
         }
         
-        if (LCMoveExistDetailGetMoveExist(nextStep->detail, *(moves->move), distance)) {
-            *(moves->move) = 0;
+        if (LCMoveExistDetailGetMoveExist(nextStep->detail, *move, 0)) {
+            *move = 0;
         } else {
-            onlyMove = *(moves->move);
+            onlyMove = *move;
             countOfMoves++;
         }
-    }
+    });
     
-    // 唯一着法
     if (countOfMoves <= 1) {
         block(1.0, onlyMove);
         return;
     }
     
     // 调整次序，hash, killers, eat, non eat.
-    LCHashHeuristicIOBeginRead(nextStep->io, distance, nextStep->rootDepth, -LCPositionCheckMateValue, LCPositionCheckMateValue);
+    LCHashHeuristicIOBeginRead(nextStep->io, 0, nextStep->rootDepth, -LCPositionCheckMateValue, LCPositionCheckMateValue);
     LCHashHeuristicRead(nextStep->hashTable, position, nextStep->io);
     
     if (nextStep->io->type == LCHashHeuristicTypeValue) {
@@ -128,34 +125,34 @@ void LCNextStepSearch(LCNextStepRef nextStep, void (^ block)(float, UInt16)) {
     }
     
     // 最终的着法次序
-    LCMovesArray array;
-    LCMovesArrayPopAll(&array);
+    LCMovesArray movesArray;
+    LCMutableMovesArrayRef array = &movesArray;
     
-    if (LCMovesArrayFilterMove(moves, &onlyMove)) {
-        LCMovesArrayPushBack(&array, onlyMove);
+    LCMovesArrayPopAll(array);
+    
+    if (LCMovesArrayClearMove(moves, &onlyMove)) {
+        LCMovesArrayPushBack(array, onlyMove);
     }
     
-    LCMutableKillerMoveRef killers = nextStep->killersLayers;
-    
-    for (killers->iter = killers->killers; killers->iter < killers->iter_end; killers->iter++) {
-        if (LCMovesArrayFilterMove(moves, killers->iter)) {
-            LCMovesArrayPushBack(&array, *(killers->iter));
+    LCKillerMovesEnumerateMovesUsingBlock(nextStep->killersLayers, ^(const LCMove *const move, Bool *const stop) {
+        if (LCMovesArrayClearMove(moves, move)) {
+            LCMovesArrayPushBack(array, *move);
         }
-    }
-    
-    for (moves->move = moves->bottom; moves->move < moves->top; moves->move++) {
-        if (*(moves->move)) {
-            LCMovesArrayPushBack(&array, *(moves->move));
+    });
+
+    LCMovesArrayEnumerateMovesUsingBlock(moves, ^(LCMove *const move, Bool *const stop) {
+        if (*move) {
+            LCMovesArrayPushBack(array, *move);
         }
-    }
+    });
     
-    *moves = array;
+    *moves = *array;
     
     // Begin PVS Search
     LCEvaluateInit(nextStep->evaluate, position);
     
     LCHashHeuristicClear(nextStep->hashTable);
-    LCKillerMoveClear(nextStep->killersLayers);
+    LCKillerMovesClear(nextStep->killersLayers);
     LCHistoryTrackClear(nextStep->historyTable);
     
     LCPositionHashClear(nextStep->hash);
@@ -180,13 +177,13 @@ void LCNextStepSearch(LCNextStepRef nextStep, void (^ block)(float, UInt16)) {
         LCPositionChanged(position, moves->move, &(moves->buffer));
         
         if (bestmove) {
-            value = -LCPVSSearch(nextStep, -alpha - 1, -alpha, distance + 1);
+            value = -_LCPVSSearch(nextStep, -alpha - 1, -alpha, 1);
             
             if (alpha < value) {
-                value = -LCPVSSearch(nextStep, -LCPositionCheckMateValue, -alpha, distance + 1);
+                value = -_LCPVSSearch(nextStep, -LCPositionCheckMateValue, -alpha, 1);
             }
         } else {
-            value = -LCPVSSearch(nextStep, -LCPositionCheckMateValue, -alpha, distance + 1);
+            value = -_LCPVSSearch(nextStep, -LCPositionCheckMateValue, -alpha, 1);
         }
         
         LCPositionRecover(position, moves->move, &(moves->buffer));
@@ -206,15 +203,11 @@ void LCNextStepSearch(LCNextStepRef nextStep, void (^ block)(float, UInt16)) {
     
     LCSideRevese(&(position->side));
     
-    // 记录Hash、History、Killer
+    // 记录Hash、Killer、History
     LCHashHeuristicIOBeginWrite(nextStep->io, position->side, 0, nextStep->rootDepth, LCHashHeuristicTypeExact, alpha, bestmove);
     LCHashHeuristicWrite(nextStep->hashTable, position, nextStep->io);
     
-    LCHistoryTrackRecord(nextStep->historyTable, bestmove, nextStep->rootDepth);
+    LCKillerMovesWrite(nextStep->killersLayers, bestmove);
     
-    LCKillerMoveWrite(killers, bestmove);
-}
-
-Int16 LCPVSSearch(LCNextStepRef nextStep, Int16 alpha, Int16 beta, UInt8 distance) {
-    return 0;
+    LCHistoryTrackRecord(nextStep->historyTable, bestmove, nextStep->rootDepth);
 }

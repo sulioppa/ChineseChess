@@ -20,7 +20,7 @@ typedef struct {
     LCMutableEvaluateRef evaluate;
     
     LCMutableHashHeuristicRef hashTable;
-    LCMutableKillerMoveRef killersLayers;
+    LCMutableKillerMovesRef killersLayers;
     LCMutableHistoryTrackRef historyTable;
     
     LCMutableMovesArrayRef movesLayers;

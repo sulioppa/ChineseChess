@@ -8,31 +8,33 @@
 
 #import "Luna+PreGenerate.h"
 
-#define LCKillerMoveLength 4
-#define LCKillerMoveLengthMask 3
+#define LCKillerMovesLength 4
+#define LCKillerMovesLengthMask 3
 
-/* MARK: - LCKillerMove
- * LCKillerMoveLength = 2 ^ n; (n = 1, 2, 3, ...)
- * LCKillerMoveLengthMask = LCKillerMoveLength - 1;
+/* MARK: - LCKillerMoves
+ * LCKillerMovesLength = 2 ^ n; (n = 1, 2, 3, ...)
+ * LCKillerMovesLengthMask = LCKillerMovesLength - 1;
  */
 typedef struct {
-    LCMove killers[LCKillerMoveLength];
+    LCMove killers[LCKillerMovesLength];
     const LCMove *iter;
     const LCMove *iter_end;
     UInt8 indexOfWrite;
-} LCKillerMove;
+} LCKillerMoves;
 
-typedef const LCKillerMove *const LCKillerMoveRef;
-typedef LCKillerMove *const LCMutableKillerMoveRef;
+typedef const LCKillerMoves *const LCKillerMovesRef;
+typedef LCKillerMoves *const LCMutableKillerMovesRef;
 
 // MARK: - LCKillerMove Life Cycle
-extern LCMutableKillerMoveRef LCKillerMoveCreateMutable(void);
+extern LCMutableKillerMovesRef LCKillerMovesCreateMutable(void);
 
-extern void LCKillerMoveClear(LCMutableKillerMoveRef killer);
+extern void LCKillerMovesClear(LCMutableKillerMovesRef killer);
 
-extern void LCKillerMoveRelease(LCKillerMoveRef killer);
+extern void LCKillerMovesRelease(LCKillerMovesRef killer);
 
 // MARK: - Write & Read
-LC_INLINE void LCKillerMoveWrite(LCMutableKillerMoveRef killer, const LCMove move) {
-    killer->killers[(killer->indexOfWrite++) & LCKillerMoveLengthMask] = move;
+LC_INLINE void LCKillerMovesWrite(LCMutableKillerMovesRef killer, const LCMove move) {
+    killer->killers[(killer->indexOfWrite++) & LCKillerMovesLengthMask] = move;
 }
+
+extern void LCKillerMovesEnumerateMovesUsingBlock(LCMutableKillerMovesRef killers, void (^ block)(const LCMove *const move, Bool *const stop));

@@ -38,11 +38,17 @@ LC_INLINE void LCMovesArrayPopAll(LCMutableMovesArrayRef moves) {
 	moves->top = moves->bottom;
 }
 
+LC_INLINE void LCMovesArrayResetBottom(LCMutableMovesArrayRef moves, const Bool toTop) {
+    moves->bottom = toTop ? moves->top : moves->moves;
+}
+
 LC_INLINE UInt16 LCMovesArrayGetCapcity(LCMovesArrayRef moves) {
 	return moves->top - moves->bottom;
 }
 
-extern Bool LCMovesArrayFilterMove(LCMutableMovesArrayRef moves, const LCMove *const move);
+extern void LCMovesArrayEnumerateMovesUsingBlock(LCMutableMovesArrayRef moves, void (^ block)(LCMove *const move, Bool *const stop));
+
+extern Bool LCMovesArrayClearMove(LCMutableMovesArrayRef moves, const LCMove *const move);
 
 /* MARK: - Generate Eat Moves
  * sorted by mvv

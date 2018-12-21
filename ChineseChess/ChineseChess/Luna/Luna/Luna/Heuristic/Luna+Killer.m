@@ -12,39 +12,51 @@
 #include <memory.h>
 
 // MARK: - LCKillerMove Life Cycle
-extern LCMutableKillerMoveRef LCKillerMoveCreateMutable(void) {
-    const UInt64 size = LCSearchMaxDepth * sizeof(LCKillerMove);
+extern LCMutableKillerMovesRef LCKillerMovesCreateMutable(void) {
+    const UInt64 size = LCSearchMaxDepth * sizeof(LCKillerMoves);
     
     void *const memory = malloc(size);
     memset(memory, 0, size);
     
-    LCKillerMove *iter = (LCKillerMove *)memory;
+    LCKillerMoves *iter = (LCKillerMoves *)memory;
     
     for (int idx = 0; idx < LCSearchMaxDepth; idx++) {
-        iter->iter_end = iter->killers + LCKillerMoveLength;
+        iter->iter_end = iter->killers + LCKillerMovesLength;
         iter++;
     }
     
-    return memory == NULL ? NULL : (LCKillerMove *)memory;
+    return memory == NULL ? NULL : (LCKillerMoves *)memory;
 }
 
-void LCKillerMoveClear(LCMutableKillerMoveRef killer) {
-    const UInt64 size = LCSearchMaxDepth * sizeof(LCKillerMove);
+void LCKillerMovesClear(LCMutableKillerMovesRef killer) {
+    const UInt64 size = LCSearchMaxDepth * sizeof(LCKillerMoves);
     
     memset(killer, 0, size);
     
-    LCKillerMove *iter = killer;
+    LCKillerMoves *iter = killer;
     
     for (int idx = 0; idx < LCSearchMaxDepth; idx++) {
-        iter->iter_end = iter->killers + LCKillerMoveLength;
+        iter->iter_end = iter->killers + LCKillerMovesLength;
         iter++;
     }
 }
 
-void LCKillerMoveRelease(LCKillerMoveRef killer) {
+void LCKillerMovesRelease(LCKillerMovesRef killer) {
     if (killer == NULL) {
         return;
     }
     
     free((void *)killer);
+}
+
+void LCKillerMovesEnumerateMovesUsingBlock(LCMutableKillerMovesRef killers, void (^ block)(const LCMove *const move, Bool *const stop)) {
+    Bool stop = false;
+    
+    for (killers->iter = killers->killers; killers->iter < killers->iter_end; killers->iter++) {
+        if (stop) {
+            return;
+        }
+        
+        block(killers->iter, &stop);
+    }
 }
