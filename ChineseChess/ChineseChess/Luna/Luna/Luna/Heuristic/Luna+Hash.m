@@ -153,3 +153,19 @@ void LCHashHeuristicRead(LCHashHeuristicRef hashTable, LCPositionRef position, L
         }
     }
 }
+
+LCMove LCHashHeuristicReadMove(LCHashHeuristicRef hashTable, LCPositionRef position) {
+    const LCHashHeuristic *hash = hashTable + position->hash;
+    
+    if (LCPositionCanHitHash(position, hash)) {
+        return hash->io.move;
+    } else {
+        hash++;
+        
+        if (LCPositionCanHitHash(position, hash)) {
+            return hash->io.move;
+        }
+        
+        return 0;
+    }
+}

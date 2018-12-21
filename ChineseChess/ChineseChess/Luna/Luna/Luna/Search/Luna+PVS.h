@@ -20,15 +20,15 @@ typedef struct {
     LCMutableEvaluateRef evaluate;
     
     LCMutableHashHeuristicRef hashTable;
+    LCMutableKillerMoveRef killersLayers;
     LCMutableHistoryTrackRef historyTable;
     
-    LCMutableHashHeuristicIORef io;
-    LCMutablePositionHashRef hash;
-    
-    LCMutableMoveExistDetailRef detail;
-    LCMutableKillerMoveRef killersLayers;
     LCMutableMovesArrayRef movesLayers;
+    LCMutableHashHeuristicIORef io;
     
+    LCMutablePositionHashRef hash;
+    LCMutableMoveExistDetailRef detail;
+
     const Bool *isThinking;
     LCDepth rootDepth;
 } LCNextStep;

@@ -143,7 +143,7 @@ Bool LCPositionIsLegal(LCPositionRef position) {
         
         // 向右搜索。
         if (*(offset + 1)) {
-            if (_LCEatRLegalBlack[position->board[king + *offset]]) {
+            if (_LCEatRLegalBlack[position->board[king + *(offset + 1)]]) {
                 return false;
             }
             
@@ -157,13 +157,13 @@ Bool LCPositionIsLegal(LCPositionRef position) {
         }
         
         // 馬
-        register LCLocation leg = LCMoveArrayConstRef->N[LCMoveMake(position->chess[LCChessOffsetRedN], king)];
+        register LCLocation leg = LCMoveMapConstRef->N[LCMoveMake(position->chess[LCChessOffsetRedN], king)];
         
         if (leg && !position->board[leg]) {
             return false;
         }
         
-        leg = LCMoveArrayConstRef->N[LCMoveMake(position->chess[LCChessOffsetRedN + 1], king)];
+        leg = LCMoveMapConstRef->N[LCMoveMake(position->chess[LCChessOffsetRedN + 1], king)];
         
         if (leg && !position->board[leg]) {
             return false;
@@ -220,7 +220,7 @@ Bool LCPositionIsLegal(LCPositionRef position) {
         
         // 向右搜索。
         if (*(offset + 1)) {
-            if (_LCEatRLegalRed[position->board[king + *offset]]) {
+            if (_LCEatRLegalRed[position->board[king + *(offset + 1)]]) {
                 return false;
             }
             
@@ -234,13 +234,13 @@ Bool LCPositionIsLegal(LCPositionRef position) {
         }
         
         // 馬
-        register LCLocation leg = LCMoveArrayConstRef->N[LCMoveMake(position->chess[LCChessOffsetBlackN], king)];
+        register LCLocation leg = LCMoveMapConstRef->N[LCMoveMake(position->chess[LCChessOffsetBlackN], king)];
         
         if (leg && !position->board[leg]) {
             return false;
         }
         
-        leg = LCMoveArrayConstRef->N[LCMoveMake(position->chess[LCChessOffsetBlackN + 1], king)];
+        leg = LCMoveMapConstRef->N[LCMoveMake(position->chess[LCChessOffsetBlackN + 1], king)];
         
         if (leg && !position->board[leg]) {
             return false;

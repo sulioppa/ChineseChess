@@ -44,6 +44,22 @@ void LCMovesArrayRelease(LCMovesArrayRef moves) {
     free((void *)moves);
 }
 
+Bool LCMovesArrayFilterMove(LCMutableMovesArrayRef moves, const LCMove *const move) {
+    if (*move == 0) {
+        return false;
+    }
+    
+    for (moves->move = moves->bottom; moves->move < moves->top; moves->move++) {
+        if (*(moves->move) == *move) {
+            *(moves->move) = 0;
+            
+            return true;
+        }
+    }
+    
+    return false;
+}
+
 LC_INLINE UInt16 LS2(const LCLocation location) {
     return location << 2;
 }
@@ -74,7 +90,7 @@ void LCGenerateSortedEatMoves(LCPositionRef position, LCMutableMovesArrayRef mov
 
 	// K
 	for (to = LCMoveArrayConstRef->K + LS2(*chess), toBoundary = to + 4; to < toBoundary && *to; to++) {
-		if (position->board[*to]) {
+		if (position->board[*to] && LCChessSideIsNotSide(position->board[*to], position->side)) {
             LCMovesArrayPushBack(moves, LCMoveMake(*chess, *to));
 		}
 	}
@@ -87,7 +103,7 @@ void LCGenerateSortedEatMoves(LCPositionRef position, LCMutableMovesArrayRef mov
 		}
 		
 		for (to = LCMoveArrayConstRef->A + LS2(*chess), toBoundary = to + 4; to < toBoundary && *to; to++) {
-			if (position->board[*to]) {
+			if (position->board[*to] && LCChessSideIsNotSide(position->board[*to], position->side)) {
 				LCMovesArrayPushBack(moves, LCMoveMake(*chess, *to));
 			}
 		}
@@ -102,7 +118,7 @@ void LCGenerateSortedEatMoves(LCPositionRef position, LCMutableMovesArrayRef mov
 		for (to = LCMoveArrayConstRef->B + LS2(*chess), toBoundary = to + 4; to < toBoundary && *to; to++) {
 			buffer = LCMoveMake(*chess, *to);
 			
-			if (position->board[*to] && !position->board[LCMoveMapConstRef->B[buffer]]) {
+			if (position->board[*to] && !position->board[LCMoveMapConstRef->B[buffer]] && LCChessSideIsNotSide(position->board[*to], position->side)) {
                 LCMovesArrayPushBack(moves, buffer);
 			}
 		}
@@ -117,7 +133,7 @@ void LCGenerateSortedEatMoves(LCPositionRef position, LCMutableMovesArrayRef mov
 		for (to = LCMoveArrayConstRef->N + LS3(*chess), toBoundary = to + 8; to < toBoundary && *to; to++) {
 			buffer = LCMoveMake(*chess, *to);
 			
-			if (position->board[*to] && !position->board[LCMoveMapConstRef->N[buffer]]) {
+			if (position->board[*to] && !position->board[LCMoveMapConstRef->N[buffer]] && LCChessSideIsNotSide(position->board[*to], position->side)) {
 				LCMovesArrayPushBack(moves, buffer);
 			}
 		}
@@ -134,13 +150,19 @@ void LCGenerateSortedEatMoves(LCPositionRef position, LCMutableMovesArrayRef mov
 		
 		if (*offset) {
 			buffer = *chess + *offset;
-            LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            
+            if (LCChessSideIsNotSide(position->board[buffer], position->side)) {
+                LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            }
 		}
 		
 		offset++;
 		if (*offset) {
 			buffer = *chess + *offset;
-            LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            
+            if (LCChessSideIsNotSide(position->board[buffer], position->side)) {
+                LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            }
 		}
 		
 		// Column
@@ -148,13 +170,19 @@ void LCGenerateSortedEatMoves(LCPositionRef position, LCMutableMovesArrayRef mov
 		
 		if (*offset) {
 			buffer = *chess + (*offset << 4);
-            LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            
+            if (LCChessSideIsNotSide(position->board[buffer], position->side)) {
+                LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            }
 		}
 		
 		offset++;
 		if (*offset) {
 			buffer = *chess + (*offset << 4);
-            LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            
+            if (LCChessSideIsNotSide(position->board[buffer], position->side)) {
+                LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            }
 		}
 	}
 	
@@ -169,13 +197,19 @@ void LCGenerateSortedEatMoves(LCPositionRef position, LCMutableMovesArrayRef mov
 		
 		if (*offset) {
 			buffer = *chess + *offset;
-            LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            
+            if (LCChessSideIsNotSide(position->board[buffer], position->side)) {
+                LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            }
 		}
 		
 		offset++;
 		if (*offset) {
 			buffer = *chess + *offset;
-            LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            
+            if (LCChessSideIsNotSide(position->board[buffer], position->side)) {
+                LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            }
 		}
 		
 		// Column
@@ -183,13 +217,19 @@ void LCGenerateSortedEatMoves(LCPositionRef position, LCMutableMovesArrayRef mov
 		
 		if (*offset) {
 			buffer = *chess + (*offset << 4);
-            LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            
+            if (LCChessSideIsNotSide(position->board[buffer], position->side)) {
+                LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            }
 		}
 		
 		offset++;
 		if (*offset) {
 			buffer = *chess + (*offset << 4);
-            LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            
+            if (LCChessSideIsNotSide(position->board[buffer], position->side)) {
+                LCMovesArrayPushBack(moves, LCMoveMake(*chess, buffer));
+            }
 		}
 	}
 	
@@ -201,7 +241,7 @@ void LCGenerateSortedEatMoves(LCPositionRef position, LCMutableMovesArrayRef mov
 		}
 		
 		for (to = LCMoveArrayConstRef->P + LS2(*chess) + buffer, toBoundary = to + 3; to < toBoundary && *to; to++) {
-			if (position->board[*to]) {
+			if (position->board[*to] && LCChessSideIsNotSide(position->board[*to], position->side)) {
                 LCMovesArrayPushBack(moves, LCMoveMake(*chess, *to));
 			}
 		}

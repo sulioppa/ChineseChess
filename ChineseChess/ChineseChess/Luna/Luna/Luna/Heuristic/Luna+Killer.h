@@ -36,7 +36,3 @@ extern void LCKillerMoveRelease(LCKillerMoveRef killer);
 LC_INLINE void LCKillerMoveWrite(LCMutableKillerMoveRef killer, const LCMove move) {
     killer->killers[(killer->indexOfWrite++) & LCKillerMoveLengthMask] = move;
 }
-
-LC_INLINE void LCKillerMoveBeginRead(LCMutableKillerMoveRef killer) {
-    killer->iter = killer->killers;
-}

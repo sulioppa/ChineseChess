@@ -9,7 +9,7 @@
 #import "Luna+PreGenerate.h"
 #import "Luna+Position.h"
 
-typedef Int8 LCDepth;
+typedef UInt8 LCDepth;
 
 typedef enum : UInt8 {
     LCHashHeuristicTypeNan = 0,
@@ -100,3 +100,5 @@ extern void LCHashHeuristicRelease(LCHashHeuristicRef hash);
 extern void LCHashHeuristicWrite(LCMutableHashHeuristicRef hashTable, LCPositionRef position, LCHashHeuristicIORef io);
 
 extern void LCHashHeuristicRead(LCHashHeuristicRef hashTable, LCPositionRef position, LCMutableHashHeuristicIORef io);
+
+extern LCMove LCHashHeuristicReadMove(LCHashHeuristicRef hashTable, LCPositionRef position);

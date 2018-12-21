@@ -42,6 +42,8 @@ LC_INLINE UInt16 LCMovesArrayGetCapcity(LCMovesArrayRef moves) {
 	return moves->top - moves->bottom;
 }
 
+extern Bool LCMovesArrayFilterMove(LCMutableMovesArrayRef moves, const LCMove *const move);
+
 /* MARK: - Generate Eat Moves
  * sorted by mvv
  */

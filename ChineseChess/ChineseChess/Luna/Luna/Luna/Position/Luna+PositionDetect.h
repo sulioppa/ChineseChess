@@ -24,9 +24,6 @@ typedef LCZobristHash LCPositionHash;
 typedef const LCPositionHash *const LCPositionHashRef;
 typedef LCPositionHash *const LCMutablePositionHashRef;
 
-extern const LCZobristHash LCPositionHashLowMask;
-extern const LCZobristKey LCPositionHashHighMask;
-
 // MARK: - LCPositionHash Life Cycle
 extern LCMutablePositionHashRef LCPositionHashCreateMutable(void);
 
@@ -34,10 +31,13 @@ extern void LCPositionHashClear(LCMutablePositionHashRef hash);
 
 extern void LCPositionHashRelease(LCPositionHashRef hash);
 
+// MARK: - Write & Read
+extern const LCZobristHash LCPositionHashLowMask;
+extern const LCZobristKey LCPositionHashHighMask;
+
 #define LCPositionGetHashKey(position) (((position->key & LCPositionHashHighMask >> 32) | (position->hash & LCPositionHashLowMask)) + position->side)
 #define LCPositionGetHashValue(position) ((LCPositionHash)(position->key))
 
-// MARK: - Write & Read
 LC_INLINE void LCPositionHashSetPosition(LCMutablePositionHashRef hash, LCPositionRef position) {
     *(hash + LCPositionGetHashKey(position)) = LCPositionGetHashValue(position);
 }
