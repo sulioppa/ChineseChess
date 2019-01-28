@@ -6,10 +6,10 @@
 //  Copyright © 2018年 李夙璃. All rights reserved.
 //
 
+#import "Luna+Generate.h"
+
 #import "Luna+Hash.h"
 #import "Luna+Killer.h"
-
-#import "Luna+Generate.h"
 #import "Luna+Heuristic.h"
 
 #import "Luna+PositionDetect.h"

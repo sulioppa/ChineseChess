@@ -49,7 +49,7 @@ void LCKillerMovesRelease(LCKillerMovesRef killer) {
     free((void *)killer);
 }
 
-void LCKillerMovesEnumerateMovesUsingBlock(LCMutableKillerMovesRef killers, void (^ block)(const LCMove *const move, Bool *const stop)) {
+void LCKillerMovesEnumerateMovesUsingBlock(LCMutableKillerMovesRef killers, void (^ block)(LCMoveRef move, Bool *const stop)) {
     Bool stop = false;
     
     for (killers->iter = killers->killers; killers->iter < killers->iter_end; killers->iter++) {

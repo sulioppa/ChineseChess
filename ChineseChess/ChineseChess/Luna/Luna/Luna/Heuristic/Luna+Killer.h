@@ -37,4 +37,4 @@ LC_INLINE void LCKillerMovesWrite(LCMutableKillerMovesRef killer, const LCMove m
     killer->killers[(killer->indexOfWrite++) & LCKillerMovesLengthMask] = move;
 }
 
-extern void LCKillerMovesEnumerateMovesUsingBlock(LCMutableKillerMovesRef killers, void (^ block)(const LCMove *const move, Bool *const stop));
+extern void LCKillerMovesEnumerateMovesUsingBlock(LCMutableKillerMovesRef killers, void (^ block)(LCMoveRef move, Bool *const stop));

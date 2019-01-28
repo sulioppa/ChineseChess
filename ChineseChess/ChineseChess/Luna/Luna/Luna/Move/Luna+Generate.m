@@ -44,26 +44,26 @@ void LCMovesArrayRelease(LCMovesArrayRef moves) {
     free((void *)moves);
 }
 
-void LCMovesArrayEnumerateMovesUsingBlock(LCMutableMovesArrayRef moves, void (^ block)(LCMove *const move, Bool *const stop)) {
+void LCMovesArrayEnumerateMovesUsingBlock(LCMutableMovesArrayRef moves, void (^ block)(LCMutableMoveRef move, Bool *const stop)) {
     Bool stop = false;
-    
-    for (moves->move = moves->bottom; moves->move < moves->top; moves->move++) {
+
+    for (LCMove *move = moves->bottom; move < moves->top; move++) {
         if (stop) {
             return;
         }
         
-        block(moves->move, &stop);
+        block(move, &stop);
     }
 }
 
-Bool LCMovesArrayClearMove(LCMutableMovesArrayRef moves, const LCMove *const move) {
-    if (*move == 0) {
+Bool LCMovesArrayClearMove(LCMutableMovesArrayRef moves, LCMoveRef target) {
+    if (*target == 0) {
         return false;
     }
     
-    for (moves->move = moves->bottom; moves->move < moves->top; moves->move++) {
-        if (*move == *(moves->move)) {
-            *(moves->move) = 0;
+    for (LCMove *move = moves->bottom; move < moves->top; move++) {
+        if (*move == *target) {
+            *move = 0;
             
             return true;
         }

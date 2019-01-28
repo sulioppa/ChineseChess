@@ -21,14 +21,16 @@ extern void LCMoveExistDetailClear(LCMutableMoveExistDetailRef detail);
 extern void LCMoveExistDetailRelease(LCMoveExistDetailRef detail);
 
 // MARK: - Write & Read
+extern const UInt64 LCMoveExistDetailOne;
+
 LC_INLINE void LCMoveExistDetailSetMoveExist(LCMutableMoveExistDetailRef detail, const LCMove move, const UInt8 distance) {
-    *(detail + move) |= 1 << distance;
+    *(detail + move) |= LCMoveExistDetailOne << distance;
 }
 
 LC_INLINE void LCMoveExistDetailClearMoveExist(LCMutableMoveExistDetailRef detail, const LCMove move, const UInt8 distance) {
-    *(detail + move) &= ~(1 << distance);
+    *(detail + move) &= ~(LCMoveExistDetailOne << distance);
 }
 
 LC_INLINE Bool LCMoveExistDetailGetMoveExist(LCMoveExistDetailRef detail, const LCMove move, const UInt8 distance) {
-    return *(detail + move) >> distance & 1;
+    return *(detail + move) >> distance & LCMoveExistDetailOne;
 }

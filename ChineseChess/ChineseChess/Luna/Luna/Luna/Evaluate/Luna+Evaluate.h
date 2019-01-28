@@ -15,7 +15,6 @@ typedef struct {
 } LCEvaluate;
 
 typedef const LCEvaluate *const LCEvaluateRef;
-
 typedef LCEvaluate *const LCMutableEvaluateRef;
 
 // MARK: - LCEvaluate Life Cycle

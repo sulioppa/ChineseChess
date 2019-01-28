@@ -9,7 +9,7 @@
 #import "Luna+PositionChanged.h"
 #import "Luna+PositionLegal.h"
 
-void LCPositionChanged(LCMutablePositionRef position, const LCMove *const move, UInt16 *const buffer) {
+void LCPositionChanged(LCMutablePositionRef position, LCMutableEvaluateRef evaluate, LCMoveRef move, UInt16 *const buffer) {
 #if LC_SingleThread
     static LCLocation from, to;
     static LCChess chess, eat;
@@ -59,6 +59,7 @@ void LCPositionChanged(LCMutablePositionRef position, const LCMove *const move, 
         position->key ^= LCZobristConstKey[*buffer];
 
         LCBitChessRemoveChess(&(position->bitchess), eat);
+        evaluate->material -= *(evaluate->dynamicChessValue[eat] + to);
     } else {
         row = LCLocationGetRow(to);
         column = LCLocationGetColumn(to);
@@ -70,7 +71,7 @@ void LCPositionChanged(LCMutablePositionRef position, const LCMove *const move, 
     *buffer = eat;
 }
 
-void LCPositionRecover(LCMutablePositionRef position, const LCMove *const move, UInt16 *const buffer) {
+void LCPositionRecover(LCMutablePositionRef position, LCMutableEvaluateRef evaluate, LCMoveRef move, UInt16 *const buffer) {
 #if LC_SingleThread
     static LCLocation from, to;
     static LCChess chess, eat;
@@ -120,6 +121,7 @@ void LCPositionRecover(LCMutablePositionRef position, const LCMove *const move, 
         position->key ^= LCZobristConstKey[*buffer];
 
         LCBitChessAddChess(&(position->bitchess), eat);
+        evaluate->material += *(evaluate->dynamicChessValue[eat] + to);
     } else {
         row = LCLocationGetRow(to);
         column = LCLocationGetColumn(to);
@@ -129,7 +131,7 @@ void LCPositionRecover(LCMutablePositionRef position, const LCMove *const move, 
     }
 }
 
-Bool LCPositionIsLegalIfChangedByMove(LCMutablePositionRef position, const LCMove *const move, UInt16 *const buffer) {
+Bool LCPositionIsLegalIfChangedByMove(LCMutablePositionRef position, LCMoveRef move, UInt16 *const buffer) {
 #if LC_SingleThread
     static LCLocation from, to;
     static LCChess chess, eat;

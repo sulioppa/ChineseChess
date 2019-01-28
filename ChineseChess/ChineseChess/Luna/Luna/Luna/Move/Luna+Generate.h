@@ -9,15 +9,15 @@
 #import "Luna+Position.h"
 #import "Luna+Heuristic.h"
 
-#define LCMovesArrayLength 120
+#define LCMovesArrayLength 122
 
 // MARK: - LCMovesArray
 typedef struct {
 	LCMove moves[LCMovesArrayLength];
     LCMove *bottom;
     LCMove *top;
-    LCMove *move;
-    LCMove buffer;
+    UInt16 buffer;
+    UInt16 state;
 } LCMovesArray;
 
 typedef const LCMovesArray *const LCMovesArrayRef;
@@ -36,6 +36,7 @@ LC_INLINE void LCMovesArrayPushBack(LCMutableMovesArrayRef moves, const LCMove m
 LC_INLINE void LCMovesArrayPopAll(LCMutableMovesArrayRef moves) {
     moves->bottom = moves->moves;
 	moves->top = moves->bottom;
+    moves->state = 0;
 }
 
 LC_INLINE void LCMovesArrayResetBottom(LCMutableMovesArrayRef moves, const Bool toTop) {
@@ -46,9 +47,9 @@ LC_INLINE UInt16 LCMovesArrayGetCapcity(LCMovesArrayRef moves) {
 	return moves->top - moves->bottom;
 }
 
-extern void LCMovesArrayEnumerateMovesUsingBlock(LCMutableMovesArrayRef moves, void (^ block)(LCMove *const move, Bool *const stop));
+extern void LCMovesArrayEnumerateMovesUsingBlock(LCMutableMovesArrayRef moves, void (^ block)(LCMutableMoveRef move, Bool *const stop));
 
-extern Bool LCMovesArrayClearMove(LCMutableMovesArrayRef moves, const LCMove *const move);
+extern Bool LCMovesArrayClearMove(LCMutableMovesArrayRef moves, LCMoveRef target);
 
 /* MARK: - Generate Eat Moves
  * sorted by mvv

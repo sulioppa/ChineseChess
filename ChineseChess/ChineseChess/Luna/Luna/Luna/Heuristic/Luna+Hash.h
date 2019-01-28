@@ -101,4 +101,5 @@ extern void LCHashHeuristicWrite(LCMutableHashHeuristicRef hashTable, LCPosition
 
 extern void LCHashHeuristicRead(LCHashHeuristicRef hashTable, LCPositionRef position, LCMutableHashHeuristicIORef io);
 
+// MARK: - Return Hash Move
 extern LCMove LCHashHeuristicReadMove(LCHashHeuristicRef hashTable, LCPositionRef position);

@@ -23,6 +23,8 @@
 		8575D29D214F804300A7969E /* Luna+Killer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575D29B214F804300A7969E /* Luna+Killer.h */; };
 		8575D2A1214F80CF00A7969E /* Luna+PVS.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575D29F214F80CF00A7969E /* Luna+PVS.h */; };
 		8575D2A2214F80CF00A7969E /* Luna+PVS.m in Sources */ = {isa = PBXBuildFile; fileRef = 8575D2A0214F80CF00A7969E /* Luna+PVS.m */; };
+		857C681D21F9A42300852C94 /* Luna+MoveNext.h in Headers */ = {isa = PBXBuildFile; fileRef = 857C681B21F9A42300852C94 /* Luna+MoveNext.h */; };
+		857C681E21F9A42300852C94 /* Luna+MoveNext.m in Sources */ = {isa = PBXBuildFile; fileRef = 857C681C21F9A42300852C94 /* Luna+MoveNext.m */; };
 		85ACFA0221AE9BC800B74334 /* Luna+Settings.h in Headers */ = {isa = PBXBuildFile; fileRef = 85ACFA0121AE9BC800B74334 /* Luna+Settings.h */; };
 		85E5B44921C622CC0098434E /* Luna+MoveExist.h in Headers */ = {isa = PBXBuildFile; fileRef = 85E5B44721C622CC0098434E /* Luna+MoveExist.h */; };
 		85E5B44A21C622CC0098434E /* Luna+MoveExist.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E5B44821C622CC0098434E /* Luna+MoveExist.m */; };
@@ -78,6 +80,8 @@
 		8575D29B214F804300A7969E /* Luna+Killer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Killer.h"; sourceTree = "<group>"; };
 		8575D29F214F80CF00A7969E /* Luna+PVS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+PVS.h"; sourceTree = "<group>"; };
 		8575D2A0214F80CF00A7969E /* Luna+PVS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+PVS.m"; sourceTree = "<group>"; };
+		857C681B21F9A42300852C94 /* Luna+MoveNext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+MoveNext.h"; sourceTree = "<group>"; };
+		857C681C21F9A42300852C94 /* Luna+MoveNext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+MoveNext.m"; sourceTree = "<group>"; };
 		85ACFA0121AE9BC800B74334 /* Luna+Settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+Settings.h"; sourceTree = "<group>"; };
 		85E5B44721C622CC0098434E /* Luna+MoveExist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Luna+MoveExist.h"; sourceTree = "<group>"; };
 		85E5B44821C622CC0098434E /* Luna+MoveExist.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Luna+MoveExist.m"; sourceTree = "<group>"; };
@@ -167,6 +171,8 @@
 				85300BF4214F7BC900B05B06 /* Luna+MoveLegal.m */,
 				85E5B44721C622CC0098434E /* Luna+MoveExist.h */,
 				85E5B44821C622CC0098434E /* Luna+MoveExist.m */,
+				857C681B21F9A42300852C94 /* Luna+MoveNext.h */,
+				857C681C21F9A42300852C94 /* Luna+MoveNext.m */,
 			);
 			path = Move;
 			sourceTree = "<group>";
@@ -317,6 +323,7 @@
 				A75AB919206C869C00FA7B1F /* Luna+Objc.h in Headers */,
 				85300BFF214F7E5400B05B06 /* Luna+Heuristic.h in Headers */,
 				A75AB911206C869C00FA7B1F /* LunaRecordVault.h in Headers */,
+				857C681D21F9A42300852C94 /* Luna+MoveNext.h in Headers */,
 				A7EBF1DB209027FC0072E389 /* Luna+Generate.h in Headers */,
 				A75AB90E206C869C00FA7B1F /* LunaRecordStack.h in Headers */,
 				85300BED214F762E00B05B06 /* Luna+PositionChanged.h in Headers */,
@@ -403,6 +410,7 @@
 				A75AB90B206C869C00FA7B1F /* Luna+Const.m in Sources */,
 				85300BEE214F762E00B05B06 /* Luna+PositionChanged.m in Sources */,
 				850A55CC21A5671400999376 /* Luna+Killer.m in Sources */,
+				857C681E21F9A42300852C94 /* Luna+MoveNext.m in Sources */,
 				8537174D21A7ECA200688F75 /* Luna+NextStep.m in Sources */,
 				85300BF6214F7BC900B05B06 /* Luna+MoveLegal.m in Sources */,
 				A75AB917206C869C00FA7B1F /* LunaRecordVault.m in Sources */,

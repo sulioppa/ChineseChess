@@ -508,8 +508,12 @@
     NSMutableArray<NSNumber *> *allMoves = [NSMutableArray array];
     
     for (LCChess chess = LCSideGetKing(_side), chessBoundary = chess + 16; chess < chessBoundary; chess++) {
-        if (_chess[chess]) {
-            [allMoves addObjectsFromArray:[self generateMovesWithLocation:_chess[chess]]];
+        if (!_chess[chess]) {
+            continue;
+        }
+        
+        for (NSNumber *to in [self generateMovesWithLocation:_chess[chess]]) {
+            [allMoves addObject:@(LCMoveMake(_chess[chess], [to unsignedCharValue]))];
         }
     }
     

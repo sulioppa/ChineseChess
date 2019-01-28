@@ -101,9 +101,11 @@ void LCInitPreGenerate(void) {
 		if (LCLegalLocationConst.K[from]) {
 			for (index = 0, count = 0; index < 4; index++) {
 				to = from + K_Dir[index];
+                
 				if (LCLegalLocationConst.K[to]) {
 					_Internal_LCMoveArray.K[(from << 2) + count] = to;
 					_Internal_LCMoveMap.K[LCMoveMake(from, to)] = 1;
+                    
 					count++;
 				}
 			}
@@ -113,9 +115,11 @@ void LCInitPreGenerate(void) {
 		if (LCLegalLocationConst.A[from]) {
 			for (index = 0, count = 0; index < 4; index++) {
 				to = from + A_Dir[index];
+                
 				if (LCLegalLocationConst.A[to]) {
 					_Internal_LCMoveArray.A[(from << 2) + count] = to;
 					_Internal_LCMoveMap.A[LCMoveMake(from, to)] = 1;
+                    
 					count++;
 				}
 			}
@@ -125,9 +129,11 @@ void LCInitPreGenerate(void) {
 		if (LCLegalLocationConst.B[from]) {
 			for (index = 0, count = 0; index < 4; index++) {
 				to = from + B_Dir[index];
+                
 				if (LCLegalLocationConst.B[to]) {
 					_Internal_LCMoveArray.B[(from << 2) + count] = to;
 					_Internal_LCMoveMap.B[LCMoveMake(from, to)] = (from + to) >> 1;
+                    
 					count++;
 				}
 			}
@@ -137,9 +143,11 @@ void LCInitPreGenerate(void) {
 		if (LCLegalLocationConst.Board[from]) {
 			for (index = 0, count = 0; index < 8; index++) {
 				to = from + N_Dir[index];
+                
 				if (LCLegalLocationConst.Board[to]) {
 					_Internal_LCMoveArray.N[(from << 3) + count] = to;
-					_Internal_LCMoveMap.N[LCMoveMake(from, to)] = from + N_Leg[index];;
+					_Internal_LCMoveMap.N[LCMoveMake(from, to)] = from + N_Leg[index];
+                    
 					count++;
 				}
 			}
@@ -149,9 +157,11 @@ void LCInitPreGenerate(void) {
 		if (LCLegalLocationConst.P[from]) {
 			for (index = 0, count = 0; index < 3; index++) {
 				to = from + P_Dir[0][index];
+                
 				if (LCLegalLocationConst.P[to]) {
 					_Internal_LCMoveArray.P[(from << 2) + count] = to;
 					_Internal_LCMoveMap.P[LCMoveMake(from, to)] = 1;
+                    
 					count++;
 				}
 			}
@@ -160,9 +170,11 @@ void LCInitPreGenerate(void) {
 		if (LCLegalLocationConst.P[from + 256]) {
 			for (index = 0, count = 0; index < 3; index++) {
 				to = from + P_Dir[1][index];
+                
 				if (LCLegalLocationConst.P[to + 256]) {
 					_Internal_LCMoveArray.P[(from << 2) + count + (1 << 10)] = to;
 					_Internal_LCMoveMap.P[LCMoveMake(from, to) + (1 << 16)] = 1;
+                    
 					count++;
 				}
 			}

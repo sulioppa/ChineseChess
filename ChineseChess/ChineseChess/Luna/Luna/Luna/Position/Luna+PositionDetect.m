@@ -11,11 +11,11 @@
 #include <stdlib.h>
 #include <memory.h>
 
-const LCZobristHash LCPositionHashLowMask = 0x7fe; // the lowest bit has being left shift, it = 0.
-const LCZobristKey LCPositionHashHighMask = 0x1ff800000000;
+const LCZobristHash LCPositionHashHighMask = 0x1ff00; // 0001 1111 1111 0000 0000.
+const LCZobristKey LCPositionHashLowMask = 0xff; // 1111 1111.
 
 LCMutablePositionHashRef LCPositionHashCreateMutable(void) {
-    const UInt64 size = sizeof(LCZobristHash) * (1 << 21);
+    const UInt64 size = sizeof(LCZobristHash) * (1 << 18);
     
     void *memory = malloc(size);
     
@@ -23,7 +23,7 @@ LCMutablePositionHashRef LCPositionHashCreateMutable(void) {
 }
 
 void LCPositionHashClear(LCMutablePositionHashRef hash) {
-    const UInt64 size = sizeof(LCZobristHash) * (1 << 21);
+    const UInt64 size = sizeof(LCZobristHash) * (1 << 18);
     
     memset(hash, 0, size);
 }

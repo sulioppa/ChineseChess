@@ -33,3 +33,5 @@ void LCMoveExistDetailRelease(LCMoveExistDetailRef detail) {
     
     free((void *)detail);
 }
+
+const UInt64 LCMoveExistDetailOne = 1;

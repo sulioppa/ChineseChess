@@ -70,6 +70,9 @@ LC_INLINE Bool LCLocationColumnIsEqualToLocation(const LCLocation location, cons
 // MARK: - Luna Move.
 typedef UInt16 LCMove;
 
+typedef const LCMove *const LCMoveRef;
+typedef LCMove *const LCMutableMoveRef;
+
 LC_INLINE LCMove LCMoveMake(const LCLocation from, const LCLocation to) {
 	return (from << 8) | to;
 }
