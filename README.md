@@ -31,7 +31,7 @@
 
 ## Overview Of Functions
 ### Game Module
-- support AI vs Human, you can select AI's level.（now __AI is developing__, using __PVS__）
+- support AI vs Human, you can select AI's level.（now __AI is debugging__, using __PVS__）
 - support immediate regret, new game or new settings.
 - support reverse the board, opposite the chesses.
 - support turn on/off the background music.
