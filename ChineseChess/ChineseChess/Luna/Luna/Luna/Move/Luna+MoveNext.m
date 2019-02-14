@@ -19,9 +19,7 @@ typedef enum : UInt16 {
 } LCMoveArrayState;
 
 // MARK: - Move Output
-LCMoveRef LCNextStepGetNextMove(LCNextStepRef nextStep, const UInt8 *const distance) {
-    LCMutableMovesArrayRef moves = nextStep->movesLayers + *distance;
-    
+LCMoveRef LCNextStepGetNextMove(LCNextStepRef nextStep, LCMutableMovesArrayRef moves, const UInt8 *const distance) {
     // Hash
     if (moves->state == LCMoveArrayStateHash) {
         moves->state = LCMoveArrayStateEat;
@@ -39,13 +37,13 @@ LCMoveRef LCNextStepGetNextMove(LCNextStepRef nextStep, const UInt8 *const dista
         
         if (moves->bottom < moves->top) {
             if (moves->top - moves->bottom == 1) {
-                moves->state = LCMoveArrayStateNonEat;
+                moves->state = LCMoveArrayStateKiller;
             }
             
             return moves->bottom++;
         }
         
-        moves->state = LCMoveArrayStateNonEat;
+        moves->state = LCMoveArrayStateKiller;
     }
     
     // Killer

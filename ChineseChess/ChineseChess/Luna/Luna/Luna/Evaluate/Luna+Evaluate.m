@@ -176,7 +176,7 @@ void LCEvaluateRelease(LCEvaluateRef evaluate) {
 /* MARK: - Dynamic Evaluate Value
  * 动态评估常量
  */
-#define _ThreatK 12
+#define _ThreatK 8
 #define _ThreatA 5
 #define _ThreatB 4
 #define _ThreatN 8
@@ -362,7 +362,7 @@ LC_INLINE const LCLocation _LCLocationGetColumnLocation(const LCLocation locatio
 }
 
 // MARK: - Multiple Evaluate（综合 局面评估）
-void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
+Int16 LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
     /* MARK: - 第一部分。
      * 剩余 子力位置 价值。
      */
@@ -686,6 +686,8 @@ void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
     if (position->side) {
         evaluate->value = -evaluate->value;
     }
+    
+    return evaluate->value;
 }
 
 // MARK: - Const（子力、位置）
@@ -1039,7 +1041,6 @@ const _LCEvaluateConstValue LCEvaluateConstValue = {
 };
 
 // MARK: - 常量数值
-const Int16 LCPositionDrawValue = 0;
+const Int16 LCPositionDrawValue = 10;
 const Int16 LCPositionCheckMateValue = 10000;
 const Int16 LCPositionWinValue = LCPositionCheckMateValue - 1000;
-const Int16 LCPositionRepetitionValue = LCPositionDrawValue - 20;

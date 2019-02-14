@@ -8,4 +8,4 @@
 
 #import "Luna+PVS.h"
 
-LCMoveRef LCNextStepGetNextMove(LCNextStepRef nextStep, const UInt8 *const distance);
+LCMoveRef LCNextStepGetNextMove(LCNextStepRef nextStep, LCMutableMovesArrayRef moves, const UInt8 *const distance);

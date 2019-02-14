@@ -114,8 +114,8 @@ LC_INLINE Bool LCHashHeuristicIOSetValue(LCMutableHashHeuristicIORef io, const L
 }
 
 LC_INLINE void LCHashHeuristicIOSetHashMove(LCMutableHashHeuristicIORef io, const LCMove move) {
-    io->type = LCHashHeuristicTypeMove;
     io->move = move;
+    io->type = move ? LCHashHeuristicTypeMove : LCHashHeuristicTypeNan;
 }
 
 LC_INLINE void LCHashHeuristicIOSetHashNan(LCMutableHashHeuristicIORef io) {

@@ -36,6 +36,8 @@ void LCNextStepAlloc(LCMutableNextStepRef nextStep) {
 }
 
 void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth rootDepth) {
+    rootDepth++;
+    
     nextStep->isThinking = isThinking;
     nextStep->rootDepth = rootDepth > LCSearchMaxDepth ? LCSearchMaxDepth : rootDepth;
 }
@@ -61,30 +63,24 @@ Int16 _LCPVSSearch(LCNextStepRef nextStep, Int16 alpha, const Int16 beta, const 
         return LCPositionDrawValue;
     }
     
-    if (LCPositionHashContainsPosition(nextStep->hash, nextStep->position)) {
-        return LCPositionRepetitionValue;
-    }
-    
-    if (distance == nextStep->rootDepth) {
-        LCEvaluatePosition(nextStep->evaluate, nextStep->position);
-        
-        return nextStep->evaluate->value;
+    if (LCPositionHashContainsPosition(nextStep->hash, nextStep->position) || distance == nextStep->rootDepth) {
+        return LCEvaluatePosition(nextStep->evaluate, nextStep->position);
     }
     
     LCMutableMovesArrayRef moves = nextStep->movesLayers + distance;
     LCMovesArrayPopAll(moves);
     
-    /* Hash
+    // Hash
     LCHashHeuristicIOBeginRead(nextStep->io, distance, nextStep->rootDepth - distance, alpha, beta);
     LCHashHeuristicRead(nextStep->hashTable, nextStep->position, nextStep->io);
     
     if (nextStep->io->type == LCHashHeuristicTypeValue) {
-        return nextStep->io->value;
+        // return nextStep->io->value;
     } else if (nextStep->io->type == LCHashHeuristicTypeMove) {
         LCMovesArrayPushBack(moves, nextStep->io->move);
     } else {
         // Not Hit Hash.
-    }*/
+    }
     
     LCMutablePositionRef position = nextStep->position;
     LCPositionHashSetPosition(nextStep->hash, position);
@@ -95,7 +91,7 @@ Int16 _LCPVSSearch(LCNextStepRef nextStep, Int16 alpha, const Int16 beta, const 
     const LCMove *move;
     LCMove bestmove = 0;
     
-    while ((move = LCNextStepGetNextMove(nextStep, &distance))) {
+    while ((move = LCNextStepGetNextMove(nextStep, moves, &distance))) {
         if (LCMoveExistDetailGetMoveExist(nextStep->detail, *move, distance)) {
             continue;
         }
@@ -124,19 +120,17 @@ Int16 _LCPVSSearch(LCNextStepRef nextStep, Int16 alpha, const Int16 beta, const 
         LCPositionRecover(position, nextStep->evaluate, move, &(moves->buffer));
         
         if (value >= beta || LCPositionWasMate(value, distance)) {
-            // 记录Hash、Killer、History
+            LCPositionHashRemovePosition(nextStep->hash, position);
+            
             LCHashHeuristicIOBeginWrite(nextStep->io, position->side, distance, nextStep->rootDepth - distance, LCHashHeuristicTypeBeta, value, *move);
             LCHashHeuristicWrite(nextStep->hashTable, position, nextStep->io);
             
             LCKillerMovesWrite(nextStep->killersLayers + distance, *move);
             LCHistoryTrackRecord(nextStep->historyTable, *move, nextStep->rootDepth - distance);
             
-            // 清理
             for (move = moves->moves; move < moves->bottom; move++) {
                 LCMoveExistDetailClearMoveExist(nextStep->detail, *move, distance);
             }
-            
-            LCPositionHashRemovePosition(nextStep->hash, position);
             
             return value;
         }
@@ -151,19 +145,19 @@ Int16 _LCPVSSearch(LCNextStepRef nextStep, Int16 alpha, const Int16 beta, const 
         }
     }
     
-    // 记录Hash、Killer、History
+    LCPositionHashRemovePosition(nextStep->hash, position);
+    
     LCHashHeuristicIOBeginWrite(nextStep->io, position->side, distance, nextStep->rootDepth - distance, LCHashHeuristicTypeExact, bestvalue, bestmove);
     LCHashHeuristicWrite(nextStep->hashTable, position, nextStep->io);
     
-    LCKillerMovesWrite(nextStep->killersLayers + distance, bestmove);
-    LCHistoryTrackRecord(nextStep->historyTable, bestmove, nextStep->rootDepth - distance);
-    
-    // 清理
-    for (move = moves->moves; move < moves->bottom; move++) {
-        LCMoveExistDetailClearMoveExist(nextStep->detail, *move, distance);
+    if (bestmove) {
+        LCKillerMovesWrite(nextStep->killersLayers + distance, bestmove);
+        LCHistoryTrackRecord(nextStep->historyTable, bestmove, nextStep->rootDepth - distance);
+        
+        for (move = moves->moves; move < moves->bottom; move++) {
+            LCMoveExistDetailClearMoveExist(nextStep->detail, *move, distance);
+        }
     }
-    
-    LCPositionHashRemovePosition(nextStep->hash, position);
     
     return bestvalue;
 }
