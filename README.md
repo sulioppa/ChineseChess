@@ -1,75 +1,115 @@
 ![](/icon.png)
-# ChineseChess（[中文点这里](/[Chinese]README.md)）
-*Chinese Chess - A Free iOS App（C & Obj-C & Swift）*
+# 中国象棋
+*中国象棋 - 免费的 iOS App（C & Obj-C & Swift）*
 
-## Overview Of This App
-### Launch & Home Page
+## App 一览
+### 启动页 & 主页
 ![](ReadMeMedia/Launch&Home.png)
 
-### Game Module
+### 对弈模块
 ![](ReadMeMedia/Game.png)
 
 ![](ReadMeMedia/GameSettings&History.png)
 
-### Edit Module
+### 摆设棋局模块
 ![](ReadMeMedia/File&Edit.png)
 
 ![](ReadMeMedia/FirstSide&CheckMate.png)
 
-### History Module
+### 棋谱模块
 ![](ReadMeMedia/History&Play.png)
 
-### MultiPeer Module
+### 联机模块
 ![](ReadMeMedia/MultiPeer&Waitting.png)
 
 ***
 
-## Development Track
-* 2017.10.11, right start the project.
-* 2018.2.24, done with MultiPeer module, begin developing AI.
-* 2018.9.27, __can move as vault gives__, the vault is small now, we can expand it in the future.
+## 开发记录
+* 2017.10.11, 正式启动工程.
+* 2018.2.24, 完成联机模块，开始开发AI.
+* 2018.9.27, 可以 __按棋谱库走棋__，棋谱库目前较小，有待扩展。
+* 2019.2.15, __AI调试完毕__，输出不稳定，原因很复杂，将 __调研深度学习__，用现代科技来研究它。
 
-## Overview Of Functions
-### Game Module
-- support AI vs Human, you can select AI's level.（now __AI is debugging__, using __PVS__）
-- support immediate regret, new game or new settings.
-- support reverse the board, opposite the chesses.
-- support turn on/off the background music.
+## 功能一览
+### 对弈模块
+- 支持人机对弈，可以选择AI等级。
+- 支持立即的悔棋，新局，设置。
+- 支持反转棋盘，反向棋子。
+- 支持背景音乐的开关。
 
-### Edit Module
-- support clear and reset the board.
-- support remove/put a chess on a legal grid.
-- support load a history.
+### 摆设棋局模块
+- 支持清除、初始化棋盘。
+- 支持在合理的格点处移除、摆放一颗棋子。
+- 支持载入棋谱进行对弈。
 
-### History Module
-- support history read, save, delete.
-- support select a step and immediatly jump to the specific position.
-- support jump to Game Module to play a game.
+### 棋谱模块
+- 支持棋谱的读(演示)，保存，删除。
+- 支持棋谱的任意一步跳转，点击即可跳转到这一步的局面。
+- 支持在当前局面跳转对弈。
 
-### MultiPeer Module
-- support two people's game through the bluetooth or LAN.
-- support regret, draw, give up.
-- support start a new game.
+### 联机模块
+- 支持两人对弈，通过蓝牙或者局域网。
+- 支持悔棋、认输、提和。
+- 支持新局。
 
-## Overview Of AI（[Refer to scholar Morning Yellow's blog](http://www.xqbase.com/computer/eleeye_intro.htm)）
-### Simple Chess Rule
-- Long check or long catch will lead to lose.
-- Both of side have no chess can attack will lead to draw.
-- 50 rounds of moves have no eat will lead to draw.
-- Same position appears many times will lead to draw.
+## App之AI一览
+### 简单棋规
+- 长将或长捉判负。
+- 双方无进攻棋子判和。
+- 50回合不吃子判和。
+- 相同的局面出现多次判和。
 
-### The Expression Of Chess and Board
-- Board: an array, the length of it is 256.
-- Chess: red is from 16 to 31, rank like King, Advisor, Advisor, Bishop, Bishop, Knight, Knight, Rook, Rook, Cannon, Cannon, Pawn, Pawn, Pawn, Pawn, Pawn, black is from 32 to 47, the same as red.
+### 棋谱库
+- 命中棋谱库：AI搜索前，可以查询棋谱库中有没有当前局面对应的着法，如果有的话，就直接拿来用，否则，AI进行搜索。另外，命中不一定是严格的局面对应，可以是左右翻转、红黑翻转，一共尝试搜索4个局面。
+- 扩充棋谱库：棋谱文件分为两种，由每一步记录是否有FEN串来区分的，如果有FEN串，则这样的文件可以用来扩充棋谱库，传入棋谱文件所在的目录路径，这样可以用大量棋谱文件来扩充棋谱库，后期可以搜集大师的比赛棋谱来增强棋力。步骤如下，1. [LunaRecordStack historyFileWithCode:YES]; 2. [LunaRecordVault expandVaultWithDirectory:@"棋谱文件所在的目录"]; 3. [LunaRecordVault writeToFile:@"棋谱库的保存路径"];
 
-### Move Generate
-- Short Type: King, Advisor, Bishop, Knight, Pawn, previous generate move array.
-- Long Type: Rook, Cannon, bit row bit column.
+### 棋盘棋子表示
+- 棋盘：长度为256的数组。
+- 棋子：16-31为红方棋子，依次为帥、仕仕、相相、馬馬、車車、炮炮、兵兵兵兵兵，32-47为黑方棋子，类似。
 
-### Position Evaluate
-- Pre Evaluate: Analysis the status of position, judging whether the position is in the middle or the end,  the value of different status is different.
-- Dynamic Evaluate: Called when search at the leaf node of PVS,  include two parts, one is location-chess value, another is dynamic evaluate, it includes the punishment of lack advisor or bishop, the control, hold, protection of knight, the hold, protection, threat, flexibility of rook and cannon, and the hollow cannon to the king (it means there's nothing between cannon and king).
+### 着法生成
+- 短程类：帥仕相馬兵，走法预生成数组，事先计算好的数据。
+- 远程类：車炮，位行位列，以位数据为索引。
 
-### Record Vault
-- Hit The Target: Before searching, refer the vault to get the move, if do hit the target, it can return, or AI will begin searching. By the way, it can be not the exact position in the vault, it can be left-right mirrored, red-black mirrored, 4 position will be searching totally.
-- Expand The Vault: There are two kinds of record files, whitch depends on whether the each step contains FEN string or not. If that, it can be used to expand the vault. We can input many games to enhance the power of AI. Following the steps, 1. [LunaRecordStack historyFileWithCode:YES]; 2. [LunaRecordVault expandVaultWithDirectory:@"the directory of record files"]; 3. [LunaRecordVault writeToFile:@"the path of saved vault"];
+### 着法排序 
+- 吃子着法：类似MVV排序。
+- 不吃子着法：按历史表排序。
+
+### 杀手着法
+- 兄弟局面。仅限于同层，这两个局面的部分好的着法可能是一致的。
+- 考虑什么样的着法？最好的着法或者引发裁剪的着法。
+
+### 提前退出
+- 和棋裁剪。双方无进攻棋子即可返回。
+- 重复局面裁剪。如果与之前的局面重复了就直接评估。
+- 杀棋裁剪。如果是达到最佳杀棋就直接返回。
+
+### 哈希启发
+- Zobrist Hash. 一种低概率冲突的键值产生法。
+- Value. 满足一定条件，则可返回该值。
+- Hash Move. 如果要进行着法生成，则可优先使用Hash Move。
+
+### 搜索算法
+- PVS. Alpha-Beta的改进算法，依赖于良序的着法顺序。
+- 有机结合了各个功能部分。
+
+### 局面评估
+- 局面预评估：分析局面的状态, 判断局面处于开中局或是残局。开中、残局的子力估值是不一样的。
+- 局面动态评估：在搜索树的叶结点进行动态评估，分为两部分，一是子力位置价值，二是动态估值，动态估值包括缺少仕相的惩罚，馬的控制、牵制、保护，車的威胁、牵制、保护、灵活度，炮的威胁、牵制、保护、空头炮/沉底炮、灵活度的评估。
+
+## 传统AI的局限性
+### 局限性
+- 局面评估依赖于人类经验。总是需要不断人工完善。
+- 置换表的不稳定性。当不是杀棋时，直接使用value的副作用，可能是输出不稳定的原因之一。
+- 重复局面直接评估的不稳定性。重复局面可能是最顽强的对抗，可能是输出不稳定的另一原因。
+- 其他高级技术的不稳定性。寂静搜索、空着裁剪、选择延伸的副作用（本App没有实现这些技术）。
+- 知识与速度。需要在其中做权衡。
+
+### 为什么本人浅尝辄止？
+- 能力有限。2015年开始接触，至今才有这些积累，仍有很多不通透之处。
+- 国内资料屈指可数。本人搜到的资料仅有[黄晨前辈的网站](http://www.xqbase.com/computer/eleeye_intro.htm)和兵河五四相关文献。
+- 技术过时。和兵河五四的作者交流一番，本人实现的技术已经是十多年前的了，而且还是初级阶段的传统技术。
+
+## 对现代AI的期待
+- 普及化。在移动端有限的计算能力下，表现较好的效果。
+- 自动化。不依赖过多的人类经验，自动提升棋力。
