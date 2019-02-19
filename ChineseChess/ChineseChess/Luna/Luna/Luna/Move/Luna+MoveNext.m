@@ -22,28 +22,11 @@ typedef enum : UInt16 {
 LCMoveRef LCNextStepGetNextMove(LCNextStepRef nextStep, LCMutableMovesArrayRef moves, const UInt8 *const distance) {
     // Hash
     if (moves->state == LCMoveArrayStateHash) {
-        moves->state = LCMoveArrayStateEat;
-        
-        if (moves->bottom < moves->top) {
-            return moves->bottom++;
-        }
-    }
-    
-    // Eat
-    if (moves->state == LCMoveArrayStateEat) {
-        if (moves->bottom == moves->top) {
-            LCGenerateSortedEatMoves(nextStep->position, moves);
-        }
-        
-        if (moves->bottom < moves->top) {
-            if (moves->top - moves->bottom == 1) {
-                moves->state = LCMoveArrayStateKiller;
-            }
-            
-            return moves->bottom++;
-        }
-        
         moves->state = LCMoveArrayStateKiller;
+        
+        if (moves->bottom < moves->top) {
+            return moves->bottom++;
+        }
     }
     
     // Killer
@@ -65,6 +48,23 @@ LCMoveRef LCNextStepGetNextMove(LCNextStepRef nextStep, LCMutableMovesArrayRef m
         }
         
         moves->bottom = moves->top;
+        moves->state = LCMoveArrayStateEat;
+    }
+    
+    // Eat
+    if (moves->state == LCMoveArrayStateEat) {
+        if (moves->bottom == moves->top) {
+            LCGenerateSortedEatMoves(nextStep->position, moves);
+        }
+        
+        if (moves->bottom < moves->top) {
+            if (moves->top - moves->bottom == 1) {
+                moves->state = LCMoveArrayStateNonEat;
+            }
+            
+            return moves->bottom++;
+        }
+        
         moves->state = LCMoveArrayStateNonEat;
     }
     

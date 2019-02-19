@@ -139,6 +139,9 @@ Int16 _LCPVSSearch(LCNextStepRef nextStep, Int16 alpha, const Int16 beta, const 
                 alpha = bestvalue;
                 type = LCHashHeuristicTypeExact;
             }
+            
+            LCHashHeuristicIOBeginWrite(nextStep->io, position->side, distance, nextStep->rootDepth - distance, LCHashHeuristicTypeAlpha, bestvalue, bestmove);
+            LCHashHeuristicWrite(nextStep->hashTable, position, nextStep->io);
         }
     }
     
