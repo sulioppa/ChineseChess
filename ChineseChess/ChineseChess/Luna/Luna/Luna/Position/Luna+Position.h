@@ -30,6 +30,7 @@ typedef struct {
     LCSide side;
     LCBitChess bitchess;
     
+    LCZobristLock lock;
     LCZobristHash hash;
     LCZobristKey key;
 } LCPosition;

@@ -42,11 +42,13 @@ void LCPositionChanged(LCMutablePositionRef position, LCMutableEvaluateRef evalu
     // hash, key
     *buffer = LCChessGetZobristOffset(chess, from);
 
+    position->lock ^= LCZobristConstLock[*buffer];
     position->hash ^= LCZobristConstHash[*buffer];
     position->key ^= LCZobristConstKey[*buffer];
     
     *buffer = LCChessGetZobristOffset(chess, to);
 
+    position->lock ^= LCZobristConstLock[*buffer];
     position->hash ^= LCZobristConstHash[*buffer];
     position->key ^= LCZobristConstKey[*buffer];
     
@@ -55,6 +57,7 @@ void LCPositionChanged(LCMutablePositionRef position, LCMutableEvaluateRef evalu
 
         *buffer = LCChessGetZobristOffset(eat, to);
         
+        position->lock ^= LCZobristConstLock[*buffer];
         position->hash ^= LCZobristConstHash[*buffer];
         position->key ^= LCZobristConstKey[*buffer];
 
@@ -104,11 +107,13 @@ void LCPositionRecover(LCMutablePositionRef position, LCMutableEvaluateRef evalu
     // hash, key
     *buffer = LCChessGetZobristOffset(chess, to);
 
+    position->lock ^= LCZobristConstLock[*buffer];
     position->hash ^= LCZobristConstHash[*buffer];
     position->key ^= LCZobristConstKey[*buffer];
     
     *buffer = LCChessGetZobristOffset(chess, from);
 
+    position->lock ^= LCZobristConstLock[*buffer];
     position->hash ^= LCZobristConstHash[*buffer];
     position->key ^= LCZobristConstKey[*buffer];
     
@@ -117,6 +122,7 @@ void LCPositionRecover(LCMutablePositionRef position, LCMutableEvaluateRef evalu
         
         *buffer = LCChessGetZobristOffset(eat, to);
         
+        position->lock ^= LCZobristConstLock[*buffer];
         position->hash ^= LCZobristConstHash[*buffer];
         position->key ^= LCZobristConstKey[*buffer];
 

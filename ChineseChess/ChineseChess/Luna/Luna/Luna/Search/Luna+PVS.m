@@ -36,7 +36,7 @@ void LCNextStepAlloc(LCMutableNextStepRef nextStep) {
 }
 
 void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth rootDepth) {
-    rootDepth++;
+    rootDepth ++;
     
     nextStep->isThinking = isThinking;
     nextStep->rootDepth = rootDepth > LCSearchMaxDepth ? LCSearchMaxDepth : rootDepth;
@@ -63,22 +63,38 @@ Int16 _LCPVSSearch(LCNextStepRef nextStep, Int16 alpha, const Int16 beta, const 
         return LCPositionDrawValue;
     }
     
-    if (LCPositionHashContainsPosition(nextStep->hash, nextStep->position) || distance == nextStep->rootDepth) {
-        return LCEvaluatePosition(nextStep->evaluate, nextStep->position);
+    if (LCPositionHashContainsPosition(nextStep->hash, nextStep->position)) {
+        return LCPositionRepetionValue;
+    }
+    
+    if (distance == nextStep->rootDepth) {
+        LCHashHeuristicIOBeginRead(nextStep->io, LCHashHeuristicTypeValueOnly, distance);
+        LCHashHeuristicRead(nextStep->hashTable, nextStep->position, nextStep->io);
+        
+        if (nextStep->io->type & LCHashHeuristicTypeValueOnly) {
+            return nextStep->io->value;
+        }
+        
+        LCEvaluatePosition(nextStep->evaluate, nextStep->position);
+        
+        LCHashHeuristicIOBeginWriteValue(nextStep->io, nextStep->position->lock, nextStep->position->side, nextStep->evaluate->value);
+        LCHashHeuristicWrite(nextStep->hashTable, nextStep->position, nextStep->io);
+        
+        return nextStep->evaluate->value;
     }
     
     // Hash
-    LCHashHeuristicIOBeginRead(nextStep->io, distance, nextStep->rootDepth - distance, alpha, beta);
+    LCHashHeuristicIOBeginRead(nextStep->io, LCHashHeuristicTypeAll, distance);
     LCHashHeuristicRead(nextStep->hashTable, nextStep->position, nextStep->io);
     
-    if (nextStep->io->type == LCHashHeuristicTypeValue) {
+    if (nextStep->io->type & LCHashHeuristicTypeMate) {
         return nextStep->io->value;
     }
     
     LCMutableMovesArrayRef moves = nextStep->movesLayers + distance;
     LCMovesArrayPopAll(moves);
     
-    if (nextStep->io->type == LCHashHeuristicTypeMove) {
+    if (nextStep->io->type & LCHashHeuristicTypeMove) {
         LCMovesArrayPushBack(moves, nextStep->io->move);
     } else {
         // Not Hit Hash.
@@ -92,8 +108,6 @@ Int16 _LCPVSSearch(LCNextStepRef nextStep, Int16 alpha, const Int16 beta, const 
     
     const LCMove *move;
     LCMove bestmove = 0;
-    
-    LCHashHeuristicType type = LCHashHeuristicTypeAlpha;
     
     while ((move = LCNextStepGetNextMove(nextStep, moves, &distance))) {
         if (LCMoveExistDetailGetMoveExist(nextStep->detail, *move, distance)) {
@@ -126,8 +140,7 @@ Int16 _LCPVSSearch(LCNextStepRef nextStep, Int16 alpha, const Int16 beta, const 
         if (value >= beta || LCPositionWasMate(value, distance)) {
             bestvalue = value;
             bestmove = *move;
-            type = LCHashHeuristicTypeBeta;
-            
+
             break;
         }
         
@@ -137,22 +150,24 @@ Int16 _LCPVSSearch(LCNextStepRef nextStep, Int16 alpha, const Int16 beta, const 
             
             if (bestvalue > alpha) {
                 alpha = bestvalue;
-                type = LCHashHeuristicTypeExact;
             }
             
-            LCHashHeuristicIOBeginWrite(nextStep->io, position->side, distance, nextStep->rootDepth - distance, LCHashHeuristicTypeAlpha, bestvalue, bestmove);
+            LCHashHeuristicIOBeginWriteMove(nextStep->io, position->lock, position->side, bestmove);
             LCHashHeuristicWrite(nextStep->hashTable, position, nextStep->io);
         }
     }
     
     LCPositionHashRemovePosition(nextStep->hash, position);
     
-    LCHashHeuristicIOBeginWrite(nextStep->io, position->side, distance, nextStep->rootDepth - distance, type, bestvalue, bestmove);
-    LCHashHeuristicWrite(nextStep->hashTable, position, nextStep->io);
-    
     if (bestmove) {
+        LCHashHeuristicIOBeginWriteMove(nextStep->io, position->lock, position->side, bestmove);
+        LCHashHeuristicWrite(nextStep->hashTable, position, nextStep->io);
+        
         LCKillerMovesWrite(nextStep->killersLayers + distance, bestmove);
         LCHistoryTrackRecord(nextStep->historyTable, bestmove, nextStep->rootDepth - distance);
+    } else {
+        LCHashHeuristicIOBeginWriteValue(nextStep->io, position->lock, position->side, bestvalue);
+        LCHashHeuristicWrite(nextStep->hashTable, position, nextStep->io);
     }
     
     for (move = moves->moves; move < moves->bottom; move++) {
@@ -215,17 +230,10 @@ void LCNextStepSearch(LCNextStepRef nextStep, void (^ block)(float, UInt16)) {
     }
     
     // 调整次序，hash, killers, eat, non eat.
-    LCHashHeuristicIOBeginRead(nextStep->io, 0, nextStep->rootDepth, -LCPositionCheckMateValue, LCPositionCheckMateValue);
+    LCHashHeuristicIOBeginRead(nextStep->io, LCHashHeuristicTypeMoveOnly, 0);
     LCHashHeuristicRead(nextStep->hashTable, position, nextStep->io);
     
-    if (nextStep->io->type == LCHashHeuristicTypeValue) {
-        onlyMove = LCHashHeuristicReadMove(nextStep->hashTable, position);
-        
-        if (LCPositionWasMate(nextStep->io->value, 1)) {
-            block(1.0, onlyMove);
-            return;
-        }
-    } else if (nextStep->io->type == LCHashHeuristicTypeMove) {
+    if (nextStep->io->type & LCHashHeuristicTypeMove) {
         onlyMove = nextStep->io->move;
     } else {
         onlyMove = 0;
@@ -317,7 +325,7 @@ void LCNextStepSearch(LCNextStepRef nextStep, void (^ block)(float, UInt16)) {
     LCSideRevese(&(position->side));
     
     // 记录Hash、Killer、History
-    LCHashHeuristicIOBeginWrite(nextStep->io, position->side, 0, nextStep->rootDepth, LCHashHeuristicTypeExact, alpha, bestmove);
+    LCHashHeuristicIOBeginWriteMove(nextStep->io, position->lock, position->side, bestmove);
     LCHashHeuristicWrite(nextStep->hashTable, position, nextStep->io);
     
     LCKillerMovesWrite(nextStep->killersLayers, bestmove);

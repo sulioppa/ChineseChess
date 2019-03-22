@@ -176,24 +176,20 @@ void LCEvaluateRelease(LCEvaluateRef evaluate) {
 /* MARK: - Dynamic Evaluate Value
  * 动态评估常量
  */
-#define _ThreatK 8
-#define _ThreatA 5
-#define _ThreatB 4
-#define _ThreatN 8
-#define _ThreatR 18
-#define _ThreatC 9
-#define _ThreatP 3
+#define _ThreatStrong 5
+#define _ThreatMiddle 3
+#define _ThreatWeak 2
 
-#define _ThreatStrong 4
-#define _ThreatMiddle 2
-#define _ThreatWeak 1
+#define _ProtectStrong 3
+#define _ProtectMiddle 2
+#define _ProtectWeak 1
 
 // MARK: - 少仕相的惩罚
 const Int16 _LCThreatAB[16] = {
-    _ThreatP * 4, _ThreatP * 3, _ThreatP * 3, _ThreatP * 2,
-    _ThreatP * 3, _ThreatP * 2, _ThreatP * 2, _ThreatP * 1,
-    _ThreatP * 3, _ThreatP * 2, _ThreatP * 2, _ThreatP * 1,
-    _ThreatP * 2, _ThreatP * 1, _ThreatP * 1, _ThreatP * 0
+    _ThreatWeak * 4, _ThreatWeak * 3, _ThreatWeak * 3, _ThreatWeak * 2,
+    _ThreatWeak * 3, _ThreatWeak * 2, _ThreatWeak * 2, _ThreatWeak * 1,
+    _ThreatWeak * 3, _ThreatWeak * 2, _ThreatWeak * 2, _ThreatWeak * 1,
+    _ThreatWeak * 2, _ThreatWeak * 1, _ThreatWeak * 1, _ThreatWeak * 0
 };
 
 LC_INLINE LCBitChess _LCBitChessGetAB(const LCBitChess bitchess, const LCSide side) {
@@ -202,33 +198,33 @@ LC_INLINE LCBitChess _LCBitChessGetAB(const LCBitChess bitchess, const LCSide si
 
 // MARK: - 馬的控制、牵制、保护
 const Int16 _LCThreatRedN[LCChessLength] = {
-    _ThreatP, 0, 0, 0,
+    _ThreatMiddle, 0, 0, 0,
     0, 0, 0, 0,
     0, 0, 0, 0,
     0, 0, 0, 0,
     
-    0, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
-    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatMiddle, _ThreatMiddle,
-    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    0, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak,
+    _ProtectStrong, _ProtectStrong, _ProtectMiddle, _ProtectMiddle, _ProtectMiddle, _ProtectMiddle,
+    _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak,
     
-    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
-    _ThreatStrong, _ThreatStrong, _ThreatR / 2, _ThreatR / 2, _ThreatC / 2, _ThreatC / 2,
-    _ThreatP, _ThreatP, _ThreatP, _ThreatP, _ThreatP
+    _ThreatStrong, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    _ThreatWeak, _ThreatWeak, _ThreatStrong, _ThreatStrong, _ThreatMiddle, _ThreatMiddle,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak
 };
 
 const Int16 _LCThreatBlackN[LCChessLength] = {
-    _ThreatP, 0, 0, 0,
+    _ThreatMiddle, 0, 0, 0,
     0, 0, 0, 0,
     0, 0, 0, 0,
     0, 0, 0, 0,
     
-    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
-    _ThreatStrong, _ThreatStrong, _ThreatR / 2, _ThreatR / 2, _ThreatC / 2, _ThreatC / 2,
-    _ThreatP, _ThreatP, _ThreatP, _ThreatP, _ThreatP,
+    _ThreatStrong, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    _ThreatWeak, _ThreatWeak, _ThreatStrong, _ThreatStrong, _ThreatMiddle, _ThreatMiddle,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
     
-    0, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
-    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatMiddle, _ThreatMiddle,
-    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak
+    0, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak,
+    _ProtectStrong, _ProtectStrong, _ProtectMiddle, _ProtectMiddle, _ProtectMiddle, _ProtectMiddle,
+    _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak
 };
 
 // MARK: - 車的威胁、隔子牵制
@@ -238,13 +234,13 @@ const Int16 _LCThreatRedR[LCChessLength] = {
     0, 0, 0, 0,
     0, 0, 0, 0,
     
-    0, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
-    _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong, _ThreatMiddle, _ThreatMiddle,
-    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    0, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak,
+    _ProtectStrong, _ProtectStrong, _ProtectStrong, _ProtectStrong, _ProtectStrong, _ProtectStrong,
+    _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak,
     
-    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
-    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong,
-    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle
+    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatStrong, _ThreatWeak, _ThreatWeak, _ThreatStrong, _ThreatStrong,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak
 };
 
 const Int16 _LCThreatBlackR[LCChessLength] = {
@@ -252,14 +248,14 @@ const Int16 _LCThreatBlackR[LCChessLength] = {
     0, 0, 0, 0,
     0, 0, 0, 0,
     0, 0, 0, 0,
-
-    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
-    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong,
-    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
     
-    0, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
-    _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong, _ThreatMiddle, _ThreatMiddle,
-    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak
+    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatStrong, _ThreatWeak, _ThreatWeak, _ThreatStrong, _ThreatStrong,
+    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    
+    0, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak,
+    _ProtectStrong, _ProtectStrong, _ProtectStrong, _ProtectStrong, _ProtectStrong, _ProtectStrong,
+    _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak
 };
 
 const Int16 _LCHoldRedR[LCChessLength] = {
@@ -269,11 +265,11 @@ const Int16 _LCHoldRedR[LCChessLength] = {
     0, 0, 0, 0,
     
     0, 0, 0, 0, 0,
-    0, 0, 0, 0, _ThreatWeak, _ThreatWeak,
+    0, 0, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak,
     0, 0, 0, 0, 0,
     
-    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
-    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, 0, 0,
+    _ThreatStrong, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, -_ThreatStrong, -_ThreatStrong,
     _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak
 };
 
@@ -283,12 +279,12 @@ const Int16 _LCHoldBlackR[LCChessLength] = {
     0, 0, 0, 0,
     0, 0, 0, 0,
     
-    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
-    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, 0, 0,
+    _ThreatStrong, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, -_ThreatStrong, -_ThreatStrong,
     _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
     
     0, 0, 0, 0, 0,
-    0, 0, 0, 0, _ThreatWeak, _ThreatWeak,
+    0, 0, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak,
     0, 0, 0, 0, 0
 };
 
@@ -299,13 +295,13 @@ const Int16 _LCThreatRedC[LCChessLength] = {
     0, 0, 0, 0,
     0, 0, 0, 0,
     
-    0, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
-    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong,
-    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
+    0, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak,
+    _ProtectStrong, _ProtectStrong, _ProtectStrong, _ProtectStrong, _ProtectStrong, _ProtectStrong,
+    _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak,
     
-    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong,
-    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong,
-    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle
+    _ThreatStrong, _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatWeak, _ThreatWeak,
+    _ThreatWeak, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatWeak
 };
 
 const Int16 _LCThreatBlackC[LCChessLength] = {
@@ -313,14 +309,14 @@ const Int16 _LCThreatBlackC[LCChessLength] = {
     0, 0, 0, 0,
     0, 0, 0, 0,
     0, 0, 0, 0,
-
-    _ThreatK, _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong,
-    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong,
-    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle,
     
-    0, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
-    _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong,
-    _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak
+    _ThreatStrong, _ThreatMiddle, _ThreatMiddle, _ThreatStrong, _ThreatStrong,
+    _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatWeak, _ThreatWeak,
+    _ThreatWeak, _ThreatMiddle, _ThreatMiddle, _ThreatMiddle, _ThreatWeak,
+    
+    0, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak,
+    _ProtectStrong, _ProtectStrong, _ProtectStrong, _ProtectStrong, _ProtectStrong, _ProtectStrong,
+    _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak, _ProtectWeak
 };
 
 const Int16 _LCHoldRedC[LCChessLength] = {
@@ -333,7 +329,7 @@ const Int16 _LCHoldRedC[LCChessLength] = {
     0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0,
     
-    _ThreatK, _ThreatWeak, _ThreatWeak, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatWeak, _ThreatWeak, _ThreatMiddle, _ThreatMiddle,
     _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong,
     _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak
 };
@@ -344,7 +340,7 @@ const Int16 _LCHoldBlackC[LCChessLength] = {
     0, 0, 0, 0,
     0, 0, 0, 0,
     
-    _ThreatK, _ThreatWeak, _ThreatWeak, _ThreatMiddle, _ThreatMiddle,
+    _ThreatStrong, _ThreatWeak, _ThreatWeak, _ThreatMiddle, _ThreatMiddle,
     _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong, _ThreatStrong,
     _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak, _ThreatWeak,
     
@@ -362,7 +358,7 @@ LC_INLINE const LCLocation _LCLocationGetColumnLocation(const LCLocation locatio
 }
 
 // MARK: - Multiple Evaluate（综合 局面评估）
-Int16 LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
+void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) {
     /* MARK: - 第一部分。
      * 剩余 子力位置 价值。
      */
@@ -524,9 +520,9 @@ Int16 LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) 
             
             // 空头炮、沉底炮
             if (LCLocationRowIsEqualToLocation(*chess, position->chess[LCChessOffsetBlackK])) {
-                evaluate->value += LCMoveMapGetRowMapState(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), LCLocationGetColumn(position->chess[LCChessOffsetBlackK])) == LCMoveMapConstRef->EatR ? _ThreatK : 0;
+                evaluate->value += LCMoveMapGetRowMapState(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), LCLocationGetColumn(position->chess[LCChessOffsetBlackK])) == LCMoveMapConstRef->EatR ? _ThreatStrong : 0;
             } else if (LCLocationColumnIsEqualToLocation(*chess, position->chess[LCChessOffsetBlackK])) {
-                evaluate->value += LCMoveMapGetColumnMapState(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), LCLocationGetRow(position->chess[LCChessOffsetBlackK])) == LCMoveMapConstRef->EatR ? _ThreatK : 0;
+                evaluate->value += LCMoveMapGetColumnMapState(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), LCLocationGetRow(position->chess[LCChessOffsetBlackK])) == LCMoveMapConstRef->EatR ? _ThreatStrong : 0;
             }
         }
         
@@ -671,9 +667,9 @@ Int16 LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) 
             
             // 空头炮、沉底炮
             if (LCLocationRowIsEqualToLocation(*chess, position->chess[LCChessOffsetRedK])) {
-                evaluate->value -= LCMoveMapGetRowMapState(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), LCLocationGetColumn(position->chess[LCChessOffsetRedK])) == LCMoveMapConstRef->EatR ? _ThreatK : 0;
+                evaluate->value -= LCMoveMapGetRowMapState(position->row[LCLocationGetRow(*chess)], LCLocationGetColumn(*chess), LCLocationGetColumn(position->chess[LCChessOffsetRedK])) == LCMoveMapConstRef->EatR ? _ThreatStrong : 0;
             } else if (LCLocationColumnIsEqualToLocation(*chess, position->chess[LCChessOffsetRedK])) {
-                evaluate->value -= LCMoveMapGetColumnMapState(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), LCLocationGetRow(position->chess[LCChessOffsetRedK])) == LCMoveMapConstRef->EatR ? _ThreatK : 0;
+                evaluate->value -= LCMoveMapGetColumnMapState(position->column[LCLocationGetColumn(*chess)], LCLocationGetRow(*chess), LCLocationGetRow(position->chess[LCChessOffsetRedK])) == LCMoveMapConstRef->EatR ? _ThreatStrong : 0;
             }
         }
         
@@ -686,8 +682,6 @@ Int16 LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position) 
     if (position->side) {
         evaluate->value = -evaluate->value;
     }
-    
-    return evaluate->value;
 }
 
 // MARK: - Const（子力、位置）
@@ -1041,6 +1035,7 @@ const _LCEvaluateConstValue LCEvaluateConstValue = {
 };
 
 // MARK: - 常量数值
-const Int16 LCPositionDrawValue = 10;
+const Int16 LCPositionDrawValue = 20;
+const Int16 LCPositionRepetionValue = -400;
 const Int16 LCPositionCheckMateValue = 10000;
-const Int16 LCPositionWinValue = LCPositionCheckMateValue - 1000;
+const Int16 LCPositionDeathValue = 1000 - LCPositionCheckMateValue;
