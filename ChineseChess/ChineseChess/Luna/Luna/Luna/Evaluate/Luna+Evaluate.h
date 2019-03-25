@@ -25,10 +25,9 @@ extern void LCEvaluateInit(LCMutableEvaluateRef evaluate, LCPositionRef position
 extern void LCEvaluateRelease(LCEvaluateRef evaluate);
 
 // MARK: - Evaluate
-extern void LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position);
+extern Int16 LCEvaluatePosition(LCMutableEvaluateRef evaluate, LCPositionRef position);
 
 // MARK: - Const Value
 extern const Int16 LCPositionDrawValue;
-extern const Int16 LCPositionRepetionValue;
 extern const Int16 LCPositionCheckMateValue;
-extern const Int16 LCPositionDeathValue;
+extern const Int16 LCPositionWinValue;

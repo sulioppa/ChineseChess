@@ -38,9 +38,6 @@ const LCChess LCZobristMap[LCChessLength] = {
     13, 13, 13, 13, 13
 };
 
-LCZobristLock _Internal_LCZobristLock[3584];
-const LCZobristLock *const LCZobristConstLock = _Internal_LCZobristLock;
-
 LCZobristHash _Internal_LCZobristHash[3584];
 const LCZobristHash *const LCZobristConstHash = _Internal_LCZobristHash;
 
@@ -72,11 +69,10 @@ void _LCInitRowColumn(void) {
 
 void _LCInitZobristValue(void) {
     LCZobristKey buffer;
-    const LCZobristHash bound = 1 << (16 + LCHashHeuristicPower);
+    const LCZobristHash bound = 1 << (15 + LCHashHeuristicPower);
     
     for (int idx = 0; idx < 3584; idx++) {
-        _Internal_LCZobristLock[idx] = arc4random_uniform(UINT16_MAX);
-        _Internal_LCZobristHash[idx] = arc4random_uniform(bound);
+        _Internal_LCZobristHash[idx] = arc4random_uniform(bound) << 1;
         
         buffer = arc4random();
         buffer <<= 32;

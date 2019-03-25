@@ -7,6 +7,7 @@
 //
 
 #import "Luna+Hash.h"
+#import "Luna+Evaluate.h"
 
 #include <stdlib.h>
 #include <memory.h>
@@ -49,37 +50,6 @@ void LCHashHeuristicIORelease(LCHashHeuristicIORef io) {
     free((void *)io);
 }
 
-// MARK: - LC_INLINE
-LC_INLINE Bool LCPositionCanHitHash(LCPositionRef position, LCHashHeuristicRef hash) {
-    return hash->io.type && position->key == hash->key && position->lock == hash->io.lock && position->side == hash->io.side;
-}
-
-LC_INLINE void LCHashHeuristicIOSetHashValue(LCMutableHashHeuristicIORef io, LCHashHeuristicRef hash) {
-    if (hash->io.type & LCHashHeuristicTypeMate) {
-        io->type = LCHashHeuristicTypeMate;
-        io->value = io->distance - LCPositionCheckMateValue;
-    } else if (hash->io.type & LCHashHeuristicTypeExact) {
-        io->type = LCHashHeuristicTypeExact;
-        io->value = hash->io.value;
-    } else {
-        io->type = LCHashHeuristicTypeNan;
-    }
-}
-
-LC_INLINE void LCHashHeuristicIOSetHashMove(LCMutableHashHeuristicIORef io, const LCMove move) {
-    io->move = move;
-    io->type = move ? LCHashHeuristicTypeMove : LCHashHeuristicTypeNan;
-}
-
-LC_INLINE void LCHashHeuristicIOAppendHashMove(LCMutableHashHeuristicIORef io, const LCMove move) {
-    io->move = move;
-    io->type |= move ? LCHashHeuristicTypeMove : LCHashHeuristicTypeNan;
-}
-
-LC_INLINE void LCHashHeuristicIOSetHashNan(LCMutableHashHeuristicIORef io) {
-    io->type = LCHashHeuristicTypeNan;
-}
-
 // MARK: - Write
 void LCHashHeuristicWrite(LCMutableHashHeuristicRef hashTable, LCPositionRef position, LCHashHeuristicIORef io) {
 #if LC_SingleThread
@@ -90,42 +60,112 @@ void LCHashHeuristicWrite(LCMutableHashHeuristicRef hashTable, LCPositionRef pos
     
     hash = hashTable + position->hash;
     
-    if (LCPositionCanHitHash(position, hash)) {
-        if (io->type & LCHashHeuristicTypeValueOnly) {
-            hash->io.type |= io->type;
-            hash->io.value = io->value;
-        } else {
-            hash->io.type |= LCHashHeuristicTypeMove;
-            hash->io.move = io->move;
-        }
-    } else {
-        hash->key = position->key;
-        hash->io = *io;
+    if (hash->io.depth > io->depth) {
+        hash++;
     }
+    
+    hash->key = position->key;
+    hash->io = *io;
 }
 
 // MARK: - Read
+LC_INLINE Bool LCPositionCanHitHash(LCPositionRef position, LCHashHeuristicRef hash) {
+    return position->key == hash->key && position->side == hash->io.side && hash->io.type;
+}
+
+LC_INLINE Bool LCHashHeuristicIOGetValue(LCHashHeuristicIORef io, LCHashHeuristicRef hash, Int16 *const value) {
+    if (hash->io.value > LCPositionWinValue) {
+        *value = hash->io.value + hash->io.distance - io->distance;
+        
+        return true;
+    } else if (hash->io.value < -LCPositionWinValue) {
+        *value = hash->io.value + io->distance - hash->io.distance;
+        
+        return true;
+    } else {
+        *value = hash->io.value;
+        
+        return hash->io.depth >= io->depth;
+    }
+}
+
+typedef Bool (^ LCHashHeuristicBlock)(LCMutableHashHeuristicIORef io, const Int16);
+
+const LCHashHeuristicBlock _LCHashHeuristicBlocks[LCHashHeuristicTypeMove] = {
+    NULL,
+    ^ Bool (LCMutableHashHeuristicIORef io, const Int16 value) {
+        return value <= io->alpha;
+    }, ^ Bool (LCMutableHashHeuristicIORef io, const Int16 value) {
+        return true;
+    }, ^ Bool (LCMutableHashHeuristicIORef io, const Int16 value) {
+        return value >= io->beta;
+    }
+};
+
+LC_INLINE Bool LCHashHeuristicIOSetValue(LCMutableHashHeuristicIORef io, const LCHashHeuristicType type, const Int16 value) {
+    if (_LCHashHeuristicBlocks[type](io, value)) {
+        io->value = value;
+        io->type = LCHashHeuristicTypeValue;
+        
+        return true;
+    }
+    
+    return false;
+}
+
+LC_INLINE void LCHashHeuristicIOSetHashMove(LCMutableHashHeuristicIORef io, const LCMove move) {
+    io->move = move;
+    io->type = move ? LCHashHeuristicTypeMove : LCHashHeuristicTypeNan;
+}
+
+LC_INLINE void LCHashHeuristicIOSetHashNan(LCMutableHashHeuristicIORef io) {
+    io->type = LCHashHeuristicTypeNan;
+}
+
 void LCHashHeuristicRead(LCHashHeuristicRef hashTable, LCPositionRef position, LCMutableHashHeuristicIORef io) {
 #if LC_SingleThread
     static const LCHashHeuristic *hash;
+    static Int16 value;
 #else
     const LCHashHeuristic *hash;
+    Int16 value;
 #endif
     
     hash = hashTable + position->hash;
     
     if (LCPositionCanHitHash(position, hash)) {
-        if (io->type == LCHashHeuristicTypeAll) {
-            LCHashHeuristicIOSetHashValue(io, hash);
-            LCHashHeuristicIOAppendHashMove(io, hash->io.move);
-        } else if (io->type == LCHashHeuristicTypeValueOnly) {
-            LCHashHeuristicIOSetHashValue(io, hash);
-        } else if (io->type == LCHashHeuristicTypeMoveOnly) {
+        if (LCHashHeuristicIOGetValue(io, hash, &value) && LCHashHeuristicIOSetValue(io, hash->io.type, value)) {
+            return;
+        } else {
             LCHashHeuristicIOSetHashMove(io, hash->io.move);
+        }
+    } else {
+        hash++;
+        
+        if (LCPositionCanHitHash(position, hash)) {
+            if (LCHashHeuristicIOGetValue(io, hash, &value) && LCHashHeuristicIOSetValue(io, hash->io.type, value)) {
+                return;
+            } else {
+                LCHashHeuristicIOSetHashMove(io, hash->io.move);
+            }
         } else {
             LCHashHeuristicIOSetHashNan(io);
         }
+    }
+}
+
+LCMove LCHashHeuristicReadMove(LCHashHeuristicRef hashTable, LCPositionRef position) {
+    const LCHashHeuristic *hash = hashTable + position->hash;
+    
+    if (LCPositionCanHitHash(position, hash)) {
+        return hash->io.move;
     } else {
-        LCHashHeuristicIOSetHashNan(io);
+        hash++;
+        
+        if (LCPositionCanHitHash(position, hash)) {
+            return hash->io.move;
+        }
+        
+        return 0;
     }
 }

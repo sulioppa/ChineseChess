@@ -62,7 +62,6 @@ void LCPositionInit(LCMutablePositionRef position, NSString *FEN, const LCSide s
         if (*location) {
             offset = LCChessGetZobristOffset(chess, *location);
             
-            position->lock ^= LCZobristConstLock[offset];
             position->hash ^= LCZobristConstHash[offset];
             position->key ^= LCZobristConstKey[offset];
         }
