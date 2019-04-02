@@ -75,7 +75,10 @@ extension EditBoardController: EditChessesViewDelegate {
 			} else {
 				self.makeChoice(point: grid)
 			}
-		}
+            
+        @unknown default:
+            break
+        }
 	}
 	
 	private func makeChoice(point: GridPoint) {

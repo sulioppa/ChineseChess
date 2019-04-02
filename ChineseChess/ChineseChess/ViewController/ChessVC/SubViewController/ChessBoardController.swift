@@ -245,13 +245,10 @@ extension ChessBoardController {
 		}
 		
 		// Conform Hashable
-		public var hashValue: Int {
-			return (x << 4) + y
-		}
-		
-		public static func ==(lhs: GridPoint, rhs: GridPoint) -> Bool {
-			return lhs.x == rhs.x && lhs.y == rhs.y
-		}
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(self.x)
+            hasher.combine(self.y)
+        }
 		
 		// Debug
 		public var description: String {

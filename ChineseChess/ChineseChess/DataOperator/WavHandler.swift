@@ -60,7 +60,10 @@ class WavHandler: NSObject {
 		case .eatCheckMate:
 			self.playWav(named: "eat")
 			self.playWav(named: "mate")
-		}
+        
+        @unknown default:
+            break
+        }
 	}
 	
 }

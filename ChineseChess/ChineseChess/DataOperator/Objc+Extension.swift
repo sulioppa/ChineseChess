@@ -31,7 +31,10 @@ extension LunaBoardState {
 			return " 红胜, 黑方长捉(长将) "
 		case .winLongCatchBlack:
 			return " 黑胜, 红方长捉(长将) "
-		}
+        
+        @unknown default:
+            return "状态未知"
+        }
 	}
 	
 	public var isNormalState: Bool {
@@ -50,7 +53,10 @@ extension LunaBoardState {
 			return "结果: 红胜 "
 		case .winNormalBlack, .winLongCatchBlack:
 			return "结果: 黑胜 "
-		}
+            
+        @unknown default:
+            return "结果: 未知"
+        }
 	}
 	
 	public var vs: String {
@@ -65,7 +71,10 @@ extension LunaBoardState {
 			return "先胜"
 		case .winNormalBlack, .winLongCatchBlack:
 			return "先负"
-		}
+        
+        @unknown default:
+            return "-"
+        }
 	}
 	
 }
