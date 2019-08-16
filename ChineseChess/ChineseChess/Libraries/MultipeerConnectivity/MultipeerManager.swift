@@ -58,6 +58,7 @@ public class MultipeerManager: NSObject {
 		if isBroswerMode {
 			let broswer = MCBrowserViewController(serviceType: Macro.Project.name, session: session)
 			broswer.delegate = self
+            broswer.modalPresentationStyle = .fullScreen
 			viewcontroller?.present(broswer, animated: true, completion: nil)
 			
 			self.broswer = broswer

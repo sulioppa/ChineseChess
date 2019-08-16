@@ -16,7 +16,7 @@
 
 // MARK: - LCNextStep Life Cycle
 void LCNextStepAlloc(LCMutableNextStepRef nextStep) {
-    *nextStep = (LCNextStep) {
+    LCNextStep src = (LCNextStep) {
         .position = LCPositionCreateMutable(),
         .evaluate = LCEvaluateCreateMutable(),
         
@@ -33,6 +33,8 @@ void LCNextStepAlloc(LCMutableNextStepRef nextStep) {
         .isThinking = NULL,
         .rootDepth = 0
     };
+    
+    memcpy(nextStep, &src, sizeof(LCNextStep));
 }
 
 void LCNextStepInit(LCMutableNextStepRef nextStep, Bool *isThinking, LCDepth rootDepth) {

@@ -77,6 +77,7 @@
 		A7E7ACFD1F91DE8E00B29C5A /* UIButton+Golden.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E7ACFC1F91DE8E00B29C5A /* UIButton+Golden.swift */; };
 		A7EB7BBA1FE419F200AA903A /* Value+Mutating.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EB7BB91FE419F200AA903A /* Value+Mutating.swift */; };
 		A7FD59C02012D859006C18C2 /* HistoryBoardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FD59BF2012D859006C18C2 /* HistoryBoardController.swift */; };
+		E88A78AA2306858600D99696 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88A78A92306858600D99696 /* BaseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +186,7 @@
 		A7EB7BB91FE419F200AA903A /* Value+Mutating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Value+Mutating.swift"; sourceTree = "<group>"; };
 		A7FD59BF2012D859006C18C2 /* HistoryBoardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryBoardController.swift; sourceTree = "<group>"; };
 		BBACABA43398033918CA7F83 /* Pods-ChineseChess.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChineseChess.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChineseChess/Pods-ChineseChess.debug.xcconfig"; sourceTree = "<group>"; };
+		E88A78A92306858600D99696 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +222,7 @@
 		A7075C081F8F8FD800652D0A /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E88A78A82306856900D99696 /* BaseVC */,
 				A70765F31F94E1A700FA6A43 /* ChessVC */,
 				A70765F41F94E1CC00FA6A43 /* GameVC */,
 				A7A19EE42005F06400F5F9E8 /* EditVC */,
@@ -560,6 +563,14 @@
 			path = "UI+Extension";
 			sourceTree = "<group>";
 		};
+		E88A78A82306856900D99696 /* BaseVC */ = {
+			isa = PBXGroup;
+			children = (
+				E88A78A92306858600D99696 /* BaseViewController.swift */,
+			);
+			path = BaseVC;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -681,7 +692,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ChineseChess/Pods-ChineseChess-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-ChineseChess/Pods-ChineseChess-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -690,7 +701,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ChineseChess/Pods-ChineseChess-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChineseChess/Pods-ChineseChess-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -723,6 +734,7 @@
 				A7592D7F1F9DFB0C00E7EA0F /* Value+Random.swift in Sources */,
 				A73873D21FE649A500D24753 /* BladeAlertView.swift in Sources */,
 				A72A4D651F90A2A800CBDAD9 /* UIViewController+PresentVC.swift in Sources */,
+				E88A78AA2306858600D99696 /* BaseViewController.swift in Sources */,
 				A778E4821F94E26000D28B25 /* MultiPeerVC.swift in Sources */,
 				A7E632DC2018B11D005A54E0 /* MultiPeerWaittingView.swift in Sources */,
 				A72F941B1F9753EE001FACC3 /* UIView+Tap.swift in Sources */,

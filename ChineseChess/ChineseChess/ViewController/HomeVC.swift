@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class HomeVC: UIViewController {
+class HomeVC: BaseViewController {
 
 	private lazy var scrollVC: ScrollVC = ScrollVC()
 	
@@ -77,20 +77,7 @@ class HomeVC: UIViewController {
 	deinit {
 		NotificationCenter.default.removeObserver(self)
 	}
-	
-	// MARK: - Status Bar	
-	override var preferredStatusBarStyle: UIStatusBarStyle {
-		return .lightContent
-	}
-	
-	override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-		return .none
-	}
-	
-	override var prefersStatusBarHidden: Bool {
-		return true
-	}
-	
+    
 }
 
 // MARK: - Action

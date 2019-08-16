@@ -9,7 +9,7 @@
 import UIKit
 
 // MARK: - Chess View Controller (Super Class)
-class ChessVC: UIViewController {
+class ChessVC: BaseViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,14 +61,6 @@ class ChessVC: UIViewController {
 	private lazy var luna: Luna = Luna()
 	
 	// MARK: - Status Bar
-	override var preferredStatusBarStyle: UIStatusBarStyle {
-		return .lightContent
-	}
-	
-	override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-		return .none
-	}
-	
 	override var prefersStatusBarHidden: Bool {
 		return !LayoutPartner.hasSafeArea
 	}
