@@ -1,6 +1,6 @@
 ![](icon.png)
 # 中国象棋
-*中国象棋 - 免费的 iOS App（C & Obj-C & Swift）*
+*中国象棋 - iOS App（C & Obj-C & Swift）*
 
 ## App 一览
 ### 启动页 & 主页
