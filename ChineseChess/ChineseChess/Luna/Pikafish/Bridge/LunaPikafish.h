@@ -48,7 +48,8 @@ size_t lpf_legal_moves(const char *board_fen,
 
 /*
  * Synchronous search; run on an application background queue. depth is 1...245;
- * movetime_ms is a positive thinking budget. Both limits apply to the search.
+ * movetime_ms=0 searches by depth without a time limit; a positive value adds
+ * an optional thinking budget. Cancellation is available in either mode.
  * banned contains the app's existing root bans; it does not change history rules.
  * Progress callbacks contain a fraction less than 1 and move=0. The caller emits
  * its completion callback after this function returns a nonzero move.

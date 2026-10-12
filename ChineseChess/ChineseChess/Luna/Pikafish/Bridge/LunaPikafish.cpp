@@ -318,8 +318,8 @@ extern "C" uint16_t lpf_search(LPFEngine *state,
         state->completed.store(false, std::memory_order_release);
         state->best_move.store(0, std::memory_order_relaxed);
         state->completed_depth.store(0, std::memory_order_relaxed);
-        if (depth < 1 || depth >= Stockfish::MAX_PLY || movetime_ms < 1)
-            throw std::invalid_argument("Search needs depth 1...245 and a positive time budget.");
+        if (depth < 1 || depth >= Stockfish::MAX_PLY || movetime_ms < 0)
+            throw std::invalid_argument("Search needs depth 1...245 and a nonnegative time budget (zero disables it).");
         if ((!banned && banned_count) || banned_count > 65536)
             throw std::invalid_argument("Invalid banned-move buffer.");
         for (size_t i = 0; i < banned_count; ++i)
@@ -381,12 +381,12 @@ extern "C" uint16_t lpf_search(LPFEngine *state,
                 engine.stop();
             }
             const auto current = Clock::now();
-            if (current >= deadline)
+            if (movetime_ms > 0 && current >= deadline)
                 engine.stop(); // Budget expiry preserves the best completed iteration.
             if (progress && !cancelled && current >= next_progress)
             {
                 const float elapsed = std::chrono::duration<float, std::milli>(current - started).count();
-                const float by_time = elapsed / float(movetime_ms);
+                const float by_time = movetime_ms > 0 ? elapsed / float(movetime_ms) : 0.0f;
                 const float by_depth = float(state->completed_depth.load(std::memory_order_relaxed))
                                        / float(depth);
                 previous_progress = std::min(0.99f, std::max(previous_progress, std::max(by_time, by_depth)));

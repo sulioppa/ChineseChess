@@ -14,9 +14,29 @@ engine uses C++17 `std::filesystem`. Use Xcode with C++17 support.
 
 The existing Swift-facing `Luna` API is retained. `Luna+NextStep.mm` initializes
 one engine lazily on the background search queue. Existing AI levels retain
-their depth values, with an additional 200–1500 ms thinking limit. The bridge
-also sends stop at the deadline, and invalidates cancelled or superseded
-requests. It forwards progress with move zero and publishes only the final move.
+their depth values, clamped to 4–14, with no thinking-time limit. Each depth
+unit is one side's move (a ply). Search time depends on the position and device;
+the app can still cancel or supersede a request. The bridge forwards progress
+with move zero and publishes only the final move. At the C interface,
+`movetime_ms = 0` disables the optional time limit; positive values set one.
+
+The existing difficulty labels in `UserPreference.Level` map to these depths:
+
+| Depth | App label |
+| --- | --- |
+| 4 | 小白 |
+| 5 | 菜鸟 |
+| 6 | 新手 |
+| 7 | 入门 |
+| 8 | 初级 |
+| 9 | 中级 |
+| 11 | 高级 |
+| 13 | 大师 |
+| 14 | 特级大师 |
+
+Depths 10 and 12 have no preset in the app. These are retained UI labels,
+not calibrated Pikafish ratings. A hint requested for a human player (level 0)
+uses depth 4.
 
 The legal-move interface uses a separate lightweight Position and needs no
 neural network or AI search. Moves are converted to the existing 256-square

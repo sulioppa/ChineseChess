@@ -70,10 +70,13 @@ int main(int argc, char** argv) {
         std::unique_ptr<LPFEngine, decltype(&lpf_engine_destroy)> engine(
             lpf_engine_create(argv[1], error, sizeof(error)), lpf_engine_destroy);
         require(engine != nullptr, error);
-        const auto move = lpf_search(engine.get(), InitialBoard, 0, 4, 150,
+        const auto move = lpf_search(engine.get(), InitialBoard, 0, 4, 0,
                                      nullptr, 0, nullptr, nullptr, nullptr, error, sizeof(error));
         require(error[0] == '\0' && std::find(red.begin(), red.end(), move) != red.end(),
-                "AI must return a legal move in Luna coordinates.");
+                "Depth-only AI must return a legal move in Luna coordinates.");
+        require(lpf_search(engine.get(), InitialBoard, 0, 4, -1,
+                           nullptr, 0, nullptr, nullptr, nullptr, error, sizeof(error)) == 0 && error[0],
+                "Negative thinking budgets must return a recoverable error.");
 
         // Keep the app's root-ban semantics: only this one move remains allowed.
         auto banned = red;
@@ -86,12 +89,12 @@ int main(int argc, char** argv) {
                 "All banned moves must yield no move.");
 
         Cancellation cancellation{std::chrono::steady_clock::now() + std::chrono::milliseconds(30)};
-        require(lpf_search(engine.get(), InitialBoard, 1, 100, 5000, nullptr, 0,
+        require(lpf_search(engine.get(), InitialBoard, 1, 100, 0, nullptr, 0,
                            stop_after_deadline, on_progress, &cancellation, error, sizeof(error)) == 0,
-                "Cancelled search must not return an actionable move.");
+                "Cancelled depth-only search must not return an actionable move.");
         require(error[0] == '\0' && cancellation.progress_calls > 0,
                 "Cancellation/progress callbacks failed.");
-        const auto retry = lpf_search(engine.get(), InitialBoard, 1, 4, 100,
+        const auto retry = lpf_search(engine.get(), InitialBoard, 1, 4, 0,
                                      nullptr, 0, nullptr, nullptr, nullptr, error, sizeof(error));
         require(!error[0] && std::find(black.begin(), black.end(), retry) != black.end(),
                 "Engine must remain usable after cancellation.");

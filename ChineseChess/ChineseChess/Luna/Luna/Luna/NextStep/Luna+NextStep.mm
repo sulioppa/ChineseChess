@@ -148,12 +148,11 @@ void ReportProgress(float progress, uint16_t, void *opaque) {
             banned.push_back(move.unsignedShortValue);
         }
 
-        // Keep the existing level API and bound phone thinking time. A hint
-        // requested for a human player (level 0) uses the minimum AI level.
+        // Keep the existing level API and search to its depth without a time
+        // limit. A hint for a human player (level 0) uses the minimum AI level.
         int searchDepth = std::clamp(depth, 4, 14);
-        int movetime = 200 + (searchDepth - 4) * 130;
         SearchContext context = {self, requestID, block};
-        uint16_t move = lpf_search(_engine, FEN.UTF8String, side, searchDepth, movetime,
+        uint16_t move = lpf_search(_engine, FEN.UTF8String, side, searchDepth, 0,
                                    banned.data(), banned.size(), ShouldStop, ReportProgress,
                                    &context, error, sizeof(error));
         if (error[0]) {
