@@ -149,8 +149,8 @@ void ReportProgress(float progress, uint16_t, void *opaque) {
         }
 
         // Business callers pass an explicit depth, separate from saved level
-        // identifiers. Keep searches within the configured 2...18 range.
-        int searchDepth = std::clamp(depth, 2, 18);
+        // identifiers. Keep searches within the configured 4...20 range.
+        int searchDepth = std::clamp(depth, 4, 20);
         SearchContext context = {self, requestID, block};
         uint16_t move = lpf_search(_engine, FEN.UTF8String, side, searchDepth, 0,
                                    banned.data(), banned.size(), ShouldStop, ReportProgress,

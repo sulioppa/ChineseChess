@@ -70,7 +70,7 @@ int main(int argc, char** argv) {
         std::unique_ptr<LPFEngine, decltype(&lpf_engine_destroy)> engine(
             lpf_engine_create(argv[1], error, sizeof(error)), lpf_engine_destroy);
         require(engine != nullptr, error);
-        const auto move = lpf_search(engine.get(), InitialBoard, 0, 2, 0,
+        const auto move = lpf_search(engine.get(), InitialBoard, 0, 4, 0,
                                      nullptr, 0, nullptr, nullptr, nullptr, error, sizeof(error));
         require(error[0] == '\0' && std::find(red.begin(), red.end(), move) != red.end(),
                 "Depth-only AI must return a legal move in Luna coordinates.");

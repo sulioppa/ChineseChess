@@ -16,7 +16,7 @@ The existing Swift-facing `Luna` API is retained. `Luna+NextStep.mm` initializes
 one engine lazily on the background search queue. `UserPreference.Level`
 retains its existing raw values as stable IDs for saved preferences; its
 separate `searchDepth` property maps difficulty labels to the new search
-depths. The bridge clamps depth to 2–18 with no thinking-time limit. Each depth
+depths. The bridge clamps depth to 4–20 with no thinking-time limit. Each depth
 unit is one side's move (a ply). Search time depends on the position and device,
 and higher depths may take longer on a phone. The app can still cancel or
 supersede a request. The bridge forwards progress with move zero and publishes
@@ -28,15 +28,15 @@ depth settings:
 
 | Depth | App label |
 | --- | --- |
-| 2 | 小白 |
-| 4 | 菜鸟 |
-| 6 | 新手 |
-| 8 | 入门 |
-| 10 | 初级 |
-| 12 | 中级 |
-| 14 | 高级 |
-| 16 | 大师 |
-| 18 | 特级大师 |
+| 4 | 小白 |
+| 6 | 菜鸟 |
+| 8 | 新手 |
+| 10 | 入门 |
+| 12 | 初级 |
+| 14 | 中级 |
+| 16 | 高级 |
+| 18 | 大师 |
+| 20 | 特级大师 |
 
 These are retained UI labels, not calibrated Pikafish ratings. A hint requested
 for a human player uses the configured `game.prompt` level and its corresponding

@@ -99,15 +99,15 @@ extension UserPreference {
 		public var searchDepth: Int {
 			switch self {
 			case .player: return 0
-			case .white: return 2
-			case .rookie: return 4
-			case .sprog: return 6
-			case .accidence: return 8
-			case .primary: return 10
-			case .intermediate: return 12
-			case .senior: return 14
-			case .master: return 16
-			case .supermaster: return 18
+			case .white: return 4
+			case .rookie: return 6
+			case .sprog: return 8
+			case .accidence: return 10
+			case .primary: return 12
+			case .intermediate: return 14
+			case .senior: return 16
+			case .master: return 18
+			case .supermaster: return 20
 			}
 		}
 		
