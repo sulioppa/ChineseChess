@@ -32,6 +32,9 @@ class GameBoardController: ChessBoardController {
 	
 	// isRegreting reveals the game is in progress of regreting.
 	private var isRegreting: Bool = false
+
+    // Reject results queued before a stop, undo, or a newer search.
+    private var thinkingRequestID: UUID? = nil
 	
 	// taskQueue, to avoid data mess. Reverse, opposite and chess move should be serially executed.
 	private let taskQueue: DispatchQueue = DispatchQueue(label: "com.sulioppa.game.taskQueue")
@@ -149,19 +152,28 @@ extension GameBoardController {
 		guard !self.AI.isThinking else { return }
         
 		self.AI.isThinking = true
+        let requestID = UUID()
+        self.thinkingRequestID = requestID
         let level = self.AI.side ? UserPreference.shared.game.black : UserPreference.shared.game.red
         
         self.AI.nextStep(withDepth: Int32(level.rawValue)) { (progress, move) in
             DispatchQueue.main.async { [weak self] in
                 guard let `self` = self else { return }
+                guard self.thinkingRequestID == requestID else { return }
                 guard self.AI.isThinking else { return }
                 
                 self.delegate?.progress = progress
                 
-                guard move > 0 else { return }
+                guard move > 0 else {
+                    if progress >= 1.0 {
+                        self.stopThinking()
+                        TextAlertView.show(in: self.contentView, text: "AI暂时无法计算此局面的走法")
+                    }
+                    return
+                }
 
                 self.asyncTask(task: { (release) in
-                    guard self.AI.isThinking else {
+                    guard self.thinkingRequestID == requestID && self.AI.isThinking else {
                         release()
                         return
                     }
@@ -173,6 +185,7 @@ extension GameBoardController {
 	}
 	
 	public final func stopThinking() {
+        self.thinkingRequestID = nil
 		self.AI.isThinking = false
 		self.delegate?.progress = 0.0
 	}

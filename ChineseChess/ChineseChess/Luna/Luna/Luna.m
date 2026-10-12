@@ -19,6 +19,7 @@
 	LunaRecordStack *_stack;
     
     LunaNextStep *_nextStep;
+    BOOL _isThinking;
 }
 
 - (void)initBoard;
@@ -72,11 +73,27 @@
 }
 
 - (LunaNextStep *)nextStep {
-    if (_nextStep == nil) {
-        _nextStep = [LunaNextStep new];
+    @synchronized (self) {
+        if (_nextStep == nil) {
+            _nextStep = [LunaNextStep new];
+        }
+        return _nextStep;
     }
-    
-    return _nextStep;
+}
+
+- (BOOL)isThinking {
+    @synchronized (self) {
+        return _isThinking;
+    }
+}
+
+- (void)setIsThinking:(BOOL)isThinking {
+    @synchronized (self) {
+        _isThinking = isThinking;
+        if (!isThinking) {
+            [_nextStep cancelSearch];
+        }
+    }
 }
 
 // Board Operation
@@ -132,21 +149,16 @@
     NSArray *bannedMoves = [self bannedMoves];
     NSString *FEN = [_coder encode:_board];
     Bool side = _side;
+    LunaNextStep *nextStep = self.nextStep;
+    uint64_t requestID = [nextStep prepareSearch];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        LunaMove move = [LunaRecordVault searchVaultWithFEN:FEN targetSide:side];
-        
-        if (move) {
-            block(1.0, move);
-        } else {
-            [self.nextStep nextStepWithFEN:FEN
-                                  targetSide:side
-                                 searchDepth:depth
-                                 bannedMoves:bannedMoves
-                                  isThinking:&(self->_isThinking)
-                                       block:block
-             ];
-        }
+        [nextStep nextStepWithFEN:FEN
+                      targetSide:side
+                     searchDepth:depth
+                     bannedMoves:bannedMoves
+                       requestID:requestID
+                           block:block];
     });
 }
 
@@ -660,7 +672,15 @@
 }
 
 - (NSArray<NSNumber *> *)legalMovesWithLocation:(LunaLocation)location {
-	return [self generateMovesWithLocation:location];
+    if (!_board[location] || LCChessSideIsNotSide(_board[location], _side)) {
+        return @[];
+    }
+
+    // Only interactive move generation uses Pikafish. Existing game and
+    // history adjudication continue to use the private Luna rule helpers.
+    return [LunaNextStep legalMovesWithFEN:[_coder encode:_board]
+                              targetSide:_side
+                                location:location];
 }
 
 - (LunaMoveState)moveChessWithMove:(LunaMove)move {

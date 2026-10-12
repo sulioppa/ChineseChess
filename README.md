@@ -24,6 +24,12 @@
 
 ***
 
+## 开发与构建
+
+AI 选步及界面合法走法已接入 Pikafish。iOS 工程需要 Xcode、C++17 和 iOS 13 或以上；打开 `ChineseChess/ChineseChess.xcworkspace`。
+
+算法桥接层可在 Linux 上用 CMake 独立编译，接入方式、验证命令、固定版本和模型许可见 [Pikafish integration](ChineseChess/ChineseChess/Luna/Pikafish/README.md)。原有历史裁判规则继续使用 Luna。
+
 ## 开发记录
 * 2017.10.11, 正式启动工程.
 * 2018.2.24, 完成联机模块，开始开发AI.

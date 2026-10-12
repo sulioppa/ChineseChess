@@ -7,16 +7,26 @@
 //
 
 #import <Foundation/Foundation.h>
+#include <stdint.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LunaNextStep : NSObject
 
++ (NSArray<NSNumber *> *)legalMovesWithFEN:(NSString *)FEN
+                              targetSide:(BOOL)side
+                                location:(UInt8)location;
+
+// Prepare before dispatching work so cancellation also invalidates queued searches.
+- (uint64_t)prepareSearch;
+- (void)cancelSearch;
+- (BOOL)isSearchCurrent:(uint64_t)requestID;
+
 - (void)nextStepWithFEN:(NSString *)FEN
              targetSide:(BOOL)side
             searchDepth:(int)depth
             bannedMoves:(NSArray<NSNumber *> *)bannedMoves
-             isThinking:(BOOL *)isThinking
+              requestID:(uint64_t)requestID
                   block:(void (^)(float progress, UInt16 move))block;
 
 @end
