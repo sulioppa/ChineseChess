@@ -148,9 +148,9 @@ void ReportProgress(float progress, uint16_t, void *opaque) {
             banned.push_back(move.unsignedShortValue);
         }
 
-        // Keep the existing level API and search to its depth without a time
-        // limit. A hint for a human player (level 0) uses the minimum AI level.
-        int searchDepth = std::clamp(depth, 4, 14);
+        // Business callers pass an explicit depth, separate from saved level
+        // identifiers. Keep searches within the configured 2...18 range.
+        int searchDepth = std::clamp(depth, 2, 18);
         SearchContext context = {self, requestID, block};
         uint16_t move = lpf_search(_engine, FEN.UTF8String, side, searchDepth, 0,
                                    banned.data(), banned.size(), ShouldStop, ReportProgress,

@@ -80,6 +80,7 @@ extension UserPreference {
 	}
 
 	public enum Level: Int {
+		// Stable identifiers used by saved preferences, independent of AI depth.
 		case player = 0
 		case white = 4
 		case rookie = 5
@@ -93,6 +94,21 @@ extension UserPreference {
 		
 		public var isPlayer: Bool {
 			return self == .player
+		}
+
+		public var searchDepth: Int {
+			switch self {
+			case .player: return 0
+			case .white: return 2
+			case .rookie: return 4
+			case .sprog: return 6
+			case .accidence: return 8
+			case .primary: return 10
+			case .intermediate: return 12
+			case .senior: return 14
+			case .master: return 16
+			case .supermaster: return 18
+			}
 		}
 		
 		public var description: String {

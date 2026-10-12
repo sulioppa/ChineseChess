@@ -154,9 +154,11 @@ extension GameBoardController {
 		self.AI.isThinking = true
         let requestID = UUID()
         self.thinkingRequestID = requestID
-        let level = self.AI.side ? UserPreference.shared.game.black : UserPreference.shared.game.red
+        let game = UserPreference.shared.game
+        let sideLevel = self.AI.side ? game.black : game.red
+        let level = sideLevel.isPlayer ? game.prompt : sideLevel
         
-        self.AI.nextStep(withDepth: Int32(level.rawValue)) { (progress, move) in
+        self.AI.nextStep(withDepth: Int32(level.searchDepth)) { (progress, move) in
             DispatchQueue.main.async { [weak self] in
                 guard let `self` = self else { return }
                 guard self.thinkingRequestID == requestID else { return }
